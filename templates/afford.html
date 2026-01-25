@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+/* ===== AFFORD TITLE ===== */
+.afford-title {
+    font-family: 'Courier New', monospace;
+    font-size: 4.5rem;          /* gấp ~3 lần */
+    font-weight: 900;
+    letter-spacing: 6px;
+    color: #2563eb;
+    text-align: center;
+    margin-top: 60px;
+}
+
+.afford-subtitle {
+    text-align: center;
+    color: #6c757d;
+    margin-bottom: 60px;
+}
+
+/* ===== FLIP CARD LAYOUT ===== */
+.afford-wrapper {
+    max-width: 1100px; /* nằm gọn giữa 2 vạch đỏ */
+    margin: 0 auto 120px;
+}
+
+.flip-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 60px; /* tăng khoảng cách giữa card */
+}
+
+/* ===== FLIP CARD ===== */
+.flip-card {
+    background-color: transparent;
+    width: 100%;
+    height: 420px; /* tăng chiều dài ~1.5 lần */
+    perspective: 1000px;
+}
+
+.flip-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s ease;
+    transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-inner {
+    transform: rotateY(180deg) translateY(-10px);
+}
+
+/* ===== FRONT & BACK ===== */
+.flip-front,
+.flip-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    border: 3px solid #000;
+    box-shadow: 8px 8px 0 #000;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+/* FRONT */
+.flip-front {
+    background: linear-gradient(135deg, #6f42c1, #4b2aad);
+}
+
+.flip-front h3 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-top: 15px;
+}
+
+.flip-front p {
+    opacity: 0.85;
+}
+
+/* BACK */
+.flip-back {
+    background: linear-gradient(135deg, #ffc107, #ffb300);
+    color: #000;
+    transform: rotateY(180deg);
+    padding: 30px;
+    text-align: center;
+}
+
+.flip-back h4 {
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+/* ICON */
+.flip-icon {
+    font-size: 3.5rem;
+}
+</style>
+
+<!-- ===== TITLE ===== -->
+<h1 class="afford-title">AFFORD</h1>
+<p class="afford-subtitle">
+    Hướng dẫn chi phí sinh hoạt cơ bản cho sinh viên FPT Đà Nẵng
+</p>
+
+<!-- ===== CARDS ===== -->
+<div class="afford-wrapper">
+    <div class="flip-row">
+
+        <!-- ĂN UỐNG -->
+        <div class="flip-card">
+            <div class="flip-inner">
+                <div class="flip-front">
+                    <div class="flip-icon">🍜</div>
+                    <h3>Ăn uống</h3>
+                    <p>25k – 50k / bữa</p>
+                </div>
+                <div class="flip-back">
+                    <h4>Ăn uống</h4>
+                    <p>Căn tin FPT, quán ăn sinh viên, mẹo tiết kiệm chi phí hằng ngày.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- NƠI Ở -->
+        <div class="flip-card">
+            <div class="flip-inner">
+                <div class="flip-front">
+                    <div class="flip-icon">🏠</div>
+                    <h3>Nơi ở</h3>
+                    <p>800k – 2tr / tháng</p>
+                </div>
+                <div class="flip-back">
+                    <h4>Nơi ở</h4>
+                    <p>Ký túc xá, trọ gần campus, kinh nghiệm chọn phòng an toàn.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIỆC LÀM THÊM -->
+        <div class="flip-card">
+            <div class="flip-inner">
+                <div class="flip-front">
+                    <div class="flip-icon">💼</div>
+                    <h3>Việc làm thêm</h3>
+                    <p>Part-time & Freelance</p>
+                </div>
+                <div class="flip-back">
+                    <h4>Việc làm thêm</h4>
+                    <p>Việc phù hợp sinh viên, cân bằng học tập & thu nhập.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

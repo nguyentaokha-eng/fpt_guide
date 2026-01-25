@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- ================= PARALLAX BACKGROUND (HOME ONLY) ================= -->
+<div class="parallax-bg">
+    <img src="https://cdn-icons-png.flaticon.com/512/29/29302.png" class="p-item book">
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" class="p-item cap1">
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" class="p-item cap2">
+    <img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" class="p-item laptop">
+    <img src="https://cdn-icons-png.flaticon.com/512/1995/1995574.png" class="p-item pen">
+    <img src="https://cdn-icons-png.flaticon.com/512/2583/2583344.png" class="p-item cup">
+</div>
+
+<!-- ================= HOME STYLE (ONLY HOME) ================= -->
+<style>
+/* ===== PARALLAX BACKGROUND ===== */
+.parallax-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #f4f6ff, #efe6ff);
+    overflow: hidden;
+}
+
+.p-item {
+    position: absolute;
+    width: 90px;
+    opacity: 0.85;
+    animation: float 6s ease-in-out infinite;
+}
+
+.book { top: 15%; left: 8%; }
+.cap1 { top: 10%; right: 12%; }
+.cap2 { top: 55%; left: 6%; }
+.laptop { bottom: 15%; right: 10%; }
+.pen { bottom: 25%; left: 30%; }
+.cup { top: 40%; right: 35%; }
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0); }
+}
+
+/* ================= INTRO ================= */
+.intro-box {
+    background: #ffc107; /* VÀNG */
+    padding: 40px;
+    border-radius: 16px;
+    border: 3px solid #000;
+    box-shadow: 8px 8px 0 #000;
+}
+
+.intro-box p {
+    color: #222; /* chữ đen dễ đọc */
+}
+
+/* ================= ABOUT HERO ================= */
+.about-hero {
+    max-width: 1100px;
+    margin: 90px auto;
+    height: 420px;
+    border-radius: 18px;
+    overflow: hidden;
+
+    background-image: url("https://rmep.vn/wp-content/uploads/2024/06/z5503795221847_32de2d1145b3d58dba3c7c10de7885c0.jpg");
+    background-size: cover;
+    background-position: center;
+
+    border: 3px solid #000;
+    box-shadow: 8px 8px 0 #000;
+}
+
+.about-overlay {
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.55);
+    padding: 50px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.about-overlay h2 {
+    color: #fff;
+}
+
+.about-overlay p {
+    color: #f1f1f1;
+    max-width: 650px;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .about-hero {
+        height: auto;
+    }
+    .about-overlay {
+        padding: 30px;
+    }
+}
+</style>
+
+<!-- ================= PARALLAX SCRIPT ================= -->
+<script>
+document.addEventListener("mousemove", (e) => {
+    const x = (e.clientX / window.innerWidth) - 0.5;
+    const y = (e.clientY / window.innerHeight) - 0.5;
+
+    document.querySelectorAll(".p-item").forEach((item, i) => {
+        const speed = (i + 1) * 8;
+        item.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+    });
+});
+</script>
+
+<!-- ================= INTRO ================= -->
+<div class="container mt-5">
+    <div class="intro-box">
+        <h2 class="pixel-title">Chào mừng bạn đến với FPT Guide!</h2>
+        <p>
+            Although this may seem obvious, just because you found this website on the interwebs,
+            does not mean you have been admitted to FPT.
+        </p>
+        <p>
+            FPT Guide được tạo ra bởi sinh viên, dành cho sinh viên – đặc biệt là tân sinh viên
+            FPT Đà Nẵng.
+        </p>
+        <p>
+            Nếu bạn đang lo lắng về lịch học, điểm số hay student life,
+            bạn đang ở đúng nơi rồi 🚀
+        </p>
+    </div>
+</div>
+
+<!-- ================= ABOUT FPT UNIVERSITY (LEFT IMAGE + RIGHT IMAGE) ================= -->
+<div class="container" style="margin-top: 90px;">
+    <div style="display: flex; gap: 40px; align-items: stretch;">
+
+        <!-- ===== LEFT: IMAGE + TEXT OVERLAY ===== -->
+        <div style="
+            flex: 1;
+            position: relative;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 3px solid #000;
+            box-shadow: 8px 8px 0 #000;
+        ">
+            <!-- ẢNH BÊN TRÁI (BẠN TỰ CHỌN) -->
+            <img src="https://ptehelper.com.au/wp-content/uploads/2022/12/dai-hoc-fpt-diem-chuan-676x380.webp"
+                 style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    filter: brightness(55%);
+                 ">
+
+            <!-- TEXT OVER IMAGE -->
+            <div style="
+                position: absolute;
+                inset: 0;
+                padding: 40px;
+                color: #fff;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            ">
+                <h2 class="pixel-title mb-3">ABOUT FPT UNIVERSITY</h2>
+
+                <p>
+                    FPT University is a private university in Vietnam founded by
+                    FPT Corporation. The university focuses on technology,
+                    innovation, and practical learning.
+                </p>
+
+                <p>
+                    With a modern campus, international environment, and strong
+                    industry connections, FPT University helps students develop
+                    real-world skills.
+                </p>
+
+                <p>
+                    At FPT Da Nang, student life is dynamic, creative, and full
+                    of opportunities 🚀
+                </p>
+            </div>
+        </div>
+
+        <!-- ===== RIGHT: IMAGE CŨ (GIỮ NGUYÊN) ===== -->
+        <div style="
+            flex: 1;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 3px solid #000;
+            box-shadow: 8px 8px 0 #000;
+        ">
+            <img src="https://rmep.vn/wp-content/uploads/2024/06/z5503795221847_32de2d1145b3d58dba3c7c10de7885c0.jpg"
+                 style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                 ">
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ================= TEAM ================= -->
+<div class="container mt-5">
+    <div class="team-header text-center">
+        <h2 class="team-text">Meet Our Team</h2>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+        {% for m in members %}
+        <div class="col-md-4 col-sm-6">
+            <div class="team-card">
+                <h5>{{ m.name }}</h5>
+                <p>{{ m.major }}</p>
+                <a href="{% url 'experience' m.slug %}" class="experience-btn">
+                    Our story
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
