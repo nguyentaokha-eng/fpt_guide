@@ -127,8 +127,6 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-STATIC_ROOT = BASE_DIR / "staticfiles"
-
 # Cho phép React (chạy port 3000) gọi API Django
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
