@@ -18,7 +18,7 @@ LECTURERS_SEED = [
     {'code': 'ngapt', 'name': 'NgaPT', 'department': 'THỂ DỤC THỂ THAO', 'subjects': ['VOV114', 'VOV124', 'VOV134']},
     {'code': 'truongdq', 'name': 'TruongDQ', 'department': 'THỂ DỤC THỂ THAO', 'subjects': ['VOV114', 'VOV124', 'VOV134']},
     {'code': 'dungdtt23', 'name': 'DungDTT23', 'department': 'Nhạc cụ truyền thống', 'subjects': ['DTR103']},
-    {'code': 'ms.quynhtnp', 'name': 'Ms.QuynhTNP', 'department': 'Nhạc cụ truyền thống', 'subjects': ['DTB103']},
+    {'code': 'quynhtnp', 'name': 'QuynhTNP', 'department': 'Nhạc cụ truyền thống', 'subjects': ['DTB103']},
     {'code': 'maycc', 'name': 'MayCC', 'department': 'TIẾNG ANH', 'subjects': ['ENT403', 'ENT503']},
     {'code': 'juosea.mm.delmundo', 'name': 'Juosea.MM.DelMundo', 'department': 'TIẾNG ANH', 'subjects': ['ENT403', 'ENT503']},
     {'code': 'lilibeth', 'name': 'Lilibeth', 'department': 'TIẾNG ANH', 'subjects': ['ENT403', 'ENT503']},
@@ -32,6 +32,7 @@ LECTURERS_SEED = [
     {'code': 'tramdt7', 'name': 'TramDT7', 'department': 'MARKETING', 'subjects': ['BRA301']},
     {'code': 'hangdtt57', 'name': 'HangDTT57', 'department': 'MARKETING', 'subjects': ['MKT309m']},
     {'code': 'lienbtb2', 'name': 'LienBTB2', 'department': 'MARKETING', 'subjects': ['LAW102']},
+
 ]
 
 
