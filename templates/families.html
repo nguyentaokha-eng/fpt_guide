@@ -3,281 +3,350 @@
 {% block content %}
 
 <style>
-    /* ===== GIAO DIỆN ===== */
-    .filter-section {
-        background: #0b1220; padding: 40px 20px; text-align: center;
+    /* ===== GIAO DIỆN CHUNG ===== */
+    .filter-section { background: #0b1220; padding: 40px 20px 20px; text-align: center; }
+    .filter-title { 
+        color: #6f42c1; margin-bottom: 20px; font-size: 1.2rem; 
+        text-transform: uppercase; letter-spacing: 2px; font-weight: bold;
     }
-    .filter-title { color: #6f42c1; margin-bottom: 20px; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; }
     
-    .filter-container {
-        display: flex; justify-content: center; flex-wrap: wrap;
-        gap: 10px; max-width: 1000px; margin: 0 auto;
+    /* SMART SEARCH BAR */
+    .search-container { max-width: 600px; margin: 0 auto 30px; position: relative; }
+    .smart-search-input {
+        width: 100%; padding: 15px 25px; border-radius: 30px; border: 2px solid #444;
+        background: rgba(255, 255, 255, 0.05); color: #fff; font-size: 1rem; outline: none; transition: 0.3s;
     }
+    .smart-search-input:focus { border-color: #6f42c1; box-shadow: 0 0 15px rgba(111, 66, 193, 0.3); }
+    #searchFeedback { display: block; margin-top: 10px; color: #b794f4; font-size: 0.85rem; font-style: italic; }
+
+    .filter-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; max-width: 1000px; margin: 0 auto; }
     .filter-btn {
         padding: 8px 18px; border: 1px solid #444; background: rgba(255,255,255,0.05);
         color: #ccc; border-radius: 8px; cursor: pointer; font-size: 0.9rem; transition: 0.3s;
     }
-    .filter-btn:hover { border-color: #6f42c1; color: #fff; }
-    .filter-btn.active { 
-        background: #6f42c1; color: #fff; border-color: #6f42c1;
-        box-shadow: 0 4px 15px rgba(111, 66, 193, 0.4);
-    }
+    .filter-btn.active { background: #6f42c1; color: #fff; border-color: #6f42c1; box-shadow: 0 4px 15px rgba(111, 66, 193, 0.4); }
 
     /* ===== SLIDER & CARDS ===== */
     .club-slider {
-    position: relative;
-    overflow: hidden;
-    width: 100vw;          /* Ép khung luôn rộng bằng 100% màn hình thiết bị */
-    left: 50%;             /* Kết hợp với transform để căn giữa nếu khung bị bóp bởi container cha */
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    
-    padding: 80px 0;
-    
-    /* Cấu hình ảnh nền chuẩn */
-    background-image:  
-        url('https://daihoc.fpt.edu.vn/wp-content/uploads/2024/02/428653189_787262210099440_3043567085344585742_n-650x488.jpeg'); 
-    
-    background-size: cover;      /* Quan trọng: Ảnh sẽ luôn phủ kín, không để lại khoảng trắng */
-    background-position: center; /* Giữ tâm ảnh luôn ở giữa */
-    background-repeat: no-repeat;
-    background-attachment: fixed; /* Tạo hiệu ứng cuộn sang trọng */
-}
-    .club-track { display: flex; gap: 40px; width: max-content; will-change: transform; }
-
-    /* ===== CẤU TRÚC FLIP CARD (MẶT TRƯỚC - MẶT SAU) ===== */
-    .club-card {
-        width: 320px; height: 480px;
-        perspective: 1000px; /* Độ sâu 3D */
-        flex-shrink: 0;
+        position: relative; overflow: hidden; width: 100%; padding: 80px 0;
+        background-image: linear-gradient(rgba(11, 18, 32, 0.8), rgba(11, 18, 32, 0.8)),
+            url('https://daihoc.fpt.edu.vn/wp-content/uploads/2024/02/428653189_787262210099440_3043567085344585742_n-650x488.jpeg'); 
+        background-size: cover; background-position: center; background-attachment: fixed;
     }
-
-    .card-inner {
-        position: relative; width: 100%; height: 100%;
-        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        transform-style: preserve-3d;
-    }
-
+    .club-track { display: flex; gap: 40px; width: max-content; will-change: transform; cursor: grab; }
+    .club-card { width: 320px; height: 480px; perspective: 1000px; flex-shrink: 0; }
+    .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
     .club-card:hover .card-inner { transform: rotateY(180deg); }
-
-    .card-front, .card-back {
-        position: absolute; width: 100%; height: 100%;
-        backface-visibility: hidden; /* Giấu mặt ngược lại khi lật */
-        border-radius: 20px; overflow: hidden;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-    }
-    
-    /* MẶT TRƯỚC */
-    .card-front { background: #161f32; border: 1px solid #2d3748; display: flex; flex-direction: column; }
-    .img-container { width: 100%; height: 75%; object-fit: cover; pointer-events: none; }
+    .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+    .card-front { background: #fff ; border: 1px solid #2d3748; display: flex; flex-direction: column; }
+    .img-container { width: 100%; height: 70%; overflow: hidden; }
     .img-container img { width: 100%; height: 100%; object-fit: cover; }
-    
-    .info-front { flex-grow: 1; padding: 20px; display: flex; flex-direction: column; align-items: center; text-align: center; }
-    .club-shortname { font-size: 1.4rem; font-weight: 800; color: #fff; margin-bottom: 5px; }
-    .club-fullname { font-size: 0.8rem; color: #a0aec0; height: 40px; overflow: hidden; }
-
-    .tag-container { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; margin-top: 15px; }
-    .tag-badge { 
-        font-size: 0.65rem; background: rgba(111, 66, 193, 0.2); color: #b794f4; 
-        padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(111, 66, 193, 0.3);
-    }
-
-    /* MẶT SAU */
-    .card-back {
-        background: #6f42c1; color: white; transform: rotateY(180deg);
-        display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 25px;
-    }
-    .btn-visit {
-        margin-top: 20px; padding: 10px 20px; background: #fff; color: #6f42c1;
-        text-decoration: none; border-radius: 8px; font-weight: bold; transition: 0.3s;
-    }
-    .btn-visit:hover { background: #1a202c; color: #fff; }
+    .info-front { padding: 20px; text-align: center; }
+    .club-shortname { font-size: 1.4rem; font-weight: 800; color: #0b1220; margin-bottom: 5px;}
+    .tag-badge { font-size: 0.65rem; background: rgba(111, 66, 193, 0.2); color: #0b1220; padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(111, 66, 193, 0.3); margin: 2px; display: inline-block; }
+    .card-back { background: #6f42c1; color: white; transform: rotateY(180deg); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 25px; text-align: center; }
+    .btn-visit { margin-top: 20px; padding: 10px 25px; background: #fff; color: #6f42c1; text-decoration: none; border-radius: 8px; font-weight: bold; transition: 0.3s;}
+    .btn-visit:hover { background: #0b1220; color: #fff; }
 </style>
 
 <div class="filter-section">
-    <div class="filter-title">Bạn đang tìm kiếm điều gì?</div>
+    <div class="filter-title">Khám phá cộng đồng của bạn</div>
+    
+    <div class="search-container">
+        <input type="text" id="smartSearch" class="smart-search-input" placeholder="Mô tả bản thân... (VD: mình hướng ngoại, thích đá banh và học code)">
+        <span id="searchFeedback">Nhập sở thích để nhận gợi ý CLB phù hợp ✨</span>
+    </div>
+
     <div class="filter-container">
         <button class="filter-btn active" data-filter="all">Tất cả</button>
         <button class="filter-btn" data-filter="Kỹ năng mềm">Kỹ năng mềm</button>
         <button class="filter-btn" data-filter="Sáng tạo">Sáng tạo</button>
         <button class="filter-btn" data-filter="Việc làm">Việc làm</button>
-        <button class="filter-btn" data-filter="Nghệ thuật">Nghệ thuật</button>
-        <button class="filter-btn" data-filter="Hướng ngoại">Hướng ngoại</button>
         <button class="filter-btn" data-filter="Học thuật">Học thuật</button>
         <button class="filter-btn" data-filter="Thể lực">Thể lực</button>
-        <button class="filter-btn" data-filter="Giao lưu">Giao lưu</button>
+        <button class="filter-btn" data-filter="Nghệ thuật">Nghệ thuật</button>
     </div>
 </div>
 
 <section class="club-slider" id="club-slider">
     <div class="club-track" id="club-track"></div>
 </section>
-<!-- STATIC URL -->
-<script>
-    const STATIC_URL = "{% static '' %}";
-</script>
+
 <script>
 const clubData = [
-  { name: "FUDA Japanese Club", short: "Mirai JC", tags: ["Học thuật", "Giao lưu", "Nghệ thuật"], img: "/static/img/clubs/1.jpg", link: "https://www.facebook.com/MiraiJClub" },
-
-  { name: "FPTU Developer Club", short: "DEVER", tags: ["Học thuật", "Việc làm", "Kỹ năng mềm"], img: "/static/img/clubs/2.jpg", link: "https://www.facebook.com/FPTUDever/" },
-
-  { name: "Security Research Club", short: "SRC", tags: ["Học thuật", "Việc làm"], img: "/static/img/clubs/3.jpg", link: "https://www.facebook.com/SybP3n0r" },
-
-  { name: "Hospitality & Tourism Skills", short: "HTS", tags: ["Kỹ năng mềm", "Giao lưu", "Việc làm"], img: "/static/img/clubs/4.jpg", link: "https://www.facebook.com/profile.php?id=100077055935304" },
-
-  { name: "Kinh doanh & Marketing", short: "RES-UP", tags: ["Sáng tạo", "Việc làm", "Kỹ năng mềm"], img: "/static/img/clubs/5.jpg", link: "https://www.facebook.com/resup.fudn" },
-
-  { name: "Financial Investing Club", short: "FIC", tags: ["Học thuật", "Việc làm"], img: "/static/img/clubs/6.jpg", link: "https://www.facebook.com/FIC.fuda" },
-
-  { name: "FPTU Football Club", short: "FUFC", tags: ["Thể lực", "Hướng ngoại", "Giao lưu"], img: "/static/img/clubs/7.jpg", link: "https://www.facebook.com/fptuniversityfootballclub" },
-
-  { name: "FUDN Vovinam Club", short: "FVC", tags: ["Thể lực", "Kỹ năng mềm"], img: "/static/img/clubs/8.jpg", link: "https://www.facebook.com/fvcdn" },
-
-  { name: "FPTU Badminton Club", short: "FUB", tags: ["Thể lực", "Giao lưu"], img: "/static/img/clubs/9.jpg", link: "https://www.facebook.com/FUBadmintonClubDN" },
-
-  { name: "FPT University Volleyball", short: "FUV", tags: ["Thể lực", "Giao lưu"], img: "/static/img/clubs/10.jpg", link: "https://www.facebook.com/clbbongchuyenfptdn" },
-
-  { name: "FUDA Hoops Gene", short: "FHG", tags: ["Thể lực", "Hướng ngoại"], img: "/static/img/clubs/11.jpg", link: "https://www.facebook.com/fudnbasketball" },
-
-  { name: "Nhị khúc côn", short: "FDN Nunchaku", tags: ["Thể lực", "Nghệ thuật"], img: "/static/img/clubs/12.jpg", link: "https://www.facebook.com/profile.php?id=100063567160734" },
-
-  { name: "CLB Võ cổ truyền", short: "FPTU VCT", tags: ["Thể lực", "Kỹ năng mềm"], img: "/static/img/clubs/13.jpg", link: "https://www.facebook.com/profile.php?id=100092324607122" },
-
-  { name: "FUDA Event Club", short: "Evo", tags: ["Sáng tạo", "Hướng ngoại", "Kỹ năng mềm"], img: "/static/img/clubs/14.jpg", link: "https://www.facebook.com/EVOEventClub" },
-
-  { name: "FPTU Media", short: "FUM", tags: ["Sáng tạo", "Việc làm", "Nghệ thuật"], img: "/static/img/clubs/15.jpg", link: "https://www.facebook.com/FUMedia" },
-
-  { name: "Dance For Passion Club", short: "DFP", tags: ["Nghệ thuật", "Hướng ngoại", "Thể lực"], img: "/static/img/clubs/16.jpg", link: "https://www.facebook.com/fudadancingclub" },
-
-  { name: "Traditional Instrument", short: "TIA", tags: ["Nghệ thuật", "Học thuật", "Giao lưu"], img: "/static/img/clubs/17.jpg", link: "https://www.facebook.com/tiaclubnhaccudantoc" },
-
-  { name: "FUDA MC Club", short: "MIC", tags: ["Kỹ năng mềm", "Nghệ thuật", "Hướng ngoại"], img: "/static/img/clubs/18.jpg", link: "https://www.facebook.com/michome.vn" },
-
-  { name: "FUDA Graphic Design", short: "FGD", tags: ["Sáng tạo", "Việc làm", "Học thuật"], img: "/static/img/clubs/19.jpg", link: "https://www.facebook.com/FudaGraphicDesign.FGD" },
-
-  { name: "Xưởng làm nhạc", short: "RHYTHM", tags: ["Sáng tạo", "Nghệ thuật", "Giao lưu"], img: "/static/img/clubs/20.jpg", link: "https://www.facebook.com/xuonglamnhac.fptdn" },
-
-  { name: "Fuda's Creative Space", short: "FCS", tags: ["Giao lưu", "Sáng tạo", "Kỹ năng mềm"], img: "/static/img/clubs/21.jpg", link: "https://www.facebook.com/fudacreativespace" },
-
-  { name: "FPT's Kindness Krew", short: "F2K", tags: ["Giao lưu", "Kỹ năng mềm", "Hướng ngoại"], img: "/static/img/clubs/22.jpg", link: "https://www.facebook.com/FPT.KINDNESS.KREW" }
+  { 
+    name: "FUDA Japanese Club", short: "Mirai JC", 
+    tags: ["Học thuật", "Giao lưu", "Nghệ thuật"], 
+    keywords: ["nhật", "anime", "manga", "văn hóa", "tiếng nhật", "cosplay", "wibu", "japan"], 
+    img: "/static/img/clubs/1.jpg", link: "https://www.facebook.com/MiraiJClub" 
+  },
+  { 
+    name: "FPTU Developer Club", short: "DEVER", 
+    tags: ["Học thuật", "Việc làm", "Kỹ năng mềm"], 
+    keywords: ["code", "lập trình", "it", "web", "phần mềm", "app", "thiết kế", "thuật toán", "developer"], 
+    img: "/static/img/clubs/2.jpg", link: "https://www.facebook.com/FPTUDever/" 
+  },
+  { 
+    name: "Security Research Club", short: "SRC", 
+    tags: ["Học thuật", "Việc làm"], 
+    keywords: ["security", "hack", "an ninh mạng", "bảo mật", "máy tính", "linux", "hacker"], 
+    img: "/static/img/clubs/3.jpg", link: "https://www.facebook.com/SybP3n0r" 
+  },
+  { 
+    name: "Hospitality & Tourism Skills", short: "HTS", 
+    tags: ["Kỹ năng mềm", "Giao lưu", "Việc làm", "Hướng ngoại"], 
+    keywords: ["du lịch", "dịch vụ", "khách sạn", "tour", "pha chế", "nấu ăn", "phục vụ", "hospitality"], 
+    img: "/static/img/clubs/4.jpg", link: "https://www.facebook.com/profile.php?id=100077055935304" 
+  },
+  { 
+    name: "Kinh doanh & Marketing", short: "RES-UP", 
+    tags: ["Sáng tạo", "Việc làm", "Kỹ năng mềm"], 
+    keywords: ["marketing", "kinh doanh", "bán hàng", "startup", "khởi nghiệp", "quảng cáo", "content", "resup"], 
+    img: "/static/img/clubs/5.jpg", link: "https://www.facebook.com/resup.fudn" 
+  },
+  { 
+    name: "Financial Investing Club", short: "FIC", 
+    tags: ["Học thuật", "Việc làm"], 
+    keywords: ["đầu tư", "chứng khoán", "tài chính", "tiền", "làm giàu", "kinh tế", "coin", "forex"], 
+    img: "/static/img/clubs/6.jpg", link: "https://www.facebook.com/FIC.fuda" 
+  },
+  { 
+    name: "FPTU Football Club", short: "FUFC", 
+    tags: ["Thể lực", "Hướng ngoại", "Giao lưu"], 
+    keywords: ["bóng đá", "đá banh", "đá bóng", "sport", "thể thao", "sân cỏ", "team", "fufc"], 
+    img: "/static/img/clubs/7.jpg", link: "https://www.facebook.com/fptuniversityfootballclub" 
+  },
+  { 
+    name: "FUDN Vovinam Club", short: "FVC", 
+    tags: ["Thể lực", "Kỹ năng mềm"], 
+    keywords: ["võ", "vovinam", "tự vệ", "đấm", "đá", "nhào lộn", "sức khỏe", "fvc"], 
+    img: "/static/img/clubs/8.jpg", link: "https://www.facebook.com/fvcdn" 
+  },
+  { 
+    name: "FPTU Badminton Club", short: "FUB", 
+    tags: ["Thể lực", "Giao lưu"], 
+    keywords: ["cầu lông", "badminton", "vợt", "thể thao", "vận động", "fub"], 
+    img: "/static/img/clubs/9.jpg", link: "https://www.facebook.com/FUBadmintonClubDN" 
+  },
+  { 
+    name: "FPT University Volleyball", short: "FUV", 
+    tags: ["Thể lực", "Giao lưu"], 
+    keywords: ["bóng chuyền", "volleyball", "đập bóng", "chiều cao", "thể thao", "fuv"], 
+    img: "/static/img/clubs/10.jpg", link: "https://www.facebook.com/clbbongchuyenfptdn" 
+  },
+  { 
+    name: "FUDA Hoops Gene", short: "FHG", 
+    tags: ["Thể lực", "Hướng ngoại"], 
+    keywords: ["bóng rổ", "basketball", "ném bóng", "hoops", "thể thao", "fhg"], 
+    img: "/static/img/clubs/11.jpg", link: "https://www.facebook.com/fudnbasketball" 
+  },
+  { 
+    name: "Nhị khúc côn", short: "FDN Nunchaku", 
+    tags: ["Thể lực", "Nghệ thuật"], 
+    keywords: ["nhị khúc", "múa võ", "nunchaku", "võ thuật", "biểu diễn", "côn"], 
+    img: "/static/img/clubs/12.jpg", link: "https://www.facebook.com/profile.php?id=100063567160734" 
+  },
+  { 
+    name: "CLB Võ cổ truyền", short: "FPTU VCT", 
+    tags: ["Thể lực", "Kỹ năng mềm"], 
+    keywords: ["võ", "cổ truyền", "truyền thống", "đấm đá", "tự vệ", "vct"], 
+    img: "/static/img/clubs/13.jpg", link: "https://www.facebook.com/profile.php?id=100092324607122" 
+  },
+  { 
+    name: "FUDA Event Club", short: "Evo", 
+    tags: ["Sáng tạo", "Hướng ngoại", "Kỹ năng mềm"], 
+    keywords: ["sự kiện", "event", "tổ chức", "hậu cần", "mc", "tiệc", "năng động", "evo"], 
+    img: "/static/img/clubs/14.jpg", link: "https://www.facebook.com/EVOEventClub" 
+  },
+  { 
+    name: "FPTU Media", short: "FUM", 
+    tags: ["Sáng tạo", "Việc làm", "Nghệ thuật"], 
+    keywords: ["chụp ảnh", "media", "quay phim", "video", "edit", "máy ảnh", "truyền thông", "fum"], 
+    img: "/static/img/clubs/15.jpg", link: "https://www.facebook.com/FUMedia" 
+  },
+  { 
+    name: "Dance For Passion Club", short: "DFP", 
+    tags: ["Nghệ thuật", "Hướng ngoại", "Thể lực"], 
+    keywords: ["nhảy", "dance", "hiphop", "vũ đạo", "âm nhạc", "biểu diễn", "dfp"], 
+    img: "/static/img/clubs/16.jpg", link: "https://www.facebook.com/fudadancingclub" 
+  },
+  { 
+    name: "Traditional Instrument", short: "TIA", 
+    tags: ["Nghệ thuật", "Học thuật", "Giao lưu"], 
+    keywords: ["nhạc cụ", "truyền thống", "đàn", "sáo", "trống", "tỳ bà", "dân tộc", "tia"], 
+    img: "/static/img/clubs/17.jpg", link: "https://www.facebook.com/tiaclubnhaccudantoc" 
+  },
+  { 
+    name: "FUDA MC Club", short: "MIC", 
+    tags: ["Kỹ năng mềm", "Nghệ thuật", "Hướng ngoại"], 
+    keywords: ["mc", "nói", "thuyết trình", "tự tin", "đám đông", "giọng nói", "dẫn chương trình", "mic"], 
+    img: "/static/img/clubs/18.jpg", link: "https://www.facebook.com/michome.vn" 
+  },
+  { 
+    name: "FUDA Graphic Design", short: "FGD", 
+    tags: ["Sáng tạo", "Việc làm", "Học thuật"], 
+    keywords: ["design", "thiết kế", "ảnh", "photoshop", "illustrator", "vẽ", "đồ họa", "fgd"], 
+    img: "/static/img/clubs/19.jpg", link: "https://www.facebook.com/FudaGraphicDesign.FGD" 
+  },
+  { 
+    name: "Xưởng làm nhạc", short: "RHYTHM", 
+    tags: ["Sáng tạo", "Nghệ thuật", "Giao lưu"], 
+    keywords: ["nhạc", "sáng tác", "studio", "hát", "rap", "âm thanh", "rhythm", "phối khí"], 
+    img: "/static/img/clubs/20.jpg", link: "https://www.facebook.com/xuonglamnhac.fptdn" 
+  },
+  { 
+    name: "Fuda's Creative Space", short: "FCS", 
+    tags: ["Giao lưu", "Sáng tạo", "Kỹ năng mềm"], 
+    keywords: ["sáng tạo", "không gian", "workshop", "ý tưởng", "làm tay", "fcs"], 
+    img: "/static/img/clubs/21.jpg", link: "https://www.facebook.com/fudacreativespace" 
+  },
+  { 
+    name: "FPT's Kindness Krew", short: "F2K", 
+    tags: ["Giao lưu", "Kỹ năng mềm", "Hướng ngoại"], 
+    keywords: ["tình nguyện", "từ thiện", "giúp đỡ", "cộng đồng", "xã hội", "kindness", "f2k"], 
+    img: "/static/img/clubs/22.jpg", link: "https://www.facebook.com/FPT.KINDNESS.KREW" 
+  }
 ];
+
 const track = document.getElementById('club-track');
 const slider = document.getElementById('club-slider');
-let x = 0, speed = 0.8, isPaused = false, isDown = false;
-let startX, lastX, singleSetWidth = 0;
-let activeFilters = ['all'];
+const searchInput = document.getElementById('smartSearch');
+const searchFeedback = document.getElementById('searchFeedback');
 
-// RENDER FUNCTION
+let x = 0, speed = 0.8, isPaused = false, isDown = false, startX, singleSetWidth = 0, activeFilters = ['all'];
+
 function render() {
     track.innerHTML = '';
-const filtered = activeFilters.includes('all')
-    ? clubData
-    : clubData.filter(c =>
-        activeFilters.every(f => c.tags.includes(f))
-    );
+    const query = searchInput.value.toLowerCase().trim();
+    let filtered;
 
+    if (query === "") {
+        filtered = activeFilters.includes('all') 
+            ? clubData 
+            : clubData.filter(c => activeFilters.every(f => c.tags.includes(f)));
+        searchFeedback.innerText = "Nhập sở thích để nhận gợi ý phù hợp ✨";
+    } else {
+        filtered = clubData.map(club => {
+            let score = 0;
+            club.keywords.forEach(k => { if(query.includes(k)) score += 5; });
+            club.tags.forEach(t => { if(query.includes(t.toLowerCase())) score += 3; });
+            if(club.name.toLowerCase().includes(query) || club.short.toLowerCase().includes(query)) score += 10;
+            return { ...club, score };
+        }).filter(c => c.score > 0).sort((a, b) => b.score - a.score);
+        
+        searchFeedback.innerText = filtered.length > 0 ? `Tìm thấy ${filtered.length} CLB khớp với bạn!` : "Không tìm thấy kết quả, hãy thử mô tả khác nhé!";
+    }
 
     if(filtered.length === 0) {
-        track.innerHTML = `<h3 style="color:#fff; width:100vw; text-align:center;">Không tìm thấy kết quả phù hợp...</h3>`;
+        track.innerHTML = '<h3 style="color:#fff; width:100vw; text-align:center; padding:50px;">Dữ liệu đang được cập nhật...</h3>';
         return;
     }
 
-  const html = filtered.map(club => `
-    <div class="club-card">
-        <div class="card-inner">
-            <div class="card-front">
-                <div class="img-container">
-                    <img src="${club.img}" alt="${club.short}" loading="lazy">
-                </div>
-                <div class="info-front">
-                    <div class="club-shortname">${club.short}</div>
-                    <div class="club-fullname">${club.name}</div>
-                    <div class="tag-container">
-                        ${club.tags.map(t => `<span class="tag-badge">${t}</span>`).join("")}
+    // TẠO NỘI DUNG CARD
+    const cardHtml = filtered.map(club => `
+        <div class="club-card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <div class="img-container"><img src="${club.img}" alt="${club.short}"></div>
+                    <div class="info-front">
+                        <div class="club-shortname">${club.short}</div>
+                        <div class="tag-container">${club.tags.map(t => `<span class="tag-badge">${t}</span>`).join('')}</div>
                     </div>
                 </div>
-            </div>
-            <div class="card-back">
-                <h3>${club.short}</h3>
-                <p style="font-size:0.8rem; opacity:0.8; margin-top:10px;">
-                    ${club.tags.join(" • ")}
-                </p>
-                <a href="${club.link}" target="_blank" class="btn-visit">
-                    Xem chi tiết
-                </a>
+                <div class="card-back">
+                    <h3>${club.short}</h3>
+                    <p style="font-size:0.8rem; margin: 15px 0;">${club.name}</p>
+                    <a href="${club.link}" target="_blank" class="btn-visit">Khám phá ngay</a>
+                </div>
             </div>
         </div>
-    </div>
-`).join("");
+    `).join('');
 
-    track.innerHTML = html + html + html; // Nhân bản để loop
+    // NHÂN BẢN 3 LẦN ĐỂ TẠO HIỆU ỨNG VÒNG LẶP VÔ TẬN
+    track.innerHTML = cardHtml + cardHtml + cardHtml;
 
+    // Tính toán chiều rộng của một bộ card duy nhất
     setTimeout(() => {
-        const first = track.querySelector('.club-card');
-        if(first) singleSetWidth = (first.offsetWidth + 30) * filtered.length;
+        const cards = track.querySelectorAll('.club-card');
+        if(cards.length > 0) {
+            const cardWidth = cards[0].offsetWidth;
+            const gap = 40; 
+            singleSetWidth = (cardWidth + gap) * filtered.length;
+        }
     }, 100);
-    x = 0;
+    
+    x = 0; // Reset vị trí về đầu mỗi khi filter/search
 }
 
-// FILTER LOGIC
-document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const f = this.dataset.filter;
-        if(f === 'all') {
-            activeFilters = ['all'];
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-        } else {
-            activeFilters = activeFilters.filter(item => item !== 'all');
-            document.querySelector('[data-filter="all"]').classList.remove('active');
-            
-            if(activeFilters.includes(f)) {
-                activeFilters = activeFilters.filter(item => item !== f);
-                this.classList.remove('active');
-            } else {
-                activeFilters.push(f);
-                this.classList.add('active');
-            }
-        }
-        if(activeFilters.length === 0) {
-            activeFilters = ['all'];
-            document.querySelector('[data-filter="all"]').classList.add('active');
-        }
-        render();
-    });
+// SỰ KIỆN TÌM KIẾM
+searchInput.addEventListener('input', () => {
+    if(searchInput.value !== "") {
+        activeFilters = ['all'];
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('[data-filter="all"]').classList.add('active');
+    }
+    render();
 });
 
-// ANIMATION LOOP
+// SỰ KIỆN FILTER BUTTONS
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.onclick = function() {
+        searchInput.value = "";
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        activeFilters = [this.dataset.filter];
+        render();
+    };
+});
+
+// LOGIC TỰ ĐỘNG CHẠY (INFINITE LOOP)
 function step() {
     if(!isDown && !isPaused && singleSetWidth > 0) {
         x -= speed;
-        if(Math.abs(x) >= singleSetWidth) x = 0;
+        // Khi chạy hết một bộ card, nhảy về 0 ngay lập tức (không nhận ra)
+        if(Math.abs(x) >= singleSetWidth) {
+            x = 0;
+        }
         track.style.transform = `translateX(${x}px)`;
     }
     requestAnimationFrame(step);
 }
 
-// DRAG EVENTS
-const start = (e) => { isDown = true; isPaused = true; startX = (e.pageX || e.touches[0].pageX) - x; };
+// SỰ KIỆN KÉO CHUỘT / VUỐT TAY
+const start = (e) => { 
+    isDown = true; 
+    isPaused = true; 
+    startX = (e.pageX || e.touches[0].pageX) - x; 
+    track.style.cursor = 'grabbing';
+};
+
 const move = (e) => {
     if(!isDown) return;
-    const px = e.pageX || e.touches[0].pageX;
-    x = px - startX;
+    const currentX = (e.pageX || e.touches[0].pageX);
+    x = currentX - startX;
+    
+    // Logic vòng lặp khi kéo
     if(x > 0) x = -singleSetWidth;
     if(Math.abs(x) >= singleSetWidth) x = 0;
+    
     track.style.transform = `translateX(${x}px)`;
 };
-const end = () => { isDown = false; isPaused = false; };
 
+const end = () => { 
+    isDown = false; 
+    isPaused = false; 
+    track.style.cursor = 'grab';
+};
+
+// Đăng ký sự kiện
 slider.addEventListener('mousedown', start);
 window.addEventListener('mousemove', move);
 window.addEventListener('mouseup', end);
 slider.addEventListener('touchstart', start, {passive: true});
-window.addEventListener('touchmove', move, {passive: false});
+window.addEventListener('touchmove', (e) => { if(isDown) move(e); }, {passive: true});
 window.addEventListener('touchend', end);
 
+// Khởi tạo lần đầu
 render();
 step();
 </script>

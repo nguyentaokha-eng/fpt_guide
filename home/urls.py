@@ -16,4 +16,6 @@ urlpatterns = [
     path('Afford/food/', views.Afford_food, name='Afford_food'),
     path('Afford/living/', views.Afford_living, name='Afford_living'),
     path('afford/job/', views.Afford_job, name='Afford_job'),
+    path('comment/<int:place_id>/', views.post_comment, name='post_comment'),
+    path('comment/list/<int:place_id>/', views.get_comments, name='get_comments'),
 ]

@@ -91,3 +91,32 @@ class Review(models.Model):
     def __str__(self):
         return f"Review {self.id} - {self.lecturer.name}"
 
+
+
+# cmt và upload ảnh cho Afford food
+from django.db import models
+
+class Place(models.Model):
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
+
+class Comment(models.Model):
+    place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name="comments")
+    display_name = models.CharField(max_length=100, blank=True)
+    is_anonymous = models.BooleanField(default=False)
+    content = models.TextField()
+
+    price = models.IntegerField()
+    quality = models.IntegerField()
+    service = models.IntegerField()
+    space = models.IntegerField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class CommentImage(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="images")
+    image = models.ImageField(upload_to="comment_images/")

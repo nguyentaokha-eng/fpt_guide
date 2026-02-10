@@ -134,3 +134,6 @@ CORS_ALLOWED_ORIGINS = [
     "https://web-production-2eec.up.railway.app",
 ]
 
+#
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"

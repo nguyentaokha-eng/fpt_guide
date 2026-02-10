@@ -233,6 +233,59 @@ def Afford_food(request):
         'foods': foods
     })
 
+#Afford_food cmt và rating
+####
+# home/views.py
+from django.http import JsonResponse
+from .models import Place, Comment, CommentImage
+
+def post_comment(request, place_id):
+    if request.method != "POST":
+        return JsonResponse({"error": "Invalid request"}, status=400)
+
+    # Create place if it doesn't exist
+    place, created = Place.objects.get_or_create(id=place_id, defaults={'name': f'Place {place_id}'})
+
+    comment = Comment.objects.create(
+        place=place,
+        display_name=request.POST.get("display_name", ""),
+        is_anonymous=request.POST.get("is_anonymous") == "true",
+        content=request.POST.get("content"),
+        price=request.POST.get("price"),
+        quality=request.POST.get("quality"),
+        service=request.POST.get("service"),
+        space=request.POST.get("space"),
+    )
+
+    for img in request.FILES.getlist("images"):
+        CommentImage.objects.create(comment=comment, image=img)
+
+    return JsonResponse({"success": True})
+
+
+def get_comments(request, place_id):
+    try:
+        place = Place.objects.get(id=place_id)
+    except Place.DoesNotExist:
+        return JsonResponse([], safe=False)
+    
+    data = []
+
+    for c in place.comments.all().order_by("-created_at"):
+        data.append({
+            "user": "Ẩn danh" if c.is_anonymous else c.display_name,
+            "content": c.content,
+            "ratings": {
+                "price": c.price,
+                "quality": c.quality,
+                "service": c.service,
+                "space": c.space,
+            },
+            "images": [img.image.url for img in c.images.all()]
+        })
+
+    return JsonResponse(data, safe=False)
+
 
 def student_life(request):
     return render(request, 'student_life.html')
