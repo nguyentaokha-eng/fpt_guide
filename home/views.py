@@ -202,8 +202,7 @@ def lecturer_detail(request, lecturer_id):
     })
 
 #trang mo rong cua afford
-def Afford_food(request):
-    return render(request, 'Afford_food.html')
+
 
 def Afford_living(request):
     return render(request, 'Afford_housing.html')
@@ -228,7 +227,7 @@ def Afford_food(request):
         if not foods:
             foods.append('Chưa có gợi ý phù hợp 😢')
 
-    return render(request, 'afford_food.html', {
+    return render(request, 'Afford_food.html', {
         'query': query,
         'foods': foods
     })
