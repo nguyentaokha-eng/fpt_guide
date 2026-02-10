@@ -1,11 +1,1400 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1 class="pixel-title">CURRICULUM</h1>
-    <p>
-        Đây là trang First-Year Experience.
-        Bạn có thể code chi tiết nội dung ở đây sau.
-    </p>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngành đào tạo - FPT Đà Nẵng</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --orange-primary: #ff6b35;
+            --orange-secondary: #ff8c42;
+            --purple-primary: #6f42c1;
+            --purple-secondary: #9b59b6;
+            --dark: #1a1a2e;
+            --gold: #ffd700;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 60px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background particles */
+        body::before {
+            content: '';
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(111, 66, 193, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hero Section with Frame */
+        .hero-frame {
+            position: relative;
+            margin-bottom: 80px;
+            padding: 60px;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(111, 66, 193, 0.05));
+            border-radius: 30px;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            animation: fadeInScale 1s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .hero-frame::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 30px;
+            padding: 3px;
+            background: linear-gradient(135deg, var(--orange-primary), var(--gold), var(--purple-primary));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: borderRotate 4s linear infinite;
+        }
+
+        @keyframes borderRotate {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .hero-frame::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.5); opacity: 0.1; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-secondary));
+            color: white;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+            animation: slideInDown 0.8s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 0%, var(--gold) 50%, var(--orange-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            animation: slideInUp 1s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 300;
+            letter-spacing: 1px;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 40px;
+            margin-bottom: 100px;
+        }
+
+        /* Category Card with Premium Frame */
+        .category-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .category-card:nth-child(1) { animation-delay: 0.1s; }
+        .category-card:nth-child(2) { animation-delay: 0.2s; }
+        .category-card:nth-child(3) { animation-delay: 0.3s; }
+        .category-card:nth-child(4) { animation-delay: 0.4s; }
+        .category-card:nth-child(5) { animation-delay: 0.5s; }
+        .category-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Premium border effect */
+        .category-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 25px;
+            padding: 2px;
+            background: linear-gradient(135deg, 
+                var(--orange-primary) 0%,
+                var(--gold) 25%,
+                var(--purple-primary) 50%,
+                var(--orange-primary) 75%,
+                var(--gold) 100%
+            );
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .category-card:hover::before {
+            opacity: 1;
+            animation: borderGlow 3s linear infinite;
+        }
+
+        @keyframes borderGlow {
+            0% { filter: hue-rotate(0deg) brightness(1); }
+            50% { filter: hue-rotate(180deg) brightness(1.5); }
+            100% { filter: hue-rotate(360deg) brightness(1); }
+        }
+
+        /* Shine effect on hover */
+        .category-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 70%
+            );
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .category-card:hover::after {
+            opacity: 1;
+            animation: shine 2s ease-in-out infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .category-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 
+                0 30px 60px rgba(255, 107, 53, 0.3),
+                0 0 80px rgba(111, 66, 193, 0.2),
+                inset 0 0 100px rgba(255, 215, 0, 0.05);
+        }
+
+        /* Category Header */
+        .category-header {
+            position: relative;
+            padding: 35px 30px;
+            background: linear-gradient(135deg, 
+                rgba(255, 107, 53, 0.2) 0%,
+                rgba(111, 66, 193, 0.2) 100%
+            );
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .category-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transition: left 0.8s ease;
+        }
+
+        .category-card:hover .category-header::before {
+            left: 100%;
+        }
+
+        .category-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            filter: drop-shadow(0 5px 15px rgba(255, 107, 53, 0.5));
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .category-card:hover .category-icon {
+            transform: rotate(360deg) scale(1.2);
+        }
+
+        .toggle-icon {
+            font-size: 1.8rem;
+            color: var(--gold);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            filter: drop-shadow(0 3px 10px rgba(255, 215, 0, 0.5));
+        }
+
+        .category-card.active .toggle-icon {
+            transform: rotate(180deg);
+            color: var(--orange-primary);
+        }
+
+        /* Courses List */
+        .courses-list {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .category-card.active .courses-list {
+            max-height: 3000px;
+        }
+
+        .course-item {
+            padding: 20px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .course-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 5px;
+            height: 0;
+            background: linear-gradient(180deg, var(--orange-primary), var(--gold));
+            transition: height 0.4s ease;
+        }
+
+        .course-item:hover::before {
+            height: 100%;
+        }
+
+        .course-item::after {
+            content: '';
+            position: absolute;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent,
+                rgba(255, 107, 53, 0.15),
+                transparent
+            );
+            transition: left 0.6s ease;
+        }
+
+        .course-item:hover::after {
+            left: 100%;
+        }
+
+        .course-item:hover {
+            background: rgba(255, 107, 53, 0.1);
+            padding-left: 40px;
+            transform: translateX(5px);
+        }
+
+        .course-bullet {
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(135deg, var(--orange-primary), var(--gold));
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .course-item:hover .course-bullet {
+            transform: scale(1.5);
+            box-shadow: 0 0 25px rgba(255, 107, 53, 0.9);
+        }
+
+        .course-name {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .course-item:hover .course-name {
+            color: white;
+            transform: translateX(5px);
+            text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+        }
+
+        /* Modal Premium Design */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            animation: modalFadeIn 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes modalFadeIn {
+            from { 
+                opacity: 0;
+                backdrop-filter: blur(0px);
+            }
+            to { 
+                opacity: 1;
+                backdrop-filter: blur(10px);
+            }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 30px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 
+                0 50px 100px rgba(0, 0, 0, 0.8),
+                inset 0 0 100px rgba(255, 107, 53, 0.05);
+            border: 2px solid transparent;
+        }
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 30px;
+            padding: 2px;
+            background: linear-gradient(135deg, var(--orange-primary), var(--gold), var(--purple-primary));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: borderRotate 4s linear infinite;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.7) translateY(100px) rotateX(20deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0) rotateX(0deg);
+            }
+        }
+
+        .modal-header {
+            padding: 50px 40px 30px;
+            background: linear-gradient(135deg, 
+                rgba(255, 107, 53, 0.2) 0%,
+                rgba(111, 66, 193, 0.2) 100%
+            );
+            position: relative;
+            overflow: hidden;
+            border-radius: 30px 30px 0 0;
+        }
+
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            animation: modalHeaderFloat 8s ease-in-out infinite;
+        }
+
+        @keyframes modalHeaderFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-20px, -20px) rotate(180deg); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 107, 53, 0.5);
+            color: white;
+            font-size: 1.8rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: var(--orange-primary);
+            border-color: var(--gold);
+            transform: rotate(90deg) scale(1.1);
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.8);
+        }
+
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, white, var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .modal-body {
+            padding: 40px;
+        }
+
+        .course-detail-section {
+            margin-bottom: 35px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            border-left: 4px solid var(--orange-primary);
+            transition: all 0.3s ease;
+        }
+
+        .course-detail-section:hover {
+            background: rgba(255, 107, 53, 0.08);
+            border-left-width: 8px;
+            transform: translateX(5px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2);
+        }
+
+        .detail-label {
+            font-weight: 700;
+            color: var(--gold);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .detail-label::before {
+            content: '◆';
+            color: var(--orange-primary);
+            font-size: 0.8rem;
+        }
+
+        .detail-value {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.15rem;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        .detail-value.large {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--orange-primary), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        .course-description {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(111, 66, 193, 0.1));
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-description::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--orange-primary), var(--gold), var(--purple-primary));
+            border-radius: 15px;
+            z-index: -1;
+            opacity: 0.3;
+            filter: blur(10px);
+        }
+
+        /* Floating Action Button */
+        .fab-container {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            z-index: 1000;
+        }
+
+        .collapse-all-btn {
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-secondary));
+            color: white;
+            border: none;
+            padding: 20px 35px;
+            border-radius: 50px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 
+                0 15px 35px rgba(255, 107, 53, 0.5),
+                inset 0 -5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .collapse-all-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s ease, height 0.5s ease;
+        }
+
+        .collapse-all-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .collapse-all-btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 
+                0 25px 50px rgba(255, 107, 53, 0.6),
+                0 0 100px rgba(255, 215, 0, 0.4);
+        }
+
+        .collapse-all-btn:active {
+            transform: translateY(-5px) scale(1);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--orange-primary), var(--gold));
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--gold), var(--orange-primary));
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .categories-grid {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 30px 15px;
+            }
+
+            .hero-frame {
+                padding: 40px 25px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .category-title {
+                font-size: 1.3rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                max-height: 90vh;
+            }
+
+            .modal-title {
+                font-size: 1.8rem;
+            }
+
+            .collapse-all-btn {
+                padding: 15px 25px;
+                font-size: 0.95rem;
+            }
+
+            .fab-container {
+                bottom: 25px;
+                right: 25px;
+            }
+        }
+
+        /* Loading animation */
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        .loading {
+            animation: shimmer 2s infinite;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0.05) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0.05) 100%
+            );
+            background-size: 1000px 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Hero Section -->
+    <div class="hero-frame">
+        <div class="hero-content">
+            <div class="hero-badge">🎓 Đại học FPT Đà Nẵng</div>
+            <h1 class="hero-title">Ngành đào tạo<br>Tại FPTU</h1>
+            <p class="hero-subtitle">Khám phá hành trình học tập và phát triển sự nghiệp của bạn</p>
+        </div>
+    </div>
+
+    <!-- Categories Grid -->
+    <div class="categories-grid">
+        <!-- Category 1: Ngành Công nghệ thông tin -->
+        <div class="category-card">
+            <div class="category-header">
+                <div class="category-title">
+                    <span class="category-icon">💻</span>
+                    <span>Công nghệ thông tin</span>
+                </div>
+                <span class="toggle-icon">◆</span>
+            </div>
+            <div class="courses-list">
+                <div class="course-item" data-course="cong-nghe-thong-tin">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Công nghệ thông tin</span>
+                </div>
+                <div class="course-item" data-course="ky-thuat-phan-mem">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Kỹ thuật phần mềm</span>
+                </div>
+                <div class="course-item" data-course="tri-tue-nhan-tao">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Trí tuệ nhân tạo</span>
+                </div>
+                <div class="course-item" data-course="khoa-hoc-dl">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Khoa học dữ liệu ứng dụng</span>
+                </div>
+                <div class="course-item" data-course="an-toan-thong-tin">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">An toàn thông tin</span>
+                </div>
+                <div class="course-item" data-course="vi-mach-ban-dan">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Vi mạch bán dẫn</span>
+                </div>
+                <div class="course-item" data-course="cong-nghe-o-to-so">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Công nghệ ô tô số</span>
+                </div>
+                <div class="course-item" data-course="he-thong-thong-tin">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Hệ thống thông tin</span>
+                </div>
+                <div class="course-item" data-course="thiet-ke-do-hoa">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Thiết kế đồ họa và mỹ thuật số</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category 2: Ngành Công nghệ kỹ thuật điện tử -->
+        <div class="category-card">
+            <div class="category-header">
+                <div class="category-title">
+                    <span class="category-icon">⚡</span>
+                    <span>Công nghệ kỹ thuật điện tử</span>
+                </div>
+                <span class="toggle-icon">◆</span>
+            </div>
+            <div class="courses-list">
+                <div class="course-item" data-course="truyen-thong-da-phuong-tien">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Truyền thông đa phương tiện</span>
+                </div>
+                <div class="course-item" data-course="quan-he-cong-chung">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Quan hệ công chúng</span>
+                </div>
+                <div class="course-item" data-course="truyen-thong-marketing">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Truyền thông Marketing tích hợp</span>
+                </div>
+                <div class="course-item" data-course="truyen-thong-thuong-hieu">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Truyền thông thương hiệu</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category 3: Khối Ngành Ngôn ngữ -->
+        <div class="category-card">
+            <div class="category-header">
+                <div class="category-title">
+                    <span class="category-icon">🌐</span>
+                    <span>Khối Ngành Ngôn ngữ</span>
+                </div>
+                <span class="toggle-icon">◆</span>
+            </div>
+            <div class="courses-list">
+                <div class="course-item" data-course="ngon-ngu-anh">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Ngôn ngữ Anh</span>
+                </div>
+                <div class="course-item" data-course="tieng-anh-thuong-mai">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Tiếng Anh thương mại</span>
+                </div>
+                <div class="course-item" data-course="ngon-ngu-han">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Ngôn ngữ Hàn Quốc</span>
+                </div>
+                <div class="course-item" data-course="tieng-han-thuong-mai">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Tiếng Hàn thương mại</span>
+                </div>
+                <div class="course-item" data-course="ngon-ngu-trung">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Ngôn ngữ Trung Quốc</span>
+                </div>
+                <div class="course-item" data-course="tieng-trung-thuong-mai">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Tiếng Trung thương mại</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category 4: Ngành Luật -->
+        <div class="category-card">
+            <div class="category-header">
+                <div class="category-title">
+                    <span class="category-icon">⚖️</span>
+                    <span>Ngành Luật</span>
+                </div>
+                <span class="toggle-icon">◆</span>
+            </div>
+            <div class="courses-list">
+                <div class="course-item" data-course="luat">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Luật</span>
+                </div>
+                <div class="course-item" data-course="luat-kinh-te">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Luật kinh tế</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category 5: Ngành Quản trị kinh doanh -->
+        <div class="category-card">
+            <div class="category-header">
+                <div class="category-title">
+                    <span class="category-icon">📊</span>
+                    <span>Quản trị kinh doanh</span>
+                </div>
+                <span class="toggle-icon">◆</span>
+            </div>
+            <div class="courses-list">
+                <div class="course-item" data-course="marketing">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Marketing</span>
+                </div>
+                <div class="course-item" data-course="kinh-doanh-quoc-te">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Kinh doanh quốc tế</span>
+                </div>
+                <div class="course-item" data-course="thuong-mai-dien-tu">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Thương mại điện tử</span>
+                </div>
+                <div class="course-item" data-course="quan-tri-kinh-doanh">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Quản trị kinh doanh</span>
+                </div>
+                <div class="course-item" data-course="quan-tri-giai-tri">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Quản trị giải trí và sự kiện</span>
+                </div>
+                <div class="course-item" data-course="quan-tri-trai-nghiem">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Quản trị trải nghiệm khách hàng</span>
+                </div>
+                <div class="course-item" data-course="quan-tri-thu-mua">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Quản trị thu mua</span>
+                </div>
+                <div class="course-item" data-course="quan-tri-khach-san">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Quản trị khách sạn</span>
+                </div>
+                <div class="course-item" data-course="quan-tri-du-lich">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Quản trị dịch vụ du lịch và lữ hành</span>
+                </div>
+                <div class="course-item" data-course="phan-tich-kinh-doanh">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Phân tích kinh doanh (Business Analytics)</span>
+                </div>
+                <div class="course-item" data-course="logistics">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Logistics và Quản lý chuỗi cung ứng</span>
+                </div>
+                <div class="course-item" data-course="cong-nghe-tai-chinh">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Công nghệ tài chính (Fintech)</span>
+                </div>
+                <div class="course-item" data-course="tai-chinh-doanh-nghiep">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Tài chính doanh nghiệp</span>
+                </div>
+                <div class="course-item" data-course="tai-chinh-thong-minh">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Tài chính thông minh</span>
+                </div>
+                <div class="course-item" data-course="tai-chinh-ngan-hang">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Tài chính ngân hàng</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category 6: Kỹ thuật tài năng -->
+        <div class="category-card">
+            <div class="category-header">
+                <div class="category-title">
+                    <span class="category-icon">🎓</span>
+                    <span>Kỹ thuật tài năng</span>
+                </div>
+                <span class="toggle-icon">◆</span>
+            </div>
+            <div class="courses-list">
+                <div class="course-item" data-course="tri-tue-nhan-tao-khoa">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">Trí tuệ nhân tạo khoa học máy tính</span>
+                </div>
+                <div class="course-item" data-course="an-ninh-mang">
+                    <span class="course-bullet"></span>
+                    <span class="course-name">An ninh mạng và an toàn số</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="fab-container">
+        <button class="collapse-all-btn" id="collapseBtn">
+            <span>Mở rộng tất cả ◆</span>
+        </button>
+    </div>
 </div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button class="modal-close" id="modalClose">×</button>
+            <h2 class="modal-title" id="modalTitle">Tên môn học</h2>
+        </div>
+        <div class="modal-body">
+            <div class="course-detail-section">
+                <div class="detail-label">Mã ngành</div>
+                <div class="detail-value" id="courseCode">7480201</div>
+            </div>
+            <div class="course-detail-section">
+                <div class="detail-label">Số tín chỉ</div>
+                <div class="detail-value large" id="courseCredits">145</div>
+            </div>
+            <div class="course-description">
+                <div class="detail-label">Định hướng đầu ra</div>
+                <div class="detail-value" id="courseDescription">
+                    Đào tạo cử nhân Công nghệ thông tin có tư duy công nghệ...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Course data
+    const courseData = {
+        'cong-nghe-thong-tin': {
+            title: 'Công nghệ thông tin',
+            code: '7480201',
+            credits: '145',
+            description: 'Đào tạo cử nhân Công nghệ thông tin có tư duy công nghệ, năng lực thiết kế, phát triển, triển khai và vận hành các hệ thống phần mềm, hệ thống thông tin và dịch vụ công nghệ thông tin trong môi trường doanh nghiệp và xã hội hiện đại. Sinh viên tốt nghiệp sẵn sàng làm việc trong môi trường toàn cầu, tham gia phát triển các hệ thống công nghệ phục vụ chuyển đổi số, điện toán đám mây, AI và khoa học dữ liệu ứng dụng, an ninh mạng và các nền tảng số của doanh nghiệp.'
+        },
+        'ky-thuat-phan-mem': {
+            title: 'Kỹ thuật phần mềm',
+            code: '7480201',
+            credits: '145',
+            description: 'Chuyên ngành Kỹ thuật phần mềm tại Trường Đại học FPT đào tạo kỹ sư phần mềm có khả năng phân tích, thiết kế, xây dựng và quản lý hệ thống phần mềm, đáp ứng nhu cầu doanh nghiệp.'
+        },
+        'tri-tue-nhan-tao': {
+            title: 'Trí tuệ nhân tạo',
+            code: '7480201',
+            credits: '145',
+            description: 'Đào tạo cử nhân Trí tuệ nhân tạo có năng lực làm chủ công nghệ, tư duy logic và sáng tạo, sẵn sàng tham gia phát triển các hệ thống thông minh phục vụ chuyển đổi số và kinh tế tri thức toàn cầu.'
+        },
+        'khoa-hoc-dl': {
+            title: 'Khoa học dữ liệu ứng dụng',
+            code: '7480201',
+            credits: '145',
+            description: 'Đào tạo cử nhân Khoa học dữ liệu ứng dụng có năng lực thu thập, xử lý, phân tích và khai phá dữ liệu lớn; có tư duy logic, sáng tạo, kỹ năng lập trình và thống kê; sẵn sàng phát triển các giải pháp dữ liệu - AI - Machine Learning để hỗ trợ doanh nghiệp, tổ chức trong quyết định, quản lý, đổi mới số và phát triển kinh tế tri thức.'
+        },
+        'an-toan-thong-tin': {
+            title: 'An toàn thông tin',
+            code: '7480201',
+            credits: '145',
+            description: 'Đào tạo kỹ sư An toàn thông tin có năng lực phân tích, thiết kế, vận hành và bảo vệ hệ thống số theo tiêu chuẩn quốc tế; ứng dụng trí tuệ nhân tạo và công nghệ mới trong giám sát, phát hiện và phản ứng sự cố an ninh mạng.'
+        },
+        'vi-mach-ban-dan': {
+            title: 'Vi mạch bán dẫn',
+            code: '7480201',
+            credits: '145',
+            description: 'Đào tạo kỹ sư Vi mạch bán dẫn có năng lực thiết kế – mô phỏng – kiểm thử – tối ưu hóa các vi mạch số, tương tự và hỗn hợp theo chuẩn quốc tế. Sinh viên tốt nghiệp làm chủ công nghệ lõi của ngành công nghiệp bán dẫn, sở hữu tư duy logic – hệ thống, kỹ năng phân tích, tiếng Anh chuyên ngành và khả năng làm việc toàn cầu.'
+        },
+        'cong-nghe-o-to-so': {
+            title: 'Công nghệ ô tô số',
+            code: '7480201',
+            credits: '145',
+            description: 'Đào tạo kỹ sư phần mềm ô tô có năng lực thiết kế, lập trình và kiểm thử các hệ thống điện – điện tử trên ô tô theo tiêu chuẩn quốc tế; làm chủ các nền tảng nhúng, chuẩn AUTOSAR và an toàn chức năng (Functional Safety), sẵn sàng tham gia phát triển xe điện, xe tự hành và ô tô thông minh trong kỷ nguyên số.'
+        },
+        'he-thong-thong-tin': {
+            title: 'Hệ thống thông tin',
+            code: '7480201',
+            credits: '145',
+            description: 'Chuyên ngành Hệ thống thông tin đào tạo nguồn nhân lực công nghệ – chiến lược – kinh doanh toàn diện. Sinh viên được trang bị kỹ năng phân tích dữ liệu, thiết kế và triển khai lộ trình chuyển đổi số, quản trị thay đổi và lãnh đạo sáng tạo số, sẵn sàng đảm nhiệm vai trò tiên phong trong hành trình số hóa của doanh nghiệp.'
+        },
+        'thiet-ke-do-hoa': {
+            title: 'Thiết kế đồ họa và mỹ thuật số',
+            code: '7480201',
+            credits: '146',
+            description: 'Cử nhân chuyên ngành Thiết kế đồ hoạ và mỹ thuật số có đạo đức nghề nghiệp và năng lực đáp ứng nhu cầu thực tế của xã hội, nắm vững kiến thức chuyên môn và thực hành, có khả năng tổ chức, thực hiện và phát huy sáng tạo trong các công việc liên quan đến chuyên ngành được đào tạo, làm việc được trong môi trường quốc tế, tạo tiền đề cho việc học tập, nghiên cứu ở bậc học cao hơn về chuyên ngành Thiết kế đồ hoạ và mỹ thuật số.'
+        },
+        'truyen-thong-da-phuong-tien': {
+            title: 'Truyền thông đa phương tiện',
+            code: '7320106',
+            credits: '139',
+            description: 'Đào tạo người học trở thành chuyên gia trong lĩnh vực truyền thông ở thời đại kỹ thuật số. Với kiến thức quản trị và kỹ năng lãnh đạo, người học sẽ là những nhà truyền thông bản lĩnh, có tầm ảnh hưởng và có khả năng cống hiến cho ngành Công nghệ truyền thông Việt Nam; tạo tiền đề cho việc tiếp tục học tập và nghiên cứu ở các cấp độ cao hơn trong lĩnh vực Truyền thông.'
+        },
+        'quan-he-cong-chung': {
+            title: 'Quan hệ công chúng',
+            code: '7320106',
+            credits: '139',
+            description: 'Đào tạo chuyên gia Quan hệ công chúng có năng lực hoạch định, triển khai và quản trị chiến lược truyền thông thương hiệu trong môi trường toàn cầu; ứng dụng công nghệ và dữ liệu số trong phân tích hành vi công chúng, xây dựng hình ảnh tổ chức và xử lý khủng hoảng truyền thông một cách chuyên nghiệp và hiệu quả.'
+        },
+        'truyen-thong-marketing': {
+            title: 'Truyền thông Marketing tích hợp',
+            description: 'Chương trình đào tạo cử nhân có nền tảng vững chắc về truyền thông và marketing, thành thạo xây dựng chiến lược truyền thông tích hợp, phát triển nội dung sáng tạo và quản trị thương hiệu trên đa nền tảng. Sinh viên được trang bị kỹ năng ứng dụng công nghệ tiên tiến như phân tích dữ liệu khách hàng, AI trong sáng tạo và tối ưu chiến dịch, quản trị truyền thông số và đo lường hiệu quả. Sau khi tốt nghiệp, người học có thể đảm nhận các vị trí như chuyên viên chiến lược thương hiệu, truyền thông tích hợp, sáng tạo nội dung, quản lý cộng đồng hay digital marketer tại doanh nghiệp, agency hoặc startup.'
+        },
+        'truyen-thong-thuong-hieu': {
+            title: 'Truyền thông thương hiệu',
+            description: 'Đào tạo cử nhân có kiến thức chuyên môn sâu về truyền thông thương hiệu, thành thạo trong việc xây dựng chiến lược truyền thông tích hợp, phát triển nội dung sáng tạo và quản trị hình ảnh thương hiệu trên đa nền tảng. Sinh viên có khả năng vận dụng tư duy chiến lược - sáng tạo - dữ liệu để thực hiện các chiến dịch truyền thông, quản lý danh tiếng thương hiệu, vận hành truyền thông số và xử lý tình huống truyền thông trong bối cảnh doanh nghiệp hiện đại. Bên cạnh đó, sinh viên được trang bị khả năng ứng dụng các công nghệ truyền thông tiên tiến như phân tích dữ liệu người dùng, ứng dụng AI trong công việc, quản trị truyền thông số và đo lường hiệu quả chiến dịch, giúp làm việc hiệu quả trong môi trường truyền thông - marketing đang thay đổi nhanh chóng.'
+        },
+        'ngon-ngu-anh': {
+            title: 'Ngôn ngữ Anh',
+            code: '7220201',
+            credits: '139',
+            description: 'Đào tạo cử nhân Ngôn ngữ Anh có năng lực sử dụng tiếng Anh thành thạo trong giao tiếp, học thuật và môi trường làm việc chuyên nghiệp; am hiểu văn hóa, xã hội các quốc gia nói tiếng Anh; có khả năng ứng dụng công nghệ ngôn ngữ hiện đại (AI, dịch máy, phân tích dữ liệu ngôn ngữ) và tư duy phản biện để làm việc, nghiên cứu hoặc giảng dạy trong môi trường quốc tế.'
+        },
+        'tieng-anh-thuong-mai': {
+            title: 'Tiếng Anh thương mại',
+            code: '7220201',
+            description: 'Đào tạo cử nhân có chuyên môn sâu về Tiếng Anh thương mại, có năng lực sử dụng tiếng Anh thành thạo trong môi trường kinh doanh quốc tế; am hiểu văn hoá doanh nghiệp, thương mại toàn cầu; có khả năng vận dụng tiếng Anh cho đàm phán, giao tiếp, biên phiên dịch và xử lý hồ sơ thương mại, marketing, logistics, đối ngoại. Sinh viên đồng thời biết ứng dụng công nghệ ngôn ngữ hiện đại (AI, dịch máy, phân tích dữ liệu văn bản) để làm việc hiệu quả trong bối cảnh doanh nghiệp số.'
+        },
+        'ngon-ngu-han': {
+            title: 'Ngôn ngữ Hàn Quốc',
+            code: '7220210',
+            credits: '139',
+            description: 'Đào tạo cử nhân Ngôn ngữ Hàn Quốc có khả năng sử dụng thành thạo hai ngoại ngữ trong giao tiếp, học thuật và môi trường làm việc chuyên nghiệp; am hiểu văn hóa, xã hội Hàn Quốc và các quốc gia nói tiếng Anh; có tư duy toàn cầu, khả năng giao tiếp liên văn hóa và ứng dụng công nghệ trong dịch thuật, giảng dạy, truyền thông và kinh doanh quốc tế.'
+        },
+        'tieng-han-thuong-mai': {
+            title: 'Tiếng Hàn thương mại',
+            code: '7220210',
+            description: 'Đào tạo cử nhân Tiếng Hàn thương mại có khả năng sử dụng thành thạo hai ngoại ngữ gồm tiếng Hàn và tiếng Anh trong môi trường kinh doanh quốc tế; am hiểu văn hóa, xã hội Hàn Quốc và các quốc gia nói tiếng Anh; có tư duy toàn cầu, khả năng giao tiếp liên văn hóa và năng lực ứng dụng công nghệ trong dịch thuật, đàm phán, truyền thông và hoạt động thương mại quốc tế. Sinh viên sẵn sàng đảm nhiệm các vị trí trong doanh nghiệp Hàn Quốc, tập đoàn đa quốc gia hoặc cơ quan đối ngoại.'
+        },
+        'ngon-ngu-trung': {
+            title: 'Ngôn ngữ Trung Quốc',
+            code: '7220204',
+            credits: '139',
+            description: 'Đào tạo cử nhân thành thạo tiếng Trung trong bối cảnh thương mại quốc tế, có khả năng giao tiếp, đàm phán, biên phiên dịch, xử lý hồ sơ doanh nghiệp trong môi trường chuyên nghiệp. Sinh viên được trang bị kiến thức nền tảng về kinh doanh, xuất nhập khẩu, đối ngoại, hiểu biết văn hóa và quy tắc thương mại Trung Quốc – quốc tế, cùng năng lực ứng dụng công nghệ ngôn ngữ hiện đại để làm việc hiệu quả trong doanh nghiệp toàn cầu.'
+        },
+        'tieng-trung-thuong-mai': {
+            title: 'Tiếng Trung thương mại',
+            code: '7220204',
+            description: 'Đào tạo cử nhân Tiếng Trung thương mại có khả năng giao tiếp, đàm phán, biên phiên dịch, xử lý hồ sơ doanh nghiệp trong môi trường chuyên nghiệp. Sinh viên được trang bị kiến thức nền tảng về kinh doanh, xuất nhập khẩu, đối ngoại, hiểu biết văn hóa và quy tắc thương mại Trung Quốc – quốc tế, cùng năng lực ứng dụng công nghệ ngôn ngữ hiện đại để làm việc hiệu quả trong doanh nghiệp toàn cầu.'
+        },
+        'luat': {
+            title: 'Luật',
+            code: '7380101',
+            credits: '139',
+            description: 'Đào tạo cử nhân Luật có tư duy pháp lý hiện đại, nắm vững nền tảng luật học, có khả năng ứng dụng pháp luật vào thực tiễn kinh doanh – công nghệ – quản trị. Sinh viên được trang bị năng lực phân tích, lập luận, tư vấn và xây dựng giải pháp pháp lý trong môi trường hội nhập, hướng đến trở thành chuyên viên pháp chế, chuyên gia tư vấn pháp lý, chuyên viên tuân thủ (compliance) hoặc cán bộ pháp lý tại cơ quan, tổ chức trong và ngoài nước.'
+        },
+        'luat-kinh-te': {
+            title: 'Luật kinh tế',
+            code: '7380101',
+            credits: '139',
+            description: 'Chuyên ngành Luật Kinh tế tại Trường Đại học FPT đào tạo chuyên gia pháp lý có năng lực pháp luật kinh doanh – đầu tư – thương mại – tài chính trong bối cảnh hội nhập quốc tế và chuyển đổi số với khả năng phân tích tình huống kinh doanh, kỹ năng tranh tụng và tư vấn pháp lý, cùng kỹ năng làm việc nhóm, giao tiếp tiếng Anh và ứng dụng công nghệ pháp lý.'
+        },
+        'marketing': {
+            title: 'Marketing',
+            code: '7340101',
+            credits: '139',
+            description: 'Đào tạo cử nhân Quản trị kinh doanh có chuyên môn sâu về marketing, có khả năng hoạch định chiến lược, triển khai và đánh giá hoạt động marketing trong kỷ nguyên số; ứng dụng công nghệ, dữ liệu, sử dụng các công cụ sáng tạo nội dung để tối ưu hóa hiệu quả marketing; phát triển thương hiệu và thúc đẩy tăng trưởng doanh nghiệp trong môi trường toàn cầu.'
+        'kinh-doanh-quoc-te': {
+            title: 'Kinh doanh quốc tế',
+            code: '7340101',
+            credits: '139',
+            description: 'Đào tạo cử nhân quản trị kinh doanh có chuyên môn sâu về kinh doanh quốc tế, có năng lực quản trị và điều hành hoạt động thương mại toàn cầu, am hiểu chiến lược, tài chính, logistics và văn hóa kinh doanh đa quốc gia; sẵn sàng trở thành công dân toàn cầu – những nhà lãnh đạo, chuyên gia hoặc doanh nhân có tư duy hội nhập và năng lực làm việc trong môi trường quốc tế.'
+        },
+        'thuong-mai-dien-tu': {
+            title: 'Thương mại điện tử',
+            code: '7340101',
+            description: 'Đào tạo cử nhân quản trị kinh doanh có chuyên môn sâu về thương mại điện tử, có năng lực xây dựng, vận hành và tối ưu hóa hoạt động kinh doanh trực tuyến. Người học được trang bị kiến thức về quản trị sàn thương mại điện tử, phân tích dữ liệu, marketing số, logistics, biết ứng dụng công nghệ mới như AI, Big Data cùng tư duy số hóa để làm việc hiệu quả trong các doanh nghiệp đa lĩnh vực.'
+        },
+        'quan-tri-kinh-doanh': {
+            title: 'Quản trị kinh doanh',
+            code: '7340101 ',
+            credits: '139',
+            description: 'Chương trình cử nhân Quản trị kinh doanh, chuyên ngành Quản trị kinh doanh trang bị cho sinh viên kiến thức nền tảng và chuyên sâu về quản trị, marketing, tài chính và nhân sự, cùng tư duy chiến lược và kỹ năng phân tích dữ liệu, giao tiếp, ứng dụng công nghệ. Sinh viên tốt nghiệp có khả năng làm việc hiệu quả trong doanh nghiệp trong nước, quốc tế hoặc tự khởi nghiệp trong môi trường kinh doanh hiện đại.'
+        },
+        'quan-tri-giai-tri': {
+            title: 'Quản trị giải trí và sự kiện',
+            code: '7340101',
+            credits: '139',
+            description: 'Chương trình Cử nhân Quản trị giải trí và sự kiện đào tạo sinh viên trở thành những chuyên gia có khả năng lên kế hoạch, tổ chức và quản lý đa dạng loại hình sự kiện từ văn hóa, giải trí đến thương mại. Bên cạnh đó, sinh viên còn được rèn luyện tiếng Anh chuyên ngành, được trang bị ngoại ngữ thứ hai và các kỹ năng thực hành cần thiết để làm việc trong môi trường chuyên nghiệp. Sau khi tốt nghiệp, người học đủ năng lực đảm nhận các vị trí như quản lý sự kiện, điều phối truyền thông hoặc sản xuất chương trình giải trí.'
+        },
+        'quan-tri-trai-nghiem': {
+            title: 'Quản trị trải nghiệm khách hàng',
+            code: '7340101',
+            description: 'Đào tạo cử nhân Quản trị trải nghiệm khách hàng có năng lực xây dựng, quản lý và tối ưu hóa hành trình khách hàng trên các kênh tương tác trực tuyến và trực tiếp. Sinh viên tốt nghiệp nắm vững kiến thức về marketing, phân tích dữ liệu khách hàng, quản lý dịch vụ và chiến lược trải nghiệm, đồng thời sở hữu kỹ năng tư duy phân tích, sáng tạo, giao tiếp chuyên nghiệp và tiếng Anh chuyên ngành. Người học đủ năng lực làm việc tại các phòng chăm sóc khách hàng, marketing, phân tích dữ liệu, quản lý dự án hoặc phát triển chiến lược trải nghiệm khách hàng trong doanh nghiệp trong nước và quốc tế.'
+        },
+        'quan-tri-thu-mua': {
+            title: 'Quản trị thu mua',
+            code: '7340101',
+            description: 'Đào tạo cử nhân Quản trị thu mua có năng lực xây dựng, triển khai và quản lý các chiến lược thu mua hiệu quả, tối ưu hóa chi phí và chuỗi cung ứng cho doanh nghiệp. Sinh viên tốt nghiệp nắm vững kiến thức về quản trị nguồn cung, đàm phán thương mại, phân tích dữ liệu, quản lý rủi ro và luật thương mại, đồng thời sở hữu kỹ năng tư duy chiến lược, ra quyết định, giao tiếp chuyên nghiệp và tiếng Anh chuyên ngành. Người học đủ năng lực làm việc tại các bộ phận thu mua, quản lý nguồn cung, hoạch định chiến lược cung ứng hoặc tư vấn vận hành chuỗi cung ứng trong doanh nghiệp trong nước và quốc tế.'
+        },
+        'quan-tri-khach-san': {
+            title: 'Quản trị khách sạn',
+            code: '7340101',
+            credits: '139',
+            description: 'Chuyên ngành Quản trị khách sạn đào tạo chuyên gia có năng lực quản lý và điều phối các hoạt động khách sạn, resort, nhà hàng, hội nghị và sự kiện trong môi trường dịch vụ cao cấp, quốc tế. Sinh viên được trang bị kiến thức về quản trị vận hành, trải nghiệm khách hàng, quản trị nhân sự dịch vụ, marketing & sales và ứng dụng công nghệ trong ngành khách sạn hiện đại.'
+        },
+        'quan-tri-du-lich': {
+            title: 'Quản trị dịch vụ du lịch và lữ hành',
+            code: '7340101',
+            credits: '139',
+            description: 'Đào tạo cử nhân Quản trị dịch vụ du lịch và lữ hành có tư duy quản trị du lịch toàn diện và có năng lực ứng dụng kiến thức liên ngành trong thực tiễn, từ phát triển sản phẩm, marketing, công nghệ du lịch đến tổ chức và điều hành tour. Sinh viên được trang bị khả năng ứng dụng công nghệ linh hoạt, sáng tạo trải nghiệm du lịch mới và nâng cao năng lực cạnh tranh trong môi trường du lịch toàn cầu.'
+        },
+        'phan-tich-kinh-doanh': {
+            title: 'Phân tích kinh doanh (Business Analytics)',
+            code: '7340101',
+            description: 'Chương trình cử nhân Quản trị kinh doanh có chuyên môn sâu về Phân tích kinh doanh, đào tạo sinh viên có năng lực phân tích, dự báo và ra quyết định dựa trên dữ liệu, kết hợp tư duy quản trị và công nghệ. Sinh viên nắm vững kiến thức về quản trị, tài chính, marketing, dữ liệu lớn và AI, đồng thời phát triển kỹ năng phân tích, giao tiếp và tiếng Anh. Người học có thể làm việc tại các bộ phận phân tích, chiến lược, dữ liệu hoặc tư vấn chuyển đổi số.'
+        },
+        'logistics': {
+            title: 'Logistics và Quản lý chuỗi cung ứng toàn cầu',
+            code: '7340101',
+            credits: '139',
+            description: 'Đào tạo cử nhân Quản trị kinh doanh có chuyên môn sâu về Logistics và Quản lý chuỗi cung ứng toàn cầu, có năng lực tổ chức, quản lý và tối ưu hóa hệ thống chuỗi cung ứng toàn cầu; thành thạo các công cụ công nghệ hiện đại như ERP, AI, Blockchain; có tư duy chiến lược, khả năng phân tích và điều phối vận hành hiệu quả, sẵn sàng trở thành chuyên gia logistics năng động trong môi trường kinh doanh quốc tế.'
+        },
+        'cong-nghe-tai-chinh': {
+            title: 'Công nghệ tài chính (Fintech)',
+            code: '7340101',
+            credits: '139',
+            description: 'Đào tạo cử nhân Công nghệ tài chính (Fintech) có năng lực ứng dụng công nghệ hiện đại như trí tuệ nhân tạo, dữ liệu lớn, blockchain trong phân tích, thiết kế và vận hành các giải pháp tài chính số; sẵn sàng đáp ứng nhu cầu chuyển đổi số của lĩnh vực tài chính theo chuẩn quốc tế.'
+        },
+        'tai-chinh-doanh-nghiep': {
+            title: 'Tài chính doanh nghiệp',
+            code: '7340101',
+            credits: '139',
+            description: 'Đào tạo cử nhân Tài chính doanh nghiệp có năng lực phân tích, hoạch định và quản trị tài chính toàn diện; biết ứng dụng công nghệ, trí tuệ nhân tạo và các công cụ số trong việc ra quyết định tài chính, đầu tư và quản trị rủi ro. Sinh viên tốt nghiệp sở hữu tư duy chiến lược, khả năng thích ứng với môi trường kinh tế toàn cầu, sẵn sàng đảm nhiệm vị trí quản lý tài chính chủ chốt tại doanh nghiệp, tập đoàn hoặc tổ chức tài chính quốc tế.'
+        },
+        'tai-chinh-thong-minh': {
+            title: 'Tài chính thông minh',
+            code: '7340101',
+            credits: '142',
+            description: 'Đào tạo chuyên gia tài chính có năng lực phân tích, hoạch định và quản trị danh mục đầu tư theo chuẩn quốc tế. Sinh viên được trang bị kiến thức về FinTech, AI và dữ liệu lớn để ra quyết định đầu tư hiệu quả, thích ứng với thị trường toàn cầu.'
+        },
+        'tai-chinh-ngan-hang': {
+            title: 'Tài chính ngân hàng',
+            code: '7340101',
+            credits: '139',
+            description: 'Đào tạo cử nhân quản trị kinh doanh có chuyên môn sâu về tài chính ngân hàng, có năng lực kết hợp tài chính, ngân hàng truyền thống với công nghệ số, gồm phân tích dữ liệu tài chính, phát triển sản phẩm fintech, ngân hàng số và an ninh tài chính số. Học viên được chuẩn bị để trở thành người dẫn đầu xu hướng trong nền kinh tế số đang phát triển mạnh.'
+        },
+        'tri-tue-nhan-tao-khoa': {
+            title: 'Trí tuệ nhân tạo khoa học máy tính',
+            code: '7480101',
+            credits: '139',
+            description: 'Đào tạo chuyên gia AI – DS tài năng có tư duy phân tích, sáng tạo, và khả năng giải quyết vấn đề dựa trên mô hình toán – dữ liệu – thuật toán. Sinh viên được trang bị nền tảng vững chắc về khoa học máy tính, trí tuệ nhân tạo, học máy, xử lý dữ liệu quy mô lớn và kỹ thuật phần mềm để sẵn sàng đảm nhiệm các vị trí AI Engineer, Machine Learning Engineer, Data Scientist, Data Engineer, hoặc trở thành nhà nghiên cứu – kỹ sư – lãnh đạo công nghệ trong doanh nghiệp toàn cầu.'
+        },
+        'an-ninh-mang': {
+            title: 'An ninh mạng và an toàn số',
+            code: '7480101',
+            credits: '139',
+            description: 'Đào tạo chuyên gia công nghệ tài năng có tư duy logic, sáng tạo và năng lực giải quyết vấn đề bằng công nghệ. Sinh viên được trang bị nền tảng vững chắc về trí tuệ nhân tạo, dữ liệu, phần mềm, hệ thống và an ninh mạng, sẵn sàng trở thành kỹ sư, nhà nghiên cứu hoặc lãnh đạo công nghệ trong các tập đoàn toàn cầu.'
+        }
+    };
+
+    // Toggle category
+    document.querySelectorAll('.category-header').forEach(header => {
+        header.addEventListener('click', function() {
+            const card = this.parentElement;
+            card.classList.toggle('active');
+        });
+    });
+
+    // Open modal when clicking on course
+    document.querySelectorAll('.course-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const courseId = this.dataset.course;
+            const course = courseData[courseId];
+            
+            if (course) {
+                document.getElementById('modalTitle').textContent = course.title;
+                document.getElementById('courseCode').textContent = course.code;
+                document.getElementById('courseCredits').textContent = course.credits;
+                document.getElementById('courseDescription').textContent = course.description;
+                
+                document.getElementById('modalOverlay').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    });
+
+    // Close modal
+    function closeModal() {
+        document.getElementById('modalOverlay').classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+
+    // Collapse/Expand all
+    const collapseBtn = document.getElementById('collapseBtn');
+    let allExpanded = false;
+
+    collapseBtn.addEventListener('click', function() {
+        const cards = document.querySelectorAll('.category-card');
+        
+        if (allExpanded) {
+            cards.forEach(card => card.classList.remove('active'));
+            this.innerHTML = '<span>Mở rộng tất cả ◆</span>';
+            allExpanded = false;
+        } else {
+            cards.forEach(card => card.classList.add('active'));
+            this.innerHTML = '<span>Thu gọn tất cả ◇</span>';
+            allExpanded = true;
+        }
+    });
+
+    // Close modal with ESC key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
 {% endblock %}

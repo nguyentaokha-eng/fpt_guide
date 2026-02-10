@@ -28,10 +28,10 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'web-production-2eec.up.railway.app',
+    'fpt-guide-campus-dn.up.railway.app',
 ]
 CSRF_TRUSTED_ORIGINS = [
-    "https://web-production-2eec.up.railway.app",
+    "https://fpt-guide-campus-dn.up.railway.app/",
 ]
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
@@ -128,15 +128,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR / 'static',
 ]
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Cho phép React (chạy port 3000) gọi API Django
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "https://web-production-2eec.up.railway.app",
+    "https://fpt-guide-campus-dn.up.railway.app",
 ]
 
 #
