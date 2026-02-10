@@ -1,1 +1,1 @@
-web: gunicorn fpt_guide.wsgi
+web: gunicorn fpt_guide.wsgi:application
