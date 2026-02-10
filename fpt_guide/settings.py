@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-jb*brt=8=d9+!kxup!jr#9&0dgqo=92m@@rs1b8%3jo**6-4c&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'web-production-2eec.up.railway.app',
+]
 
 
 
@@ -127,5 +131,6 @@ STATICFILES_DIRS = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://web-production-2eec.up.railway.app",
 ]
 
