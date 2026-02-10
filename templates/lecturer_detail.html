@@ -1,0 +1,1056 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* ===== PIXEL ART STYLING ===== */
+    .pixel-font {
+        font-family: "Press Start 2P", monospace;
+    }
+    
+    .mono-font {
+        font-family: monospace;
+    }
+
+    .detail-page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f9fafb;
+        min-height: 100vh;
+    }
+
+    /* ===== BACK BUTTON ===== */
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 20px;
+        background: #fff;
+        border: 4px solid #000;
+        box-shadow: 4px 4px 0 #000;
+        font-family: "Press Start 2P", monospace;
+        font-size: 10px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        color: #000;
+    }
+
+    .back-button:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 #000;
+    }
+
+    .back-arrow {
+        font-size: 16px;
+        transform: rotate(180deg);
+    }
+
+    /* ===== HEADER CARD ===== */
+    .header-card {
+        background: linear-gradient(to bottom right, #34d399, #10b981);
+        border: 4px solid #000;
+        box-shadow: 8px 8px 0 #000;
+        padding: 32px;
+        color: white;
+        margin-bottom: 24px;
+    }
+
+    .header-card h2 {
+        font-size: 18px;
+        margin-bottom: 8px;
+        font-family: monospace;
+    }
+
+    .header-card h1 {
+        font-family: "Press Start 2P", monospace;
+        font-size: 32px;
+        line-height: 1.5;
+        margin-bottom: 24px;
+    }
+
+    .tag-buttons {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 24px;
+    }
+
+    .tag-btn {
+        padding: 12px 24px;
+        border: 2px solid #fff;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        font-weight: bold;
+        font-family: monospace;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .tag-btn.yellow {
+        background: #fde047;
+        color: #1f2937;
+        border: 2px solid #000;
+    }
+
+    .tag-btn.pink {
+        background: #fbcfe8;
+        color: #1f2937;
+        border: 2px solid #000;
+    }
+
+    .review-summary {
+        font-size: 18px;
+        font-family: monospace;
+    }
+
+    /* ===== STATS GRID ===== */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 24px;
+    }
+
+    @media (max-width: 768px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* ===== INFO CARD ===== */
+    .info-card {
+        background: #fff;
+        border: 4px solid #000;
+        box-shadow: 6px 6px 0 #000;
+        padding: 24px;
+    }
+
+    .badge-container {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+    }
+
+    .badge {
+        padding: 6px 16px;
+        background: #ff9800;
+        border: 2px solid #000;
+        font-size: 12px;
+        font-weight: bold;
+        font-family: monospace;
+    }
+
+    .feedback-btn {
+        padding: 6px 16px;
+        background: #f3f4f6;
+        border: 2px solid #000;
+        font-size: 12px;
+        font-family: monospace;
+        color: #4b5563;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        cursor: pointer;
+    }
+
+    .lecturer-name {
+        font-family: "Press Start 2P", monospace;
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+
+    .lecturer-dept {
+        color: #6b7280;
+        font-size: 18px;
+        margin-bottom: 24px;
+        font-family: monospace;
+    }
+
+    .info-section {
+        margin-bottom: 16px;
+    }
+
+    .info-label {
+        font-size: 11px;
+        color: #6b7280;
+        margin-bottom: 8px;
+        font-family: monospace;
+    }
+
+    .subject-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .subject-tag {
+        padding: 6px 12px;
+        background: #f3f4f6;
+        border: 2px solid #000;
+        font-size: 13px;
+        font-weight: 500;
+        font-family: monospace;
+    }
+
+    .stat-section {
+        padding-top: 16px;
+        border-top: 2px solid #000;
+        margin-top: 16px;
+    }
+
+    .stat-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+    .stat-percentage {
+        color: #f97316;
+        font-weight: bold;
+        font-family: monospace;
+    }
+
+    .stat-value {
+        font-family: "Press Start 2P", monospace;
+        font-size: 16px;
+        font-weight: bold;
+        color: #f97316;
+    }
+
+    .stat-value.green {
+        color: #10b981;
+    }
+
+    /* ===== RATINGS DISTRIBUTION ===== */
+    .rating-bar {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .rating-label {
+        font-size: 11px;
+        font-weight: 500;
+        color: #4b5563;
+        width: 112px;
+        font-family: monospace;
+    }
+
+    .bar-container {
+        flex: 1;
+        background: #e5e7eb;
+        border: 2px solid #000;
+        height: 16px;
+        overflow: hidden;
+    }
+
+    .bar-fill {
+        height: 100%;
+        transition: width 0.3s;
+    }
+
+    .bar-fill.excellent {
+        background: #10b981;
+    }
+
+    .bar-fill.good {
+        background: #34d399;
+    }
+
+    .bar-fill.average {
+        background: #d1d5db;
+    }
+
+    .bar-count {
+        font-size: 13px;
+        font-weight: bold;
+        width: 32px;
+        text-align: right;
+        font-family: monospace;
+    }
+
+    /* ===== HIGHLIGHTS ===== */
+    .highlights-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .highlight-item {
+        padding: 12px 16px;
+        background: #f9fafb;
+        border: 2px solid #000;
+    }
+
+    .highlight-label {
+        font-size: 11px;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 4px;
+        font-family: monospace;
+    }
+
+    .highlight-count {
+        font-family: "Press Start 2P", monospace;
+        font-size: 20px;
+        font-weight: bold;
+        color: #1f2937;
+    }
+
+    /* ===== REVIEWS SECTION ===== */
+    .reviews-section {
+        background: #fff;
+        border: 4px solid #000;
+        box-shadow: 6px 6px 0 #000;
+        padding: 32px;
+    }
+
+    .reviews-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .reviews-title {
+        font-family: "Press Start 2P", monospace;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .write-review-btn {
+        padding: 12px 24px;
+        background: #9333ea;
+        color: white;
+        border: 4px solid #000;
+        box-shadow: 4px 4px 0 #000;
+        font-weight: bold;
+        font-family: monospace;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .write-review-btn:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 #000;
+    }
+
+    /* ===== REVIEW FORM ===== */
+    .review-form {
+        margin-bottom: 32px;
+        padding: 24px;
+        background: #f9fafb;
+        border: 4px solid #000;
+        box-shadow: 4px 4px 0 #000;
+        display: none;
+    }
+
+    .review-form.active {
+        display: block;
+    }
+
+    .form-title {
+        font-family: "Press Start 2P", monospace;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 12px;
+    }
+
+    .form-subtitle {
+        font-size: 13px;
+        color: #6b7280;
+        font-style: italic;
+        margin-bottom: 24px;
+        font-family: monospace;
+    }
+
+    .form-group {
+        margin-bottom: 24px;
+    }
+
+    .form-label {
+        display: block;
+        font-size: 13px;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 8px;
+        font-family: monospace;
+    }
+
+    .form-description {
+        font-size: 13px;
+        color: #6b7280;
+        margin-bottom: 12px;
+        font-family: monospace;
+    }
+
+    .input-with-icon {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px;
+        background: #fff;
+        border: 3px solid #000;
+    }
+
+    .input-with-icon input {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-family: monospace;
+    }
+
+    .slider-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .slider-container input[type="range"] {
+        flex: 1;
+        height: 8px;
+    }
+
+    .slider-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        color: #6b7280;
+        margin-bottom: 8px;
+        font-family: monospace;
+    }
+
+    .score-display {
+        font-family: "Press Start 2P", monospace;
+        font-size: 24px;
+        font-weight: bold;
+        color: #1f2937;
+        padding: 4px 16px;
+        background: #1f2937;
+        color: white;
+        border: 2px solid #000;
+        display: inline-block;
+    }
+
+    .color-bar {
+        display: flex;
+        margin-top: 8px;
+        border: 2px solid #000;
+        overflow: hidden;
+    }
+
+    .color-bar div {
+        flex: 1;
+        height: 12px;
+    }
+
+    .options-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .option-btn {
+        padding: 12px 16px;
+        font-weight: 500;
+        border: 3px solid #000;
+        background: #fff;
+        color: #374151;
+        box-shadow: 4px 4px 0 #000;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: monospace;
+    }
+
+    .option-btn:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 #000;
+    }
+
+    .option-btn.selected,
+    .option-btn:has(input:checked) {
+        background: #10b981;
+        color: white;
+        box-shadow: 2px 2px 0 #000;
+    }
+
+    .tags-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .tag-btn-form {
+        padding: 8px 16px;
+        font-weight: 500;
+        font-size: 13px;
+        border: 3px solid #000;
+        background: #fff;
+        color: #4b5563;
+        box-shadow: 4px 4px 0 #000;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: monospace;
+    }
+
+    .tag-btn-form:hover:not(:disabled) {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 #000;
+    }
+
+    .tag-btn-form.selected,
+    .tag-btn-form:has(input:checked) {
+        background: #10b981;
+        color: white;
+        box-shadow: 2px 2px 0 #000;
+    }
+
+    .tag-btn-form:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .form-textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 4px solid #000;
+        font-family: monospace;
+        min-height: 128px;
+        resize: vertical;
+    }
+
+    .form-textarea:focus {
+        outline: none;
+    }
+
+    .toggle-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+        background: #fff;
+        border: 3px solid #000;
+    }
+
+    .toggle-label {
+        font-weight: 500;
+        font-family: monospace;
+    }
+
+    .toggle-description {
+        font-size: 13px;
+        color: #6b7280;
+        font-family: monospace;
+    }
+
+    .toggle-switch {
+        position: relative;
+        width: 56px;
+        height: 32px;
+        border: 2px solid #000;
+        background: #d1d5db;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .toggle-switch.active {
+        background: #9333ea;
+    }
+
+    .toggle-knob {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 20px;
+        height: 20px;
+        background: #fff;
+        border: 2px solid #000;
+        transition: transform 0.2s;
+    }
+
+    .toggle-switch.active .toggle-knob {
+        transform: translateX(24px);
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 4px solid #000;
+        font-family: monospace;
+    }
+
+    .form-input:focus {
+        outline: none;
+    }
+
+    .form-buttons {
+        display: flex;
+        gap: 12px;
+    }
+
+    .submit-btn {
+        flex: 1;
+        padding: 12px 24px;
+        background: #9333ea;
+        color: white;
+        border: 4px solid #000;
+        box-shadow: 4px 4px 0 #000;
+        font-weight: bold;
+        font-family: monospace;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .submit-btn:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 #000;
+    }
+
+    .cancel-btn {
+        padding: 12px 24px;
+        background: #e5e7eb;
+        color: #374151;
+        border: 4px solid #000;
+        box-shadow: 4px 4px 0 #000;
+        font-weight: bold;
+        font-family: monospace;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .cancel-btn:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 #000;
+    }
+
+    /* ===== EMPTY STATE ===== */
+    .empty-state {
+        text-align: center;
+        padding: 48px 0;
+        border: 4px dashed #d1d5db;
+    }
+
+    .empty-title {
+        font-family: "Press Start 2P", monospace;
+        font-size: 14px;
+        color: #9ca3af;
+        margin-bottom: 8px;
+    }
+
+    .empty-text {
+        color: #6b7280;
+        font-family: monospace;
+    }
+
+    /* ===== REVIEW ITEM ===== */
+    .review-item {
+        padding: 24px;
+        background: #f9fafb;
+        border: 3px solid #000;
+        margin-bottom: 16px;
+    }
+
+    .review-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .reviewer-info {
+        flex: 1;
+    }
+
+    .reviewer-name {
+        font-weight: bold;
+        font-size: 18px;
+        font-family: monospace;
+    }
+
+    .reviewer-name.anonymous {
+        color: #9ca3af;
+    }
+
+    .review-meta {
+        font-size: 13px;
+        color: #6b7280;
+        font-family: monospace;
+    }
+
+    .review-badges {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .class-badge {
+        padding: 4px 12px;
+        border: 2px solid #000;
+        font-size: 13px;
+        font-weight: 500;
+        font-family: monospace;
+    }
+
+    .class-badge.team {
+        background: #d1fae5;
+        color: #065f46;
+    }
+
+    .class-badge.gold {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    .class-badge.hard {
+        background: #fed7aa;
+        color: #9a3412;
+    }
+
+    .class-badge.steel {
+        background: #e9d5ff;
+        color: #6b21a8;
+    }
+
+    .compatibility-score {
+        width: 48px;
+        height: 48px;
+        border: 3px solid #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .compatibility-score.excellent {
+        background: #10b981;
+    }
+
+    .compatibility-score.good {
+        background: #eab308;
+    }
+
+    .compatibility-score.average {
+        background: #f97316;
+    }
+
+    .compatibility-score.poor {
+        background: #ef4444;
+    }
+
+    .score-number {
+        font-family: "Press Start 2P", monospace;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .review-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    .review-tag {
+        padding: 4px 12px;
+        background: #ddd6fe;
+        color: #5b21b6;
+        border: 2px solid #000;
+        font-size: 11px;
+        font-weight: 500;
+        font-family: monospace;
+    }
+
+    .review-comment {
+        color: #374151;
+        margin-bottom: 16px;
+        font-family: monospace;
+    }
+
+    .review-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 16px;
+        border-top: 2px solid #e5e7eb;
+    }
+
+    .like-btn {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: #6b7280;
+        cursor: pointer;
+        font-size: 13px;
+        font-family: monospace;
+        background: none;
+        border: none;
+        transition: color 0.2s;
+    }
+
+    .like-btn:hover {
+        color: #9333ea;
+    }
+
+    .review-stats {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        font-size: 11px;
+        color: #6b7280;
+        font-family: monospace;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+
+<!-- MAIN CONTENT -->
+<div class="detail-page">
+    <!-- BACK BUTTON -->
+    <a href="{% url 'rate_lecture' %}" class="back-button">
+        <span class="back-arrow">→</span>
+        <span>QUAY LẠI</span>
+    </a>
+
+
+    <!-- HEADER CARD -->
+    <div class="header-card" style="margin-top: 24px; display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 20px;">
+        <div>
+            <h2>RATE MY LECTURER ĐÁNH GIÁ</h2>
+            <h1>GIẢNG VIÊN YÊU THÍCH</h1>
+            <div class="tag-buttons">
+                {% if stats.review_count > 0 and stats.top_traits %}
+                    {% for t in stats.top_traits|slice:":3" %}
+                    <div class="tag-btn"><span>⭐</span><span>{{ t.label }}</span></div>
+                    {% endfor %}
+                {% else %}
+                    <div class="tag-btn"><span>⭐</span><span>Chưa có đánh giá</span></div>
+                {% endif %}
+            </div>
+            <div class="review-summary">
+                DỰA TRÊN TỔNG HỢP CỦA <span id="reviewCount" style="font-weight: bold; text-decoration: underline;">{{ stats.review_count }} REVIEWS</span>
+            </div>
+        </div>
+        <div style="text-align: right;">
+            <span class="badge" style="background: #ff9800; color: #000; padding: 8px 16px;">{{ lecturer.status }}</span>
+            <h2 class="lecturer-name" style="color: #fff; margin-top: 12px;">{{ lecturer.name }}</h2>
+            <p class="lecturer-dept" style="color: rgba(255,255,255,0.9);">{{ lecturer.department }}</p>
+        </div>
+    </div>
+
+    <!-- STATS GRID -->
+    <div class="stats-grid" id="statsGrid">
+        <div class="info-card">
+            <div class="info-section">
+                <div class="info-label">CÁC MÔN GIẢNG DẠY</div>
+                <div class="subject-tags">
+                    {% for subj in lecturer.subjects %}
+                    <span class="subject-tag">{{ subj }}</span>
+                    {% empty %}
+                    <span class="subject-tag">—</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% if stats.review_count > 0 %}
+            <div class="stat-section">
+                <div class="stat-header">
+                    <span class="info-label">Phù hợp nhất với</span>
+            {% if stats.suitable_for_most %}
+                <span class="stat-percentage">{{ stats.suitable_for_percent }}%</span>
+                {% endif %}
+                </div>
+                {% if stats.suitable_for_most %}
+                <span class="stat-value">{{ suitable_label }}</span>
+                {% else %}
+                <span class="stat-value">—</span>
+                {% endif %}
+            </div>
+            <div class="stat-section">
+                <div class="info-label">Áp lực & Độ khó</div>
+                <span class="stat-value green">{{ stats.pressure_most|default:"—" }}</span>
+            </div>
+            {% endif %}
+        </div>
+        <div class="info-card">
+            <div class="info-label" style="margin-bottom: 16px;">PHÂN PHỐI ĐÁNH GIÁ ĐỘ HỢP</div>
+            {% for value, label, count in fit_bars %}
+            <div class="rating-bar">
+                <span class="rating-label">{{ label }}</span>
+                <div class="bar-container">
+                    {% if stats.review_count > 0 %}
+                    <div class="bar-fill {% if value >= 4 %}excellent{% elif value == 3 %}good{% else %}average{% endif %}" style="width: {% widthratio count stats.review_count 100 %}%;"></div>
+                    {% endif %}
+                </div>
+                <span class="bar-count">{{ count }}</span>
+            </div>
+            {% endfor %}
+            <div class="stat-section" style="margin-top: 24px;">
+                <div class="info-label" style="margin-bottom: 12px;">ĐẶC ĐIỂM NỔI BẬT</div>
+                <div class="highlights-grid">
+                    {% for t in stats.top_traits|slice:":6" %}
+                    <div class="highlight-item">
+                        <span class="highlight-label">{{ t.label }}</span>
+                        <span class="highlight-count">{{ t.count }}</span>
+                    </div>
+                    {% empty %}
+                    <p style="color: #9ca3af; font-family: monospace;">Chưa có đánh giá đặc điểm.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REVIEWS SECTION -->
+    <div class="reviews-section" id="reviews-section">
+        <div class="reviews-header">
+            <h2 class="reviews-title">Cộng đồng nhận xét</h2>
+            <button type="button" class="write-review-btn" onclick="document.getElementById('reviewForm').classList.toggle('active');">
+                <span>💬</span><span>Viết đánh giá</span>
+            </button>
+        </div>
+
+        <!-- REVIEW FORM (Hình 1 + 2) -->
+        <div class="review-form" id="reviewForm">
+            <h3 class="form-title">Đánh giá giảng viên</h3>
+            <p class="form-subtitle">CHIA SẺ CÔNG TÂM - GIÚP ĐỠ CỘNG ĐỒNG</p>
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-label">MÔN BẠN ĐÃ HỌC</label>
+                    <p class="form-description">VD: CSI101, PRO192...</p>
+                    <div class="input-with-icon">
+                        <input type="text" name="subject_studied" placeholder="VD: CSI101, PRO192..." class="form-input">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Mức độ Hợp với giảng viên</label>
+                    <p class="form-description">Phong cách giảng dạy có phù hợp với cách học của bạn không?</p>
+                    <div class="options-grid">
+                        {% for value, label in compatibility_choices %}
+                        <label class="option-btn"><input type="radio" name="rating_fit" value="{{ value }}" {% if forloop.first %}checked{% endif %}> {{ label }}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Cảm nhận Áp lực & Độ khó</label>
+                    <p class="form-description">Bài tập, deadline, chấm điểm, kỷ luật...</p>
+                    <div class="options-grid">
+                        {% for value, label in pressure_choices %}
+                        <label class="option-btn"><input type="radio" name="rating_pressure" value="{{ value }}" {% if forloop.first %}checked{% endif %}> {{ label }}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">ĐIỂM SỐ NHẬN ĐƯỢC TRÊN LỚP (0-10)</label>
+                    <div class="slider-container">
+                        <input type="range" name="score" min="0" max="10" value="5" id="scoreSlider" oninput="document.getElementById('scoreDisplay').textContent=this.value">
+                        <span class="score-display" id="scoreDisplay">5</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">AI HỢP VỚI GIẢNG VIÊN NÀY?</label>
+                    <div class="options-grid">
+                        {% for value, label in suitable_for_choices %}
+                        <label class="option-btn"><input type="radio" name="suitable_for" value="{{ value }}"> {{ label }}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">ĐẶC ĐIỂM NỔI BẬT (TỐI ĐA 3)</label>
+                    <div class="tags-grid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));">
+                        {% for key, label in outstanding_traits %}
+                        <label class="tag-btn-form"><input type="checkbox" name="outstanding_traits" value="{{ key }}" class="trait-cb"> {{ label }}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nhận xét chi tiết</label>
+                    <textarea name="comment" class="form-textarea" placeholder="Chia sẻ trải nghiệm của bạn về phương pháp giảng dạy, tài liệu, bài tập, thi cử..."></textarea>
+                </div>
+                <div class="form-group">
+                    <div class="toggle-container">
+                        <div>
+                            <span class="toggle-label">Ẩn danh</span>
+                            <p class="toggle-description">Bật để không hiển thị tên của bạn</p>
+                        </div>
+                        <label class="toggle-switch active" id="anonToggle" onclick="this.classList.toggle('active'); document.getElementById('anonInput').value = this.classList.contains('active') ? '1' : '0'; document.getElementById('nameGroup').classList.toggle('hidden', this.classList.contains('active'));">
+                            <span class="toggle-knob"></span>
+                        </label>
+                        <input type="hidden" name="is_anonymous" id="anonInput" value="1">
+                    </div>
+                    <div id="nameGroup" class="hidden form-group">
+                        <label class="form-label">Tên hiển thị (không bắt buộc)</label>
+                        <input type="text" name="reviewer_name" class="form-input" placeholder="Tên hoặc biệt danh">
+                    </div>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="submit-btn">Gửi đánh giá</button>
+                    <button type="button" class="cancel-btn" onclick="document.getElementById('reviewForm').classList.remove('active');">Hủy</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- REVIEWS LIST -->
+        <div id="reviewsList">
+            {% for r in reviews %}
+            <div class="review-item">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <span class="reviewer-name {% if r.is_anonymous %}anonymous{% endif %}">{% if r.is_anonymous %}Ẩn danh{% else %}{{ r.reviewer_name|default:"Ẩn danh" }}{% endif %}</span>
+                        <div class="review-meta">{{ r.created_at|date:"d/m/Y H:i" }}{% if r.subject_studied %} · {{ r.subject_studied }}{% endif %}</div>
+                    </div>
+                    <div class="review-badges">
+                        {% if r.suitable_for == 'team_qua_mon' %}<span class="class-badge team">Team Qua Môn</span>{% endif %}
+                        {% if r.suitable_for == 'san_coc_vang' %}<span class="class-badge gold">Săn Cóc Vàng</span>{% endif %}
+                        {% if r.suitable_for == 'cay_cuoc_nhieu' %}<span class="class-badge hard">Cày Cuốc Nhiều</span>{% endif %}
+                        {% if r.suitable_for == 'tinh_than_thep' %}<span class="class-badge steel">Tinh Thần Thép</span>{% endif %}
+                        <span class="compatibility-score excellent">{{ r.score }}</span>
+                    </div>
+                </div>
+                <div class="review-tags">
+                    {% for key in r.tags %}
+                    {% for k, label in outstanding_traits %}{% if k == key %}<span class="review-tag">{{ label }}</span>{% endif %}{% endfor %}
+                    {% endfor %}
+                </div>
+                <p class="review-comment">{{ r.comment|default:"—" }}</p>
+                <div class="review-footer">
+                    <span class="review-stats">Điểm: {{ r.score }} · Mức độ hợp: {{ r.rating_fit }} · Áp lực: {{ r.rating_pressure }}</span>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+                <p class="empty-title">Chưa có nhận xét nào</p>
+                <p class="empty-text">Hãy là người đầu tiên đánh giá giảng viên này!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+// Giới hạn chọn tối đa 3 đặc điểm
+document.querySelectorAll('.trait-cb').forEach(function(cb) {
+    cb.addEventListener('change', function() {
+        var checked = document.querySelectorAll('.trait-cb:checked');
+        if (checked.length > 3) this.checked = false;
+    });
+});
+// Bar width cho phân phối (template không có get_item - dùng data)
+</script>
+{% endblock %}

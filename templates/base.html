@@ -71,16 +71,58 @@
             background-color: #ffc107;
             color: #000 !important;
         }
+                /* Đẩy logo sang trái một chút */
+        .navbar-brand {
+            margin-left: -350px;   /* chỉnh số này theo ý bạn */
+        }
 
+        /* Đẩy menu sang phải một chút */
+        .nav-highlight {
+            margin-right: -250px;  /* chỉnh số này theo ý bạn */
+        }
         /* ===== INTRO BOX ===== */
         .intro-box {
-            background: linear-gradient(135deg, #ffc107, #ffb300);
-            padding: 40px;
-            border-radius: 16px;
-            margin-top: 50px;
+            background: linear-gradient(135deg, #ff9800, #ffb300);
+            padding: 50px 40px;
+            border-radius: 18px;
             border: 3px solid #000;
-            box-shadow: 6px 6px 0 #000;
+            box-shadow: 8px 8px 0 #000;
         }
+        /* giới hạn nội dung + dễ đọc hơn */
+        .intro-box p {
+            max-width: 1200px;   /* tăng độ rộng chữ */
+            margin: 0 auto 20px;
+            line-height: 1.9;    /* thoáng hơn */
+            font-size: 17.5px;   /* to hơn chút */
+            color: #1f1f1f;
+        }
+        /* tiêu đề đẹp hơn */
+        .pixel-title {
+            text-align: center;
+            font-size: 32px;
+            letter-spacing: 2px;
+            margin-bottom: 35px;
+            color: #1b1b1b;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+        }
+
+        /* đoạn cuối tạo điểm nghỉ mắt */
+        .intro-box p:last-child {
+            font-weight: 600;
+            font-size: 26px;
+            margin-top: 30px;
+        }
+                /* ===== INTRO TEXT SIZE ===== */
+        .intro-box h2 {
+            font-size: 36px;      /* tiêu đề */
+            margin-bottom: 20px;
+        }
+
+        .intro-box p {
+            font-size: 20px;      /* chữ nội dung */
+            line-height: 1.7;
+        }
+
 
         /* ===== TEAM CARD ===== */
         .team-card {

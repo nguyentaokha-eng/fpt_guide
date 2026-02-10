@@ -5,4 +5,210 @@
     <h1>Explore FPT University</h1>
     <p>Trang này dùng để khám phá ngành học, campus, student life...</p>
 </div>
+<style>
+        /* ================= EXPLORE ================= */
+        .explore-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 80px;
+        }
+
+        .explore-card {
+            background: #fff;
+            padding: 36px;
+            border: 3px solid #000;
+            box-shadow: 8px 8px 0 #000;
+            border-radius: 12px;
+        }
+
+        .explore-card h3 {
+            font-family: "Press Start 2P", monospace;
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .explore-card p {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .explore-btn {
+            display: inline-block;
+            padding: 14px 28px;
+            border: 3px solid #000;
+            font-family: "Press Start 2P", monospace;
+            font-size: 14px;
+            color: #000;
+            text-decoration: none;
+            box-shadow: 4px 4px 0 #000;
+        }
+
+        /* màu từng nút */
+        .btn-yellow { background: #f5f27a; }
+        .btn-peach  { background: #ffe0c2; }
+        .btn-blue   { background: #cdd5f4; }
+        .btn-purple { background: #c9c3ff; }
+
+        /* mobile */
+        @media (max-width: 768px) {
+            .explore-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+                /* ===== INTRO BOX ===== */
+        .intro-box {
+            background: linear-gradient(135deg, #ff9800, #ffb300);
+            padding: 50px 40px;
+            border-radius: 18px;
+            border: 3px solid #000;
+            box-shadow: 8px 8px 0 #000;
+        }
+        /* giới hạn nội dung + dễ đọc hơn */
+        .intro-box p {
+            max-width: 1200px;   /* tăng độ rộng chữ */
+            margin: 0 auto 20px;
+            line-height: 1.9;    /* thoáng hơn */
+            font-size: 17.5px;   /* to hơn chút */
+            color: #1f1f1f;
+        }
+        /* tiêu đề đẹp hơn */
+        .pixel-title {
+            text-align: center;
+            font-size: 32px;
+            letter-spacing: 2px;
+            margin-bottom: 35px;
+            color: #1b1b1b;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+        }
+
+        /* đoạn cuối tạo điểm nghỉ mắt */
+        .intro-box p:last-child {
+            font-weight: 600;
+            font-size: 26px;
+            margin-top: 30px;
+        }
+        /* ===== INTRO TEXT SIZE ===== */
+        .intro-box h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .intro-box p {
+            font-size: 20px;
+            line-height: 1.7;
+        }
+
+        .explore-card {  /* làm cho ô đều */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 280px;
+        }
+
+        /* ghi chú nhỏ hơn */
+        .explore-card .note {
+            font-size: 14px;
+            color: #555;
+        }
+        /* ===== RATE LECTURE STYLE ===== */
+        .rate-card {
+            position: relative;
+        }
+
+        /* tiêu đề nổi bật */
+        .rate-title {
+            font-family: "Press Start 2P", monospace;
+            text-align: center;
+            font-size: 33px !important;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            color: #000;
+        }
+
+        /* ghi chú - CHỈ GIỮ 1 ĐỊNH NGHĨA */
+        .rate-note {
+            font-size: 17px;  /* ✅ SỬA "17x" → "17px" */
+            line-height: 1.5;
+            color: #222;
+            margin: 2px 0 !important;
+        }
+
+        /* nút to + nổi hơn */
+        .rate-card .explore-btn {
+            margin-top: 18px;
+            padding: 16px 32px;
+            font-size: 24px;
+        }
+
+</style>
+<!-- ================= EXPLORE ================= -->
+<div class="container">
+    <div class="explore-grid">
+
+        <!-- CARD 1 -->
+            <div class="explore-card rate-card">
+            <h3 class="rate-title">RATE MY LECTURE</h3>
+
+            <p class="rate-note">
+                Nền tảng chia sẻ trải nghiệm học tập, giúp sinh viên FPT
+                tham khảo giảng viên phù hợp nhất.
+            </p>
+            <p class="rate-note">
+                *Việc sử dụng “Đại học FPT” chỉ có tác dụng là đối tượng
+                hướng tới của website.
+            </p>
+            <p class="rate-note">
+                *Dự án cộng đồng phi lợi nhuận, do sinh viên xây dựng.
+                Website không trực thuộc và không đại diện cho
+                Tổ chức Giáo dục FPT.
+            </p>
+
+            <a href="{% url 'rate_lecture' %}" class="explore-btn btn-yellow">
+                LEARN MORE
+            </a>
+        </div>
+
+
+        <!-- CARD 2 -->
+        <div class="explore-card rate-card">
+            <h3 class="rate-title">STUDENT LIFE</h3>
+            <p class="rate-note">
+                A diverse, supportive, and creative community.
+                Find your passions both in and out of the classroom.
+            </p>
+            <a href="{% url 'student_life' %}" class="explore-btn btn-peach">
+                LEARN MORE
+            </a>
+        </div>
+        <!-- CARD 3 -->
+        <div class="explore-card rate-card">
+            <h3 class="rate-title">CURRICULUM</h3>
+            <p class="rate-note">
+                Hands-on from day one. At FPT you can do research
+                the moment you step on campus.
+            </p>
+            <a href="{% url 'curriculum' %}" class="explore-btn btn-blue">
+                LEARN MORE
+            </a>
+        </div>
+        <!-- CARD 4 -->
+        <div class="explore-card rate-card">  <!-- ✅ THÊM rate-card -->
+            <h3 class="rate-title">Community</h3>  <!-- ✅ ĐỔI thành rate-title -->
+            <p class="rate-note">  <!-- ✅ ĐỔI thành rate-note -->
+                Pioneering. Accessible. Supportive.
+                Test ideas with real industry resources.
+            </p>
+            <a href="https://www.facebook.com/groups/1216577847270995"
+            target="_blank"
+            class="explore-btn btn-purple">
+            LEARN MORE
+            </a>
+        </div>
+
+    </div>
+</div>
+
 {% endblock %}

@@ -1,0 +1,1228 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* ===== PIXEL TITLE ===== */
+    .pixel-title {
+        font-family: "Press Start 2P", monospace;
+        text-align: center;
+        font-size: 32px;
+        margin-bottom: 40px;
+    }
+
+    /* ===== RATE PAGE ===== */
+    .rate-page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    /* ===== SEARCH BOX ===== */
+    .search-box {
+        margin-bottom: 30px;
+        position: relative;
+    }
+
+    .search-box input {
+        width: 100%;
+        padding: 16px 20px;
+        font-size: 16px;
+        border: 3px solid #000;
+        border-radius: 8px;
+        box-shadow: 4px 4px 0 #000;
+    }
+
+    /* ===== AUTOCOMPLETE DROPDOWN ===== */
+    .autocomplete-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #fff;
+        border: 3px solid #000;
+        border-top: none;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 4px 4px 0 #000;
+        max-height: 400px;
+        overflow-y: auto;
+        display: none;
+        z-index: 1000;
+        margin-top: -8px;
+    }
+
+    .autocomplete-dropdown.show {
+        display: block;
+    }
+
+    .suggestion-item {
+        padding: 16px 20px;
+        cursor: pointer;
+        border-bottom: 2px solid #e0e0e0;
+        transition: background 0.2s;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .suggestion-item:last-child {
+        border-bottom: none;
+    }
+
+    .suggestion-item:hover {
+        background: #f5f27a;
+    }
+
+    .suggestion-item.active {
+        background: #f5f27a;
+    }
+
+    .suggestion-left {
+        flex: 1;
+    }
+
+    .suggestion-code {
+        font-family: "Press Start 2P", monospace;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 4px;
+    }
+
+    .suggestion-code .highlight {
+        background: #ffeb3b;
+        padding: 2px 4px;
+    }
+
+    .suggestion-dept {
+        font-size: 12px;
+        color: #666;
+    }
+
+    .suggestion-right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 4px;
+    }
+
+    .suggestion-badge {
+        padding: 4px 8px;
+        background: #ff9800;
+        border: 2px solid #000;
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+    .suggestion-reviews {
+        font-size: 11px;
+        color: #999;
+    }
+
+    .no-suggestions {
+        padding: 20px;
+        text-align: center;
+        color: #999;
+        font-size: 14px;
+    }
+
+    /* ===== FILTER BAR ===== */
+    .filter-bar {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 40px;
+        flex-wrap: wrap;
+    }
+
+    .campus-tabs {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        flex: 1;
+    }
+
+    .campus-tabs button {
+        padding: 12px 20px;
+        border: 3px solid #000;
+        background: #fff;
+        font-family: "Press Start 2P", monospace;
+        font-size: 12px;
+        cursor: pointer;
+        box-shadow: 4px 4px 0 #000;
+        transition: all 0.2s;
+    }
+
+    .campus-tabs button:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 #000;
+    }
+
+    .campus-tabs button.active {
+        background: #f5f27a;
+    }
+
+    .department-filter {
+        padding: 12px 20px;
+        border: 3px solid #000;
+        font-family: "Press Start 2P", monospace;
+        font-size: 12px;
+        box-shadow: 4px 4px 0 #000;
+        cursor: pointer;
+        background: #fff;
+        transition: all 0.2s;
+    }
+
+    .department-filter:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 #000;
+    }
+
+    .department-filter:focus {
+        outline: none;
+        background: #f5f27a;
+    }
+
+    /* ===== LECTURER GRID ===== */
+    .lecturer-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+
+    /* ===== LECTURER CARD ===== */
+    .lecturer-card {
+        background: #fff;
+        padding: 24px;
+        border: 3px solid #000;
+        border-radius: 12px;
+        box-shadow: 6px 6px 0 #000;
+        position: relative;
+        transition: transform 0.2s;
+        cursor: pointer;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+    .lecturer-card:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 8px 8px 0 #000;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 6px 12px;
+        background: #ff9800;
+        border: 2px solid #000;
+        font-size: 11px;
+        font-weight: bold;
+        margin-bottom: 12px;
+    }
+
+    .lecturer-code {
+        font-family: "Press Start 2P", monospace;
+        font-size: 20px;
+        margin: 12px 0 8px;
+    }
+
+    .department {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 16px;
+    }
+
+    .subject-tags {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+
+    .subject-tags span {
+        padding: 6px 12px;
+        background: #e0e0e0;
+        border: 2px solid #000;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .subject-tags .more {
+        background: #cdd5f4;
+    }
+
+    .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 16px;
+        border-top: 2px solid #000;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .arrow {
+        font-size: 20px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+        .lecturer-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .campus-tabs button {
+            font-size: 10px;
+            padding: 10px 14px;
+        }
+
+        .department-filter {
+            width: 100%;
+        }
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+</style>
+
+<div class="container mt-5">
+    <h1 class="pixel-title">REVIEW LECTURE FPT UNIVERSITY</h1>
+</div>
+
+<div class="rate-page">
+    <!-- SEARCH WITH AUTOCOMPLETE -->
+    <div class="search-box">
+        <input 
+            type="text"
+            id="searchInput"
+            placeholder="Tìm theo tên hoặc mã giảng viên (VD: XUATNT,...)"
+            autocomplete="off">
+        
+        <!-- DROPDOWN GỢI Ý -->
+        <div class="autocomplete-dropdown" id="autocompleteDropdown">
+            <!-- Suggestions will be inserted here -->
+        </div>
+    </div>
+
+    <!-- FILTER -->
+    <div class="filter-bar">
+        <div class="campus-tabs">
+            <button data-subject="language">NGÔN NGỮ</button>
+            <button data-subject="it" class="active">CÔNG NGHỆ THÔNG TIN</button>
+            <button data-subject="vovinam">VOVINAM & Traditional musical instrument</button>
+            <button data-subject="english">TIẾNG ANH ĐẦU VÀO</button>
+            <button data-subject="other">KHÁC</button>
+        </div>
+
+        <select class="department-filter" id="departmentFilter">
+            <option value="all">Tất cả bộ môn</option>
+        </select>
+    </div>
+
+    <!-- LECTURER LIST -->
+    <div class="lecturer-grid" id="lecturerGrid">       
+        
+        <!-- ========== CÔNG NGHỆ THÔNG TIN ========== -->
+        
+        <!-- CARD - XUATNT -->
+        <a href="{% url 'lecturer_detail' 'xuatnt' %}" class="lecturer-card"
+            data-id="1"
+            data-name="xuatnt"
+            data-subject="it"
+            data-department="cong nghe thong tin"
+            data-campus="da nang"
+            data-subjects="SSA101">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">XUATNT</h3>
+            <p class="department">CÔNG NGHỆ THÔNG TIN</p>
+
+            <div class="subject-tags">
+                <span>SSA101</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+
+        <!-- CARD - TRING2 - GIỮ NGUYÊN ID=2 -->
+        <a href="{% url 'lecturer_detail' 'tring2' %}" class="lecturer-card"
+            data-id="2"
+            data-name="tring2"
+            data-subject="it"
+            data-department="cong nghe thong tin"
+            data-campus="da nang"
+            data-subjects="CSD201,CSI101,IAP301,REL301M">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">TRING2</h3>
+            <p class="department">CÔNG NGHỆ THÔNG TIN</p>
+
+            <div class="subject-tags">
+                <span>CSD201</span>
+                <span>CSI101</span>
+                <span>IAP301</span>
+                <span>REL301M</span>               
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+
+        <!-- CARD - ANNV35 -->
+        <a href="{% url 'lecturer_detail' 'annv35' %}" class="lecturer-card"
+            data-id="3"
+            data-name="annv35"
+            data-subject="it"
+            data-department="cong nghe thong tin"
+            data-campus="da nang"
+            data-subjects="ANM322,ANR401">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">ANNV35</h3>
+            <p class="department">CÔNG NGHỆ THÔNG TIN</p>
+
+            <div class="subject-tags">
+                <span>ANM322</span>
+                <span>ANR401</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+
+        <!-- ========== NGÔN NGỮ ========== -->
+        
+        <!-- CARD - ThoTT -->
+        <a href="{% url 'lecturer_detail' 'thott' %}" class="lecturer-card"
+            data-id="4"
+            data-name="thott"
+            data-subject="language"
+            data-department="ngoai ngu"
+            data-campus="da nang"
+            data-subjects="ECR301">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">ThoTT</h3>
+            <p class="department">NGOẠI NGỮ</p>
+
+            <div class="subject-tags">
+                <span>ECR301</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+        
+         <!-- CARD - TrangNT -->
+        <a href="{% url 'lecturer_detail' 'trangnt' %}" class="lecturer-card"
+            data-id="5"
+            data-name="trangnt"
+            data-subject="language"
+            data-department="ngoai ngu"
+            data-campus="da nang"
+            data-subjects="ENG303">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">TrangNT</h3>
+            <p class="department">NGOẠI NGỮ</p>
+
+            <div class="subject-tags">
+                <span>ENG303</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+
+         <!-- CARD - NhungDT -->
+        <a href="{% url 'lecturer_detail' 'nhungdt' %}" class="lecturer-card"
+            data-id="6"
+            data-name="nhungdt"
+            data-subject="language"
+            data-department="tieng trung"
+            data-campus="da nang"
+            data-subjects="CHN113">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">NhungDT</h3>
+            <p class="department">TIẾNG TRUNG</p>
+
+            <div class="subject-tags">
+                <span>CHN113</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+
+         <!-- CARD - trammc -->
+        <a href="{% url 'lecturer_detail' 'trammc' %}" class="lecturer-card"
+            data-id="7"
+            data-name="trammc"
+            data-subject="language"
+            data-department="tieng trung"
+            data-campus="da nang"
+            data-subjects="CHN113">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">trammc</h3>
+            <p class="department">TIẾNG TRUNG</p>
+
+            <div class="subject-tags">
+                <span>CHN113</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>        
+        <!-- ========== VOVINAM ========== -->
+         <!-- CARD - ThuanNT12 -->
+        <a href="{% url 'lecturer_detail' 'thuannt12' %}" class="lecturer-card"
+            data-id="8"
+            data-name="thuannt12"
+            data-subject="vovinam"
+            data-department="the duc the thao"
+            data-campus="da nang"
+            data-subjects="VOV114,VOV124,VOV134">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">ThuanNT12</h3>
+            <p class="department">THỂ DỤC THỂ THAO</p>
+
+            <div class="subject-tags">
+                <span>VOV114</span>
+                <span>VOV124</span>
+                <span>VOV134</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+
+        <!-- CARD - HungHN10 -->
+        <a href="{% url 'lecturer_detail' 'hunghn10' %}" class="lecturer-card"
+            data-id="9"
+            data-name="hunghn10"
+            data-subject="vovinam"
+            data-department="the duc the thao"
+            data-campus="da nang"
+            data-subjects="VOV114,VOV124,VOV134">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">HungHN10</h3>
+            <p class="department">THỂ DỤC THỂ THAO</p>
+
+            <div class="subject-tags">
+                <span>VOV114</span>
+                <span>VOV124</span>
+                <span>VOV134</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+
+         <!-- CARD - NghiaBV5 -->
+        <a href="{% url 'lecturer_detail' 'nghiabv5' %}" class="lecturer-card"
+            data-id="10"
+            data-name="nghiabv5"
+            data-subject="vovinam"
+            data-department="the duc the thao"
+            data-campus="da nang"
+            data-subjects="VOV114,VOV124,VOV134">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">NghiaBV5</h3>
+            <p class="department">THỂ DỤC THỂ THAO</p>
+
+            <div class="subject-tags">
+                <span>VOV114</span>
+                <span>VOV124</span>
+                <span>VOV134</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+
+         <!-- CARD - NgaPT -->
+        <a href="{% url 'lecturer_detail' 'ngapt' %}" class="lecturer-card"
+            data-id="11"
+            data-name="ngapt"
+            data-subject="vovinam"
+            data-department="the duc the thao"
+            data-campus="da nang"
+            data-subjects="VOV114,VOV124,VOV134">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">NgaPT</h3>
+            <p class="department">THỂ DỤC THỂ THAO</p>
+
+            <div class="subject-tags">
+                <span>VOV114</span>
+                <span>VOV124</span>
+                <span>VOV134</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+
+         <!-- CARD - TruongDQ -->
+        <a href="{% url 'lecturer_detail' 'truongdq' %}" class="lecturer-card"
+            data-id="12"
+            data-name="truongdq"
+            data-subject="vovinam"
+            data-department="the duc the thao"
+            data-campus="da nang"
+            data-subjects="VOV114,VOV124,VOV134">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">TruongDQ</h3>
+            <p class="department">THỂ DỤC THỂ THAO</p>
+
+            <div class="subject-tags">
+                <span>VOV114</span>
+                <span>VOV124</span>
+                <span>VOV134</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+
+         <!-- CARD - TAIHX -->
+        <a href="{% url 'lecturer_detail' 'taihx' %}" class="lecturer-card"
+            data-id="13"
+            data-name="taihx"
+            data-subject="vovinam"
+            data-department="the duc the thao"
+            data-campus="da nang"
+            data-subjects="VOV114,VOV124,VOV134">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">TAIHX</h3>
+            <p class="department">THỂ DỤC THỂ THAO</p>
+
+            <div class="subject-tags">
+                <span>VOV114</span>
+                <span>VOV124</span>
+                <span>VOV134</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>        
+
+         <!-- CARD - namtp3 -->
+        <a href="{% url 'lecturer_detail' 'namtp3' %}" class="lecturer-card"
+            data-id="14"
+            data-name="namtp3"
+            data-subject="vovinam"
+            data-department="the duc the thao"
+            data-campus="da nang"
+            data-subjects="VOV114,VOV124,VOV134">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">namtp3</h3>
+            <p class="department">THỂ DỤC THỂ THAO</p>
+
+            <div class="subject-tags">
+                <span>VOV114</span>
+                <span>VOV124</span>
+                <span>VOV134</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>         
+
+         <!-- CARD - DongLB -->
+        <a href="{% url 'lecturer_detail' 'donglb' %}" class="lecturer-card"
+            data-id="15"
+            data-name="donglb"
+            data-subject="vovinam"
+            data-department="the duc the thao"
+            data-campus="da nang"
+            data-subjects="VOV114,VOV124,VOV134">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">DongLB</h3>
+            <p class="department">THỂ DỤC THỂ THAO</p>
+
+            <div class="subject-tags">
+                <span>VOV114</span>
+                <span>VOV124</span>
+                <span>VOV134</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>     
+        
+         <!-- CARD - THAINP -->
+        <a href="{% url 'lecturer_detail' 'thainp' %}" class="lecturer-card"
+            data-id="16"
+            data-name="thainp"
+            data-subject="vovinam"
+            data-department="the duc the thao"
+            data-campus="da nang"
+            data-subjects="VOV114,VOV124,VOV134">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">THAINP</h3>
+            <p class="department">THỂ DỤC THỂ THAO</p>
+
+            <div class="subject-tags">
+                <span>VOV114</span>
+                <span>VOV124</span>
+                <span>VOV134</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>           
+        <!-- ========== MUSICAL ========== -->
+        <!-- CARD - DungDTT23 -->
+        <a href="{% url 'lecturer_detail' 'dungdtt23' %}" class="lecturer-card"
+            data-id="17"
+            data-name="dungdtt23"
+            data-subject="vovinam"
+            data-department="nhac cu truyen thong"
+            data-campus="da nang"
+            data-subjects="DTR103">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">DungDTT23</h3>
+            <p class="department">Nhạc cụ truyền thống</p>
+
+            <div class="subject-tags">
+                <span>DTR103</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+
+        <!-- CARD - QuynhTNP -->
+        <a href="{% url 'lecturer_detail' 'quynhtnp' %}" class="lecturer-card"
+            data-id="18"
+            data-name="quynhtnp"
+            data-subject="vovinam"
+            data-department="nhac cu truyen thong"
+            data-campus="da nang"
+            data-subjects="DTB103">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">QuynhTNP</h3>
+            <p class="department">Nhạc cụ truyền thống</p>
+
+            <div class="subject-tags">
+                <span>DTB103</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+
+        <!-- ========== TIẾNG ANH ĐẦU VÀO ========== -->
+        <!-- CARD - MayCC - GIỮ NGUYÊN ID=14 -->
+        <a href="{% url 'lecturer_detail' 'maycc' %}" class="lecturer-card"
+            data-id="19"
+            data-name="maycc"
+            data-subject="english"
+            data-department="tieng anh"
+            data-campus="da nang"
+            data-subjects="ENT403,ENT503">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">MayCC</h3>
+            <p class="department">TIẾNG ANH</p>
+
+            <div class="subject-tags">
+                <span>ENT403</span>
+                <span>ENT503</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+
+        <!-- CARD - Juosea.MM.DelMundo -->
+        <a href="{% url 'lecturer_detail' 'juosea.mm.delmundo' %}" class="lecturer-card"
+            data-id="20"
+            data-name="juosea.mm.delmundo"
+            data-subject="english"
+            data-department="tieng anh"
+            data-campus="da nang"
+            data-subjects="ENT403,ENT503">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">Juosea.MM.DelMundo</h3>
+            <p class="department">TIẾNG ANH</p>
+
+            <div class="subject-tags">
+                <span>ENT403</span>
+                <span>ENT503</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+         
+        <!-- CARD - Lilibeth -->
+        <a href="{% url 'lecturer_detail' 'lilibeth' %}" class="lecturer-card"
+            data-id="21"
+            data-name="lilibeth"
+            data-subject="english"
+            data-department="tieng anh"
+            data-campus="da nang"
+            data-subjects="ENT403,ENT503">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">Lilibeth</h3>
+            <p class="department">TIẾNG ANH</p>
+
+            <div class="subject-tags">
+                <span>ENT403</span>
+                <span>ENT503</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+
+        <!-- CARD - Hera Ballbero -->
+        <a href="{% url 'lecturer_detail' 'hera ballbero' %}" class="lecturer-card"
+            data-id="22"
+            data-name="hera ballbero"
+            data-subject="english"
+            data-department="tieng anh"
+            data-campus="da nang"
+            data-subjects="ENT403,ENT503,Top Notch">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">Hera Ballbero</h3>
+            <p class="department">TIẾNG ANH</p>
+
+            <div class="subject-tags">
+                <span>ENT403</span>
+                <span>ENT503</span>
+                <span>Top Notch</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+        
+        <!-- CARD - MarryGaleBO -->
+        <a href="{% url 'lecturer_detail' 'marrygalebo' %}" class="lecturer-card"
+            data-id="23"
+            data-name="marrygalebo"
+            data-subject="english"
+            data-department="tieng anh"
+            data-campus="da nang"
+            data-subjects="ENT403,ENT503">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">MarryGaleBO</h3>
+            <p class="department">TIẾNG ANH</p>
+
+            <div class="subject-tags">
+                <span>ENT403</span>
+                <span>ENT503</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+        <!-- ========== KHÁC ========== -->
+
+        <!-- CARD - TramDT7 -->
+        <a href="{% url 'lecturer_detail' 'tramdt7' %}" class="lecturer-card"
+            data-id="24"
+            data-name="tramdt7"
+            data-subject="other"
+            data-department="marketing"
+            data-campus="da nang"
+            data-subjects="BRA301">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">TramDT7</h3>
+            <p class="department">MARKETING</p>
+
+            <div class="subject-tags">
+                <span>BRA301</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+
+
+        <!-- CARD - HangDTT57 -->
+        <a href="{% url 'lecturer_detail' 'hangdtt57' %}" class="lecturer-card"
+            data-id="24"
+            data-name="hangdtt57"
+            data-subject="other"
+            data-department="marketing"
+            data-campus="da nang"
+            data-subjects="MKT309m">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">HangDTT57</h3>
+            <p class="department">MARKETING</p>
+
+            <div class="subject-tags">
+                <span>MKT309m</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+        
+        <!-- CARD - LienBTB2 -->
+        <a href="{% url 'lecturer_detail' 'lienbtb2' %}" class="lecturer-card"
+            data-id="24"
+            data-name="lienbtb2"
+            data-subject="other"
+            data-department="marketing"
+            data-campus="da nang"
+            data-subjects="LAW102">
+
+            <span class="badge">ĐÀ NẴNG</span>
+            <h3 class="lecturer-code">LienBTB2</h3>
+            <p class="department">MARKETING</p>
+
+            <div class="subject-tags">
+                <span>LAW102</span>
+            </div>
+
+            <div class="card-footer">
+                <span class="review-count">0 REVIEWS</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+    </div>
+</div>
+
+
+<script>
+    const searchInput = document.getElementById("searchInput");
+    const autocompleteDropdown = document.getElementById("autocompleteDropdown");
+    const departmentFilter = document.getElementById("departmentFilter");
+    const buttons = document.querySelectorAll(".campus-tabs button");
+    const cards = document.querySelectorAll(".lecturer-card");
+
+    let currentSubject = "it";
+    let currentDepartment = "all";
+    let selectedIndex = -1;
+
+    // ===== LOAD REVIEW COUNTS FROM LOCALSTORAGE =====
+    function updateReviewCounts() {
+        const allReviews = JSON.parse(localStorage.getItem('lecturerReviews') || '{}');
+        
+        cards.forEach(card => {
+            const lecturerId = card.dataset.id;
+            const reviews = allReviews[lecturerId] || [];
+            const count = reviews.length;
+            
+            const reviewCountEl = card.querySelector('.review-count');
+            if (reviewCountEl) {
+                reviewCountEl.textContent = `${count} REVIEW${count !== 1 ? 'S' : ''}`;
+            }
+        });
+    }
+
+    // Update counts on page load
+    updateReviewCounts();
+
+    // ===== CLICK TAB (MÔN HỌC) =====
+    buttons.forEach(button => {
+        button.addEventListener("click", () => {
+            buttons.forEach(btn => btn.classList.remove("active"));
+            button.classList.add("active");
+
+            currentSubject = button.dataset.subject;
+            
+            // Reset search và department filter
+            searchInput.value = "";
+            departmentFilter.value = "all";
+            currentDepartment = "all";
+            autocompleteDropdown.classList.remove("show");
+            
+            // Update dropdown options based on subject
+            updateDepartmentOptions();
+            
+            filterCards();
+        });
+    });
+
+    // ===== UPDATE DEPARTMENT DROPDOWN OPTIONS =====
+    function updateDepartmentOptions() {
+        const subjectsSet = new Set();
+        
+        // Collect all unique subjects for current subject category
+        cards.forEach(card => {
+            if (card.dataset.subject === currentSubject) {
+                const subjects = card.dataset.subjects.split(',');
+                subjects.forEach(subj => subjectsSet.add(subj.trim()));
+            }
+        });
+
+        // Rebuild dropdown
+        let options = '<option value="all">Tất cả bộ môn</option>';
+        Array.from(subjectsSet).sort().forEach(subj => {
+            options += `<option value="${subj}">${subj}</option>`;
+        });
+        
+        departmentFilter.innerHTML = options;
+    }
+
+    // ===== DEPARTMENT FILTER CHANGE =====
+    departmentFilter.addEventListener("change", (e) => {
+        currentDepartment = e.target.value;
+        filterCards();
+    });
+
+    // ===== LIVE SEARCH & AUTOCOMPLETE =====
+    searchInput.addEventListener("input", (e) => {
+        const keyword = e.target.value.toLowerCase().trim();
+        
+        if (keyword === "") {
+            autocompleteDropdown.classList.remove("show");
+            filterCards();
+            return;
+        }
+
+        // Tìm các giảng viên phù hợp
+        const matches = Array.from(cards).filter(card => {
+            const name = card.dataset.name.toLowerCase();
+            const department = card.dataset.department.toLowerCase();
+            const subject = card.dataset.subject;
+            
+            return subject === currentSubject && 
+                   (name.includes(keyword) || department.includes(keyword));
+        });
+
+        // Hiển thị suggestions
+        if (matches.length > 0) {
+            showSuggestions(matches, keyword);
+        } else {
+            showNoResults();
+        }
+
+        // Filter cards
+        filterCards();
+    });
+
+    // ===== HIỂN THỊ GỢI Ý =====
+    function showSuggestions(matches, keyword) {
+        selectedIndex = -1;
+        const allReviews = JSON.parse(localStorage.getItem('lecturerReviews') || '{}');
+        
+        const html = matches.map((card, index) => {
+            const name = card.dataset.name;
+            const nameUpper = name.toUpperCase();
+            const dept = card.dataset.department.toUpperCase();
+            const campus = card.dataset.campus.toUpperCase();
+            const lecturerId = card.dataset.id;
+            const reviews = allReviews[lecturerId] || [];
+            const reviewCount = reviews.length;
+            
+            // Highlight matching text
+            const highlightedName = highlightMatch(nameUpper, keyword);
+            
+            return `
+                <div class="suggestion-item" data-index="${index}" data-name="${name}">
+                    <div class="suggestion-left">
+                        <div class="suggestion-code">${highlightedName}</div>
+                        <div class="suggestion-dept">${dept}</div>
+                    </div>
+                    <div class="suggestion-right">
+                        <span class="suggestion-badge">${campus}</span>
+                        <span class="suggestion-reviews">${reviewCount} reviews</span>
+                    </div>
+                </div>
+            `;
+        }).join("");
+
+        autocompleteDropdown.innerHTML = html;
+        autocompleteDropdown.classList.add("show");
+
+        // Add click event to suggestions
+        document.querySelectorAll(".suggestion-item").forEach(item => {
+            item.addEventListener("click", () => {
+                const lecturerName = item.dataset.name;
+                selectLecturer(lecturerName);
+            });
+        });
+    }
+
+    // ===== HIGHLIGHT TEXT KHỚP =====
+    function highlightMatch(text, keyword) {
+        const upperKeyword = keyword.toUpperCase();
+        const index = text.indexOf(upperKeyword);
+        
+        if (index === -1) return text;
+        
+        const before = text.substring(0, index);
+        const match = text.substring(index, index + upperKeyword.length);
+        const after = text.substring(index + upperKeyword.length);
+        
+        return `${before}<span class="highlight">${match}</span>${after}`;
+    }
+
+    // ===== KHÔNG CÓ KẾT QUẢ =====
+    function showNoResults() {
+        autocompleteDropdown.innerHTML = `
+            <div class="no-suggestions">
+                Không tìm thấy giảng viên nào 😢
+            </div>
+        `;
+        autocompleteDropdown.classList.add("show");
+    }
+
+    // ===== CHỌN GIẢNG VIÊN =====
+    function selectLecturer(name) {
+        searchInput.value = name.toUpperCase();
+        autocompleteDropdown.classList.remove("show");
+        filterCards();
+        
+        // Scroll to the selected card
+        const selectedCard = Array.from(cards).find(card => 
+            card.dataset.name === name
+        );
+        
+        if (selectedCard) {
+            selectedCard.scrollIntoView({ behavior: "smooth", block: "center" });
+            selectedCard.style.animation = "pulse 0.5s";
+        }
+    }
+
+    // ===== KEYBOARD NAVIGATION (Arrow keys + Enter) =====
+    searchInput.addEventListener("keydown", (e) => {
+        const suggestions = document.querySelectorAll(".suggestion-item");
+        
+        if (suggestions.length === 0) return;
+
+        if (e.key === "ArrowDown") {
+            e.preventDefault();
+            selectedIndex = Math.min(selectedIndex + 1, suggestions.length - 1);
+            updateSelection(suggestions);
+        } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            selectedIndex = Math.max(selectedIndex - 1, 0);
+            updateSelection(suggestions);
+        } else if (e.key === "Enter") {
+            e.preventDefault();
+            if (selectedIndex >= 0 && suggestions[selectedIndex]) {
+                const lecturerName = suggestions[selectedIndex].dataset.name;
+                selectLecturer(lecturerName);
+            }
+        } else if (e.key === "Escape") {
+            autocompleteDropdown.classList.remove("show");
+        }
+    });
+
+    // ===== UPDATE SELECTION =====
+    function updateSelection(suggestions) {
+        suggestions.forEach((item, index) => {
+            if (index === selectedIndex) {
+                item.classList.add("active");
+                item.scrollIntoView({ block: "nearest" });
+            } else {
+                item.classList.remove("active");
+            }
+        });
+    }
+
+    // ===== ĐÓNG DROPDOWN KHI CLICK BÊN NGOÀI =====
+    document.addEventListener("click", (e) => {
+        if (!searchInput.contains(e.target) && !autocompleteDropdown.contains(e.target)) {
+            autocompleteDropdown.classList.remove("show");
+        }
+    });
+
+    // ===== FILTER CARDS =====
+    function filterCards() {
+        const keyword = searchInput.value.toLowerCase().trim();
+
+        cards.forEach(card => {
+            const name = card.dataset.name.toLowerCase();
+            const department = card.dataset.department.toLowerCase();
+            const subject = card.dataset.subject;
+            const subjects = card.dataset.subjects ? card.dataset.subjects.split(',') : [];
+
+            const matchSubject = subject === currentSubject;
+            const matchSearch =
+                keyword === "" ||
+                name.includes(keyword) ||
+                department.includes(keyword);
+            
+            // Check if card matches department filter
+            const matchDepartment = 
+                currentDepartment === "all" || 
+                subjects.some(s => s.trim() === currentDepartment);
+
+            card.style.display =
+                matchSubject && matchSearch && matchDepartment ? "block" : "none";
+        });
+    }
+
+    // Load lần đầu
+    updateDepartmentOptions();
+    filterCards();
+</script>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-3">🍜 Gợi ý ăn uống cho sinh viên</h2>
+    <p class="text-muted">
+        Mô tả tình huống của bạn, ví dụ:
+        <em>“Hôm nay chỉ có 30k mà đói”</em>
+    </p>
+
+    <form method="get" class="mb-4">
+        <div class="input-group">
+            <input
+                type="text"
+                name="q"
+                class="form-control"
+                placeholder="Bạn đang muốn ăn thế nào?"
+                value="{{ query }}"
+            >
+            <button class="btn btn-primary" type="submit">
+                Gợi ý
+            </button>
+        </div>
+    </form>
+
+    {% if query %}
+    <div class="alert alert-info">
+        💡 Mẹo sinh viên: Ưu tiên món no lâu – rẻ – nhanh
+    </div>
+    {% endif %}
+
+    {% if foods %}
+        <h4>📍 Món phù hợp</h4>
+        <div class="row">
+            {% for food in foods %}
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5>{{ food.name }}</h5>
+                        <p>💰 {{ food.price }}đ</p>
+                        {% for tag in food.tags %}
+                            <span class="badge bg-secondary">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    {% elif query %}
+        <div class="alert alert-warning">
+            😢 Chưa tìm được món phù hợp
+        </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}
+}
