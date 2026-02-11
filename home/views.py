@@ -206,7 +206,7 @@ def lecturer_detail(request, lecturer_id):
 
 
 def Afford_living(request):
-    return render(request, 'Afford_housing.html')
+    return render(request, 'Afford_living.html')
 
 def Afford_job(request):
     return render(request, 'Afford_job.html')

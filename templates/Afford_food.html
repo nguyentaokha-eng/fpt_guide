@@ -1,356 +1,865 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-
 <style>
-body{background:#0b1220;color:#e5e7eb}
-.container{max-width:1200px;margin:auto}
+    /* ===== BASE STYLES ===== */
+    body { background: #f9fafb; color: #1f2937; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    
+    /* ===== PIXEL TITLE ===== */
+    .pixel-title {
+        font-family: "Press Start 2P", monospace;
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
 
-/* SEARCH */
-.search-box{max-width:600px;margin:30px auto}
-.search-box input{
- width:100%;padding:14px 20px;border-radius:999px;
- border:none;outline:none;font-size:1rem
-}
+    /* ===== SEARCH BOX ===== */
+    .search-section {
+        max-width: 600px;
+        margin: 0 auto 40px;
+    }
+    .search-box {
+        position: relative;
+    }
+    .search-box input {
+        width: 100%;
+        padding: 16px 20px;
+        font-size: 16px;
+        border: 3px solid #000;
+        border-radius: 8px;
+        box-shadow: 4px 4px 0 #000;
+        outline: none;
+    }
+    .search-box input:focus {
+        box-shadow: 6px 6px 0 #6f42c1;
+    }
 
-/* LIST */
-.grid{
- display:grid;
- grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
- gap:20px
-}
-.card{
- background:#111827;border-radius:16px;
- overflow:hidden;cursor:pointer;transition:.25s
-}
-.card:hover{transform:translateY(-6px)}
-.card img{width:100%;height:170px;object-fit:cover}
-.card-body{padding:14px}
-.card-body small{color:#9ca3af}
+    /* ===== RESTAURANT GRID ===== */
+    .restaurant-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 24px;
+    }
 
-/* OVERLAY */
-.overlay{
- position:fixed;inset:0;
- background:rgba(0,0,0,.8);
- display:none;align-items:center;justify-content:center;
- z-index:999
-}
-.modal{
- width:90%;max-width:1100px;
- background:#020617;border-radius:18px;
- display:grid;grid-template-columns:1.1fr .9fr;
- overflow:hidden
-}
-.left,.right{padding:20px}
-.main-img{width:100%;height:260px;object-fit:cover;border-radius:12px}
-.gallery{display:flex;gap:8px;margin-top:10px}
-.gallery img{
- width:70px;height:70px;object-fit:cover;
- border-radius:8px;cursor:pointer
-}
+    .restaurant-card {
+        background: #fff;
+        border: 3px solid #000;
+        border-radius: 12px;
+        box-shadow: 6px 6px 0 #000;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        color: inherit;
+    }
+    .restaurant-card:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 8px 8px 0 #000;
+    }
+    .restaurant-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+    .restaurant-info {
+        padding: 16px;
+    }
+    .restaurant-name {
+        font-family: monospace;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+    .restaurant-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 12px;
+    }
+    .tag-badge {
+        padding: 4px 8px;
+        background: #e5e7eb;
+        border: 2px solid #000;
+        font-size: 11px;
+        font-weight: bold;
+    }
+    .tag-badge.purple { background: #6f42c1; color: white; }
+    .tag-badge.orange { background: #f59e0b; color: white; }
+    .restaurant-rating {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 12px;
+        border-top: 2px solid #000;
+        font-size: 13px;
+        font-weight: bold;
+    }
+    .rating-stars {
+        color: #f59e0b;
+    }
 
-/* SCORE */
-.score-grid{
- display:grid;grid-template-columns:repeat(2,1fr);
- gap:8px;margin:12px 0
-}
-.score-grid div{
- background:#111827;padding:8px;border-radius:8px
-}
+    /* ===== OVERLAY/MODAL ===== */
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        padding: 20px;
+    }
+    .modal-overlay.active {
+        display: flex;
+    }
 
-/* COMMENT */
-.comment{background:#111827;padding:10px;border-radius:10px;margin-top:10px}
-.comment img{width:60px;height:60px;object-fit:cover;border-radius:8px}
-.comment-imgs{display:flex;gap:5px;margin-top:8px}
-.comment-imgs img{width:50px;height:50px;border-radius:6px;cursor:pointer}
+    .modal-content {
+        background: #fff;
+        border: 4px solid #000;
+        border-radius: 16px;
+        box-shadow: 8px 8px 0 #000;
+        max-width: 1100px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
 
-/* ZOOM */
-#zoom{
- position:fixed;inset:0;
- background:rgba(0,0,0,.85);
- display:none;align-items:center;justify-content:center;
- z-index:2000
-}
-#zoom img{max-width:90%;max-height:90%}
+    .modal-header {
+        background: linear-gradient(to right, #6f42c1, #9333ea);
+        color: white;
+        padding: 24px;
+    }
+    .modal-header h2 {
+        font-family: monospace;
+        font-size: 24px;
+        margin-bottom: 8px;
+    }
+    .modal-header a {
+        color: white;
+        text-decoration: underline;
+    }
+    .modal-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        background: rgba(0,0,0,0.3);
+        border: 2px solid #fff;
+        border-radius: 50%;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-/* FORM */
-.form-group{margin-bottom:10px}
-.form-group input,.form-group textarea{width:100%;padding:8px;border-radius:6px;border:none;background:#374151}
-.form-group label{font-size:12px;color:#9ca3af}
+    .modal-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        padding: 24px;
+    }
+    @media (max-width: 768px) {
+        .modal-body { grid-template-columns: 1fr; }
+    }
+
+    .detail-section h3 {
+        font-family: monospace;
+        font-size: 16px;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #000;
+    }
+
+    /* ===== IMAGES ===== */
+    .main-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border: 3px solid #000;
+        border-radius: 12px;
+        margin-bottom: 12px;
+    }
+    .gallery {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+    }
+    .gallery img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border: 2px solid #000;
+        border-radius: 8px;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+    .gallery img:hover {
+        border-color: #6f42c1;
+    }
+
+    /* ===== SCORES ===== */
+    .scores-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+    .score-item {
+        background: #f3f4f6;
+        border: 2px solid #000;
+        border-radius: 8px;
+        padding: 12px;
+        text-align: center;
+    }
+    .score-label {
+        font-size: 12px;
+        color: #6b7280;
+        margin-bottom: 4px;
+    }
+    .score-value {
+        font-family: "Press Start 2P", monospace;
+        font-size: 20px;
+        font-weight: bold;
+        color: #6f42c1;
+    }
+    .overall-score {
+        background: #6f42c1;
+        color: white;
+        border: 3px solid #000;
+        border-radius: 12px;
+        padding: 16px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .overall-score .label {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+    .overall-score .value {
+        font-family: "Press Start 2P", monospace;
+        font-size: 36px;
+    }
+
+    /* ===== COMMENTS ===== */
+    .comments-list {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    .comment-item {
+        background: #f9fafb;
+        border: 2px solid #000;
+        border-radius: 10px;
+        padding: 16px;
+        margin-bottom: 12px;
+    }
+    .comment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+    .comment-user {
+        font-weight: bold;
+        font-family: monospace;
+    }
+    .comment-date {
+        font-size: 12px;
+        color: #9ca3af;
+    }
+    .comment-content {
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 8px;
+    }
+    .comment-scores {
+        display: flex;
+        gap: 12px;
+        font-size: 11px;
+    }
+    .comment-score {
+        background: #e5e7eb;
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+    .comment-images {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+    }
+    .comment-images img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border: 2px solid #000;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    /* ===== REVIEW FORM ===== */
+    .review-form {
+        margin-top: 20px;
+        padding: 20px;
+        background: #f9fafb;
+        border: 3px solid #000;
+        border-radius: 12px;
+        display: none;
+    }
+    .review-form.active {
+        display: block;
+    }
+    .review-form h4 {
+        font-family: monospace;
+        margin-bottom: 16px;
+    }
+    .form-group {
+        margin-bottom: 16px;
+    }
+    .form-group label {
+        display: block;
+        font-size: 13px;
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+    .form-group input[type="text"],
+    .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #000;
+        border-radius: 6px;
+        font-family: monospace;
+    }
+    .form-group textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+    
+    .slider-group {
+        margin-bottom: 16px;
+    }
+    .slider-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+    }
+    .slider-value {
+        font-family: "Press Start 2P", monospace;
+        font-weight: bold;
+        color: #6f42c1;
+    }
+    .slider-group input[type="range"] {
+        width: 100%;
+        height: 8px;
+        border: 2px solid #000;
+        border-radius: 4px;
+        appearance: none;
+        background: #e5e7eb;
+    }
+    .slider-group input[type="range"]::-webkit-slider-thumb {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        background: #6f42c1;
+        border: 2px solid #000;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    .submit-btn {
+        width: 100%;
+        padding: 14px;
+        background: #6f42c1;
+        color: white;
+        border: 3px solid #000;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 4px 4px 0 #000;
+        transition: all 0.2s;
+    }
+    .submit-btn:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 #000;
+    }
+
+    .toggle-form-btn {
+        width: 100%;
+        padding: 14px;
+        background: #f3f4f6;
+        color: #1f2937;
+        border: 3px solid #000;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 4px 4px 0 #000;
+        transition: all 0.2s;
+        margin-top: 16px;
+    }
+    .toggle-form-btn:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 #000;
+    }
+
+    /* ===== ZOOM ===== */
+    .zoom-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.9);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+    }
+    .zoom-overlay.active {
+        display: flex;
+    }
+    .zoom-overlay img {
+        max-width: 90%;
+        max-height: 90%;
+        border: 3px solid #fff;
+    }
 </style>
 
 <div class="container">
- <h3 class="mt-4">🍜 Ăn uống quanh ĐH FPT</h3>
+    <h1 class="pixel-title">🍜 ĂN UỐNG QUANH ĐH FPT</h1>
 
- <div class="search-box">
-  <input id="search" placeholder="cơm rẻ, cafe học bài, chợ sinh viên...">
- </div>
+    <!-- SEARCH -->
+    <div class="search-section">
+        <div class="search-box">
+            <input id="search" placeholder="Tìm quán ăn... (VD: cơm rẻ, cafe, trà sữa)">
+        </div>
+    </div>
 
- <div class="grid" id="list"></div>
+    <!-- RESTAURANT LIST -->
+    <div class="restaurant-grid" id="restaurantList"></div>
 </div>
 
-<!-- DETAIL -->
-<div class="overlay" id="detail">
- <div class="modal">
-  <div class="left">
-   <h4 id="dName"></h4>
-   <a id="dMap" target="_blank">📍 Google Maps</a>
-   <p>⭐ <b id="dAvg"></b> / 10</p>
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="detailModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <h2 id="dName"></h2>
+            <a id="dMap" target="_blank">📍 Xem trên Google Maps</a>
+        </div>
+        
+        <div class="modal-body">
+            <!-- LEFT: Info & Images -->
+            <div class="detail-section">
+                <h3>📸 Hình ảnh</h3>
+                <img id="dMain" class="main-image">
+                <div class="gallery" id="dGallery"></div>
 
-   <div class="score-grid">
-    <div>Giá: <span id="sPrice"></span></div>
-    <div>Chất lượng: <span id="sQuality"></span></div>
-    <div>Phục vụ: <span id="sService"></span></div>
-    <div>Không gian: <span id="sSpace"></span></div>
-   </div>
+                <h3 style="margin-top: 20px">📊 Đánh giá</h3>
+                <div class="overall-score">
+                    <div class="label">Điểm tổng hợp</div>
+                    <div class="value" id="dOverall"></div>
+                </div>
+                
+                <div class="scores-grid">
+                    <div class="score-item">
+                        <div class="score-label">Giá</div>
+                        <div class="score-value" id="sPrice"></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">Chất lượng</div>
+                        <div class="score-value" id="sQuality"></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">Phục vụ</div>
+                        <div class="score-value" id="sService"></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">Không gian</div>
+                        <div class="score-value" id="sSpace"></div>
+                    </div>
+                </div>
+            </div>
 
-   <img id="dMain" class="main-img">
-   <div class="gallery" id="dGallery"></div>
-  </div>
+            <!-- RIGHT: Comments & Form -->
+            <div class="detail-section">
+                <h3>💬 Bình luận (<span id="commentCount">0</span>)</h3>
+                
+                <div class="comments-list" id="commentList">
+                    <p style="color: #9ca3af; text-align: center;">Chưa có bình luận nào</p>
+                </div>
 
-  <div class="right">
-   <h5>Bình luận sinh viên</h5>
-   <div id="commentList"></div>
-   
-   <!-- COMMENT FORM -->
-   <div style="margin-top:20px;padding:15px;background:#1f2937;border-radius:12px">
-    <h6>Thêm bình luận</h6>
-    {% csrf_token %}
-    <div class="form-group">
-     <input id="cName" placeholder="Tên của bạn">
+                <button class="toggle-form-btn" onclick="toggleReviewForm()">
+                    ✏️ Viết bình luận
+                </button>
+
+                <!-- REVIEW FORM -->
+                <div class="review-form" id="reviewForm">
+                    <h4>Thêm bình luận mới</h4>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Tên của bạn</label>
+                        <input type="text" id="cName" placeholder="Nhập tên hoặc ẩn danh">
+                    </div>
+                    
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <label>Giá 💰</label>
+                            <span class="slider-value" id="sliderPrice">5</span>
+                        </div>
+                        <input type="range" id="cPrice" min="1" max="10" value="5" oninput="updateSlider('Price')">
+                    </div>
+                    
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <label>Chất lượng 🍽️</label>
+                            <span class="slider-value" id="sliderQuality">5</span>
+                        </div>
+                        <input type="range" id="cQuality" min="1" max="10" value="5" oninput="updateSlider('Quality')">
+                    </div>
+                    
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <label>Phục vụ 👨‍🍳</label>
+                            <span class="slider-value" id="sliderService">5</span>
+                        </div>
+                        <input type="range" id="cService" min="1" max="10" value="5" oninput="updateSlider('Service')">
+                    </div>
+                    
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <label>Không gian 🏠</label>
+                            <span class="slider-value" id="sliderSpace">5</span>
+                        </div>
+                        <input type="range" id="cSpace" min="1" max="10" value="5" oninput="updateSlider('Space')">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Nội dung bình luận</label>
+                        <textarea id="cText" placeholder="Chia sẻ trải nghiệm của bạn..." rows="4"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Ảnh đính kèm (có thể chọn nhiều)</label>
+                        <input type="file" id="cImages" multiple accept="image/*">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="cAnon"> Ẩn danh
+                        </label>
+                    </div>
+                    
+                    <button class="submit-btn" onclick="submitComment()">📤 Gửi bình luận</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-     <textarea id="cText" placeholder="Chia sẻ trải nghiệm..." rows="3"></textarea>
-    </div>
-    <div class="form-group" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
-     <div><label>Giá</label><input type="number" id="cPrice" min="1" max="10" value="5"></div>
-     <div><label>Chất lượng</label><input type="number" id="cQuality" min="1" max="10" value="5"></div>
-     <div><label>Phục vụ</label><input type="number" id="cService" min="1" max="10" value="5"></div>
-     <div><label>Không gian</label><input type="number" id="cSpace" min="1" max="10" value="5"></div>
-    </div>
-    <div class="form-group">
-     <label>Ảnh (có thể chọn nhiều)</label>
-     <input type="file" id="cImages" multiple accept="image/*">
-    </div>
-    <label><input type="checkbox" id="cAnon"> Ẩn danh</label>
-    <br><br>
-    <button onclick="submitComment()" style="background:#3b82f6;color:white;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;width:100%">Gửi bình luận</button>
-   </div>
-  </div>
- </div>
 </div>
 
-<div id="zoom" onclick="this.style.display='none'">
- <img id="zoomImg">
+<!-- ZOOM IMAGE -->
+<div class="zoom-overlay" id="zoomOverlay" onclick="closeZoom()">
+    <img id="zoomImg">
 </div>
 
 <script>
-const DATA=[
-{
- id:1,
- name:"Quán cơm cô Đẹp",
- map:"https://maps.google.com",
- tags:["cơm","rẻ","no"],
- keywords:["ăn no","35k","25k","sinh viên"],
- photos:{
-  place:[
-   "https://images.foody.vn/res/g1/123/prof/s640x400.jpg",
-   "https://images.foody.vn/res/g1/123/s640x400.jpg"
-  ]
- },
- ratings:[{price:9,quality:8,service:7,space:6}],
- comments:[
-  {user:"Ẩn danh",text:"Rẻ thật, ăn no",img:"https://i.pravatar.cc/100?1"}
- ]
-},
-{
- id:2,
- name:"Cafe Học Bài 24h",
- map:"https://maps.google.com",
- tags:["cafe","yên tĩnh"],
- keywords:["học bài","wifi","đêm"],
- photos:{place:[
-  "https://images.foody.vn/res/g2/456/prof/s640x400.jpg"
- ]},
- ratings:[{price:7,quality:8,service:8,space:9}],
- comments:[]
-},
-{
- id:3,
- name:"Chợ Sinh Viên",
- map:"https://maps.google.com",
- tags:["chợ","rẻ"],
- keywords:["ăn vặt","tiết kiệm"],
- photos:{place:[
-  "https://images.foody.vn/res/g3/789/prof/s640x400.jpg"
- ]},
- ratings:[{price:10,quality:7,service:6,space:6}],
- comments:[]
-},
-{
- id:4,
- name:"Bún bò Huế",
- map:"https://maps.google.com",
- tags:["bún","no"],
- keywords:["ăn sáng","nóng"],
- photos:{place:[
-  "https://images.foody.vn/res/g4/321/prof/s640x400.jpg"
- ]},
- ratings:[{price:8,quality:9,service:7,space:7}],
- comments:[]
-},
-{
- id:5,
- name:"Trà sữa giá sinh viên",
- map:"https://maps.google.com",
- tags:["trà sữa","rẻ"],
- keywords:["ngọt","chill"],
- photos:{place:[
-  "https://images.foody.vn/res/g5/654/prof/s640x400.jpg"
- ]},
- ratings:[{price:8,quality:7,service:8,space:8}],
- comments:[]
-}
+// Sample data - using local static images
+const DATA = [
+    {
+        id: 1,
+        name: "Quán cơm cô Đẹp",
+        map: "https://maps.google.com",
+        tags: ["Cơm", "Rẻ", "No"],
+        keywords: ["ăn no", "35k", "25k", "sinh viên"],
+        photos: {
+            place: [
+                "{% static 'image/food/1.jpg' %}",
+                "{% static 'image/food/2.jpg' %}"
+            ]
+        },
+        ratings: [{price: 9, quality: 8, service: 7, space: 6}],
+        comments: [
+            {user: "Sinh viên năm 3", text: "Rẻ thật, ăn no bụng", date: "2024-01-15", scores: {price: 9, quality: 8, service: 7, space: 6}, images: []}
+        ]
+    },
+    {
+        id: 2,
+        name: "Cafe Học Bài 24h",
+        map: "https://maps.google.com",
+        tags: ["Cafe", "Yên tĩnh", "Wifi"],
+        keywords: ["học bài", "wifi", "đêm"],
+        photos: {
+            place: ["{% static 'image/food/4.jpg' %}"]
+        },
+        ratings: [{price: 7, quality: 8, service: 8, space: 9}],
+        comments: []
+    },
+    {
+        id: 3,
+        name: "Chợ Sinh Viên",
+        map: "https://maps.google.com",
+        tags: ["Chợ", "Rẻ", "Ăn vặt"],
+        keywords: ["ăn vặt", "tiết kiệm"],
+        photos: {
+            place: ["{% static 'image/food/5.jpg' %}"]
+        },
+        ratings: [{price: 10, quality: 7, service: 6, space: 6}],
+        comments: []
+    },
+    {
+        id: 4,
+        name: "Bún bò Huế",
+        map: "https://maps.google.com",
+        tags: ["Bún", "Nóng", "Sáng"],
+        keywords: ["ăn sáng", "nóng"],
+        photos: {
+            place: ["{% static 'image/food/6.jpg' %}"]
+        },
+        ratings: [{price: 8, quality: 9, service: 7, space: 7}],
+        comments: []
+    },
+    {
+        id: 5,
+        name: "Trà sữa giá sinh viên",
+        map: "https://maps.google.com",
+        tags: ["Trà sữa", "Rẻ", "Chill"],
+        keywords: ["ngọt", "chill"],
+        photos: {
+            place: ["{% static 'image/food/7.jpg' %}"]
+        },
+        ratings: [{price: 8, quality: 7, service: 8, space: 8}],
+        comments: []
+    },
+    {
+        id: 6,
+        name: "Bánh mì thịt nướng",
+        map: "https://maps.google.com",
+        tags: ["Bánh mì", "Nhanh"],
+        keywords: ["sáng", "trưa"],
+        photos: {
+            place: ["{% static 'image/food/8.jpg' %}"]
+        },
+        ratings: [{price: 7, quality: 8, service: 9, space: 5}],
+        comments: []
+    }
 ];
 
-function avg(p){
- let t={price:0,quality:0,service:0,space:0};
- p.ratings.forEach(r=>Object.keys(t).forEach(k=>t[k]+=r[k]));
- Object.keys(t).forEach(k=>t[k]/=p.ratings.length||1);
- return t;
-}
-
-function render(){
- const q=search.value.toLowerCase();
- list.innerHTML="";
- DATA.filter(p=>{
-  if(!q)return true;
-  return p.name.toLowerCase().includes(q)
-   || p.tags.some(t=>q.includes(t))
-   || p.keywords.some(k=>q.includes(k));
- }).forEach(p=>{
-  const a=avg(p);
-  list.innerHTML+=`
-   <div class="card" onclick="openDetail(${p.id})">
-    <img src="${p.photos.place[0]}">
-    <div class="card-body">
-     <h5>${p.name}</h5>
-     <small>⭐ ${((a.price+a.quality+a.service+a.space)/4).toFixed(1)}</small>
-    </div>
-   </div>`;
- });
-}
-
+const STATIC_URL = "{% static '' %}";
 let currentPlaceId = null;
 
-function openDetail(id){
- const p=DATA.find(x=>x.id===id);
- currentPlaceId = id;
- detail.style.display="flex";
- const a=avg(p);
-
- dName.innerText=p.name;
- dMap.href=p.map;
- dAvg.innerText=((a.price+a.quality+a.service+a.space)/4).toFixed(1);
- sPrice.innerText=a.price.toFixed(1);
- sQuality.innerText=a.quality.toFixed(1);
- sService.innerText=a.service.toFixed(1);
- sSpace.innerText=a.space.toFixed(1);
-
- dMain.src=p.photos.place[0];
- dGallery.innerHTML="";
- p.photos.place.forEach(i=>{
-  dGallery.innerHTML+=`<img src="${i}" onclick="zoomImg.src='${i}';zoom.style.display='flex'">`;
- });
-
- // Load comments from backend
- loadComments(id);
+function avg(p) {
+    let t = {price: 0, quality: 0, service: 0, space: 0};
+    p.ratings.forEach(r => Object.keys(t).forEach(k => t[k] += r[k]));
+    Object.keys(t).forEach(k => t[k] /= p.ratings.length || 1);
+    return t;
 }
 
-function loadComments(placeId){
- fetch(`/comment/list/${placeId}/`)
- .then(r=>r.json())
- .then(data=>{
-  commentList.innerHTML="";
-  data.forEach(c=>{
-   let imgsHtml = "";
-   if(c.images && c.images.length > 0){
-    imgsHtml = `<div class="comment-imgs">` + 
-     c.images.map(img=>`<img src="${img}" onclick="zoomImg.src='${img}';zoom.style.display='flex'">`).join('') + 
-     `</div>`;
-   }
-   commentList.innerHTML+=`
-    <div class="comment">
-     <b>${c.user}</b>
-     <p>${c.content}</p>
-     ${imgsHtml}
-    </div>`;
-  });
- })
- .catch(()=>{
-  // Fallback to static data if backend not available
-  const p=DATA.find(x=>x.id===placeId);
-  if(p && p.comments){
-   commentList.innerHTML="";
-   p.comments.forEach(c=>{
-    commentList.innerHTML+=`
-     <div class="comment">
-      <b>${c.user}</b>
-      <p>${c.text}</p>
-     </div>`;
-   });
-  }
- });
+function render() {
+    const q = document.getElementById('search').value.toLowerCase();
+    const container = document.getElementById('restaurantList');
+    container.innerHTML = "";
+    
+    DATA.filter(p => {
+        if (!q) return true;
+        return p.name.toLowerCase().includes(q) ||
+               p.tags.some(t => q.includes(t.toLowerCase())) ||
+               p.keywords.some(k => q.includes(k));
+    }).forEach(p => {
+        const a = avg(p);
+        const overall = ((a.price + a.quality + a.service + a.space) / 4).toFixed(1);
+        
+        container.innerHTML += `
+            <div class="restaurant-card" onclick="openDetail(${p.id})">
+                <img src="${p.photos.place[0]}" alt="${p.name}">
+                <div class="restaurant-info">
+                    <div class="restaurant-name">${p.name}</div>
+                    <div class="restaurant-tags">
+                        ${p.tags.slice(0, 3).map(t => `<span class="tag-badge ${t === 'Cơm' || t === 'Cafe' ? 'purple' : 'orange'}">${t}</span>`).join('')}
+                    </div>
+                    <div class="restaurant-rating">
+                        <span class="rating-stars">⭐ ${overall}</span>
+                        <span>${p.comments.length} bình luận</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
 }
 
-function getCsrfToken(){
- const name = 'csrftoken';
- const value = `; ${document.cookie}`.split(`; ${name}=`)[1].split(';')[0];
- return value;
+function openDetail(id) {
+    const p = DATA.find(x => x.id === id);
+    currentPlaceId = id;
+    
+    const modal = document.getElementById('detailModal');
+    const a = avg(p);
+    const overall = ((a.price + a.quality + a.service + a.space) / 4).toFixed(1);
+    
+    document.getElementById('dName').innerText = p.name;
+    document.getElementById('dMap').href = p.map;
+    document.getElementById('dOverall').innerText = overall + "/10";
+    document.getElementById('sPrice').innerText = a.price.toFixed(1);
+    document.getElementById('sQuality').innerText = a.quality.toFixed(1);
+    document.getElementById('sService').innerText = a.service.toFixed(1);
+    document.getElementById('sSpace').innerText = a.space.toFixed(1);
+    
+    document.getElementById('dMain').src = p.photos.place[0];
+    const gallery = document.getElementById('dGallery');
+    gallery.innerHTML = "";
+    p.photos.place.forEach((img, idx) => {
+        gallery.innerHTML += `<img src="${img}" onclick="zoomImage('${img}')" ${idx === 0 ? 'style="border-color:#6f42c1"' : ''}>`;
+    });
+    
+    document.getElementById('commentCount').innerText = p.comments.length;
+    renderComments(p.comments);
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
 }
 
-function submitComment(){
- const fd = new FormData();
- fd.append("csrfmiddlewaretoken", getCsrfToken());
- fd.append("display_name", document.getElementById("cName").value);
- fd.append("content", document.getElementById("cText").value);
- fd.append("price", document.getElementById("cPrice").value);
- fd.append("quality", document.getElementById("cQuality").value);
- fd.append("service", document.getElementById("cService").value);
- fd.append("space", document.getElementById("cSpace").value);
- fd.append("is_anonymous", document.getElementById("cAnon").checked);
-
- const imgFiles = document.getElementById("cImages").files;
- for(let i=0; i<imgFiles.length; i++){
-  fd.append("images", imgFiles[i]);
- }
-
- fetch(`/comment/${currentPlaceId}/`,{
-  method:"POST",
-  body:fd
- })
- .then(r=>r.json())
- .then(d=>{
-  if(d.success){
-   alert("Đã gửi bình luận!");
-   // Clear form
-   document.getElementById("cName").value="";
-   document.getElementById("cText").value="";
-   document.getElementById("cImages").value="";
-   // Reload comments
-   loadComments(currentPlaceId);
-  }else{
-   alert("Lỗi: " + (d.error || ""));
-  }
- })
- .catch(e=>{
-  console.error(e);
-  alert("Có lỗi xảy ra!");
- });
+function renderComments(comments) {
+    const container = document.getElementById('commentList');
+    if (comments.length === 0) {
+        container.innerHTML = '<p style="color: #9ca3af; text-align: center; padding: 20px;">Chưa có bình luận nào</p>';
+        return;
+    }
+    
+    container.innerHTML = comments.map(c => {
+        let imagesHtml = '';
+        if (c.images && c.images.length > 0) {
+            imagesHtml = `<div class="comment-images">${c.images.map(img => `<img src="${img}" onclick="zoomImage('${img}')">`).join('')}</div>`;
+        }
+        return `
+            <div class="comment-item">
+                <div class="comment-header">
+                    <span class="comment-user">${c.user}</span>
+                    <span class="comment-date">${c.date}</span>
+                </div>
+                <div class="comment-content">${c.text}</div>
+                <div class="comment-scores">
+                    <span class="comment-score">💰 ${c.scores.price}</span>
+                    <span class="comment-score">🍽️ ${c.scores.quality}</span>
+                    <span class="comment-score">👨‍🍳 ${c.scores.service}</span>
+                    <span class="comment-score">🏠 ${c.scores.space}</span>
+                </div>
+                ${imagesHtml}
+            </div>
+        `;
+    }).join('');
 }
 
-detail.onclick=e=>{if(e.target===detail)detail.style.display="none"};
-search.oninput=render;
+function closeModal() {
+    document.getElementById('detailModal').classList.remove('active');
+    document.body.style.overflow = '';
+    document.getElementById('reviewForm').classList.remove('active');
+}
+
+function toggleReviewForm() {
+    document.getElementById('reviewForm').classList.toggle('active');
+}
+
+function updateSlider(type) {
+    const val = document.getElementById('c' + type).value;
+    document.getElementById('slider' + type).innerText = val;
+}
+
+function zoomImage(src) {
+    document.getElementById('zoomImg').src = src;
+    document.getElementById('zoomOverlay').classList.add('active');
+}
+
+function closeZoom() {
+    document.getElementById('zoomOverlay').classList.remove('active');
+}
+
+function getCsrfToken() {
+    const name = 'csrftoken';
+    const value = `; ${document.cookie}`.split(`; ${name}=`)[1].split(';')[0];
+    return value;
+}
+
+function submitComment() {
+    const fd = new FormData();
+    fd.append("csrfmiddlewaretoken", getCsrfToken());
+    fd.append("display_name", document.getElementById("cName").value || "Ẩn danh");
+    fd.append("content", document.getElementById("cText").value);
+    fd.append("price", document.getElementById("cPrice").value);
+    fd.append("quality", document.getElementById("cQuality").value);
+    fd.append("service", document.getElementById("cService").value);
+    fd.append("space", document.getElementById("cSpace").value);
+    fd.append("is_anonymous", document.getElementById("cAnon").checked);
+
+    const imgFiles = document.getElementById("cImages").files;
+    for(let i=0; i<imgFiles.length; i++){
+        fd.append("images", imgFiles[i]);
+    }
+
+    fetch(`/comment/${currentPlaceId}/`, {
+        method: "POST",
+        body: fd
+    })
+    .then(r => r.json())
+    .then(d => {
+        if (d.success) {
+            alert("Đã gửi bình luận!");
+            document.getElementById("cName").value = "";
+            document.getElementById("cText").value = "";
+            document.getElementById("cImages").value = "";
+            loadComments(currentPlaceId);
+            toggleReviewForm();
+        } else {
+            alert("Lỗi: " + (d.error || ""));
+        }
+    })
+    .catch(() => {
+        // Fallback: add comment locally
+        const p = DATA.find(x => x.id === currentPlaceId);
+        const newComment = {
+            user: document.getElementById("cName").value || "Ẩn danh",
+            text: document.getElementById("cText").value,
+            date: new Date().toISOString().split('T')[0],
+            scores: {
+                price: parseInt(document.getElementById("cPrice").value),
+                quality: parseInt(document.getElementById("cQuality").value),
+                service: parseInt(document.getElementById("cService").value),
+                space: parseInt(document.getElementById("cSpace").value)
+            },
+            images: []
+        };
+        p.comments.unshift(newComment);
+        renderComments(p.comments);
+        document.getElementById('commentCount').innerText = p.comments.length;
+        alert("Đã gửi bình luận!");
+        document.getElementById("cName").value = "";
+        document.getElementById("cText").value = "";
+        document.getElementById("cImages").value = "";
+        toggleReviewForm();
+    });
+}
+
+function loadComments(placeId) {
+    fetch(`/comment/list/${placeId}/`)
+    .then(r => r.json())
+    .then(data => {
+        const p = DATA.find(x => x.id === placeId);
+        if (p) p.comments = data;
+        renderComments(data);
+        document.getElementById('commentCount').innerText = data.length;
+    })
+    .catch(() => {});
+}
+
+// Close modal on overlay click
+document.getElementById('detailModal').onclick = function(e) {
+    if (e.target === this) closeModal();
+};
+
+// Search listener
+document.getElementById('search').oninput = render;
+
+// Initial render
 render();
 </script>
 

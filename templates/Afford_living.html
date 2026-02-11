@@ -1,0 +1,1004 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<style>
+    /* ===== BASE STYLES ===== */
+    body { background: #f9fafb; color: #1f2937; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    
+    /* ===== PIXEL TITLE ===== */
+    .pixel-title {
+        font-family: "Press Start 2P", monospace;
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    /* ===== SEARCH BOX ===== */
+    .search-section {
+        max-width: 600px;
+        margin: 0 auto 40px;
+    }
+    .search-box {
+        position: relative;
+    }
+    .search-box input {
+        width: 100%;
+        padding: 16px 20px;
+        font-size: 16px;
+        border: 3px solid #000;
+        border-radius: 8px;
+        box-shadow: 4px 4px 0 #000;
+        outline: none;
+    }
+    .search-box input:focus {
+        box-shadow: 6px 6px 0 #10b981;
+    }
+
+    /* ===== FILTER TAGS ===== */
+    .filter-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+    .filter-tag {
+        padding: 10px 20px;
+        background: #fff;
+        border: 3px solid #000;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 4px 4px 0 #000;
+        transition: all 0.2s;
+    }
+    .filter-tag:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 #000;
+    }
+    .filter-tag.active {
+        background: #10b981;
+        color: white;
+        box-shadow: 2px 2px 0 #000;
+    }
+
+    /* ===== ACCOMMODATION GRID ===== */
+    .accommodation-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 24px;
+    }
+
+    .accommodation-card {
+        background: #fff;
+        border: 3px solid #000;
+        border-radius: 12px;
+        box-shadow: 6px 6px 0 #000;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        color: inherit;
+    }
+    .accommodation-card:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 8px 8px 0 #000;
+    }
+    .accommodation-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+    .accommodation-info {
+        padding: 16px;
+    }
+    .accommodation-name {
+        font-family: monospace;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+    .accommodation-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 12px;
+    }
+    .tag-badge {
+        padding: 4px 8px;
+        background: #e5e7eb;
+        border: 2px solid #000;
+        font-size: 11px;
+        font-weight: bold;
+    }
+    .tag-badge.green { background: #10b981; color: white; }
+    .tag-badge.blue { background: #3b82f6; color: white; }
+    .tag-badge.orange { background: #f59e0b; color: white; }
+    .accommodation-price {
+        font-family: "Press Start 2P", monospace;
+        font-size: 14px;
+        color: #10b981;
+        padding-top: 12px;
+        border-top: 2px solid #000;
+    }
+
+    /* ===== OVERLAY/MODAL ===== */
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        padding: 20px;
+    }
+    .modal-overlay.active {
+        display: flex;
+    }
+
+    .modal-content {
+        background: #fff;
+        border: 4px solid #000;
+        border-radius: 16px;
+        box-shadow: 8px 8px 0 #000;
+        max-width: 1100px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-header {
+        background: linear-gradient(to right, #10b981, #059669);
+        color: white;
+        padding: 24px;
+    }
+    .modal-header h2 {
+        font-family: monospace;
+        font-size: 24px;
+        margin-bottom: 8px;
+    }
+    .modal-header a {
+        color: white;
+        text-decoration: underline;
+    }
+    .modal-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        background: rgba(0,0,0,0.3);
+        border: 2px solid #fff;
+        border-radius: 50%;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        padding: 24px;
+    }
+    @media (max-width: 768px) {
+        .modal-body { grid-template-columns: 1fr; }
+    }
+
+    .detail-section h3 {
+        font-family: monospace;
+        font-size: 16px;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #000;
+    }
+
+    /* ===== IMAGES ===== */
+    .main-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border: 3px solid #000;
+        border-radius: 12px;
+        margin-bottom: 12px;
+    }
+    .gallery {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+    }
+    .gallery img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border: 2px solid #000;
+        border-radius: 8px;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+    .gallery img:hover {
+        border-color: #10b981;
+    }
+
+    /* ===== INFO GRID ===== */
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+    .info-item {
+        background: #f3f4f6;
+        border: 2px solid #000;
+        border-radius: 8px;
+        padding: 12px;
+        text-align: center;
+    }
+    .info-label {
+        font-size: 12px;
+        color: #6b7280;
+        margin-bottom: 4px;
+    }
+    .info-value {
+        font-family: "Press Start 2P", monospace;
+        font-size: 14px;
+        font-weight: bold;
+        color: #10b981;
+    }
+
+    .amenities {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+    .amenity {
+        padding: 6px 12px;
+        background: #10b981;
+        color: white;
+        border: 2px solid #000;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .description {
+        background: #f9fafb;
+        border: 2px solid #000;
+        border-radius: 8px;
+        padding: 16px;
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    /* ===== REVIEWS ===== */
+    .reviews-section h3 {
+        font-family: monospace;
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+    .reviews-list {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    .review-item {
+        background: #f9fafb;
+        border: 2px solid #000;
+        border-radius: 10px;
+        padding: 16px;
+        margin-bottom: 12px;
+    }
+    .review-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+    .review-user {
+        font-weight: bold;
+        font-family: monospace;
+    }
+    .review-rating {
+        color: #f59e0b;
+    }
+    .review-content {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+    .review-date {
+        font-size: 11px;
+        color: #9ca3af;
+        margin-top: 8px;
+    }
+    .review-images {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+    }
+    .review-images img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border: 2px solid #000;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    /* ===== REVIEW FORM ===== */
+    .review-form {
+        margin-top: 20px;
+        padding: 20px;
+        background: #f9fafb;
+        border: 3px solid #000;
+        border-radius: 12px;
+        display: none;
+    }
+    .review-form.active {
+        display: block;
+    }
+    .review-form h4 {
+        font-family: monospace;
+        margin-bottom: 16px;
+    }
+    .form-group {
+        margin-bottom: 16px;
+    }
+    .form-group label {
+        display: block;
+        font-size: 13px;
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+    .form-group input[type="text"],
+    .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #000;
+        border-radius: 6px;
+        font-family: monospace;
+    }
+    .form-group textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+    
+    .slider-group {
+        margin-bottom: 16px;
+    }
+    .slider-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+    }
+    .slider-value {
+        font-family: "Press Start 2P", monospace;
+        font-weight: bold;
+        color: #10b981;
+    }
+    .slider-group input[type="range"] {
+        width: 100%;
+        height: 8px;
+        border: 2px solid #000;
+        border-radius: 4px;
+        appearance: none;
+        background: #e5e7eb;
+    }
+    .slider-group input[type="range"]::-webkit-slider-thumb {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        background: #10b981;
+        border: 2px solid #000;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    .submit-btn {
+        width: 100%;
+        padding: 14px;
+        background: #10b981;
+        color: white;
+        border: 3px solid #000;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 4px 4px 0 #000;
+        transition: all 0.2s;
+    }
+    .submit-btn:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 #000;
+    }
+
+    .toggle-form-btn {
+        width: 100%;
+        padding: 14px;
+        background: #f3f4f6;
+        color: #1f2937;
+        border: 3px solid #000;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 4px 4px 0 #000;
+        transition: all 0.2s;
+        margin-top: 16px;
+    }
+    .toggle-form-btn:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 #000;
+    }
+
+    /* ===== ZOOM ===== */
+    .zoom-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.9);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+    }
+    .zoom-overlay.active {
+        display: flex;
+    }
+    .zoom-overlay img {
+        max-width: 90%;
+        max-height: 90%;
+        border: 3px solid #fff;
+    }
+
+    /* ===== EMPTY STATE ===== */
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #9ca3af;
+    }
+    .empty-state svg {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 16px;
+    }
+</style>
+
+<div class="container">
+    <h1 class="pixel-title">🏠 TÌM NƠI Ở GẦN FPT</h1>
+
+    <!-- SEARCH -->
+    <div class="search-section">
+        <div class="search-box">
+            <input id="search" placeholder="Tìm theo khu vực, tên... (VD: Ngũ Hành Sơn, quận 7)">
+        </div>
+    </div>
+
+    <!-- FILTER TAGS -->
+    <div class="filter-tags">
+        <button class="filter-tag active" data-filter="all">Tất cả</button>
+        <button class="filter-tag" data-filter="KTX">Ký túc xá</button>
+        <button class="filter-tag" data-filter="phongtro">Phòng trọ</button>
+        <button class="filter-tag" data-filter="nha nguyen can">Nhà nguyên căn</button>
+        <button class="filter-tag" data-filter="quantrum">Quận Thanh Khê</button>
+        <button class="filter-tag" data-filter="nguhanhson">Ngũ Hành Sơn</button>
+        <button class="filter-tag" data-filter="hoakhue">Hòa Khê</button>
+    </div>
+
+    <!-- ACCOMMODATION LIST -->
+    <div class="accommodation-grid" id="accommodationList"></div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="detailModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <h2 id="dName"></h2>
+            <a id="dMap" target="_blank">📍 Xem trên Google Maps</a>
+        </div>
+        
+        <div class="modal-body">
+            <!-- LEFT: Info & Images -->
+            <div class="detail-section">
+                <h3>📸 Hình ảnh</h3>
+                <img id="dMain" class="main-image">
+                <div class="gallery" id="dGallery"></div>
+
+                <h3 style="margin-top: 20px">📋 Thông tin</h3>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Giá phòng</div>
+                        <div class="info-value" id="dPrice"></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Diện tích</div>
+                        <div class="info-value" id="dArea"></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Khoảng cách</div>
+                        <div class="info-value" id="dDistance"></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Số người</div>
+                        <div class="info-value" id="dCapacity"></div>
+                    </div>
+                </div>
+
+                <h3>🏷️ Tiện ích</h3>
+                <div class="amenities" id="dAmenities"></div>
+
+                <div class="description" id="dDescription"></div>
+            </div>
+
+            <!-- RIGHT: Reviews & Form -->
+            <div class="detail-section reviews-section">
+                <h3>💬 Đánh giá (<span id="reviewCount">0</span>)</h3>
+                
+                <div class="reviews-list" id="reviewList">
+                    <p style="color: #9ca3af; text-align: center;">Chưa có đánh giá nào</p>
+                </div>
+
+                <button class="toggle-form-btn" onclick="toggleReviewForm()">
+                    ✏️ Viết đánh giá
+                </button>
+
+                <!-- REVIEW FORM -->
+                <div class="review-form" id="reviewForm">
+                    <h4>Thêm đánh giá mới</h4>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Tên của bạn</label>
+                        <input type="text" id="cName" placeholder="Nhập tên hoặc ẩn danh">
+                    </div>
+                    
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <label>Giá phòng 💰</label>
+                            <span class="slider-value" id="sliderPrice">5</span>
+                        </div>
+                        <input type="range" id="cPrice" min="1" max="10" value="5" oninput="updateSlider('Price')">
+                    </div>
+                    
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <label>Vị trí 📍</label>
+                            <span class="slider-value" id="sliderLocation">5</span>
+                        </div>
+                        <input type="range" id="cLocation" min="1" max="10" value="5" oninput="updateSlider('Location')">
+                    </div>
+                    
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <label>Tiện nghi 🏠</label>
+                            <span class="slider-value" id="sliderAmenity">5</span>
+                        </div>
+                        <input type="range" id="cAmenity" min="1" max="10" value="5" oninput="updateSlider('Amenity')">
+                    </div>
+                    
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <label>An ninh 🔒</label>
+                            <span class="slider-value" id="sliderSecurity">5</span>
+                        </div>
+                        <input type="range" id="cSecurity" min="1" max="10" value="5" oninput="updateSlider('Security')">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Nội dung đánh giá</label>
+                        <textarea id="cText" placeholder="Chia sẻ trải nghiệm của bạn..." rows="4"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Ảnh đính kèm (có thể chọn nhiều)</label>
+                        <input type="file" id="cImages" multiple accept="image/*">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="cAnon"> Ẩn danh
+                        </label>
+                    </div>
+                    
+                    <button class="submit-btn" onclick="submitReview()">📤 Gửi đánh giá</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ZOOM IMAGE -->
+<div class="zoom-overlay" id="zoomOverlay" onclick="closeZoom()">
+    <img id="zoomImg">
+</div>
+
+<script>
+// Sample data - using local static images
+const DATA = [
+    {
+        id: 1,
+        name: "Ký túc xá FPT Đà Nẵng",
+        map: "https://maps.google.com",
+        type: "KTX",
+        area: "Nam Kỳ Khởi Nghĩa",
+        price: "800k - 1.2tr",
+        areaValue: "20-30m²",
+        distance: "500m",
+        capacity: "2-4 người/phòng",
+        keywords: ["ktx", "fpt", "gần"],
+        tags: ["KTX", "Gần FPT"],
+        amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Giặt sấy", "Thể thao"],
+        photos: {
+            place: [
+                "{% static 'image/living/1.jpg' %}",
+                "{% static 'image/living/2.jpg' %}"
+            ]
+        },
+        description: "Ký túc xá chính thức của trường ĐH FPT, gần khuôn viên trường. An ninh tốt, có nhiều tiện ích cho sinh viên.",
+        ratings: [{price: 8, location: 9, amenity: 7, security: 8}],
+        reviews: [
+            {user: "Sinh viên năm 2", rating: "⭐⭐⭐⭐⭐", text: "Gần trường lắm, đi bộ 5 phút là tới. An ninh tốt.", date: "2024-01-15", images: []}
+        ]
+    },
+    {
+        id: 2,
+        name: "Phòng trọ Ngũ Hành Sơn",
+        map: "https://maps.google.com",
+        type: "phongtro",
+        area: "Ngũ Hành Sơn",
+        price: "1.5tr - 2tr",
+        areaValue: "25-35m²",
+        distance: "800m",
+        capacity: "1-2 người",
+        keywords: ["ngũ hành sơn", "phòng trọ", "gần"],
+        tags: ["Phòng trọ", "Ngũ Hành Sơn"],
+        amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Máy giặt"],
+        photos: {
+            place: ["{% static 'image/living/3.jpg' %}"]
+        },
+        description: "Phòng trọ sạch sẽ, gần khu vực Văn Lang, đi xe máy 5 phút tới trường. Chủ nhà thân thiện.",
+        ratings: [{price: 6, location: 8, amenity: 8, security: 7}],
+        reviews: []
+    },
+    {
+        id: 3,
+        name: "Nhà nguyên căn Hòa Khê",
+        map: "https://maps.google.com",
+        type: "nha nguyen can",
+        area: "Hòa Khê",
+        price: "3.5tr - 5tr",
+        areaValue: "60-80m²",
+        distance: "2km",
+        capacity: "3-5 người",
+        keywords: ["nhà nguyên căn", "hòa khê", "thanh khê"],
+        tags: ["Nhà nguyên căn", "Thanh Khê"],
+        amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Máy giặt", "Bếp", "Sân"],
+        photos: {
+            place: ["{% static 'image/living/4.jpg' %}"]
+        },
+        description: "Nhà nguyên căn rộng rãi, phù hợp cho nhóm sinh viên muốn ở chung. Có sân để xe, nấu ăn được.",
+        ratings: [{price: 7, location: 6, amenity: 9, security: 8}],
+        reviews: [
+            {user: "Nhóm 4 bạn", rating: "⭐⭐⭐⭐", text: "Ở 4 người thì giá chia ra rẻ lắm. Nhà rộng, nấu ăn thoải mái.", date: "2024-01-10", images: []}
+        ]
+    },
+    {
+        id: 4,
+        name: "Studio gần FPT",
+        map: "https://maps.google.com",
+        type: "phongtro",
+        area: "Văn Lang",
+        price: "2tr - 2.5tr",
+        areaValue: "28m²",
+        distance: "1km",
+        capacity: "1-2 người",
+        keywords: ["studio", "văn lang", "gần fpt"],
+        tags: ["Phòng trọ", "Studio"],
+        amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Giường", "Bàn học"],
+        photos: {
+            place: ["{% static 'image/living/5.jpg' %}"]
+        },
+        description: "Phòng studio mini, đầy đủ đồ cho 1 người. Đi xe 3 phút tới trường. Có bảo vệ 24/7.",
+        ratings: [{price: 7, location: 9, amenity: 8, security: 9}],
+        reviews: []
+    },
+    {
+        id: 5,
+        name: "Ktx Thanh Khê",
+        map: "https://maps.google.com",
+        type: "KTX",
+        area: "Thanh Khê",
+        price: "600k - 900k",
+        areaValue: "18-25m²",
+        distance: "3km",
+        capacity: "2-3 người",
+        keywords: ["ktx", "thanh khê", "rẻ"],
+        tags: ["KTX", "Giá rẻ"],
+        amenities: ["Wifi", "Quạt", "Nóng lạnh", "Giặt"],
+        photos: {
+            place: ["{% static 'image/living/6.jpg' %}"]
+        },
+        description: "Ktx giá rẻ, phù hợp cho sinh viên muốn tiết kiệm chi phí. Đi xe bus hoặc grab tới trường.",
+        ratings: [{price: 9, location: 5, amenity: 6, security: 7}],
+        reviews: [
+            {user: "Sinh viên năm 1", rating: "⭐⭐⭐⭐", text: "Giá rẻ nhất quanh đây. Đi xa hơn một chút nhưng đáng giá.", date: "2024-01-05", images: []}
+        ]
+    },
+    {
+        id: 6,
+        name: "Căn hộ mini FPT",
+        map: "https://maps.google.com",
+        type: "phongtro",
+        area: "Đường 2/9",
+        price: "2.5tr - 3tr",
+        areaValue: "32m²",
+        distance: "1.5km",
+        capacity: "1-2 người",
+        keywords: ["căn hộ", "mini", "2/9"],
+        tags: ["Căn hộ", "Hải Châu"],
+        amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Máy giặt", "Ban công"],
+        photos: {
+            place: ["{% static 'image/living/7.jpg' %}"]
+        },
+        description: "Căn hộ mini đầy đủ tiện nghi, có ban công, view đẹp. Gần siêu thị và trung tâm thương mại.",
+        ratings: [{price: 6, location: 8, amenity: 9, security: 8}],
+        reviews: []
+    }
+];
+
+let currentId = null;
+let activeFilter = 'all';
+
+function avg(p) {
+    let t = {price: 0, location: 0, amenity: 0, security: 0};
+    p.ratings.forEach(r => Object.keys(t).forEach(k => t[k] += (r[k] || 0)));
+    Object.keys(t).forEach(k => t[k] /= p.ratings.length || 1);
+    return t;
+}
+
+function render() {
+    const q = document.getElementById('search').value.toLowerCase();
+    const container = document.getElementById('accommodationList');
+    container.innerHTML = "";
+    
+    let filtered = DATA.filter(p => {
+        if (activeFilter !== 'all') {
+            if (activeFilter === 'KTX' && p.type !== 'KTX') return false;
+            if (activeFilter === 'phongtro' && p.type !== 'phongtro') return false;
+            if (activeFilter === 'nha nguyen can' && p.type !== 'nha nguyen can') return false;
+            if (['quantrum', 'nguhanhson', 'hoakhue'].includes(activeFilter)) {
+                if (!p.area.toLowerCase().includes(activeFilter === 'quantrum' ? 'thanh' : activeFilter === 'nguhanhson' ? 'ngũ' : 'hòa')) return false;
+            }
+        }
+        
+        if (!q) return true;
+        return p.name.toLowerCase().includes(q) ||
+               p.area.toLowerCase().includes(q) ||
+               p.tags.some(t => q.includes(t.toLowerCase())) ||
+               p.keywords.some(k => q.includes(k));
+    });
+    
+    if (filtered.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <p>Không tìm thấy nơi ở phù hợp</p>
+            </div>
+        `;
+        return;
+    }
+    
+    filtered.forEach(p => {
+        container.innerHTML += `
+            <div class="accommodation-card" onclick="openDetail(${p.id})">
+                <img src="${p.photos.place[0]}" alt="${p.name}">
+                <div class="accommodation-info">
+                    <div class="accommodation-name">${p.name}</div>
+                    <div class="accommodation-tags">
+                        ${p.tags.slice(0, 3).map(t => `<span class="tag-badge ${t === 'KTX' ? 'green' : t === 'Phòng trọ' ? 'blue' : 'orange'}">${t}</span>`).join('')}
+                    </div>
+                    <div class="accommodation-price">💰 ${p.price}</div>
+                </div>
+            </div>
+        `;
+    });
+}
+
+function openDetail(id) {
+    const p = DATA.find(x => x.id === id);
+    currentId = id;
+    
+    const modal = document.getElementById('detailModal');
+    
+    document.getElementById('dName').innerText = p.name;
+    document.getElementById('dMap').href = p.map;
+    document.getElementById('dPrice').innerText = p.price;
+    document.getElementById('dArea').innerText = p.areaValue;
+    document.getElementById('dDistance').innerText = p.distance;
+    document.getElementById('dCapacity').innerText = p.capacity;
+    document.getElementById('dDescription').innerText = p.description;
+    
+    document.getElementById('dAmenities').innerHTML = p.amenities.map(a => `<span class="amenity">${a}</span>`).join('');
+    
+    document.getElementById('dMain').src = p.photos.place[0];
+    const gallery = document.getElementById('dGallery');
+    gallery.innerHTML = "";
+    p.photos.place.forEach((img, idx) => {
+        gallery.innerHTML += `<img src="${img}" onclick="zoomImage('${img}')" ${idx === 0 ? 'style="border-color:#10b981"' : ''}>`;
+    });
+    
+    document.getElementById('reviewCount').innerText = p.reviews.length;
+    renderReviews(p.reviews);
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function renderReviews(reviews) {
+    const container = document.getElementById('reviewList');
+    if (reviews.length === 0) {
+        container.innerHTML = '<p style="color: #9ca3af; text-align: center; padding: 20px;">Chưa có đánh giá nào</p>';
+        return;
+    }
+    
+    container.innerHTML = reviews.map(r => {
+        let imagesHtml = '';
+        if (r.images && r.images.length > 0) {
+            imagesHtml = `<div class="review-images">${r.images.map(img => `<img src="${img}" onclick="zoomImage('${img}')">`).join('')}</div>`;
+        }
+        return `
+            <div class="review-item">
+                <div class="review-header">
+                    <span class="review-user">${r.user}</span>
+                    <span class="review-rating">${r.rating}</span>
+                </div>
+                <div class="review-content">${r.text}</div>
+                <div class="review-date">${r.date}</div>
+                ${imagesHtml}
+            </div>
+        `;
+    }).join('');
+}
+
+function closeModal() {
+    document.getElementById('detailModal').classList.remove('active');
+    document.body.style.overflow = '';
+    document.getElementById('reviewForm').classList.remove('active');
+}
+
+function toggleReviewForm() {
+    document.getElementById('reviewForm').classList.toggle('active');
+}
+
+function updateSlider(type) {
+    const val = document.getElementById('c' + type).value;
+    document.getElementById('slider' + type).innerText = val;
+}
+
+function zoomImage(src) {
+    document.getElementById('zoomImg').src = src;
+    document.getElementById('zoomOverlay').classList.add('active');
+}
+
+function closeZoom() {
+    document.getElementById('zoomOverlay').classList.remove('active');
+}
+
+function getCsrfToken() {
+    const name = 'csrftoken';
+    const value = `; ${document.cookie}`.split(`; ${name}=`)[1].split(';')[0];
+    return value;
+}
+
+function submitReview() {
+    const fd = new FormData();
+    fd.append("csrfmiddlewaretoken", getCsrfToken());
+    fd.append("display_name", document.getElementById("cName").value || "Ẩn danh");
+    fd.append("content", document.getElementById("cText").value);
+    fd.append("price", document.getElementById("cPrice").value);
+    fd.append("location", document.getElementById("cLocation").value);
+    fd.append("amenity", document.getElementById("cAmenity").value);
+    fd.append("security", document.getElementById("cSecurity").value);
+    fd.append("is_anonymous", document.getElementById("cAnon").checked);
+
+    const imgFiles = document.getElementById("cImages").files;
+    for(let i=0; i<imgFiles.length; i++){
+        fd.append("images", imgFiles[i]);
+    }
+
+    fetch(`/comment/${currentId}/`, {
+        method: "POST",
+        body: fd
+    })
+    .then(r => r.json())
+    .then(d => {
+        if (d.success) {
+            alert("Đã gửi đánh giá!");
+            document.getElementById("cName").value = "";
+            document.getElementById("cText").value = "";
+            document.getElementById("cImages").value = "";
+            loadReviews(currentId);
+            toggleReviewForm();
+        } else {
+            alert("Lỗi: " + (d.error || ""));
+        }
+    })
+    .catch(() => {
+        // Fallback: add review locally
+        const p = DATA.find(x => x.id === currentId);
+        const overall = (
+            parseInt(document.getElementById("cPrice").value) +
+            parseInt(document.getElementById("cLocation").value) +
+            parseInt(document.getElementById("cAmenity").value) +
+            parseInt(document.getElementById("cSecurity").value)
+        ) / 4;
+        
+        let stars = "⭐";
+        for (let i = 1; i < Math.round(overall); i++) stars += "⭐";
+        
+        const newReview = {
+            user: document.getElementById("cName").value || "Ẩn danh",
+            text: document.getElementById("cText").value,
+            rating: stars,
+            date: new Date().toISOString().split('T')[0],
+            images: []
+        };
+        p.reviews.unshift(newReview);
+        renderReviews(p.reviews);
+        document.getElementById('reviewCount').innerText = p.reviews.length;
+        alert("Đã gửi đánh giá!");
+        document.getElementById("cName").value = "";
+        document.getElementById("cText").value = "";
+        document.getElementById("cImages").value = "";
+        toggleReviewForm();
+    });
+}
+
+function loadReviews(id) {
+    fetch(`/comment/list/${id}/`)
+    .then(r => r.json())
+    .then(data => {
+        const p = DATA.find(x => x.id === id);
+        if (p) p.reviews = data;
+        renderReviews(data);
+        document.getElementById('reviewCount').innerText = data.length;
+    })
+    .catch(() => {});
+}
+
+// Filter buttons
+document.querySelectorAll('.filter-tag').forEach(btn => {
+    btn.onclick = function() {
+        document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        activeFilter = this.dataset.filter;
+        render();
+    };
+});
+
+// Close modal on overlay click
+document.getElementById('detailModal').onclick = function(e) {
+    if (e.target === this) closeModal();
+};
+
+// Search listener
+document.getElementById('search').oninput = render;
+
+// Initial render
+render();
+</script>
+
+{% endblock %}
