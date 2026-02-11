@@ -473,6 +473,7 @@
             align-items: center;
             justify-content: center;
             animation: modalFadeIn 0.4s ease;
+            padding: 20px;
         }
 
         .modal-overlay.active {
@@ -493,9 +494,9 @@
         .modal-content {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             border-radius: 30px;
-            max-width: 800px;
-            width: 90%;
-            max-height: 85vh;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
             overflow-y: auto;
             position: relative;
             animation: modalSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -530,7 +531,7 @@
         }
 
         .modal-header {
-            padding: 50px 40px 30px;
+            padding: 40px 35px 25px;
             background: linear-gradient(135deg, 
                 rgba(255, 107, 53, 0.2) 0%,
                 rgba(111, 66, 193, 0.2) 100%
@@ -558,14 +559,14 @@
 
         .modal-close {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 15px;
             background: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(255, 107, 53, 0.5);
             color: white;
             font-size: 1.8rem;
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -584,23 +585,24 @@
 
         .modal-title {
             font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 900;
             background: linear-gradient(135deg, white, var(--gold));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             position: relative;
             z-index: 1;
+            line-height: 1.3;
         }
 
         .modal-body {
-            padding: 40px;
+            padding: 35px;
         }
 
         .course-detail-section {
-            margin-bottom: 35px;
-            padding: 25px;
+            margin-bottom: 25px;
+            padding: 20px;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 15px;
             border-left: 4px solid var(--orange-primary);
@@ -617,30 +619,30 @@
         .detail-label {
             font-weight: 700;
             color: var(--gold);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .detail-label::before {
             content: '◆';
             color: var(--orange-primary);
-            font-size: 0.8rem;
+            font-size: 0.7rem;
         }
 
         .detail-value {
             color: rgba(255, 255, 255, 0.9);
-            font-size: 1.15rem;
-            line-height: 1.8;
+            font-size: 1.05rem;
+            line-height: 1.7;
             font-weight: 400;
         }
 
         .detail-value.large {
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: 900;
             background: linear-gradient(135deg, var(--orange-primary), var(--gold));
             -webkit-background-clip: text;
@@ -650,10 +652,10 @@
 
         .course-description {
             background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(111, 66, 193, 0.1));
-            padding: 30px;
+            padding: 25px;
             border-radius: 15px;
             border: 2px solid rgba(255, 215, 0, 0.3);
-            margin-top: 30px;
+            margin-top: 25px;
             position: relative;
             overflow: hidden;
         }
@@ -670,6 +672,11 @@
             z-index: -1;
             opacity: 0.3;
             filter: blur(10px);
+        }
+
+        .course-description .detail-value {
+            font-size: 0.98rem;
+            line-height: 1.8;
         }
 
         /* Floating Action Button */
@@ -780,11 +787,19 @@
 
             .modal-content {
                 width: 95%;
-                max-height: 90vh;
+                max-height: 95vh;
             }
 
             .modal-title {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
+            }
+
+            .modal-body {
+                padding: 25px;
+            }
+
+            .detail-value.large {
+                font-size: 2.5rem;
             }
 
             .collapse-all-btn {
@@ -796,23 +811,6 @@
                 bottom: 25px;
                 right: 25px;
             }
-        }
-
-        /* Loading animation */
-        @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
-        }
-
-        .loading {
-            animation: shimmer 2s infinite;
-            background: linear-gradient(
-                to right,
-                rgba(255, 255, 255, 0.05) 0%,
-                rgba(255, 255, 255, 0.1) 50%,
-                rgba(255, 255, 255, 0.05) 100%
-            );
-            background-size: 1000px 100%;
         }
     </style>
 </head>
@@ -1096,7 +1094,7 @@
 </div>
 
 <script>
-    // Course data
+    // Course data - PHẦN NÀY ĐÃ SỬA LỖI DẤU PHẨY
     const courseData = {
         'cong-nghe-thong-tin': {
             title: 'Công nghệ thông tin',
@@ -1166,11 +1164,15 @@
         },
         'truyen-thong-marketing': {
             title: 'Truyền thông Marketing tích hợp',
+            code: '7320106',
+            credits: '139',
             description: 'Chương trình đào tạo cử nhân có nền tảng vững chắc về truyền thông và marketing, thành thạo xây dựng chiến lược truyền thông tích hợp, phát triển nội dung sáng tạo và quản trị thương hiệu trên đa nền tảng. Sinh viên được trang bị kỹ năng ứng dụng công nghệ tiên tiến như phân tích dữ liệu khách hàng, AI trong sáng tạo và tối ưu chiến dịch, quản trị truyền thông số và đo lường hiệu quả. Sau khi tốt nghiệp, người học có thể đảm nhận các vị trí như chuyên viên chiến lược thương hiệu, truyền thông tích hợp, sáng tạo nội dung, quản lý cộng đồng hay digital marketer tại doanh nghiệp, agency hoặc startup.'
         },
         'truyen-thong-thuong-hieu': {
             title: 'Truyền thông thương hiệu',
-            description: 'Đào tạo cử nhân có kiến thức chuyên môn sâu về truyền thông thương hiệu, thành thạo trong việc xây dựng chiến lược truyền thông tích hợp, phát triển nội dung sáng tạo và quản trị hình ảnh thương hiệu trên đa nền tảng. Sinh viên có khả năng vận dụng tư duy chiến lược - sáng tạo - dữ liệu để thực hiện các chiến dịch truyền thông, quản lý danh tiếng thương hiệu, vận hành truyền thông số và xử lý tình huống truyền thông trong bối cảnh doanh nghiệp hiện đại. Bên cạnh đó, sinh viên được trang bị khả năng ứng dụng các công nghệ truyền thông tiên tiến như phân tích dữ liệu người dùng, ứng dụng AI trong công việc, quản trị truyền thông số và đo lường hiệu quả chiến dịch, giúp làm việc hiệu quả trong môi trường truyền thông - marketing đang thay đổi nhanh chóng.'
+            code: '7320106',
+            credits: '139',
+            description: 'Đào tạo cử nhân có kiến thức chuyên môn sâu về truyền thông thương hiệu, thành thạo trong việc xây dựng chiến lược truyền thông tích hợp, phát triển nội dung sáng tạo và quản trị hình ảnh thương hiệu trên đa nền tảng. Sinh viên có khả năng vận dụng tư duy chiến lược - sáng tạo - dữ liệu để thực hiện các chiến dịch truyền thông, quản lý danh tiếng thương hiệu, vận hành truyền thông số và xử lý tình huống truyền thông trong bối cảnh doanh nghiệp hiện đại.'
         },
         'ngon-ngu-anh': {
             title: 'Ngôn ngữ Anh',
@@ -1181,7 +1183,8 @@
         'tieng-anh-thuong-mai': {
             title: 'Tiếng Anh thương mại',
             code: '7220201',
-            description: 'Đào tạo cử nhân có chuyên môn sâu về Tiếng Anh thương mại, có năng lực sử dụng tiếng Anh thành thạo trong môi trường kinh doanh quốc tế; am hiểu văn hoá doanh nghiệp, thương mại toàn cầu; có khả năng vận dụng tiếng Anh cho đàm phán, giao tiếp, biên phiên dịch và xử lý hồ sơ thương mại, marketing, logistics, đối ngoại. Sinh viên đồng thời biết ứng dụng công nghệ ngôn ngữ hiện đại (AI, dịch máy, phân tích dữ liệu văn bản) để làm việc hiệu quả trong bối cảnh doanh nghiệp số.'
+            credits: '139',
+            description: 'Đào tạo cử nhân có chuyên môn sâu về Tiếng Anh thương mại, có năng lực sử dụng tiếng Anh thành thạo trong môi trường kinh doanh quốc tế; am hiểu văn hoá doanh nghiệp, thương mại toàn cầu; có khả năng vận dụng tiếng Anh cho đàm phán, giao tiếp, biên phiên dịch và xử lý hồ sơ thương mại, marketing, logistics, đối ngoại.'
         },
         'ngon-ngu-han': {
             title: 'Ngôn ngữ Hàn Quốc',
@@ -1192,91 +1195,98 @@
         'tieng-han-thuong-mai': {
             title: 'Tiếng Hàn thương mại',
             code: '7220210',
-            description: 'Đào tạo cử nhân Tiếng Hàn thương mại có khả năng sử dụng thành thạo hai ngoại ngữ gồm tiếng Hàn và tiếng Anh trong môi trường kinh doanh quốc tế; am hiểu văn hóa, xã hội Hàn Quốc và các quốc gia nói tiếng Anh; có tư duy toàn cầu, khả năng giao tiếp liên văn hóa và năng lực ứng dụng công nghệ trong dịch thuật, đàm phán, truyền thông và hoạt động thương mại quốc tế. Sinh viên sẵn sàng đảm nhiệm các vị trí trong doanh nghiệp Hàn Quốc, tập đoàn đa quốc gia hoặc cơ quan đối ngoại.'
+            credits: '139',
+            description: 'Đào tạo cử nhân Tiếng Hàn thương mại có khả năng sử dụng thành thạo hai ngoại ngữ gồm tiếng Hàn và tiếng Anh trong môi trường kinh doanh quốc tế; am hiểu văn hóa, xã hội Hàn Quốc và các quốc gia nói tiếng Anh; có tư duy toàn cầu, khả năng giao tiếp liên văn hóa và năng lực ứng dụng công nghệ trong dịch thuật, đàm phán, truyền thông và hoạt động thương mại quốc tế.'
         },
         'ngon-ngu-trung': {
             title: 'Ngôn ngữ Trung Quốc',
             code: '7220204',
             credits: '139',
-            description: 'Đào tạo cử nhân thành thạo tiếng Trung trong bối cảnh thương mại quốc tế, có khả năng giao tiếp, đàm phán, biên phiên dịch, xử lý hồ sơ doanh nghiệp trong môi trường chuyên nghiệp. Sinh viên được trang bị kiến thức nền tảng về kinh doanh, xuất nhập khẩu, đối ngoại, hiểu biết văn hóa và quy tắc thương mại Trung Quốc – quốc tế, cùng năng lực ứng dụng công nghệ ngôn ngữ hiện đại để làm việc hiệu quả trong doanh nghiệp toàn cầu.'
+            description: 'Đào tạo cử nhân thành thạo tiếng Trung trong bối cảnh thương mại quốc tế, có khả năng giao tiếp, đàm phán, biên phiên dịch, xử lý hồ sơ doanh nghiệp trong môi trường chuyên nghiệp. Sinh viên được trang bị kiến thức nền tảng về kinh doanh, xuất nhập khẩu, đối ngoại, hiểu biết văn hóa và quy tắc thương mại Trung Quốc – quốc tế.'
         },
         'tieng-trung-thuong-mai': {
             title: 'Tiếng Trung thương mại',
             code: '7220204',
-            description: 'Đào tạo cử nhân Tiếng Trung thương mại có khả năng giao tiếp, đàm phán, biên phiên dịch, xử lý hồ sơ doanh nghiệp trong môi trường chuyên nghiệp. Sinh viên được trang bị kiến thức nền tảng về kinh doanh, xuất nhập khẩu, đối ngoại, hiểu biết văn hóa và quy tắc thương mại Trung Quốc – quốc tế, cùng năng lực ứng dụng công nghệ ngôn ngữ hiện đại để làm việc hiệu quả trong doanh nghiệp toàn cầu.'
+            credits: '139',
+            description: 'Đào tạo cử nhân Tiếng Trung thương mại có khả năng giao tiếp, đàm phán, biên phiên dịch, xử lý hồ sơ doanh nghiệp trong môi trường chuyên nghiệp. Sinh viên được trang bị kiến thức nền tảng về kinh doanh, xuất nhập khẩu, đối ngoại, hiểu biết văn hóa và quy tắc thương mại Trung Quốc – quốc tế.'
         },
         'luat': {
             title: 'Luật',
             code: '7380101',
             credits: '139',
-            description: 'Đào tạo cử nhân Luật có tư duy pháp lý hiện đại, nắm vững nền tảng luật học, có khả năng ứng dụng pháp luật vào thực tiễn kinh doanh – công nghệ – quản trị. Sinh viên được trang bị năng lực phân tích, lập luận, tư vấn và xây dựng giải pháp pháp lý trong môi trường hội nhập, hướng đến trở thành chuyên viên pháp chế, chuyên gia tư vấn pháp lý, chuyên viên tuân thủ (compliance) hoặc cán bộ pháp lý tại cơ quan, tổ chức trong và ngoài nước.'
+            description: 'Đào tạo cử nhân Luật có tư duy pháp lý hiện đại, nắm vững nền tảng luật học, có khả năng ứng dụng pháp luật vào thực tiễn kinh doanh – công nghệ – quản trị. Sinh viên được trang bị năng lực phân tích, lập luận, tư vấn và xây dựng giải pháp pháp lý trong môi trường hội nhập.'
         },
         'luat-kinh-te': {
             title: 'Luật kinh tế',
             code: '7380101',
             credits: '139',
-            description: 'Chuyên ngành Luật Kinh tế tại Trường Đại học FPT đào tạo chuyên gia pháp lý có năng lực pháp luật kinh doanh – đầu tư – thương mại – tài chính trong bối cảnh hội nhập quốc tế và chuyển đổi số với khả năng phân tích tình huống kinh doanh, kỹ năng tranh tụng và tư vấn pháp lý, cùng kỹ năng làm việc nhóm, giao tiếp tiếng Anh và ứng dụng công nghệ pháp lý.'
+            description: 'Chuyên ngành Luật Kinh tế tại Trường Đại học FPT đào tạo chuyên gia pháp lý có năng lực pháp luật kinh doanh – đầu tư – thương mại – tài chính trong bối cảnh hội nhập quốc tế và chuyển đổi số với khả năng phân tích tình huống kinh doanh, kỹ năng tranh tụng và tư vấn pháp lý.'
         },
         'marketing': {
             title: 'Marketing',
             code: '7340101',
             credits: '139',
-            description: 'Đào tạo cử nhân Quản trị kinh doanh có chuyên môn sâu về marketing, có khả năng hoạch định chiến lược, triển khai và đánh giá hoạt động marketing trong kỷ nguyên số; ứng dụng công nghệ, dữ liệu, sử dụng các công cụ sáng tạo nội dung để tối ưu hóa hiệu quả marketing; phát triển thương hiệu và thúc đẩy tăng trưởng doanh nghiệp trong môi trường toàn cầu.'
+            description: 'Đào tạo cử nhân Quản trị kinh doanh có chuyên môn sâu về marketing, có khả năng hoạch định chiến lược, triển khai và đánh giá hoạt động marketing trong kỷ nguyên số; ứng dụng công nghệ, dữ liệu, sử dụng các công cụ sáng tạo nội dung để tối ưu hóa hiệu quả marketing; phát triển thương hiệu và thúc đẩy tăng trưởng doanh nghiệp trong môi trường toàn cầu.'
+        },
         'kinh-doanh-quoc-te': {
             title: 'Kinh doanh quốc tế',
             code: '7340101',
             credits: '139',
-            description: 'Đào tạo cử nhân quản trị kinh doanh có chuyên môn sâu về kinh doanh quốc tế, có năng lực quản trị và điều hành hoạt động thương mại toàn cầu, am hiểu chiến lược, tài chính, logistics và văn hóa kinh doanh đa quốc gia; sẵn sàng trở thành công dân toàn cầu – những nhà lãnh đạo, chuyên gia hoặc doanh nhân có tư duy hội nhập và năng lực làm việc trong môi trường quốc tế.'
+            description: 'Đào tạo cử nhân quản trị kinh doanh có chuyên môn sâu về kinh doanh quốc tế, có năng lực quản trị và điều hành hoạt động thương mại toàn cầu, am hiểu chiến lược, tài chính, logistics và văn hóa kinh doanh đa quốc gia; sẵn sàng trở thành công dân toàn cầu.'
         },
         'thuong-mai-dien-tu': {
             title: 'Thương mại điện tử',
             code: '7340101',
-            description: 'Đào tạo cử nhân quản trị kinh doanh có chuyên môn sâu về thương mại điện tử, có năng lực xây dựng, vận hành và tối ưu hóa hoạt động kinh doanh trực tuyến. Người học được trang bị kiến thức về quản trị sàn thương mại điện tử, phân tích dữ liệu, marketing số, logistics, biết ứng dụng công nghệ mới như AI, Big Data cùng tư duy số hóa để làm việc hiệu quả trong các doanh nghiệp đa lĩnh vực.'
+            credits: '139',
+            description: 'Đào tạo cử nhân quản trị kinh doanh có chuyên môn sâu về thương mại điện tử, có năng lực xây dựng, vận hành và tối ưu hóa hoạt động kinh doanh trực tuyến. Người học được trang bị kiến thức về quản trị sàn thương mại điện tử, phân tích dữ liệu, marketing số, logistics.'
         },
         'quan-tri-kinh-doanh': {
             title: 'Quản trị kinh doanh',
-            code: '7340101 ',
+            code: '7340101',
             credits: '139',
-            description: 'Chương trình cử nhân Quản trị kinh doanh, chuyên ngành Quản trị kinh doanh trang bị cho sinh viên kiến thức nền tảng và chuyên sâu về quản trị, marketing, tài chính và nhân sự, cùng tư duy chiến lược và kỹ năng phân tích dữ liệu, giao tiếp, ứng dụng công nghệ. Sinh viên tốt nghiệp có khả năng làm việc hiệu quả trong doanh nghiệp trong nước, quốc tế hoặc tự khởi nghiệp trong môi trường kinh doanh hiện đại.'
+            description: 'Chương trình cử nhân Quản trị kinh doanh, chuyên ngành Quản trị kinh doanh trang bị cho sinh viên kiến thức nền tảng và chuyên sâu về quản trị, marketing, tài chính và nhân sự, cùng tư duy chiến lược và kỹ năng phân tích dữ liệu, giao tiếp, ứng dụng công nghệ.'
         },
         'quan-tri-giai-tri': {
             title: 'Quản trị giải trí và sự kiện',
             code: '7340101',
             credits: '139',
-            description: 'Chương trình Cử nhân Quản trị giải trí và sự kiện đào tạo sinh viên trở thành những chuyên gia có khả năng lên kế hoạch, tổ chức và quản lý đa dạng loại hình sự kiện từ văn hóa, giải trí đến thương mại. Bên cạnh đó, sinh viên còn được rèn luyện tiếng Anh chuyên ngành, được trang bị ngoại ngữ thứ hai và các kỹ năng thực hành cần thiết để làm việc trong môi trường chuyên nghiệp. Sau khi tốt nghiệp, người học đủ năng lực đảm nhận các vị trí như quản lý sự kiện, điều phối truyền thông hoặc sản xuất chương trình giải trí.'
+            description: 'Chương trình Cử nhân Quản trị giải trí và sự kiện đào tạo sinh viên trở thành những chuyên gia có khả năng lên kế hoạch, tổ chức và quản lý đa dạng loại hình sự kiện từ văn hóa, giải trí đến thương mại.'
         },
         'quan-tri-trai-nghiem': {
             title: 'Quản trị trải nghiệm khách hàng',
             code: '7340101',
-            description: 'Đào tạo cử nhân Quản trị trải nghiệm khách hàng có năng lực xây dựng, quản lý và tối ưu hóa hành trình khách hàng trên các kênh tương tác trực tuyến và trực tiếp. Sinh viên tốt nghiệp nắm vững kiến thức về marketing, phân tích dữ liệu khách hàng, quản lý dịch vụ và chiến lược trải nghiệm, đồng thời sở hữu kỹ năng tư duy phân tích, sáng tạo, giao tiếp chuyên nghiệp và tiếng Anh chuyên ngành. Người học đủ năng lực làm việc tại các phòng chăm sóc khách hàng, marketing, phân tích dữ liệu, quản lý dự án hoặc phát triển chiến lược trải nghiệm khách hàng trong doanh nghiệp trong nước và quốc tế.'
+            credits: '139',
+            description: 'Đào tạo cử nhân Quản trị trải nghiệm khách hàng có năng lực xây dựng, quản lý và tối ưu hóa hành trình khách hàng trên các kênh tương tác trực tuyến và trực tiếp.'
         },
         'quan-tri-thu-mua': {
             title: 'Quản trị thu mua',
             code: '7340101',
-            description: 'Đào tạo cử nhân Quản trị thu mua có năng lực xây dựng, triển khai và quản lý các chiến lược thu mua hiệu quả, tối ưu hóa chi phí và chuỗi cung ứng cho doanh nghiệp. Sinh viên tốt nghiệp nắm vững kiến thức về quản trị nguồn cung, đàm phán thương mại, phân tích dữ liệu, quản lý rủi ro và luật thương mại, đồng thời sở hữu kỹ năng tư duy chiến lược, ra quyết định, giao tiếp chuyên nghiệp và tiếng Anh chuyên ngành. Người học đủ năng lực làm việc tại các bộ phận thu mua, quản lý nguồn cung, hoạch định chiến lược cung ứng hoặc tư vấn vận hành chuỗi cung ứng trong doanh nghiệp trong nước và quốc tế.'
+            credits: '139',
+            description: 'Đào tạo cử nhân Quản trị thu mua có năng lực xây dựng, triển khai và quản lý các chiến lược thu mua hiệu quả, tối ưu hóa chi phí và chuỗi cung ứng cho doanh nghiệp.'
         },
         'quan-tri-khach-san': {
             title: 'Quản trị khách sạn',
             code: '7340101',
             credits: '139',
-            description: 'Chuyên ngành Quản trị khách sạn đào tạo chuyên gia có năng lực quản lý và điều phối các hoạt động khách sạn, resort, nhà hàng, hội nghị và sự kiện trong môi trường dịch vụ cao cấp, quốc tế. Sinh viên được trang bị kiến thức về quản trị vận hành, trải nghiệm khách hàng, quản trị nhân sự dịch vụ, marketing & sales và ứng dụng công nghệ trong ngành khách sạn hiện đại.'
+            description: 'Chuyên ngành Quản trị khách sạn đào tạo chuyên gia có năng lực quản lý và điều phối các hoạt động khách sạn, resort, nhà hàng, hội nghị và sự kiện trong môi trường dịch vụ cao cấp, quốc tế.'
         },
         'quan-tri-du-lich': {
             title: 'Quản trị dịch vụ du lịch và lữ hành',
             code: '7340101',
             credits: '139',
-            description: 'Đào tạo cử nhân Quản trị dịch vụ du lịch và lữ hành có tư duy quản trị du lịch toàn diện và có năng lực ứng dụng kiến thức liên ngành trong thực tiễn, từ phát triển sản phẩm, marketing, công nghệ du lịch đến tổ chức và điều hành tour. Sinh viên được trang bị khả năng ứng dụng công nghệ linh hoạt, sáng tạo trải nghiệm du lịch mới và nâng cao năng lực cạnh tranh trong môi trường du lịch toàn cầu.'
+            description: 'Đào tạo cử nhân Quản trị dịch vụ du lịch và lữ hành có tư duy quản trị du lịch toàn diện và có năng lực ứng dụng kiến thức liên ngành trong thực tiễn, từ phát triển sản phẩm, marketing, công nghệ du lịch đến tổ chức và điều hành tour.'
         },
         'phan-tich-kinh-doanh': {
             title: 'Phân tích kinh doanh (Business Analytics)',
             code: '7340101',
-            description: 'Chương trình cử nhân Quản trị kinh doanh có chuyên môn sâu về Phân tích kinh doanh, đào tạo sinh viên có năng lực phân tích, dự báo và ra quyết định dựa trên dữ liệu, kết hợp tư duy quản trị và công nghệ. Sinh viên nắm vững kiến thức về quản trị, tài chính, marketing, dữ liệu lớn và AI, đồng thời phát triển kỹ năng phân tích, giao tiếp và tiếng Anh. Người học có thể làm việc tại các bộ phận phân tích, chiến lược, dữ liệu hoặc tư vấn chuyển đổi số.'
+            credits: '139',
+            description: 'Chương trình cử nhân Quản trị kinh doanh có chuyên môn sâu về Phân tích kinh doanh, đào tạo sinh viên có năng lực phân tích, dự báo và ra quyết định dựa trên dữ liệu, kết hợp tư duy quản trị và công nghệ.'
         },
         'logistics': {
             title: 'Logistics và Quản lý chuỗi cung ứng toàn cầu',
             code: '7340101',
             credits: '139',
-            description: 'Đào tạo cử nhân Quản trị kinh doanh có chuyên môn sâu về Logistics và Quản lý chuỗi cung ứng toàn cầu, có năng lực tổ chức, quản lý và tối ưu hóa hệ thống chuỗi cung ứng toàn cầu; thành thạo các công cụ công nghệ hiện đại như ERP, AI, Blockchain; có tư duy chiến lược, khả năng phân tích và điều phối vận hành hiệu quả, sẵn sàng trở thành chuyên gia logistics năng động trong môi trường kinh doanh quốc tế.'
+            description: 'Đào tạo cử nhân Quản trị kinh doanh có chuyên môn sâu về Logistics và Quản lý chuỗi cung ứng toàn cầu, có năng lực tổ chức, quản lý và tối ưu hóa hệ thống chuỗi cung ứng toàn cầu; thành thạo các công cụ công nghệ hiện đại như ERP, AI, Blockchain.'
         },
         'cong-nghe-tai-chinh': {
             title: 'Công nghệ tài chính (Fintech)',
@@ -1288,7 +1298,7 @@
             title: 'Tài chính doanh nghiệp',
             code: '7340101',
             credits: '139',
-            description: 'Đào tạo cử nhân Tài chính doanh nghiệp có năng lực phân tích, hoạch định và quản trị tài chính toàn diện; biết ứng dụng công nghệ, trí tuệ nhân tạo và các công cụ số trong việc ra quyết định tài chính, đầu tư và quản trị rủi ro. Sinh viên tốt nghiệp sở hữu tư duy chiến lược, khả năng thích ứng với môi trường kinh tế toàn cầu, sẵn sàng đảm nhiệm vị trí quản lý tài chính chủ chốt tại doanh nghiệp, tập đoàn hoặc tổ chức tài chính quốc tế.'
+            description: 'Đào tạo cử nhân Tài chính doanh nghiệp có năng lực phân tích, hoạch định và quản trị tài chính toàn diện; biết ứng dụng công nghệ, trí tuệ nhân tạo và các công cụ số trong việc ra quyết định tài chính, đầu tư và quản trị rủi ro.'
         },
         'tai-chinh-thong-minh': {
             title: 'Tài chính thông minh',
@@ -1300,13 +1310,13 @@
             title: 'Tài chính ngân hàng',
             code: '7340101',
             credits: '139',
-            description: 'Đào tạo cử nhân quản trị kinh doanh có chuyên môn sâu về tài chính ngân hàng, có năng lực kết hợp tài chính, ngân hàng truyền thống với công nghệ số, gồm phân tích dữ liệu tài chính, phát triển sản phẩm fintech, ngân hàng số và an ninh tài chính số. Học viên được chuẩn bị để trở thành người dẫn đầu xu hướng trong nền kinh tế số đang phát triển mạnh.'
+            description: 'Đào tạo cử nhân quản trị kinh doanh có chuyên môn sâu về tài chính ngân hàng, có năng lực kết hợp tài chính, ngân hàng truyền thống với công nghệ số, gồm phân tích dữ liệu tài chính, phát triển sản phẩm fintech, ngân hàng số và an ninh tài chính số.'
         },
         'tri-tue-nhan-tao-khoa': {
             title: 'Trí tuệ nhân tạo khoa học máy tính',
             code: '7480101',
             credits: '139',
-            description: 'Đào tạo chuyên gia AI – DS tài năng có tư duy phân tích, sáng tạo, và khả năng giải quyết vấn đề dựa trên mô hình toán – dữ liệu – thuật toán. Sinh viên được trang bị nền tảng vững chắc về khoa học máy tính, trí tuệ nhân tạo, học máy, xử lý dữ liệu quy mô lớn và kỹ thuật phần mềm để sẵn sàng đảm nhiệm các vị trí AI Engineer, Machine Learning Engineer, Data Scientist, Data Engineer, hoặc trở thành nhà nghiên cứu – kỹ sư – lãnh đạo công nghệ trong doanh nghiệp toàn cầu.'
+            description: 'Đào tạo chuyên gia AI – DS tài năng có tư duy phân tích, sáng tạo, và khả năng giải quyết vấn đề dựa trên mô hình toán – dữ liệu – thuật toán. Sinh viên được trang bị nền tảng vững chắc về khoa học máy tính, trí tuệ nhân tạo, học máy, xử lý dữ liệu quy mô lớn và kỹ thuật phần mềm.'
         },
         'an-ninh-mang': {
             title: 'An ninh mạng và an toàn số',
@@ -1332,9 +1342,9 @@
             
             if (course) {
                 document.getElementById('modalTitle').textContent = course.title;
-                document.getElementById('courseCode').textContent = course.code;
-                document.getElementById('courseCredits').textContent = course.credits;
-                document.getElementById('courseDescription').textContent = course.description;
+                document.getElementById('courseCode').textContent = course.code || 'N/A';
+                document.getElementById('courseCredits').textContent = course.credits || 'N/A';
+                document.getElementById('courseDescription').textContent = course.description || 'Thông tin đang được cập nhật';
                 
                 document.getElementById('modalOverlay').classList.add('active');
                 document.body.style.overflow = 'hidden';
@@ -1379,19 +1389,6 @@
         if (e.key === 'Escape') {
             closeModal();
         }
-    });
-
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
     });
 </script>
 
