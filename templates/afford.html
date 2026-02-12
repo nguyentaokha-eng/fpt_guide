@@ -5,165 +5,184 @@
 {% block content %}
 
 <style>
-    /* ===== AFFORD BACKGROUND (CHỈ TRANG NÀY) ===== */
+    /* ===== AFFORD SECTION ===== */
     .afford-section {
         min-height: 100vh;
-        background:
-            
-            url( "https://rmep.vn/wp-content/uploads/2024/06/z5503795221847_32de2d1145b3d58dba3c7c10de7885c0.jpg" ) center / cover no-repeat;
-        padding: 90px 0 130px;
+        padding: 30px 0 60px;
     }
 
-    /* ===== TITLE ===== */
-    .afford-title {
-        font-family: 'Courier New', monospace;
-        font-size: 4.5rem;
-        font-weight: 900;
-        letter-spacing: 6px;
-        color: #1200be;
+    /* ===== TITLE BOX ===== */
+    .afford-header-box {
+        display: inline-block;
+        padding: 25px 50px;
+        background: #ffffff;
+        border: 3px solid #000;
+        border-radius: 16px;
+        box-shadow: 6px 6px 0 #000;
         text-align: center;
+        margin: 0 auto 30px;
+    }
+
+    .afford-header-wrapper {
+        text-align: center;
+    }
+
+    .afford-main-title {
+        font-family: 'Courier New', monospace;
+        font-size: 3rem;
+        font-weight: 900;
+        letter-spacing: 4px;
+        color: #1200be;
         text-transform: uppercase;
         margin-bottom: 10px;
     }
 
-    .afford-subtitle {
-        text-align: center;
-        color: #555;
-        max-width: 720px;
-        margin: 0 auto 80px;
-        font-size: 1.05rem;
+    .afford-subtitle-1 {
+        color: #6f42c1;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0;
     }
 
-    /* ===== CARD LAYOUT ===== */
-    .afford-cards {
-        display: flex;
-        justify-content: center;
-        gap: 70px;
-        flex-wrap: wrap;
+    /* ===== CARD GRID (EXPLORE STYLE) ===== */
+    .afford-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        margin-top: 30px;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 20px;
     }
 
-    /* ===== FLIP CARD ===== */
-    .flip-card {
-        width: 320px;
-        height: 520px;
-        perspective: 1200px;
-        cursor: pointer;
-    }
-
-    .flip-inner {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
-        transform-style: preserve-3d;
-    }
-
-    .flip-card:hover .flip-inner {
-        transform: rotateY(180deg);
-    }
-
-    .flip-front,
-    .flip-back {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        backface-visibility: hidden;
-        border-radius: 22px;
-        border: 3px solid #000;
-        box-shadow: 8px 8px 0 #000;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* ===== FRONT ===== */
-    .flip-front {
+    .afford-card {
         background: #fff;
-    }
-
-    .front-image {
-        height: 220px;
-        width: 100%;
-        object-fit: cover;
-    }
-
-    .front-content {
-        padding: 28px 22px;
-        text-align: center;
-        flex: 1;
+        padding: 24px;
+        border: 3px solid #000;
+        box-shadow: 6px 6px 0 #000;
+        border-radius: 12px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
+        min-height: 280px;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.2s;
     }
 
-    .front-icon {
-        width: 70px;
-        margin: 0 auto 15px;
+    .afford-card:hover {
+        transform: translate(-4px, -4px);
+        box-shadow: 12px 12px 0 #000;
     }
 
-    .flip-front h3 {
-        font-weight: 800;
-        margin-bottom: 6px;
+    .afford-card h3 {
+        font-family: "Press Start 2P", monospace;
+        font-size: 18px;
+        margin-bottom: 16px;
         color: #1200be;
     }
 
-    .flip-front p {
-        color: #444;
-        font-size: 0.95rem;
+    .afford-card p {
+        color: #333;
+        line-height: 1.7;
+        margin-bottom: 24px;
     }
 
-    /* ===== BACK ===== */
-    .flip-back {
-        background: #fff;
-        transform: rotateY(180deg);
-        padding: 30px;
-        text-align: center;
+    .afford-card .card-note {
+        font-size: 14px;
+        color: #555;
     }
 
-    .flip-back img {
-        width: 100%;
-        height: 180px;
-        object-fit: cover;
-        border-radius: 14px;
-        margin-bottom: 22px;
-    }
-
-    .flip-back h4 {
-        color: #6f42c1;
-        font-weight: 800;
-        margin-bottom: 10px;
-    }
-
-    .flip-back p {
-        font-size: 0.95rem;
-        color: #444;
-        margin-bottom: 25px;
-    }
-
-    .flip-back a {
-        display: inline-block;
-        background: #6f42c1;
-        color: #fff;
-        padding: 10px 26px;
-        border-radius: 22px;
-        text-decoration: none;
+    .afford-card .card-price {
+        font-size: 1.1rem;
         font-weight: 600;
-        transition: all 0.25s ease;
+        color: #6f42c1;
+        margin-bottom: 15px;
     }
 
-    .flip-back a:hover {
-        background: #ffc107;
+    /* ===== BUTTONS ===== */
+    .afford-btn {
+        display: inline-block;
+        padding: 14px 28px;
+        border: 3px solid #000;
+        font-family: "Press Start 2P", monospace;
+        font-size: 14px;
         color: #000;
+        text-decoration: none;
+        box-shadow: 4px 4px 0 #000;
+        transition: all 0.2s;
     }
+
+    .afford-btn:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 #000;
+    }
+
+    /* Button colors */
+    .btn-green { background: #a8e6cf; }
+    .btn-yellow { background: #ffd93d; }
+    .btn-peach { background: #ff8b94; }
+    .btn-blue { background: #a2d2ff; }
 
     /* ===== RESPONSIVE ===== */
-    @media (max-width: 991px) {
-        .afford-title {
-            font-size: 3rem;
+    @media (max-width: 1200px) {
+        .afford-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            padding: 0 30px;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .afford-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .afford-section {
+            padding: 20px 0 40px;
         }
 
-        .afford-cards {
-            gap: 40px;
+        .afford-header-box {
+            padding: 20px 25px;
+            width: 90%;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 4px 4px 0 #000;
+        }
+
+        .afford-main-title {
+            font-size: 2rem;
+            letter-spacing: 2px;
+        }
+
+        .afford-subtitle-1 {
+            font-size: 0.95rem;
+        }
+
+        .afford-grid {
+            grid-template-columns: 1fr;
+            gap: 25px;
+            padding: 0 15px;
+            margin-top: 25px;
+        }
+
+        .afford-card {
+            min-height: auto;
+            padding: 20px;
+            box-shadow: 4px 4px 0 #000;
+        }
+
+        .afford-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 #000;
+        }
+
+        .afford-card h3 {
+            font-size: 14px;
         }
     }
 </style>
@@ -171,90 +190,49 @@
 <section class="afford-section">
     <div class="container">
 
-        <h1 class="afford-title">Afford</h1>
-        <p class="afford-subtitle">
-            Hướng dẫn chi phí sinh hoạt cơ bản cho sinh viên FPT Đà Nẵng trong những tháng đầu đại học.
-        </p>
-
-        <div class="afford-cards">
-
-            <!-- ===== ĂN UỐNG ===== -->
-            <div class="flip-card">
-                <div class="flip-inner">
-
-                    <div class="flip-front">
-                        <img class="front-image"
-                             src="https://images.unsplash.com/photo-1529042410759-befb1204b468"
-                             alt="Ăn uống sinh viên">
-                        <div class="front-content">
-                            <img class="front-icon"
-                                 src="https://img.icons8.com/emoji/96/bowl-with-spoon-emoji.png">
-                            <h3>Ăn uống</h3>
-                            <p>25k – 50k / bữa</p>
-                        </div>
-                    </div>
-
-                    <div class="flip-back">
-                        <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe">
-                        <h4>Ăn uống sinh viên</h4>
-                        <p>Căng tin FPT, quán ăn rẻ – ngon – no, mẹo tiết kiệm mỗi ngày.</p>
-                        <a href={% url 'Afford_food' %} > Xem chi tiết</a>
-                    </div>
-
-                </div>
+        <!-- TITLE BOX -->
+        <div class="afford-header-wrapper">
+            <div class="afford-header-box">
+                <h1 class="afford-main-title">Afford</h1>
+                <p class="afford-subtitle-1">Hướng dẫn chi phí sinh hoạt cho tân sinh viên FPT</p>
             </div>
+        </div>
 
-            <!-- ===== NƠI Ở ===== -->
-            <div class="flip-card">
-                <div class="flip-inner">
+        <!-- CARDS GRID -->
+        <div class="afford-grid">
 
-                    <div class="flip-front">
-                        <img class="front-image"
-                             src="https://images.unsplash.com/photo-1505691938895-1758d7feb511"
-                             alt="Nhà trọ sinh viên">
-                        <div class="front-content">
-                            <img class="front-icon"
-                                 src="https://img.icons8.com/emoji/96/house-emoji.png">
-                            <h3>Nơi ở</h3>
-                            <p>800k – 2tr / tháng</p>
-                        </div>
-                    </div>
-
-                    <div class="flip-back">
-                        <img src="https://images.unsplash.com/photo-1586105251261-72a756497a11">
-                        <h4>Nơi ở an toàn</h4>
-                        <p>Ký túc xá, nhà trọ gần campus, kinh nghiệm tránh lừa đảo.</p>
-                        <a href={% url 'Afford_living' %} >Tìm phòng</a>
-                    </div>
-
+            <!-- CARD 1: ĂN UỐNG -->
+            <a href="{% url 'Afford_food' %}" class="afford-card">
+                <div>
+                    <h3>ĂN UỐNG</h3>
+                    <p class="card-price">25k – 50k / bữa</p>
+                    <p>Căng tin FPT, quán ăn rẻ – ngon – no, mẹo tiết kiệm mỗi ngày.</p>
+                    <p class="card-note">Tìm kiếm địa điểm ăn uống ngon và rẻ quanh khu vực FPT.</p>
                 </div>
-            </div>
+                <span class="afford-btn btn-green">XEM CHI TIẾT</span>
+            </a>
 
-            <!-- ===== VIỆC LÀM ===== -->
-            <div class="flip-card">
-                <div class="flip-inner">
-
-                    <div class="flip-front">
-                        <img class="front-image"
-                             src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4"
-                             alt="Việc làm thêm">
-                        <div class="front-content">
-                            <img class="front-icon"
-                                 src="https://img.icons8.com/emoji/96/briefcase-emoji.png">
-                            <h3>Việc làm thêm</h3>
-                            <p>Part-time & Freelance</p>
-                        </div>
-                    </div>
-
-                    <div class="flip-back">
-                        <img src="https://images.unsplash.com/photo-1521791055366-0d553872125f">
-                        <h4>Việc làm sinh viên</h4>
-                        <p>Việc làm thêm linh hoạt, không ảnh hưởng việc học.</p>
-                        <a href={% url 'Afford_job' %}>Xem việc</a>
-                    </div>
-
+            <!-- CARD 2: NƠI Ở -->
+            <a href="{% url 'Afford_living' %}" class="afford-card">
+                <div>
+                    <h3>NƠI Ở</h3>
+                    <p class="card-price">800k – 2tr / tháng</p>
+                    <p>Ký túc xá, nhà trọ gần campus, kinh nghiệm tránh lừa đảo.</p>
+                    <p class="card-note">Hướng dẫn tìm phòng trọ và ký túc xá FPT.</p>
                 </div>
-            </div>
+                <span class="afford-btn btn-yellow">TÌM PHÒNG</span>
+            </a>
+
+            <!-- CARD 3: VIỆC LÀM -->
+            <a href="{% url 'Afford_job' %}" class="afford-card">
+                <div>
+                    <h3>VIỆC LÀM</h3>
+                    <p class="card-price">Part-time & Freelance</p>
+                    <p>Việc làm thêm linh hoạt, không ảnh hưởng việc học.</p>
+                    <p class="card-note">Cơ hội việc làm cho sinh viên FPT.</p>
+                </div>
+                <span class="afford-btn btn-peach">XEM VIỆC</span>
+            </a>
 
         </div>
     </div>

@@ -1,7 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.db import transaction, models
+from django.http import JsonResponse
+from django.contrib.auth.models import User
 from .models import (
     Member, Experience, Lecturer, Review,
     COMPATIBILITY_CHOICES, PRESSURE_CHOICES, SUITABLE_FOR_CHOICES, OUTSTANDING_TRAITS,
+    Place, Restaurant, Comment, CommentImage,
+    LivingPlace, LivingComment, LivingCommentImage,
 )
 
 # Seed giảng viên (gọi khi cần)
@@ -235,32 +240,107 @@ def Afford_food(request):
 
 #Afford_food cmt và rating
 ####
-# home/views.py
-from django.http import JsonResponse
-from .models import Place, Comment, CommentImage
+
+def recalculate_place_ratings(place):
+    """Recalculate rating averages for a place based on all its comments."""
+    comments = place.comments.all()
+    total = comments.count()
+    
+    if total == 0:
+        place.price_avg = 0
+        place.quality_avg = 0
+        place.service_avg = 0
+        place.space_avg = 0
+        place.overall_score = 0
+        place.total_reviews = 0
+    else:
+        price_sum = sum(c.price for c in comments)
+        quality_sum = sum(c.quality for c in comments)
+        service_sum = sum(c.service for c in comments)
+        space_sum = sum(c.space for c in comments)
+        
+        place.price_avg = round(price_sum / total, 1)
+        place.quality_avg = round(quality_sum / total, 1)
+        place.service_avg = round(service_sum / total, 1)
+        place.space_avg = round(space_sum / total, 1)
+        place.total_reviews = total
+        
+        # Overall score is average of the 4 category averages
+        place.overall_score = round(
+            (place.price_avg + place.quality_avg + place.service_avg + place.space_avg) / 4, 1
+        )
+    
+    place.save()
+
 
 def post_comment(request, place_id):
     if request.method != "POST":
-        return JsonResponse({"error": "Invalid request"}, status=400)
-
-    # Create place if it doesn't exist
-    place, created = Place.objects.get_or_create(id=place_id, defaults={'name': f'Place {place_id}'})
-
-    comment = Comment.objects.create(
-        place=place,
-        display_name=request.POST.get("display_name", ""),
-        is_anonymous=request.POST.get("is_anonymous") == "true",
-        content=request.POST.get("content"),
-        price=request.POST.get("price"),
-        quality=request.POST.get("quality"),
-        service=request.POST.get("service"),
-        space=request.POST.get("space"),
+        return JsonResponse({"error": "Invalid request method"}, status=400)
+    
+    # Validate rating values (must be 0-10)
+    try:
+        price = int(request.POST.get("price", 0))
+        quality = int(request.POST.get("quality", 0))
+        service = int(request.POST.get("service", 0))
+        space = int(request.POST.get("space", 0))
+        
+        if not (0 <= price <= 10 and 0 <= quality <= 10 and 0 <= service <= 10 and 0 <= space <= 10):
+            return JsonResponse({"error": "Ratings must be between 0-10"}, status=400)
+    except (ValueError, TypeError):
+        return JsonResponse({"error": "Invalid rating values"}, status=400)
+    
+    content = request.POST.get("content", "").strip()
+    display_name = request.POST.get("display_name", "").strip() or "Ẩn danh"
+    is_anonymous = request.POST.get("is_anonymous") == "true"
+    
+    # Get or create place
+    place, created = Place.objects.get_or_create(
+        id=place_id, 
+        defaults={'name': f'Place {place_id}'}
     )
-
-    for img in request.FILES.getlist("images"):
-        CommentImage.objects.create(comment=comment, image=img)
-
-    return JsonResponse({"success": True})
+    
+    # Get user if authenticated
+    user = request.user if request.user.is_authenticated else None
+    
+    with transaction.atomic():
+        # Check if user already has a comment for this place
+        existing_comment = None
+        if user:
+            existing_comment = Comment.objects.filter(place=place, user=user).first()
+        
+        if existing_comment:
+            # Update existing comment
+            existing_comment.price = price
+            existing_comment.quality = quality
+            existing_comment.service = service
+            existing_comment.space = space
+            existing_comment.content = content
+            existing_comment.display_name = display_name
+            existing_comment.is_anonymous = is_anonymous
+            existing_comment.save()
+            comment = existing_comment
+        else:
+            # Create new comment
+            comment = Comment.objects.create(
+                place=place,
+                user=user,
+                display_name=display_name,
+                is_anonymous=is_anonymous,
+                content=content,
+                price=price,
+                quality=quality,
+                service=service,
+                space=space,
+            )
+        
+        # Handle image uploads
+        for img in request.FILES.getlist("images"):
+            CommentImage.objects.create(comment=comment, image=img)
+        
+        # Recalculate ratings
+        recalculate_place_ratings(place)
+    
+    return JsonResponse({"success": True, "comment_id": comment.id})
 
 
 def get_comments(request, place_id):
@@ -273,6 +353,8 @@ def get_comments(request, place_id):
 
     for c in place.comments.all().order_by("-created_at"):
         data.append({
+            "id": c.id,
+            "user_id": c.user_id if c.user else None,
             "user": "Ẩn danh" if c.is_anonymous else c.display_name,
             "content": c.content,
             "ratings": {
@@ -281,9 +363,53 @@ def get_comments(request, place_id):
                 "service": c.service,
                 "space": c.space,
             },
-            "images": [img.image.url for img in c.images.all()]
+            "images": [img.image.url for img in c.images.all()],
+            "created_at": c.created_at.isoformat(),
+            "updated_at": c.updated_at.isoformat() if c.updated_at else None,
         })
 
+    return JsonResponse(data, safe=False)
+
+
+def get_restaurants(request):
+    """API endpoint to get all restaurants with their ratings."""
+    restaurants = Restaurant.objects.all()
+    
+    data = []
+    for r in restaurants:
+        data.append({
+            "id": r.id,
+            "name": r.name,
+            "price_avg": r.price_avg,
+            "quality_avg": r.quality_avg,
+            "service_avg": r.service_avg,
+            "space_avg": r.space_avg,
+            "overall_score": r.overall_score,
+            "total_reviews": r.total_reviews,
+        })
+    
+    return JsonResponse(data, safe=False)
+
+
+def get_places(request):
+    """API endpoint to get all places with their ratings and comments count."""
+    places = Place.objects.all()
+    
+    data = []
+    for p in places:
+        data.append({
+            "id": p.id,
+            "name": p.name,
+            "price_avg": p.price_avg,
+            "quality_avg": p.quality_avg,
+            "service_avg": p.service_avg,
+            "space_avg": p.space_avg,
+            "overall_score": p.overall_score,
+            "total_reviews": p.total_reviews,
+            "comments_count": p.comments.count(),
+            "restaurant_id": p.restaurant_id if p.restaurant else None,
+        })
+    
     return JsonResponse(data, safe=False)
 
 
@@ -293,3 +419,160 @@ def student_life(request):
 
 def curriculum(request):
     return render(request, 'curriculum.html')
+
+
+# ========== AFFORD LIVING COMMENT SYSTEM ==========
+
+def recalculate_living_place_ratings(living_place):
+    """Recalculate rating averages for a living place based on all its comments."""
+    comments = living_place.comments.all()
+    total = comments.count()
+    
+    if total == 0:
+        living_place.price_avg = 0
+        living_place.location_avg = 0
+        living_place.amenity_avg = 0
+        living_place.security_avg = 0
+        living_place.overall_score = 0
+        living_place.total_reviews = 0
+    else:
+        price_sum = sum(c.price for c in comments)
+        location_sum = sum(c.location for c in comments)
+        amenity_sum = sum(c.amenity for c in comments)
+        security_sum = sum(c.security for c in comments)
+        
+        living_place.price_avg = round(price_sum / total, 1)
+        living_place.location_avg = round(location_sum / total, 1)
+        living_place.amenity_avg = round(amenity_sum / total, 1)
+        living_place.security_avg = round(security_sum / total, 1)
+        living_place.total_reviews = total
+        
+        # Overall score is average of the 4 category averages
+        living_place.overall_score = round(
+            (living_place.price_avg + living_place.location_avg + 
+             living_place.amenity_avg + living_place.security_avg) / 4, 1
+        )
+    
+    living_place.save()
+
+
+def post_living_comment(request, living_place_id):
+    """Post a comment for a living place."""
+    if request.method != "POST":
+        return JsonResponse({"error": "Invalid request method"}, status=400)
+    
+    # Validate rating values (must be 0-10)
+    try:
+        price = int(request.POST.get("price", 0))
+        location = int(request.POST.get("location", 0))
+        amenity = int(request.POST.get("amenity", 0))
+        security = int(request.POST.get("security", 0))
+        
+        if not (0 <= price <= 10 and 0 <= location <= 10 and 0 <= amenity <= 10 and 0 <= security <= 10):
+            return JsonResponse({"error": "Ratings must be between 0-10"}, status=400)
+    except (ValueError, TypeError):
+        return JsonResponse({"error": "Invalid rating values"}, status=400)
+    
+    content = request.POST.get("content", "").strip()
+    display_name = request.POST.get("display_name", "").strip() or "Ẩn danh"
+    is_anonymous = request.POST.get("is_anonymous") == "true"
+    
+    # Get or create living place
+    living_place, created = LivingPlace.objects.get_or_create(
+        id=living_place_id, 
+        defaults={'name': f'Living Place {living_place_id}'}
+    )
+    
+    # Get user if authenticated
+    user = request.user if request.user.is_authenticated else None
+    
+    with transaction.atomic():
+        # Check if user already has a comment for this place
+        existing_comment = None
+        if user:
+            existing_comment = LivingComment.objects.filter(living_place=living_place, user=user).first()
+        
+        if existing_comment:
+            # Update existing comment
+            existing_comment.price = price
+            existing_comment.location = location
+            existing_comment.amenity = amenity
+            existing_comment.security = security
+            existing_comment.content = content
+            existing_comment.display_name = display_name
+            existing_comment.is_anonymous = is_anonymous
+            existing_comment.save()
+            comment = existing_comment
+        else:
+            # Create new comment
+            comment = LivingComment.objects.create(
+                living_place=living_place,
+                user=user,
+                display_name=display_name,
+                is_anonymous=is_anonymous,
+                content=content,
+                price=price,
+                location=location,
+                amenity=amenity,
+                security=security,
+            )
+        
+        # Handle image uploads
+        for img in request.FILES.getlist("images"):
+            LivingCommentImage.objects.create(comment=comment, image=img)
+        
+        # Recalculate ratings
+        recalculate_living_place_ratings(living_place)
+    
+    return JsonResponse({"success": True, "comment_id": comment.id})
+
+
+def get_living_comments(request, living_place_id):
+    """Get all comments for a living place."""
+    try:
+        living_place = LivingPlace.objects.get(id=living_place_id)
+    except LivingPlace.DoesNotExist:
+        return JsonResponse([], safe=False)
+    
+    data = []
+
+    for c in living_place.comments.all().order_by("-created_at"):
+        data.append({
+            "id": c.id,
+            "user_id": c.user_id if c.user else None,
+            "user": "Ẩn danh" if c.is_anonymous else c.display_name,
+            "content": c.content,
+            "ratings": {
+                "price": c.price,
+                "location": c.location,
+                "amenity": c.amenity,
+                "security": c.security,
+            },
+            "images": [img.image.url for img in c.images.all()],
+            "created_at": c.created_at.isoformat(),
+            "updated_at": c.updated_at.isoformat() if c.updated_at else None,
+        })
+
+    return JsonResponse(data, safe=False)
+
+
+def get_living_places(request):
+    """API endpoint to get all living places with their ratings."""
+    living_places = LivingPlace.objects.all()
+    
+    data = []
+    for lp in living_places:
+        data.append({
+            "id": lp.id,
+            "name": lp.name,
+            "address": lp.address,
+            "distance": lp.distance,
+            "price_avg": lp.price_avg,
+            "location_avg": lp.location_avg,
+            "amenity_avg": lp.amenity_avg,
+            "security_avg": lp.security_avg,
+            "overall_score": lp.overall_score,
+            "total_reviews": lp.total_reviews,
+        })
+    
+    return JsonResponse(data, safe=False)

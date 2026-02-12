@@ -510,7 +510,7 @@
                             <label>Giá 💰</label>
                             <span class="slider-value" id="sliderPrice">5</span>
                         </div>
-                        <input type="range" id="cPrice" min="1" max="10" value="5" oninput="updateSlider('Price')">
+                        <input type="range" id="cPrice" min="0" max="10" value="5" oninput="updateSlider('Price')">
                     </div>
                     
                     <div class="slider-group">
@@ -518,7 +518,7 @@
                             <label>Chất lượng 🍽️</label>
                             <span class="slider-value" id="sliderQuality">5</span>
                         </div>
-                        <input type="range" id="cQuality" min="1" max="10" value="5" oninput="updateSlider('Quality')">
+                        <input type="range" id="cQuality" min="0" max="10" value="5" oninput="updateSlider('Quality')">
                     </div>
                     
                     <div class="slider-group">
@@ -526,7 +526,7 @@
                             <label>Phục vụ 👨‍🍳</label>
                             <span class="slider-value" id="sliderService">5</span>
                         </div>
-                        <input type="range" id="cService" min="1" max="10" value="5" oninput="updateSlider('Service')">
+                        <input type="range" id="cService" min="0" max="10" value="5" oninput="updateSlider('Service')">
                     </div>
                     
                     <div class="slider-group">
@@ -534,7 +534,7 @@
                             <label>Không gian 🏠</label>
                             <span class="slider-value" id="sliderSpace">5</span>
                         </div>
-                        <input type="range" id="cSpace" min="1" max="10" value="5" oninput="updateSlider('Space')">
+                        <input type="range" id="cSpace" min="0" max="10" value="5" oninput="updateSlider('Space')">
                     </div>
                     
                     <div class="form-group">
@@ -566,83 +566,310 @@
 </div>
 
 <script>
-// Sample data - using local static images
-const DATA = [
+// Store for backend data
+let backendPlaces = [];
+
+// Sample data - using local static images (fallback when API is not available)
+// Initial ratings are 0 0 0 0 and will be updated based on student ratings
+const SAMPLE_DATA = [
     {
         id: 1,
         name: "Quán cơm cô Đẹp",
-        map: "https://maps.google.com",
+        map: "https://maps.google.com/?q=Ngã tư Nam Kỳ Khởi Nghĩa",
         tags: ["Cơm", "Rẻ", "No"],
-        keywords: ["ăn no", "35k", "25k", "sinh viên"],
+        keywords: ["cơm gà xé", "cơm gà chiên", "cơm sườn", "cơm trưa rẻ"],
         photos: {
-            place: [
-                "{% static 'image/food/1.jpg' %}",
-                "{% static 'image/food/2.jpg' %}"
-            ]
+            place: ["{% static 'image/food/1.jpg' %}"]
         },
-        ratings: [{price: 9, quality: 8, service: 7, space: 6}],
-        comments: [
-            {user: "Sinh viên năm 3", text: "Rẻ thật, ăn no bụng", date: "2024-01-15", scores: {price: 9, quality: 8, service: 7, space: 6}, images: []}
-        ]
+        ratings: [],
+        comments: []
     },
     {
         id: 2,
-        name: "Cafe Học Bài 24h",
-        map: "https://maps.google.com",
-        tags: ["Cafe", "Yên tĩnh", "Wifi"],
-        keywords: ["học bài", "wifi", "đêm"],
+        name: "Poonbo",
+        map: "https://maps.google.com/?q=247 Trần Đại Nghĩa",
+        tags: ["Ăn vặt", "Mỳ cay", "Đồ nướng"],
+        keywords: ["mỳ cay trứng ốp la", "cá viên", "bún đậu", "đồ chiên", "gỏi"],
         photos: {
             place: ["{% static 'image/food/4.jpg' %}"]
         },
-        ratings: [{price: 7, quality: 8, service: 8, space: 9}],
+        ratings: [],
         comments: []
     },
     {
         id: 3,
-        name: "Chợ Sinh Viên",
-        map: "https://maps.google.com",
-        tags: ["Chợ", "Rẻ", "Ăn vặt"],
-        keywords: ["ăn vặt", "tiết kiệm"],
+        name: "Túc Tắc (Trần Nhân Tông)",
+        map: "https://maps.google.com/?q=224 Trần Nhân Tông",
+        tags: ["Trà sữa", "Nước uống", "Chill"],
+        keywords: ["trà sữa", "trà trái cây", "trà đào"],
         photos: {
             place: ["{% static 'image/food/5.jpg' %}"]
         },
-        ratings: [{price: 10, quality: 7, service: 6, space: 6}],
+        ratings: [],
         comments: []
     },
     {
         id: 4,
-        name: "Bún bò Huế",
-        map: "https://maps.google.com",
-        tags: ["Bún", "Nóng", "Sáng"],
-        keywords: ["ăn sáng", "nóng"],
+        name: "Cơm tấm Family",
+        map: "https://maps.google.com/?q=Bên hông trường Cao Đẳng Du lịch",
+        tags: ["Cơm tấm", "Cơm sườn", "No"],
+        keywords: ["cơm tấm sườn", "cơm món", "cơm bình dân"],
         photos: {
             place: ["{% static 'image/food/6.jpg' %}"]
         },
-        ratings: [{price: 8, quality: 9, service: 7, space: 7}],
+        ratings: [],
         comments: []
     },
     {
         id: 5,
-        name: "Trà sữa giá sinh viên",
-        map: "https://maps.google.com",
-        tags: ["Trà sữa", "Rẻ", "Chill"],
-        keywords: ["ngọt", "chill"],
+        name: "Bún đậu Ông Chú",
+        map: "https://maps.google.com/?q=70 Lê Thiện Trị",
+        tags: ["Bún đậu", "Món Việt", "Nhóm"],
+        keywords: ["bún đậu mắm tôm", "ram cuốn cải", "bún mắm", "bánh tráng thịt heo"],
         photos: {
             place: ["{% static 'image/food/7.jpg' %}"]
         },
-        ratings: [{price: 8, quality: 7, service: 8, space: 8}],
+        ratings: [],
         comments: []
     },
     {
         id: 6,
-        name: "Bánh mì thịt nướng",
-        map: "https://maps.google.com",
-        tags: ["Bánh mì", "Nhanh"],
-        keywords: ["sáng", "trưa"],
+        name: "Gà rán Hàn Quốc Heemang",
+        map: "https://maps.google.com/?q=358A Trần Đại Nghĩa",
+        tags: ["Gà rán", "Đồ Hàn", "Mỳ cay"],
+        keywords: ["gà sốt Hàn", "set gà S 75k", "mì tương đen 59k", "tokbokki"],
         photos: {
             place: ["{% static 'image/food/8.jpg' %}"]
         },
-        ratings: [{price: 7, quality: 8, service: 9, space: 5}],
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 7,
+        name: "Mỳ Quảng 37",
+        map: "https://maps.google.com/?q=364 Trần Đại Nghĩa",
+        tags: ["Mỳ quảng", "Miền Trung", "Sáng"],
+        keywords: ["mỳ quảng gà", "mỳ quảng tôm thịt"],
+        photos: {
+            place: ["{% static 'image/food/9.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 8,
+        name: "Tiệm ăn Hàn Quốc Mishin",
+        map: "https://maps.google.com/?q=356B Trần Đại Nghĩa",
+        tags: ["Đồ Hàn", "Mỳ cay", "Cơm trộn"],
+        keywords: ["mì tương đen", "tokbokki", "mandu", "gà rán"],
+        photos: {
+            place: ["{% static 'image/food/10.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 9,
+        name: "Tiệm của Chuột",
+        map: "https://maps.google.com/?q=374 Trần Đại Nghĩa",
+        tags: ["Ăn vặt", "Bún đậu", "Mỳ cay"],
+        keywords: ["gỏi cuốn", "ram cuốn cải", "bánh tráng trộn"],
+        photos: {
+            place: ["{% static 'image/food/1.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 10,
+        name: "Bông Food & Drink",
+        map: "https://maps.google.com/?q=306 Trần Đại Nghĩa",
+        tags: ["Trà sữa", "Ăn vặt", "Nước uống"],
+        keywords: ["trà sữa", "trà", "đồ ăn vặt"],
+        photos: {
+            place: ["{% static 'image/food/2.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 11,
+        name: "Chicken Plus",
+        map: "https://maps.google.com/?q=291 Trần Đại Nghĩa",
+        tags: ["Gà rán", "Đồ chiên", "Nhóm"],
+        keywords: ["đùi gà truyền thống 65k/2 cái", "mì ý", "cơm gà sốt"],
+        photos: {
+            place: ["{% static 'image/food/4.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 12,
+        name: "Bánh canh cá lóc Huế - Hà Huế",
+        map: "https://maps.google.com/?q=148 Trần Đại Nghĩa",
+        tags: ["Bánh canh", "Huế", "Sáng"],
+        keywords: ["bánh canh cá lóc", "bánh canh chả cua", "bánh canh xương"],
+        photos: {
+            place: ["{% static 'image/food/5.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 13,
+        name: "Bún đậu 1996 (CS1)",
+        map: "https://maps.google.com/?q=358 Trần Đại Nghĩa",
+        tags: ["Bún đậu", "Ăn vặt", "Mỳ cay"],
+        keywords: ["chân gà sốt Thái", "trà sữa", "đồ chiên"],
+        photos: {
+            place: ["{% static 'image/food/6.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 14,
+        name: "Bún đậu 1996 (CS2)",
+        map: "https://maps.google.com/?q=283 Trần Đại Nghĩa",
+        tags: ["Bún đậu", "No"],
+        keywords: ["bún đậu 1 người 35k", "mì cay 25k"],
+        photos: {
+            place: ["{% static 'image/food/7.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 15,
+        name: "Nẫu Cuốn - Bánh cuốn Tây Sơn",
+        map: "https://maps.google.com/?q=01 Huỳnh Lắm",
+        tags: ["Món cuốn", "Nhẹ", "Việt"],
+        keywords: ["gỏi cuốn thịt", "bánh hỏi nem chả", "thịt nướng"],
+        photos: {
+            place: ["{% static 'image/food/8.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 16,
+        name: "Gà ủ muối Đũm Rôpe",
+        map: "https://maps.google.com/?q=Đường Lê Đỉnh",
+        tags: ["Gà ủ muối", "Nhóm", "Đặc sản"],
+        keywords: ["chân gà trứng non", "cháo nghêu", "cháo ếch Singapore"],
+        photos: {
+            place: ["{% static 'image/food/9.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 17,
+        name: "Bếp nhà Hạ Ny",
+        map: "https://maps.google.com/?q=287 Trần Đại Nghĩa",
+        tags: ["Ăn vặt", "Gà rán", "Hàn"],
+        keywords: ["kimbap", "mandu", "nem chua rán", "gà viên"],
+        photos: {
+            place: ["{% static 'image/food/10.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 18,
+        name: "Gà rán Hàn Quốc Gamori",
+        map: "https://maps.google.com/?q=469 Mai Đăng Chơn",
+        tags: ["Gà rán", "Hàn", "Sinh viên"],
+        keywords: ["gà lắc sốt", "tokbokki", "cơm gà sốt"],
+        photos: {
+            place: ["{% static 'image/food/1.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 19,
+        name: "Ăn vặt Vi Khương",
+        map: "https://maps.google.com/?q=450 Trần Đại Nghĩa",
+        tags: ["Ăn vặt", "Nhóm"],
+        keywords: ["đồ ăn vặt các loại"],
+        photos: {
+            place: ["{% static 'image/food/2.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 20,
+        name: "Cơm gà mắm tỏi 33",
+        map: "https://maps.google.com/?q=478 Trần Đại Nghĩa",
+        tags: ["Cơm gà", "Cơm món", "No"],
+        keywords: ["cơm gà xối mỡ", "cơm gà mắm tỏi", "tôm rim", "bò lá lốt"],
+        photos: {
+            place: ["{% static 'image/food/4.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 21,
+        name: "Bún đậu Đòn Đẻn",
+        map: "https://maps.google.com/?q=448 Trần Đại Nghĩa",
+        tags: ["Bún đậu", "No"],
+        keywords: ["bún đậu 35k", "mì cay 25k"],
+        photos: {
+            place: ["{% static 'image/food/5.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 22,
+        name: "Trà sữa Chu Cha",
+        map: "https://maps.google.com/?q=500 Trần Hưng Đạo",
+        tags: ["Trà sữa", "Nước uống"],
+        keywords: ["trà sữa 25-37k"],
+        photos: {
+            place: ["{% static 'image/food/6.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 23,
+        name: "Vita Cafe & Juice",
+        map: "https://maps.google.com/?q=371 Trần Hưng Đạo",
+        tags: ["Cafe", "Trà sữa", "Nước ép"],
+        keywords: ["cà phê", "trà sữa 18-35k"],
+        photos: {
+            place: ["{% static 'image/food/7.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 24,
+        name: "Mixue",
+        map: "https://maps.google.com/?q=67 Lê Thiện Trị",
+        tags: ["Trà sữa", "Kem", "Rẻ"],
+        keywords: ["kem 10k", "trà sữa 10-30k"],
+        photos: {
+            place: ["{% static 'image/food/8.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 25,
+        name: "Túc Tắc Tea (Huỳnh Văn Nghệ)",
+        map: "https://maps.google.com/?q=76 Huỳnh Văn Nghệ",
+        tags: ["Trà sữa", "Trà trái cây"],
+        keywords: ["trà sữa 24k+", "nước uống sinh viên"],
+        photos: {
+            place: ["{% static 'image/food/9.jpg' %}"]
+        },
+        ratings: [],
         comments: []
     }
 ];
@@ -650,10 +877,70 @@ const DATA = [
 const STATIC_URL = "{% static '' %}";
 let currentPlaceId = null;
 
+// Load places from backend API
+async function loadPlacesFromAPI() {
+    try {
+        const response = await fetch('/api/places/');
+        if (response.ok) {
+            const data = await response.json();
+            if (data.length > 0) {
+                backendPlaces = data;
+                return true;
+            }
+        }
+    } catch (e) {
+        console.log('Using static data (API not available)');
+    }
+    return false;
+}
+
+// Convert backend place data to display format
+function convertPlaceData(place) {
+    return {
+        id: place.id,
+        name: place.name,
+        map: "https://maps.google.com",
+        tags: ["Ăn uống", "FPT"],
+        keywords: ["food", place.name.toLowerCase()],
+        photos: {
+            place: ["{% static 'image/food/1.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    };
+}
+
+// Calculate average ratings from comments
+function calculateRatingsFromComments(comments) {
+    if (!comments || comments.length === 0) {
+        return { price: 0, quality: 0, service: 0, space: 0 };
+    }
+    
+    let price = 0, quality = 0, service = 0, space = 0;
+    comments.forEach(c => {
+        if (c.ratings) {
+            price += c.ratings.price || 0;
+            quality += c.ratings.quality || 0;
+            service += c.ratings.service || 0;
+            space += c.ratings.space || 0;
+        }
+    });
+    
+    const n = comments.length;
+    return {
+        price: price / n,
+        quality: quality / n,
+        service: service / n,
+        space: space / n
+    };
+}
+
 function avg(p) {
     let t = {price: 0, quality: 0, service: 0, space: 0};
-    p.ratings.forEach(r => Object.keys(t).forEach(k => t[k] += r[k]));
-    Object.keys(t).forEach(k => t[k] /= p.ratings.length || 1);
+    if (p.ratings && p.ratings.length > 0) {
+        p.ratings.forEach(r => Object.keys(t).forEach(k => t[k] += r[k]));
+        Object.keys(t).forEach(k => t[k] /= p.ratings.length);
+    }
     return t;
 }
 
@@ -662,14 +949,46 @@ function render() {
     const container = document.getElementById('restaurantList');
     container.innerHTML = "";
     
-    DATA.filter(p => {
-        if (!q) return true;
-        return p.name.toLowerCase().includes(q) ||
-               p.tags.some(t => q.includes(t.toLowerCase())) ||
-               p.keywords.some(k => q.includes(k));
-    }).forEach(p => {
-        const a = avg(p);
-        const overall = ((a.price + a.quality + a.service + a.space) / 4).toFixed(1);
+    let placesToRender = [];
+    
+    if (backendPlaces.length > 0) {
+        placesToRender = backendPlaces
+            .filter(p => {
+                if (!q) return true;
+                return p.name.toLowerCase().includes(q);
+            })
+            .map(convertPlaceData);
+    } else {
+        placesToRender = SAMPLE_DATA.filter(p => {
+            if (!q) return true;
+            return p.name.toLowerCase().includes(q) ||
+                   p.tags.some(t => q.includes(t.toLowerCase())) ||
+                   p.keywords.some(k => q.includes(k));
+        });
+    }
+    
+    placesToRender.forEach(p => {
+        let a = {price: 0, quality: 0, service: 0, space: 0};
+        let overall = "0.0";
+        let commentCount = 0;
+        
+        if (backendPlaces.length > 0) {
+            const backendPlace = backendPlaces.find(bp => bp.id === p.id);
+            if (backendPlace) {
+                overall = (backendPlace.overall_score || 0).toFixed(1);
+                commentCount = backendPlace.total_reviews || 0;
+                a = {
+                    price: backendPlace.price_avg || 0,
+                    quality: backendPlace.quality_avg || 0,
+                    service: backendPlace.service_avg || 0,
+                    space: backendPlace.space_avg || 0
+                };
+            }
+        } else if (p.ratings && p.ratings.length > 0) {
+            a = avg(p);
+            overall = ((a.price + a.quality + a.service + a.space) / 4).toFixed(1);
+            commentCount = p.comments.length;
+        }
         
         container.innerHTML += `
             <div class="restaurant-card" onclick="openDetail(${p.id})">
@@ -681,7 +1000,7 @@ function render() {
                     </div>
                     <div class="restaurant-rating">
                         <span class="rating-stars">⭐ ${overall}</span>
-                        <span>${p.comments.length} bình luận</span>
+                        <span>${commentCount} bình luận</span>
                     </div>
                 </div>
             </div>
@@ -689,13 +1008,48 @@ function render() {
     });
 }
 
-function openDetail(id) {
-    const p = DATA.find(x => x.id === id);
-    currentPlaceId = id;
+async function openDetail(id) {
+    let p;
+    
+    const backendPlace = backendPlaces.find(x => x && x.id === id);
+    if (backendPlace) {
+        p = convertPlaceData(backendPlace);
+        currentPlaceId = id;
+        
+        try {
+            const response = await fetch(`/comment/list/${id}/`);
+            if (response.ok) {
+                const comments = await response.json();
+                p.comments = comments;
+                const ratings = calculateRatingsFromComments(comments);
+                p.ratings = comments.map(c => c.ratings);
+            }
+        } catch (e) {
+            console.log('Could not load comments');
+        }
+    } else {
+        p = SAMPLE_DATA.find(x => x.id === id);
+        currentPlaceId = id;
+    }
+    
+    if (!p) return;
     
     const modal = document.getElementById('detailModal');
-    const a = avg(p);
-    const overall = ((a.price + a.quality + a.service + a.space) / 4).toFixed(1);
+    let a = {price: 0, quality: 0, service: 0, space: 0};
+    let overall = "0.0";
+    
+    if (backendPlace) {
+        a = {
+            price: backendPlace.price_avg || 0,
+            quality: backendPlace.quality_avg || 0,
+            service: backendPlace.service_avg || 0,
+            space: backendPlace.space_avg || 0
+        };
+        overall = (backendPlace.overall_score || 0).toFixed(1);
+    } else if (p.ratings && p.ratings.length > 0) {
+        a = avg(p);
+        overall = ((a.price + a.quality + a.service + a.space) / 4).toFixed(1);
+    }
     
     document.getElementById('dName').innerText = p.name;
     document.getElementById('dMap').href = p.map;
@@ -721,7 +1075,7 @@ function openDetail(id) {
 
 function renderComments(comments) {
     const container = document.getElementById('commentList');
-    if (comments.length === 0) {
+    if (!comments || comments.length === 0) {
         container.innerHTML = '<p style="color: #9ca3af; text-align: center; padding: 20px;">Chưa có bình luận nào</p>';
         return;
     }
@@ -731,18 +1085,22 @@ function renderComments(comments) {
         if (c.images && c.images.length > 0) {
             imagesHtml = `<div class="comment-images">${c.images.map(img => `<img src="${img}" onclick="zoomImage('${img}')">`).join('')}</div>`;
         }
+        
+        const date = c.created_at ? new Date(c.created_at).toLocaleDateString('vi-VN') : '';
+        const scores = c.ratings || {price: c.price || 0, quality: c.quality || 0, service: c.service || 0, space: c.space || 0};
+        
         return `
             <div class="comment-item">
                 <div class="comment-header">
                     <span class="comment-user">${c.user}</span>
-                    <span class="comment-date">${c.date}</span>
+                    <span class="comment-date">${date}</span>
                 </div>
-                <div class="comment-content">${c.text}</div>
+                <div class="comment-content">${c.content}</div>
                 <div class="comment-scores">
-                    <span class="comment-score">💰 ${c.scores.price}</span>
-                    <span class="comment-score">🍽️ ${c.scores.quality}</span>
-                    <span class="comment-score">👨‍🍳 ${c.scores.service}</span>
-                    <span class="comment-score">🏠 ${c.scores.space}</span>
+                    <span class="comment-score">💰 ${scores.price}</span>
+                    <span class="comment-score">🍽️ ${scores.quality}</span>
+                    <span class="comment-score">👨‍🍳 ${scores.service}</span>
+                    <span class="comment-score">🏠 ${scores.space}</span>
                 </div>
                 ${imagesHtml}
             </div>
@@ -815,7 +1173,7 @@ function submitComment() {
     })
     .catch(() => {
         // Fallback: add comment locally
-        const p = DATA.find(x => x.id === currentPlaceId);
+        const p = SAMPLE_DATA.find(x => x.id === currentPlaceId);
         const newComment = {
             user: document.getElementById("cName").value || "Ẩn danh",
             text: document.getElementById("cText").value,
@@ -826,11 +1184,21 @@ function submitComment() {
                 service: parseInt(document.getElementById("cService").value),
                 space: parseInt(document.getElementById("cSpace").value)
             },
-            images: []
+            ratings: {
+                price: parseInt(document.getElementById("cPrice").value),
+                quality: parseInt(document.getElementById("cQuality").value),
+                service: parseInt(document.getElementById("cService").value),
+                space: parseInt(document.getElementById("cSpace").value)
+            },
+            images: [],
+            content: document.getElementById("cText").value
         };
-        p.comments.unshift(newComment);
-        renderComments(p.comments);
-        document.getElementById('commentCount').innerText = p.comments.length;
+        if (p) {
+            if (!p.comments) p.comments = [];
+            p.comments.unshift(newComment);
+        }
+        renderComments(p ? p.comments : [newComment]);
+        document.getElementById('commentCount').innerText = p ? p.comments.length : 1;
         alert("Đã gửi bình luận!");
         document.getElementById("cName").value = "";
         document.getElementById("cText").value = "";
@@ -843,8 +1211,18 @@ function loadComments(placeId) {
     fetch(`/comment/list/${placeId}/`)
     .then(r => r.json())
     .then(data => {
-        const p = DATA.find(x => x.id === placeId);
-        if (p) p.comments = data;
+        if (backendPlaces.length > 0) {
+            const backendPlace = backendPlaces.find(x => x.id === placeId);
+            if (backendPlace) {
+                const ratings = calculateRatingsFromComments(data);
+                backendPlace.total_reviews = data.length;
+                backendPlace.price_avg = ratings.price;
+                backendPlace.quality_avg = ratings.quality;
+                backendPlace.service_avg = ratings.service;
+                backendPlace.space_avg = ratings.space;
+                backendPlace.overall_score = (ratings.price + ratings.quality + ratings.service + ratings.space) / 4;
+            }
+        }
         renderComments(data);
         document.getElementById('commentCount').innerText = data.length;
     })
@@ -859,8 +1237,13 @@ document.getElementById('detailModal').onclick = function(e) {
 // Search listener
 document.getElementById('search').oninput = render;
 
-// Initial render
-render();
+// Load data and initial render
+async function init() {
+    await loadPlacesFromAPI();
+    render();
+}
+
+init();
 </script>
 
 {% endblock %}

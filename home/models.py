@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Member(models.Model):
@@ -94,29 +95,102 @@ class Review(models.Model):
 
 
 # cmt và upload ảnh cho Afford food
-from django.db import models
 
+class Restaurant(models.Model):
+    """Restaurant model for Afford Food with rating statistics."""
+    name = models.CharField(max_length=200)
+    # Rating statistics (auto-calculated)
+    price_avg = models.FloatField(default=0)
+    quality_avg = models.FloatField(default=0)
+    service_avg = models.FloatField(default=0)
+    space_avg = models.FloatField(default=0)
+    overall_score = models.FloatField(default=0)
+    total_reviews = models.IntegerField(default=0)
+    
+    def __str__(self):
+        return self.name
+
+
+# Place model for backward compatibility (links to Restaurant)
 class Place(models.Model):
     name = models.CharField(max_length=200)
+    restaurant = models.OneToOneField(Restaurant, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
 
 
 class Comment(models.Model):
+    """Comment with ratings for a place."""
     place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name="comments")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     display_name = models.CharField(max_length=100, blank=True)
     is_anonymous = models.BooleanField(default=False)
     content = models.TextField()
-
+    
     price = models.IntegerField()
     quality = models.IntegerField()
     service = models.IntegerField()
     space = models.IntegerField()
-
+    
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        unique_together = ('place', 'user')
+    
+    def __str__(self):
+        return f"Comment by {self.display_name or 'Anonymous'} on {self.place.name}"
 
 
 class CommentImage(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="images")
     image = models.ImageField(upload_to="comment_images/")
+
+
+# Models for Afford Living (nơi ở)
+
+class LivingPlace(models.Model):
+    """Living place model for Afford Living with rating statistics."""
+    name = models.CharField(max_length=200)
+    address = models.CharField(max_length=500, blank=True)
+    distance = models.CharField(max_length=100, blank=True)
+    # Rating statistics (auto-calculated)
+    price_avg = models.FloatField(default=0)
+    location_avg = models.FloatField(default=0)
+    amenity_avg = models.FloatField(default=0)
+    security_avg = models.FloatField(default=0)
+    overall_score = models.FloatField(default=0)
+    total_reviews = models.IntegerField(default=0)
+    
+    def __str__(self):
+        return self.name
+
+
+class LivingComment(models.Model):
+    """Comment with ratings for a living place."""
+    living_place = models.ForeignKey(LivingPlace, on_delete=models.CASCADE, related_name="comments")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    display_name = models.CharField(max_length=100, blank=True)
+    is_anonymous = models.BooleanField(default=False)
+    content = models.TextField()
+    
+    # Ratings for living places
+    price = models.IntegerField()
+    location = models.IntegerField()
+    amenity = models.IntegerField()
+    security = models.IntegerField()
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        unique_together = ('living_place', 'user')
+    
+    def __str__(self):
+        return f"Comment by {self.display_name or 'Anonymous'} on {self.living_place.name}"
+
+
+class LivingCommentImage(models.Model):
+    comment = models.ForeignKey(LivingComment, on_delete=models.CASCADE, related_name="images")
+    image = models.ImageField(upload_to="living_comment_images/")

@@ -18,4 +18,10 @@ urlpatterns = [
     path('afford/job/', views.Afford_job, name='Afford_job'),
     path('comment/<int:place_id>/', views.post_comment, name='post_comment'),
     path('comment/list/<int:place_id>/', views.get_comments, name='get_comments'),
+    path('api/restaurants/', views.get_restaurants, name='get_restaurants'),
+    path('api/places/', views.get_places, name='get_places'),
+    # Afford Living API
+    path('api/living-places/', views.get_living_places, name='get_living_places'),
+    path('living-comment/<int:living_place_id>/', views.post_living_comment, name='post_living_comment'),
+    path('living-comment/list/<int:living_place_id>/', views.get_living_comments, name='get_living_comments'),
 ]

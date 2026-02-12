@@ -92,6 +92,15 @@
         height: 180px;
         object-fit: cover;
     }
+    .card-image-placeholder {
+        width: 100%;
+        height: 180px;
+        background: #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+    }
     .accommodation-info {
         padding: 16px;
     }
@@ -117,12 +126,17 @@
     .tag-badge.green { background: #10b981; color: white; }
     .tag-badge.blue { background: #3b82f6; color: white; }
     .tag-badge.orange { background: #f59e0b; color: white; }
-    .accommodation-price {
-        font-family: "Press Start 2P", monospace;
-        font-size: 14px;
-        color: #10b981;
+    .accommodation-rating {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         padding-top: 12px;
         border-top: 2px solid #000;
+        font-size: 13px;
+        font-weight: bold;
+    }
+    .rating-stars {
+        color: #f59e0b;
     }
 
     /* ===== OVERLAY/MODAL ===== */
@@ -253,6 +267,49 @@
         color: #10b981;
     }
 
+    /* ===== SCORES ===== */
+    .scores-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+    .score-item {
+        background: #f3f4f6;
+        border: 2px solid #000;
+        border-radius: 8px;
+        padding: 12px;
+        text-align: center;
+    }
+    .score-label {
+        font-size: 12px;
+        color: #6b7280;
+        margin-bottom: 4px;
+    }
+    .score-value {
+        font-family: "Press Start 2P", monospace;
+        font-size: 20px;
+        font-weight: bold;
+        color: #10b981;
+    }
+    .overall-score {
+        background: #10b981;
+        color: white;
+        border: 3px solid #000;
+        border-radius: 12px;
+        padding: 16px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .overall-score .label {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+    .overall-score .value {
+        font-family: "Press Start 2P", monospace;
+        font-size: 36px;
+    }
+
     .amenities {
         display: flex;
         flex-wrap: wrap;
@@ -317,6 +374,17 @@
         font-size: 11px;
         color: #9ca3af;
         margin-top: 8px;
+    }
+    .review-scores {
+        display: flex;
+        gap: 12px;
+        font-size: 11px;
+        margin-top: 8px;
+    }
+    .review-score {
+        background: #e5e7eb;
+        padding: 4px 8px;
+        border-radius: 4px;
     }
     .review-images {
         display: flex;
@@ -441,6 +509,29 @@
         box-shadow: 2px 2px 0 #000;
     }
 
+    .action-btn {
+        display: block;
+        width: 100%;
+        text-decoration: none;
+        padding: 16px;
+        background: #10b981;
+        border: 3px solid #000;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        box-sizing: border-box;
+        box-shadow: 4px 4px 0 #000;
+        transition: all 0.2s;
+        text-align: center;
+    }
+    .action-btn:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 #000;
+    }
+
     /* ===== ZOOM ===== */
     .zoom-overlay {
         position: fixed;
@@ -471,6 +562,88 @@
         height: 80px;
         margin-bottom: 16px;
     }
+
+    /* ===== COST MODAL ===== */
+    .cost-modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        padding: 20px;
+    }
+    .cost-modal-overlay.active {
+        display: flex;
+    }
+    .cost-modal-content {
+        background: #fff;
+        border: 4px solid #000;
+        border-radius: 16px;
+        box-shadow: 8px 8px 0 #000;
+        max-width: 500px;
+        width: 100%;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    .cost-modal-header {
+        background: linear-gradient(to right, #10b981, #059669);
+        color: white;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .cost-modal-header h3 {
+        font-family: monospace;
+        font-size: 18px;
+        margin: 0;
+    }
+    .cost-modal-close {
+        width: 36px;
+        height: 36px;
+        background: rgba(0,0,0,0.3);
+        border: 2px solid #fff;
+        border-radius: 50%;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .cost-modal-body {
+        padding: 24px;
+    }
+    .cost-item {
+        background: #f9fafb;
+        border: 2px solid #000;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 12px;
+    }
+    .cost-item:last-child {
+        margin-bottom: 0;
+    }
+    .cost-label {
+        font-size: 12px;
+        color: #6b7280;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+    .cost-value {
+        font-family: "Press Start 2P", monospace;
+        font-size: 16px;
+        font-weight: bold;
+        color: #10b981;
+    }
+    .cost-note {
+        font-size: 12px;
+        color: #9ca3af;
+        margin-top: 8px;
+        font-style: italic;
+    }
 </style>
 
 <div class="container">
@@ -495,7 +668,9 @@
     </div>
 
     <!-- ACCOMMODATION LIST -->
-    <div class="accommodation-grid" id="accommodationList"></div>
+    <div class="accommodation-grid" id="accommodationList">
+        <!-- Cards will be rendered here by JavaScript -->
+    </div>
 </div>
 
 <!-- DETAIL MODAL -->
@@ -504,7 +679,6 @@
         <div class="modal-header">
             <button class="modal-close" onclick="closeModal()">×</button>
             <h2 id="dName"></h2>
-            <a id="dMap" target="_blank">📍 Xem trên Google Maps</a>
         </div>
         
         <div class="modal-body">
@@ -518,20 +692,50 @@
                 
                 <div class="info-grid">
                     <div class="info-item">
-                        <div class="info-label">Giá phòng</div>
-                        <div class="info-value" id="dPrice"></div>
+                        <div class="info-label">📍 Địa chỉ</div>
+                        <div class="info-value" id="dAddress" style="font-size: 12px; font-family: monospace;"></div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Diện tích</div>
-                        <div class="info-value" id="dArea"></div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Khoảng cách</div>
+                        <div class="info-label">🚗 Khoảng cách</div>
                         <div class="info-value" id="dDistance"></div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Số người</div>
+                        <div class="info-label">📐 Diện tích</div>
+                        <div class="info-value" id="dArea"></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">👥 Số người</div>
                         <div class="info-value" id="dCapacity"></div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 16px;">
+                    <a id="dMap" class="action-btn" target="_blank">🗺️ Xem trên Google Maps</a>
+                    <button class="action-btn" onclick="openCostDetail()">💰 Chi phí</button>
+                </div>
+
+                <h3 style="margin-top: 20px">📊 Đánh giá</h3>
+                <div class="overall-score">
+                    <div class="label">Điểm tổng hợp</div>
+                    <div class="value" id="dOverall"></div>
+                </div>
+                
+                <div class="scores-grid">
+                    <div class="score-item">
+                        <div class="score-label">Giá</div>
+                        <div class="score-value" id="sPrice"></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">Vị trí</div>
+                        <div class="score-value" id="sLocation"></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">Tiện nghi</div>
+                        <div class="score-value" id="sAmenity"></div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">An ninh</div>
+                        <div class="score-value" id="sSecurity"></div>
                     </div>
                 </div>
 
@@ -617,142 +821,251 @@
     </div>
 </div>
 
+<!-- COST DETAIL MODAL -->
+<div class="cost-modal-overlay" id="costModal">
+    <div class="cost-modal-content">
+        <div class="cost-modal-header">
+            <h3>💰 Chi phí chi tiết</h3>
+            <button class="cost-modal-close" onclick="closeCostDetail()">×</button>
+        </div>
+        <div class="cost-modal-body">
+            <div class="cost-item">
+                <div class="cost-label">🏠 Giá phòng</div>
+                <div class="cost-value" id="costRoom"></div>
+                <div class="cost-note">Giá tham khảo, có thể thay đổi tùy thời điểm</div>
+            </div>
+            <div class="cost-item">
+                <div class="cost-label">💧 Tiền nước</div>
+                <div class="cost-value" id="costWater"></div>
+                <div class="cost-note">Thường tính theo đầu người hoặc theo số m³</div>
+            </div>
+            <div class="cost-item">
+                <div class="cost-label">⚡ Tiền điện</div>
+                <div class="cost-value" id="costElectric"></div>
+                <div class="cost-note">Giá điện sinh hoạt ~3.000đ/kWh</div>
+            </div>
+            <div class="cost-item">
+                <div class="cost-label">📶 Wifi/Internet</div>
+                <div class="cost-value" id="costWifi"></div>
+                <div class="cost-note">Có thể tính vào giá phòng hoặc riêng</div>
+            </div>
+            <div class="cost-item">
+                <div class="cost-label">🧹 Dịch vụ khác</div>
+                <div class="cost-value" id="costOther"></div>
+                <div class="cost-note">Rác thải, vệ sinh chung...</div>
+            </div>
+            <div class="cost-item" style="background: #10b981; color: white;">
+                <div class="cost-label" style="color: white;">💵 Tổng ước tính</div>
+                <div class="cost-value" style="color: white;" id="costTotal"></div>
+                <div class="cost-note" style="color: #d1fae5;">Mỗi người khi ở ghép</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- ZOOM IMAGE -->
 <div class="zoom-overlay" id="zoomOverlay" onclick="closeZoom()">
     <img id="zoomImg">
 </div>
 
 <script>
-// Sample data - using local static images
+// Place data with ratings starting at 0
 const DATA = [
     {
         id: 1,
-        name: "Ký túc xá FPT Đà Nẵng",
-        map: "https://maps.google.com",
-        type: "KTX",
-        area: "Nam Kỳ Khởi Nghĩa",
-        price: "800k - 1.2tr",
-        areaValue: "20-30m²",
-        distance: "500m",
-        capacity: "2-4 người/phòng",
-        keywords: ["ktx", "fpt", "gần"],
-        tags: ["KTX", "Gần FPT"],
-        amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Giặt sấy", "Thể thao"],
-        photos: {
-            place: [
-                "{% static 'image/living/1.jpg' %}",
-                "{% static 'image/living/2.jpg' %}"
-            ]
-        },
-        description: "Ký túc xá chính thức của trường ĐH FPT, gần khuôn viên trường. An ninh tốt, có nhiều tiện ích cho sinh viên.",
-        ratings: [{price: 8, location: 9, amenity: 7, security: 8}],
-        reviews: [
-            {user: "Sinh viên năm 2", rating: "⭐⭐⭐⭐⭐", text: "Gần trường lắm, đi bộ 5 phút là tới. An ninh tốt.", date: "2024-01-15", images: []}
-        ]
-    },
-    {
-        id: 2,
-        name: "Phòng trọ Ngũ Hành Sơn",
-        map: "https://maps.google.com",
+        name: "Bobi House",
+        map: "https://maps.google.com/?q=Bobi+House+FPT",
         type: "phongtro",
-        area: "Ngũ Hành Sơn",
-        price: "1.5tr - 2tr",
-        areaValue: "25-35m²",
+        address: "Ngũ Hành Sơn, Đà Nẵng",
+        price: "2.6tr - 3tr",
+        areaValue: "20-30m²",
         distance: "800m",
         capacity: "1-2 người",
-        keywords: ["ngũ hành sơn", "phòng trọ", "gần"],
+        keywords: ["bobi", "house", "ngũ hành sơn"],
         tags: ["Phòng trọ", "Ngũ Hành Sơn"],
         amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Máy giặt"],
         photos: {
-            place: ["{% static 'image/living/3.jpg' %}"]
+            place: ["{% static 'image/living/1.jpg' %}"]
         },
-        description: "Phòng trọ sạch sẽ, gần khu vực Văn Lang, đi xe máy 5 phút tới trường. Chủ nhà thân thiện.",
-        ratings: [{price: 6, location: 8, amenity: 8, security: 7}],
-        reviews: []
+        description: "Bobi House - Phòng trọ gần FPT, di chuyển thuận tiện. Giá phòng hợp lý, chủ nhà thân thiện.",
+        ratings: [],
+        reviews: [],
+        cost: {
+            room: "2.6tr/người - 3tr/2 người",
+            water: "50k/người",
+            electric: "3.5k/chữ",
+            wifi: "Miễn phí",
+            other: "0đ",
+            total: "~1.3tr - 1.5tr/người"
+        }
+    },
+    {
+        id: 2,
+        name: "Căn hộ Đình Vũ",
+        map: "https://maps.google.com/?q=Dinh+Vu+Apartment+FPT",
+        type: "canho",
+        address: "Ngũ Hành Sơn, Đà Nẵng",
+        price: "3.5tr",
+        areaValue: "35-45m²",
+        distance: "1km",
+        capacity: "2 người",
+        keywords: ["đình vũ", "căn hộ", "ngũ hành sơn"],
+        tags: ["Căn hộ", "Ngũ Hành Sơn"],
+        amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Máy giặt", "Ban công"],
+        photos: {
+            place: ["{% static 'image/living/2.jpg' %}"]
+        },
+        description: "Căn hộ Đình Vũ - Rộng rãi, thoáng mát, gần khu vực FPT. Phù hợp cho 2 người ở.",
+        ratings: [],
+        reviews: [],
+        cost: {
+            room: "3.5tr/2 người",
+            water: "30k/người",
+            electric: "3.5k/chữ",
+            wifi: "Miễn phí",
+            other: "0đ",
+            total: "~1.75tr - 1.9tr/người"
+        }
     },
     {
         id: 3,
-        name: "Nhà nguyên căn Hòa Khê",
-        map: "https://maps.google.com",
-        type: "nha nguyen can",
-        area: "Hòa Khê",
-        price: "3.5tr - 5tr",
-        areaValue: "60-80m²",
-        distance: "2km",
-        capacity: "3-5 người",
-        keywords: ["nhà nguyên căn", "hòa khê", "thanh khê"],
-        tags: ["Nhà nguyên căn", "Thanh Khê"],
-        amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Máy giặt", "Bếp", "Sân"],
+        name: "Tèo FPT Apartment",
+        map: "https://maps.google.com/?q=Téo+FPT+Apartment",
+        type: "canho",
+        address: "Ngũ Hành Sơn, Đà Nẵng",
+        price: "3.5tr",
+        areaValue: "40-50m²",
+        distance: "1.2km",
+        capacity: "3 người",
+        keywords: ["tèo", "fpt", "apartment", "ngũ hành sơn"],
+        tags: ["Căn hộ", "Ngũ Hành Sơn"],
+        amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Máy giặt", "Bếp"],
         photos: {
-            place: ["{% static 'image/living/4.jpg' %}"]
+            place: ["{% static 'image/living/3.jpg' %}"]
         },
-        description: "Nhà nguyên căn rộng rãi, phù hợp cho nhóm sinh viên muốn ở chung. Có sân để xe, nấu ăn được.",
-        ratings: [{price: 7, location: 6, amenity: 9, security: 8}],
-        reviews: [
-            {user: "Nhóm 4 bạn", rating: "⭐⭐⭐⭐", text: "Ở 4 người thì giá chia ra rẻ lắm. Nhà rộng, nấu ăn thoải mái.", date: "2024-01-10", images: []}
-        ]
+        description: "Tèo FPT Apartment - Căn hộ rộng cho nhóm sinh viên. Gần FPT, tiện nghi đầy đủ.",
+        ratings: [],
+        reviews: [],
+        cost: {
+            room: "3.5tr/3 người",
+            water: "50k/người",
+            electric: "3.5k/chữ",
+            wifi: "Miễn phí",
+            other: "0đ",
+            total: "~1.17tr - 1.3tr/người"
+        }
     },
     {
         id: 4,
-        name: "Studio gần FPT",
-        map: "https://maps.google.com",
+        name: "Café An An",
+        map: "https://maps.google.com/?q=Cafe+An+An+FPT",
         type: "phongtro",
-        area: "Văn Lang",
-        price: "2tr - 2.5tr",
-        areaValue: "28m²",
-        distance: "1km",
+        address: "Ngũ Hành Sơn, Đà Nẵng",
+        price: "3tr - 4.5tr",
+        areaValue: "25-35m²",
+        distance: "700m",
         capacity: "1-2 người",
-        keywords: ["studio", "văn lang", "gần fpt"],
-        tags: ["Phòng trọ", "Studio"],
-        amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Giường", "Bàn học"],
+        keywords: ["an an", "cafe", "phòng trọ", "ngũ hành sơn"],
+        tags: ["Phòng trọ", "Ngũ Hành Sơn"],
+        amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Máy giặt"],
         photos: {
-            place: ["{% static 'image/living/5.jpg' %}"]
+            place: ["{% static 'image/living/4.jpg' %}"]
         },
-        description: "Phòng studio mini, đầy đủ đồ cho 1 người. Đi xe 3 phút tới trường. Có bảo vệ 24/7.",
-        ratings: [{price: 7, location: 9, amenity: 8, security: 9}],
-        reviews: []
+        description: "Café An An - Phòng trọ có quán cafe bên dưới. Không gian xanh mát, yên tĩnh.",
+        ratings: [],
+        reviews: [],
+        cost: {
+            room: "3tr/1 người - 4.5tr/2 người",
+            water: "50k/người",
+            electric: "3.5k/chữ",
+            wifi: "Miễn phí",
+            other: "0đ",
+            total: "~1.5tr - 2.25tr/người"
+        }
     },
     {
         id: 5,
-        name: "Ktx Thanh Khê",
-        map: "https://maps.google.com",
-        type: "KTX",
-        area: "Thanh Khê",
-        price: "600k - 900k",
-        areaValue: "18-25m²",
-        distance: "3km",
-        capacity: "2-3 người",
-        keywords: ["ktx", "thanh khê", "rẻ"],
-        tags: ["KTX", "Giá rẻ"],
-        amenities: ["Wifi", "Quạt", "Nóng lạnh", "Giặt"],
+        name: "DTT Apartment",
+        map: "https://maps.google.com/?q=DTT+Apartment+FPT",
+        type: "canho",
+        address: "Ngũ Hành Sơn, Đà Nẵng",
+        price: "4.5tr",
+        areaValue: "45-55m²",
+        distance: "1km",
+        capacity: "2 người",
+        keywords: ["dtt", "apartment", "ngũ hành sơn"],
+        tags: ["Căn hộ", "Ngũ Hành Sơn"],
+        amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Máy giặt", "Ban công", "Bếp"],
         photos: {
-            place: ["{% static 'image/living/6.jpg' %}"]
+            place: ["{% static 'image/living/5.jpg' %}"]
         },
-        description: "Ktx giá rẻ, phù hợp cho sinh viên muốn tiết kiệm chi phí. Đi xe bus hoặc grab tới trường.",
-        ratings: [{price: 9, location: 5, amenity: 6, security: 7}],
-        reviews: [
-            {user: "Sinh viên năm 1", rating: "⭐⭐⭐⭐", text: "Giá rẻ nhất quanh đây. Đi xa hơn một chút nhưng đáng giá.", date: "2024-01-05", images: []}
-        ]
+        description: "DTT Apartment - Căn hộ cao cấp gần FPT. Đầy đủ tiện nghi, view đẹp.",
+        ratings: [],
+        reviews: [],
+        cost: {
+            room: "4.5tr/2 người",
+            water: "50k/người",
+            electric: "3.5k/chữ",
+            wifi: "Miễn phí",
+            other: "0đ",
+            total: "~2.25tr - 2.5tr/người"
+        }
     },
     {
         id: 6,
-        name: "Căn hộ mini FPT",
-        map: "https://maps.google.com",
+        name: "Trọ A Phúc",
+        map: "https://maps.google.com/?q=Tro+A+Phuc+FPT",
         type: "phongtro",
-        area: "Đường 2/9",
-        price: "2.5tr - 3tr",
-        areaValue: "32m²",
-        distance: "1.5km",
-        capacity: "1-2 người",
-        keywords: ["căn hộ", "mini", "2/9"],
-        tags: ["Căn hộ", "Hải Châu"],
-        amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Máy giặt", "Ban công"],
+        address: "Thanh Khê, Đà Nẵng",
+        price: "1.9tr",
+        areaValue: "18-25m²",
+        distance: "2.5km",
+        capacity: "1 người",
+        keywords: ["a phúc", "phúc", "thanh khê", "trọ"],
+        tags: ["Phòng trọ", "Thanh Khê"],
+        amenities: ["Wifi", "Điều hòa", "Nóng lạnh"],
+        photos: {
+            place: ["{% static 'image/living/6.jpg' %}"]
+        },
+        description: "Trọ A Phúc - Phòng trọ giá rẻ, phù hợp cho sinh viên. Đi xe máy 15 phút tới FPT.",
+        ratings: [],
+        reviews: [],
+        cost: {
+            room: "1.9tr/người",
+            water: "50k/người",
+            electric: "3.5k/chữ",
+            wifi: "Miễn phí",
+            other: "0đ",
+            total: "~2tr - 2.2tr/người"
+        }
+    },
+    {
+        id: 7,
+        name: "Bảo Home 2",
+        map: "https://maps.google.com/?q=Bao+Home+2+FPT",
+        type: "canho",
+        address: "Ngũ Hành Sơn, Đà Nẵng",
+        price: "3.2tr",
+        areaValue: "35-45m²",
+        distance: "900m",
+        capacity: "2 người",
+        keywords: ["bảo home", "home 2", "ngũ hành sơn"],
+        tags: ["Căn hộ", "Ngũ Hành Sơn"],
+        amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Máy giặt", "Bếp"],
         photos: {
             place: ["{% static 'image/living/7.jpg' %}"]
         },
-        description: "Căn hộ mini đầy đủ tiện nghi, có ban công, view đẹp. Gần siêu thị và trung tâm thương mại.",
-        ratings: [{price: 6, location: 8, amenity: 9, security: 8}],
-        reviews: []
+        description: "Bảo Home 2 - Căn hộ mới, sạch sẽ, gần FPT. Chủ nhà thân thiện, hỗ trợ sinh viên.",
+        ratings: [],
+        reviews: [],
+        cost: {
+            room: "3.2tr/2 người",
+            water: "70k/người",
+            electric: "3.8k/chữ",
+            wifi: "50k/người",
+            other: "50k/người (rác)",
+            total: "~1.6tr - 1.8tr/người"
+        }
     }
 ];
 
@@ -761,14 +1074,20 @@ let activeFilter = 'all';
 
 function avg(p) {
     let t = {price: 0, location: 0, amenity: 0, security: 0};
-    p.ratings.forEach(r => Object.keys(t).forEach(k => t[k] += (r[k] || 0)));
-    Object.keys(t).forEach(k => t[k] /= p.ratings.length || 1);
+    if (p.ratings && p.ratings.length > 0) {
+        p.ratings.forEach(r => Object.keys(t).forEach(k => t[k] += r[k]));
+        Object.keys(t).forEach(k => t[k] /= p.ratings.length);
+    }
     return t;
 }
 
 function render() {
     const q = document.getElementById('search').value.toLowerCase();
     const container = document.getElementById('accommodationList');
+    
+    console.log('Rendering cards...');
+    console.log('DATA length:', DATA.length);
+    
     container.innerHTML = "";
     
     let filtered = DATA.filter(p => {
@@ -777,16 +1096,18 @@ function render() {
             if (activeFilter === 'phongtro' && p.type !== 'phongtro') return false;
             if (activeFilter === 'nha nguyen can' && p.type !== 'nha nguyen can') return false;
             if (['quantrum', 'nguhanhson', 'hoakhue'].includes(activeFilter)) {
-                if (!p.area.toLowerCase().includes(activeFilter === 'quantrum' ? 'thanh' : activeFilter === 'nguhanhson' ? 'ngũ' : 'hòa')) return false;
+                if (!p.address.toLowerCase().includes(activeFilter === 'quantrum' ? 'thanh' : activeFilter === 'nguhanhson' ? 'ngũ' : 'hòa')) return false;
             }
         }
         
         if (!q) return true;
         return p.name.toLowerCase().includes(q) ||
-               p.area.toLowerCase().includes(q) ||
+               p.address.toLowerCase().includes(q) ||
                p.tags.some(t => q.includes(t.toLowerCase())) ||
                p.keywords.some(k => q.includes(k));
     });
+    
+    console.log('Filtered count:', filtered.length);
     
     if (filtered.length === 0) {
         container.innerHTML = `
@@ -802,19 +1123,31 @@ function render() {
     }
     
     filtered.forEach(p => {
+        const a = avg(p);
+        const overall = ((a.price + a.location + a.amenity + a.security) / 4).toFixed(1);
+        const reviewCount = p.reviews.length;
+        const imgSrc = p.photos.place[0] || '';
+        
         container.innerHTML += `
-            <div class="accommodation-card" onclick="openDetail(${p.id})">
-                <img src="${p.photos.place[0]}" alt="${p.name}">
+            <div class="accommodation-card" onclick="openDetail(${p.id})" style="min-height: 320px;">
+                <div class="card-image-placeholder" style="width: 100%; height: 180px; background: #e5e7eb; display: flex; align-items: center; justify-content: center; font-size: 48px;">
+                    ${imgSrc ? `<img src="${imgSrc}" alt="${p.name}" style="width: 100%; height: 100%; object-fit: cover;">` : '🏠'}
+                </div>
                 <div class="accommodation-info">
                     <div class="accommodation-name">${p.name}</div>
                     <div class="accommodation-tags">
                         ${p.tags.slice(0, 3).map(t => `<span class="tag-badge ${t === 'KTX' ? 'green' : t === 'Phòng trọ' ? 'blue' : 'orange'}">${t}</span>`).join('')}
                     </div>
-                    <div class="accommodation-price">💰 ${p.price}</div>
+                    <div class="accommodation-rating">
+                        <span class="rating-stars">⭐ ${overall}</span>
+                        <span>${reviewCount} đánh giá</span>
+                    </div>
                 </div>
             </div>
         `;
     });
+    
+    console.log('Cards rendered successfully');
 }
 
 function openDetail(id) {
@@ -823,17 +1156,34 @@ function openDetail(id) {
     
     const modal = document.getElementById('detailModal');
     
+    const a = avg(p);
+    const overall = ((a.price + a.location + a.amenity + a.security) / 4).toFixed(1);
+    
     document.getElementById('dName').innerText = p.name;
     document.getElementById('dMap').href = p.map;
-    document.getElementById('dPrice').innerText = p.price;
+    document.getElementById('dAddress').innerText = p.address;
     document.getElementById('dArea').innerText = p.areaValue;
     document.getElementById('dDistance').innerText = p.distance;
     document.getElementById('dCapacity').innerText = p.capacity;
     document.getElementById('dDescription').innerText = p.description;
     
+    // Show ratings
+    document.getElementById('dOverall').innerText = overall + "/10";
+    document.getElementById('sPrice').innerText = a.price.toFixed(1);
+    document.getElementById('sLocation').innerText = a.location.toFixed(1);
+    document.getElementById('sAmenity').innerText = a.amenity.toFixed(1);
+    document.getElementById('sSecurity').innerText = a.security.toFixed(1);
+    
     document.getElementById('dAmenities').innerHTML = p.amenities.map(a => `<span class="amenity">${a}</span>`).join('');
     
-    document.getElementById('dMain').src = p.photos.place[0];
+    const imgSrc = p.photos.place[0] || '';
+    if (imgSrc) {
+        document.getElementById('dMain').src = imgSrc;
+        document.getElementById('dMain').style.display = 'block';
+    } else {
+        document.getElementById('dMain').style.display = 'none';
+    }
+    
     const gallery = document.getElementById('dGallery');
     gallery.innerHTML = "";
     p.photos.place.forEach((img, idx) => {
@@ -849,7 +1199,7 @@ function openDetail(id) {
 
 function renderReviews(reviews) {
     const container = document.getElementById('reviewList');
-    if (reviews.length === 0) {
+    if (!reviews || reviews.length === 0) {
         container.innerHTML = '<p style="color: #9ca3af; text-align: center; padding: 20px;">Chưa có đánh giá nào</p>';
         return;
     }
@@ -859,14 +1209,23 @@ function renderReviews(reviews) {
         if (r.images && r.images.length > 0) {
             imagesHtml = `<div class="review-images">${r.images.map(img => `<img src="${img}" onclick="zoomImage('${img}')">`).join('')}</div>`;
         }
+        
+        const date = r.created_at ? new Date(r.created_at).toLocaleDateString('vi-VN') : (r.date || '');
+        const scores = r.ratings || {price: r.price || 0, location: r.location || 0, amenity: r.amenity || 0, security: r.security || 0};
+        
         return `
             <div class="review-item">
                 <div class="review-header">
                     <span class="review-user">${r.user}</span>
-                    <span class="review-rating">${r.rating}</span>
+                    <span class="review-date">${date}</span>
                 </div>
-                <div class="review-content">${r.text}</div>
-                <div class="review-date">${r.date}</div>
+                <div class="review-content">${r.content || r.text || ''}</div>
+                <div class="review-scores">
+                    <span class="review-score">💰 ${scores.price}</span>
+                    <span class="review-score">📍 ${scores.location}</span>
+                    <span class="review-score">🏠 ${scores.amenity}</span>
+                    <span class="review-score">🔒 ${scores.security}</span>
+                </div>
                 ${imagesHtml}
             </div>
         `;
@@ -919,7 +1278,7 @@ function submitReview() {
         fd.append("images", imgFiles[i]);
     }
 
-    fetch(`/comment/${currentId}/`, {
+    fetch(`/living-comment/${currentId}/`, {
         method: "POST",
         body: fd
     })
@@ -946,37 +1305,69 @@ function submitReview() {
             parseInt(document.getElementById("cSecurity").value)
         ) / 4;
         
-        let stars = "⭐";
-        for (let i = 1; i < Math.round(overall); i++) stars += "⭐";
-        
         const newReview = {
             user: document.getElementById("cName").value || "Ẩn danh",
-            text: document.getElementById("cText").value,
-            rating: stars,
+            content: document.getElementById("cText").value,
             date: new Date().toISOString().split('T')[0],
-            images: []
+            images: [],
+            ratings: {
+                price: parseInt(document.getElementById("cPrice").value),
+                location: parseInt(document.getElementById("cLocation").value),
+                amenity: parseInt(document.getElementById("cAmenity").value),
+                security: parseInt(document.getElementById("cSecurity").value)
+            }
         };
-        p.reviews.unshift(newReview);
-        renderReviews(p.reviews);
-        document.getElementById('reviewCount').innerText = p.reviews.length;
+        if (p) {
+            if (!p.ratings) p.ratings = [];
+            if (!p.reviews) p.reviews = [];
+            p.ratings.push(newReview.ratings);
+            p.reviews.unshift(newReview);
+        }
+        renderReviews(p ? p.reviews : [newReview]);
+        document.getElementById('reviewCount').innerText = p ? p.reviews.length : 1;
         alert("Đã gửi đánh giá!");
         document.getElementById("cName").value = "";
         document.getElementById("cText").value = "";
         document.getElementById("cImages").value = "";
         toggleReviewForm();
+        // Refresh the main page to show updated ratings
+        render();
     });
 }
 
 function loadReviews(id) {
-    fetch(`/comment/list/${id}/`)
+    fetch(`/living-comment/list/${id}/`)
     .then(r => r.json())
     .then(data => {
         const p = DATA.find(x => x.id === id);
-        if (p) p.reviews = data;
+        if (p) {
+            p.reviews = data;
+            p.ratings = data.map(c => c.ratings);
+        }
         renderReviews(data);
         document.getElementById('reviewCount').innerText = data.length;
+        // Refresh the main page to show updated ratings
+        render();
     })
     .catch(() => {});
+}
+
+function openCostDetail() {
+    const p = DATA.find(x => x.id === currentId);
+    if (!p || !p.cost) return;
+    
+    document.getElementById('costRoom').innerText = p.cost.room;
+    document.getElementById('costWater').innerText = p.cost.water;
+    document.getElementById('costElectric').innerText = p.cost.electric;
+    document.getElementById('costWifi').innerText = p.cost.wifi;
+    document.getElementById('costOther').innerText = p.cost.other;
+    document.getElementById('costTotal').innerText = p.cost.total;
+    
+    document.getElementById('costModal').classList.add('active');
+}
+
+function closeCostDetail() {
+    document.getElementById('costModal').classList.remove('active');
 }
 
 // Filter buttons
@@ -994,11 +1385,17 @@ document.getElementById('detailModal').onclick = function(e) {
     if (e.target === this) closeModal();
 };
 
+// Close cost modal on overlay click
+document.getElementById('costModal').onclick = function(e) {
+    if (e.target === this) closeCostDetail();
+};
+
 // Search listener
 document.getElementById('search').oninput = render;
 
 // Initial render
 render();
+console.log('Page loaded successfully');
 </script>
 
 {% endblock %}
