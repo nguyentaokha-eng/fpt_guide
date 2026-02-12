@@ -1,504 +1,529 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-{% load static %}
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Life - FPT Guide</title>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-        :root {
-            --orange-primary: #ff6b35;
-            --orange-secondary: #ff8c42;
-            --dark-text: #2c3e50;
-            --light-bg: #f8f9fa;
-        }
+<style>
+    :root {
+        --orange-primary: #ff6b35;
+        --orange-secondary: #ff8c42;
+        --dark-text: #2c3e50;
+        --light-bg: #f8f9fa;
+    }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--light-bg);
-            color: var(--dark-text);
-        }
+    .student-life-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+    /* ============ SECTION TITLES ============ */
+    .section-title {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 50px;
+        position: relative;
+        display: inline-block;
+    }
 
-        /* ============ SECTION TITLES ============ */
-        .section-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 50px;
-            position: relative;
-            display: inline-block;
-        }
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 200px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--orange-primary), var(--orange-secondary));
+        border-radius: 2px;
+    }
 
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 200px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--orange-primary), var(--orange-secondary));
-            border-radius: 2px;
-        }
+    .section-title .highlight {
+        color: var(--orange-primary);
+    }
 
-        .section-title .highlight {
-            color: var(--orange-primary);
-        }
+    .diagonal-lines {
+        display: inline-block;
+        width: 100px;
+        height: 3px;
+        background: repeating-linear-gradient(
+            45deg,
+            #ddd,
+            #ddd 5px,
+            transparent 5px,
+            transparent 10px
+        );
+        margin-left: 20px;
+        vertical-align: middle;
+    }
 
-        .diagonal-lines {
-            display: inline-block;
-            width: 100px;
-            height: 3px;
-            background: repeating-linear-gradient(
-                45deg,
-                #ddd,
-                #ddd 5px,
-                transparent 5px,
-                transparent 10px
-            );
-            margin-left: 20px;
-            vertical-align: middle;
-        }
+    /* ============ FACILITIES CAROUSEL SECTION ============ */
+    .facilities-section {
+        margin-bottom: 80px;
+    }
 
-        /* ============ FACILITIES CAROUSEL SECTION ============ */
-        .facilities-section {
-            margin-bottom: 80px;
-        }
+    .carousel-container {
+        position: relative;
+        overflow: hidden;
+        padding: 0 60px;
+    }
 
-        .carousel-container {
-            position: relative;
-            overflow: hidden;
-            padding: 0 60px;
-        }
+    .carousel-track {
+        display: flex;
+        gap: 20px;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        .carousel-track {
-            display: flex;
-            gap: 30px;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    .facility-card {
+        min-width: calc(25% - 15px);
+        height: 280px;
+        flex-shrink: 0;
+        position: relative;
+        border-radius: 15px;
+        overflow: hidden;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    }
 
+    .facility-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(255, 107, 53, 0.2);
+    }
+
+    .placeholder-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
+        border: 2px solid #e0e0e0;
+        transition: all 0.3s ease;
+    }
+
+    .facility-card:hover .placeholder-container {
+        background: linear-gradient(135deg, #fff5f0 0%, #ffe6d9 100%);
+        border-color: var(--orange-primary);
+    }
+
+    .placeholder-icon {
+        font-size: 4rem;
+        margin-bottom: 15px;
+        opacity: 0.7;
+        transition: all 0.3s ease;
+    }
+
+    .facility-card:hover .placeholder-icon {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    .facility-name {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--dark-text);
+        text-align: center;
+        padding: 0 15px;
+        transition: all 0.3s ease;
+    }
+
+    .facility-card:hover .facility-name {
+        color: var(--orange-primary);
+    }
+
+    .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 50px;
+        height: 50px;
+        background: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+        z-index: 10;
+    }
+
+    .carousel-btn:hover {
+        background: var(--orange-primary);
+        color: white;
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .carousel-btn.prev {
+        left: 0;
+    }
+
+    .carousel-btn.next {
+        right: 0;
+    }
+
+    /* ============ MODAL FOR IMAGE ZOOM ============ */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .modal.active {
+        display: flex;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .modal-content {
+        position: relative;
+        max-width: 90%;
+        max-height: 90%;
+        animation: zoomIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes zoomIn {
+        from {
+            transform: scale(0.7);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    .modal-image {
+        max-width: 100%;
+        max-height: 90vh;
+        border-radius: 15px;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        object-fit: contain;
+    }
+
+    .modal-close {
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 40px;
+        height: 40px;
+        background: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+        background: var(--orange-primary);
+        color: white;
+        transform: rotate(90deg);
+    }
+
+    .modal-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 50px;
+        height: 50px;
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .modal-nav:hover {
+        background: var(--orange-primary);
+        color: white;
+    }
+
+    .modal-nav.prev {
+        left: -70px;
+    }
+
+    .modal-nav.next {
+        right: -70px;
+    }
+
+    .modal-caption {
+        text-align: center;
+        color: white;
+        margin-top: 20px;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    /* ============ CLUBS & ACTIVITIES SECTION ============ */
+    .clubs-section {
+        margin-bottom: 80px;
+    }
+
+    .clubs-intro {
+        max-width: 1200px;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #555;
+        margin-bottom: 40px;
+    }
+
+    .cta-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 15px 35px;
+        background: linear-gradient(135deg, var(--orange-primary), var(--orange-secondary));
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+        margin-bottom: 40px;
+    }
+
+    .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(255, 107, 53, 0.4);
+    }
+
+    .cta-button svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .clubs-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+
+    .club-card {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s ease;
+        border: 3px solid var(--orange-primary);
+        background: #fff;
+    }
+
+    .club-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 50px rgba(255, 107, 53, 0.25);
+    }
+
+    .club-image {
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.5s ease;
+    }
+
+    .club-card:hover .club-image {
+        transform: scale(1.1);
+    }
+
+    /* ============ INTERNATIONAL EXPERIENCE SECTION ============ */
+    .international-section {
+        margin-bottom: 80px;
+    }
+
+    .international-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+    }
+
+    .international-images {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 15px;
+        height: 600px;
+    }
+
+    .international-images::before {
+        content: '';
+        position: absolute;
+        top: -20px;
+        left: -20px;
+        width: 150px;
+        height: 150px;
+        border: 4px solid var(--orange-primary);
+        border-radius: 20px;
+        z-index: -1;
+    }
+
+    .int-image-wrapper {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        transition: all 0.4s ease;
+        cursor: pointer;
+        border: 3px solid var(--orange-primary);
+    }
+
+    .int-image-wrapper:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(255, 107, 53, 0.3);
+    }
+
+    .int-image-wrapper:nth-child(1) {
+        grid-row: 1 / 3;
+    }
+
+    .int-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .int-image-wrapper:hover .int-image {
+        transform: scale(1.1);
+    }
+
+    .international-content {
+        padding: 20px;
+    }
+
+    .international-content p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #555;
+        margin-bottom: 30px;
+    }
+
+    .pagination-dots {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #ddd;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .dot.active,
+    .dot:hover {
+        background: var(--orange-primary);
+        transform: scale(1.2);
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 1200px) {
         .facility-card {
-            min-width: calc(25% - 22.5px);
-            flex-shrink: 0;
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 3px solid var(--orange-primary);
-            background: #fff;
-        }
-
-        .facility-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(255, 107, 53, 0.3);
-        }
-
-        .facility-image {
-            width: 100%;
+            min-width: calc(33.333% - 14px);
             height: 250px;
-            object-fit: cover;
-            object-position: center;
-            transition: transform 0.5s ease;
         }
 
-        .facility-card:hover .facility-image {
-            transform: scale(1.1);
+        .placeholder-icon {
+            font-size: 3.5rem;
         }
 
         .facility-name {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 20px;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
-            color: white;
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-align: center;
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: 2rem;
         }
 
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            background: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-            z-index: 10;
+        .carousel-container {
+            padding: 0 50px;
         }
 
-        .carousel-btn:hover {
-            background: var(--orange-primary);
-            color: white;
-            transform: translateY(-50%) scale(1.1);
+        .facility-card {
+            min-width: calc(50% - 10px);
+            height: 220px;
         }
 
-        .carousel-btn.prev {
-            left: 0;
+        .placeholder-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
         }
 
-        .carousel-btn.next {
-            right: 0;
-        }
-
-        /* ============ MODAL FOR IMAGE ZOOM ============ */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .modal-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            animation: zoomIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @keyframes zoomIn {
-            from {
-                transform: scale(0.7);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .modal-image {
-            max-width: 100%;
-            max-height: 90vh;
-            border-radius: 15px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 40px;
-            height: 40px;
-            background: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .modal-close:hover {
-            background: var(--orange-primary);
-            color: white;
-            transform: rotate(90deg);
-        }
-
-        .modal-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .modal-nav:hover {
-            background: var(--orange-primary);
-            color: white;
-        }
-
-        .modal-nav.prev {
-            left: -70px;
-        }
-
-        .modal-nav.next {
-            right: -70px;
-        }
-
-        .modal-caption {
-            text-align: center;
-            color: white;
-            margin-top: 20px;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        /* ============ CLUBS & ACTIVITIES SECTION ============ */
-        .clubs-section {
-            margin-bottom: 80px;
-        }
-
-        .clubs-intro {
-            max-width: 1200px;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #555;
-            margin-bottom: 40px;
-        }
-
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 15px 35px;
-            background: linear-gradient(135deg, var(--orange-primary), var(--orange-secondary));
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
-            margin-bottom: 40px;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.4);
-        }
-
-        .cta-button svg {
-            width: 20px;
-            height: 20px;
+        .facility-name {
+            font-size: 0.95rem;
         }
 
         .clubs-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-        }
-
-        .club-card {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s ease;
-            border: 3px solid var(--orange-primary);
-            background: #fff;
-        }
-
-        .club-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 50px rgba(255, 107, 53, 0.25);
-        }
-
-        .club-image {
-            width: 100%;
-            height: 350px;
-            object-fit: cover;
-            object-position: center;
-            transition: transform 0.5s ease;
-        }
-
-        .club-card:hover .club-image {
-            transform: scale(1.1);
-        }
-
-        /* ============ INTERNATIONAL EXPERIENCE SECTION ============ */
-        .international-section {
-            margin-bottom: 80px;
+            grid-template-columns: 1fr;
         }
 
         .international-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
+            grid-template-columns: 1fr;
         }
 
         .international-images {
+            height: 500px;
+        }
+
+        .modal-nav,
+        .modal-close {
             position: relative;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            gap: 15px;
-            height: 600px;
+            left: auto;
+            right: auto;
+            top: auto;
+            margin: 10px;
         }
 
-        .international-images::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            width: 150px;
-            height: 150px;
-            border: 4px solid var(--orange-primary);
-            border-radius: 20px;
-            z-index: -1;
+        .modal-content {
+            max-width: 95%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .facility-card {
+            min-width: calc(100% - 10px);
+            height: 200px;
         }
 
-        .int-image-wrapper {
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            transition: all 0.4s ease;
-            cursor: pointer;
-            border: 3px solid var(--orange-primary);
+        .placeholder-icon {
+            font-size: 2.5rem;
         }
 
-        .int-image-wrapper:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.3);
+        .facility-name {
+            font-size: 0.9rem;
         }
+    }
+</style>
 
-        .int-image-wrapper:nth-child(1) {
-            grid-row: 1 / 3;
-        }
-
-        .int-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .int-image-wrapper:hover .int-image {
-            transform: scale(1.1);
-        }
-
-        .international-content {
-            padding: 20px;
-        }
-
-        .international-content p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #555;
-            margin-bottom: 30px;
-        }
-
-        .pagination-dots {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #ddd;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .dot.active,
-        .dot:hover {
-            background: var(--orange-primary);
-            transform: scale(1.2);
-        }
-
-        /* ============ RESPONSIVE ============ */
-        @media (max-width: 1200px) {
-            .facility-card {
-                min-width: calc(33.333% - 20px);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .carousel-container {
-                padding: 0 50px;
-            }
-
-            .facility-card {
-                min-width: calc(50% - 15px);
-            }
-
-            .clubs-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .international-container {
-                grid-template-columns: 1fr;
-            }
-
-            .international-images {
-                height: 500px;
-            }
-
-            .modal-nav,
-            .modal-close {
-                position: relative;
-                left: auto;
-                right: auto;
-                top: auto;
-                margin: 10px;
-            }
-
-            .modal-content {
-                max-width: 95%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .facility-card {
-                min-width: 100%;
-            }
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
+<div class="student-life-container">
     <!-- ============ FACILITIES SECTION ============ -->
     <section class="facilities-section">
         <h2 class="section-title">
@@ -515,57 +540,75 @@
 
             <div class="carousel-track" id="carouselTrack">
                 <!-- Phòng học -->
-                <div class="facility-card" onclick="openModal(0, 'main')">
-                    <img src="{% static 'image/facilities/phong-hoc.jpg.jpg' %}" alt="Phòng học" onerror="this.src='https://via.placeholder.com/400x300/ff6b35/ffffff?text=Phòng+học'">
-                    <div class="facility-name">Phòng học</div>
+                <div class="facility-card" onclick="openModal(0, 'main')" data-facility="phong-hoc">
+                    <div class="placeholder-container">
+                        <div class="placeholder-icon">🏫</div>
+                        <div class="facility-name">Phòng học</div>
+                    </div>
                 </div>
 
                 <!-- Ký túc xá -->
-                <div class="facility-card" onclick="openModal(1, 'main')">
-                    <img src="{% static 'image/facilities/ki-tuc-xa.jpg' %}" alt="Ký túc xá" onerror="this.src='https://via.placeholder.com/400x300/ff6b35/ffffff?text=Ký+túc+xá'">
-                    <div class="facility-name">Ký túc xá</div>
+                <div class="facility-card" onclick="openModal(1, 'main')" data-facility="ktx">
+                    <div class="placeholder-container">
+                        <div class="placeholder-icon">🏠</div>
+                        <div class="facility-name">Ký túc xá</div>
+                    </div>
                 </div>
 
                 <!-- Thư viện -->
-                <div class="facility-card" onclick="openModal(2, 'main')">
-                    <img src="{% static 'image/facilities/thu-vien.jpg' %}" alt="Thư viện" onerror="this.src='https://via.placeholder.com/400x300/ff6b35/ffffff?text=Thư+viện'">
-                    <div class="facility-name">Thư viện</div>
+                <div class="facility-card" onclick="openModal(2, 'main')" data-facility="thu-vien">
+                    <div class="placeholder-container">
+                        <div class="placeholder-icon">📚</div>
+                        <div class="facility-name">Thư viện</div>
+                    </div>
                 </div>
 
                 <!-- Khu thể thao -->
-                <div class="facility-card" onclick="openModal(3, 'main')">
-                    <img src="{% static 'image/facilities/khu-the-thao.jpg' %}" alt="Khu thể thao" onerror="this.src='https://via.placeholder.com/400x300/ff6b35/ffffff?text=Khu+thể+thao'">
-                    <div class="facility-name">Khu thể thao</div>
+                <div class="facility-card" onclick="openModal(3, 'main')" data-facility="the-thao">
+                    <div class="placeholder-container">
+                        <div class="placeholder-icon">⚽</div>
+                        <div class="facility-name">Khu thể thao</div>
+                    </div>
                 </div>
 
                 <!-- Không gian xanh -->
-                <div class="facility-card" onclick="openModal(4, 'main')">
-                    <img src="{% static 'image/facilities/khong-gian-xanh.jpg' %}" alt="Không gian xanh" onerror="this.src='https://via.placeholder.com/400x300/ff6b35/ffffff?text=Không+gian+xanh'">
-                    <div class="facility-name">Không gian xanh</div>
+                <div class="facility-card" onclick="openModal(4, 'main')" data-facility="xanh">
+                    <div class="placeholder-container">
+                        <div class="placeholder-icon">🌳</div>
+                        <div class="facility-name">Không gian xanh</div>
+                    </div>
                 </div>
 
                 <!-- Hội trường -->
-                <div class="facility-card" onclick="openModal(5, 'main')">
-                    <img src="{% static 'image/facilities/hoi-truong.jpg' %}" alt="Hội trường" onerror="this.src='https://via.placeholder.com/400x300/ff6b35/ffffff?text=Hội+trường'">
-                    <div class="facility-name">Hội trường</div>
+                <div class="facility-card" onclick="openModal(5, 'main')" data-facility="hoi-truong">
+                    <div class="placeholder-container">
+                        <div class="placeholder-icon">🎭</div>
+                        <div class="facility-name">Hội trường</div>
+                    </div>
                 </div>
 
                 <!-- Phòng Lab -->
-                <div class="facility-card" onclick="openModal(6, 'main')">
-                    <img src="{% static 'image/facilities/Phong-lab.jpg' %}" alt="Phòng Lab" onerror="this.src='https://via.placeholder.com/400x300/ff6b35/ffffff?text=Phòng+Lab'">
-                    <div class="facility-name">Phòng Lab</div>
+                <div class="facility-card" onclick="openModal(6, 'main')" data-facility="lab">
+                    <div class="placeholder-container">
+                        <div class="placeholder-icon">🔬</div>
+                        <div class="facility-name">Phòng Lab</div>
+                    </div>
                 </div>
 
                 <!-- Studio -->
-                <div class="facility-card" onclick="openModal(7, 'main')">
-                    <img src="{% static 'image/facilities/studio.jpg.jpg' %}" alt="Studio" onerror="this.src='https://via.placeholder.com/400x300/ff6b35/ffffff?text=Studio'">
-                    <div class="facility-name">Studio</div>
+                <div class="facility-card" onclick="openModal(7, 'main')" data-facility="studio">
+                    <div class="placeholder-container">
+                        <div class="placeholder-icon">🎬</div>
+                        <div class="facility-name">Studio</div>
+                    </div>
                 </div>
 
                 <!-- LUK Facilities -->
-                <div class="facility-card" onclick="openLukModal()">
-                    <img src="{% static 'image/luk/luk-cafe.jpg' %}" alt="LUK Facilities" onerror="this.src='https://via.placeholder.com/400x300/ff6b35/ffffff?text=LUK'">
-                    <div class="facility-name">LUK Facilities</div>
+                <div class="facility-card" onclick="openLukModal()" data-facility="luk">
+                    <div class="placeholder-container">
+                        <div class="placeholder-icon">☕</div>
+                        <div class="facility-name">LUK Facilities</div>
+                    </div>
                 </div>
             </div>
 
@@ -578,6 +621,7 @@
 
         <div class="pagination-dots" style="justify-content: center; margin-top: 30px;">
             <span class="dot active"></span>
+            <span class="dot"></span>
             <span class="dot"></span>
             <span class="dot"></span>
             <span class="dot"></span>
@@ -658,11 +702,6 @@
                     <span class="dot active"></span>
                     <span class="dot"></span>
                     <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
                 </div>
             </div>
         </div>
@@ -701,16 +740,15 @@
         { name: 'Không gian xanh', image: '{% static "image/facilities/khong-gian-xanh.jpg" %}' },
         { name: 'Hội trường', image: '{% static "image/facilities/hoi-truong.jpg" %}' },
         { name: 'Phòng Lab', image: '{% static "image/facilities/Phong-lab.jpg" %}' },
-        { name: 'Studio', image: '{% static "image/facilities/studio.jpg.jpg" %}' },
-        { name: 'LUK Facilities', image: '{% static "image/luk/luk-cafe.jpg" %}' }
+        { name: 'Studio', image: '{% static "image/facilities/studio.jpg.jpg" %}' }
     ];
 
-    // LUK facilities data
+    // LUK facilities data - 4 ảnh
     const lukFacilities = [
-        { name: 'LUK Solution', image: '{% static "image/luk/luk-sollution.jpg" %}' },
         { name: 'LUK Cafe', image: '{% static "image/luk/luk-cafe.jpg" %}' },
+        { name: 'LUK Solution', image: '{% static "image/luk/luk-sollution.jpg" %}' },
         { name: 'LUK Room', image: '{% static "image/luk/luk-room.jpg" %}' },
-        { name: 'LUK', image: '{% static "image/luk/luk.ipg.jpg" %}' }
+        { name: 'LUK Space', image: '{% static "image/luk/luk.ipg.jpg" %}' }
     ];
 
     // Carousel functionality
@@ -719,9 +757,10 @@
 
     function moveCarousel(direction) {
         const cards = document.querySelectorAll('.facility-card');
-        const cardWidth = cards[0].offsetWidth + 30; // width + gap
-        const visibleCards = Math.floor(track.parentElement.offsetWidth / cardWidth);
-        const maxIndex = cards.length - visibleCards;
+        const cardWidth = cards[0].offsetWidth + 20; // width + gap
+        const containerWidth = track.parentElement.offsetWidth - 120; // subtract padding
+        const visibleCards = Math.floor(containerWidth / cardWidth);
+        const maxIndex = Math.max(0, cards.length - visibleCards);
 
         currentIndex += direction;
         
@@ -729,6 +768,28 @@
         if (currentIndex > maxIndex) currentIndex = maxIndex;
 
         track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+
+        // Update pagination dots
+        updatePaginationDots();
+    }
+
+    function updatePaginationDots() {
+        const dots = document.querySelectorAll('.facilities-section .pagination-dots .dot');
+        const cards = document.querySelectorAll('.facility-card');
+        const cardWidth = cards[0].offsetWidth + 20;
+        const containerWidth = track.parentElement.offsetWidth - 120;
+        const visibleCards = Math.floor(containerWidth / cardWidth);
+        const totalPages = Math.ceil(cards.length / visibleCards);
+        const currentPage = Math.floor(currentIndex / visibleCards);
+
+        dots.forEach((dot, index) => {
+            if (index < totalPages) {
+                dot.style.display = 'block';
+                dot.classList.toggle('active', index === currentPage);
+            } else {
+                dot.style.display = 'none';
+            }
+        });
     }
 
     // Modal functionality
@@ -790,9 +851,10 @@
     document.getElementById('lukModal').addEventListener('click', function(e) {
         if (e.target === this) closeModal('luk');
     });
+
+    // Initialize pagination dots on load
+    window.addEventListener('load', updatePaginationDots);
+    window.addEventListener('resize', updatePaginationDots);
 </script>
 
-</body>
-</html>
 {% endblock %}
-

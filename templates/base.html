@@ -339,5 +339,88 @@
 <!-- ===== BOOTSTRAP JS ===== -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+<!-- ===== Hiệu ứng chuột ===== -->
+<canvas id="sparkCanvas"></canvas>
+
+<style>
+#sparkCanvas{
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+</style>
+
+<script>
+const sparkConfig = {
+  color: "#F4A261",   // cam giống ảnh
+  size: 15,
+  radius: 35,
+  count: 9,
+  duration: 400,
+  scale: 1
+};
+
+const canvas = document.getElementById("sparkCanvas");
+const ctx = canvas.getContext("2d");
+
+function resize(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
+
+let sparks = [];
+
+document.addEventListener("click", function(e){
+  const now = performance.now();
+
+  for(let i=0;i<sparkConfig.count;i++){
+    sparks.push({
+      x: e.clientX,
+      y: e.clientY,
+      angle: (Math.PI*2*i)/sparkConfig.count,
+      start: now
+    });
+  }
+});
+
+function animate(time){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  sparks = sparks.filter(s=>{
+    const elapsed = time - s.start;
+    if(elapsed > sparkConfig.duration) return false;
+
+    const progress = elapsed / sparkConfig.duration;
+    const dist = progress * sparkConfig.radius * sparkConfig.scale;
+
+    const x = s.x + Math.cos(s.angle)*dist;
+    const y = s.y + Math.sin(s.angle)*dist;
+
+    ctx.strokeStyle = sparkConfig.color;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x,y);
+    ctx.lineTo(
+      x + Math.cos(s.angle)*sparkConfig.size*(1-progress),
+      y + Math.sin(s.angle)*sparkConfig.size*(1-progress)
+    );
+    ctx.stroke();
+
+    return true;
+  });
+
+  requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);
+</script>
+
+
+
+
 </body>
 </html>
