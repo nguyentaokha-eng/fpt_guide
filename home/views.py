@@ -131,10 +131,17 @@ def families(request):
     return render(request, 'families.html')
 
 
+# SAU (mới)
 def rate_lecture(request):
     ensure_lecturers()
-    lecturers = Lecturer.objects.all().order_by('name')
-    return render(request, 'rate_lecture.html', {'lecturers': lecturers})
+    from django.db.models import Count
+    lecturers = Lecturer.objects.annotate(review_count=Count('reviews')).order_by('name')
+    # Tạo dict: code -> review_count để truyền vào template
+    review_counts = {l.code: l.review_count for l in lecturers}
+    return render(request, 'rate_lecture.html', {
+        'lecturers': lecturers,
+        'review_counts': review_counts,
+    })
 
 
 def lecturer_detail(request, lecturer_id):

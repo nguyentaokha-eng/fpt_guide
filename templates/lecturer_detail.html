@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load tz %}
 
 {% block content %}
 <style>
@@ -828,7 +829,6 @@
         <span>QUAY LẠI</span>
     </a>
 
-
     <!-- HEADER CARD -->
     <div class="header-card" style="margin-top: 24px; display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 20px;">
         <div>
@@ -871,9 +871,9 @@
             <div class="stat-section">
                 <div class="stat-header">
                     <span class="info-label">Phù hợp nhất với</span>
-            {% if stats.suitable_for_most %}
-                <span class="stat-percentage">{{ stats.suitable_for_percent }}%</span>
-                {% endif %}
+                    {% if stats.suitable_for_most %}
+                    <span class="stat-percentage">{{ stats.suitable_for_percent }}%</span>
+                    {% endif %}
                 </div>
                 {% if stats.suitable_for_most %}
                 <span class="stat-value">{{ suitable_label }}</span>
@@ -925,7 +925,7 @@
             </button>
         </div>
 
-        <!-- REVIEW FORM (Hình 1 + 2) -->
+        <!-- REVIEW FORM -->
         <div class="review-form" id="reviewForm">
             <h3 class="form-title">Đánh giá giảng viên</h3>
             <p class="form-subtitle">CHIA SẺ CÔNG TÂM - GIÚP ĐỠ CỘNG ĐỒNG</p>
@@ -1012,8 +1012,11 @@
             <div class="review-item">
                 <div class="review-header">
                     <div class="reviewer-info">
-                        <span class="reviewer-name {% if r.is_anonymous %}anonymous{% endif %}">{% if r.is_anonymous %}Ẩn danh{% else %}{{ r.reviewer_name|default:"Ẩn danh" }}{% endif %}</span>
-                        <div class="review-meta">{{ r.created_at|date:"d/m/Y H:i" }}{% if r.subject_studied %} · {{ r.subject_studied }}{% endif %}</div>
+                        <span class="reviewer-name {% if r.is_anonymous %}anonymous{% endif %}">
+                            {% if r.is_anonymous %}Ẩn danh{% else %}{{ r.reviewer_name|default:"Ẩn danh" }}{% endif %}
+                        </span>
+                        <!-- FIX: dùng localtime để hiển thị đúng giờ Việt Nam -->
+                        <div class="review-meta">{{ r.created_at|localtime|date:"d/m/Y H:i" }}{% if r.subject_studied %} · {{ r.subject_studied }}{% endif %}</div>
                     </div>
                     <div class="review-badges">
                         {% if r.suitable_for == 'team_qua_mon' %}<span class="class-badge team">Team Qua Môn</span>{% endif %}
@@ -1051,6 +1054,5 @@ document.querySelectorAll('.trait-cb').forEach(function(cb) {
         if (checked.length > 3) this.checked = false;
     });
 });
-// Bar width cho phân phối (template không có get_item - dùng data)
 </script>
 {% endblock %}
