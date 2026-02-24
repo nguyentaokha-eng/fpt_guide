@@ -5,9 +5,13 @@
 
 <!-- ================= PARALLAX BACKGROUND (HOME ONLY) ================= -->
 <div class="parallax-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+    <div class="grid-overlay"></div>
     <img src="https://png.pngtree.com/png-clipart/20250102/original/pngtree-book-icon-png-image_4358423.png" class="p-item book">
     <img src="https://lswhs.lsr7.org/wp-content/uploads/2020/05/1-11492_white-graduation-cap-png-graduation-cap-icon-png.png" class="p-item cap1">
-    <img src="https://png.pngtree.com/png-clipart/20210418/original/pngtree-mate-black-laptop-mockup-blank-display-personal-computer-with-transparent-background-png-image_6235464.jpg" class="p-item laptop">
     <img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" class="p-item target">
     <img src="https://cdn1.iconfinder.com/data/icons/art-design-and-development-vol-1/64/059-1024.png" class="p-item pen">
     <img src="https://cdn-icons-png.flaticon.com/512/2583/2583344.png" class="p-item cup">
@@ -17,36 +21,114 @@
 <style>
 /* ===== PARALLAX BACKGROUND ===== */
 .parallax-bg {
-    position: fixed;    
+    position: fixed;
     inset: 0;
     z-index: -1;
-    background: linear-gradient(135deg, #f4f6ff, #efe6ff);
+    background: linear-gradient(135deg, #c8d6f5 0%, #ddd0f7 35%, #e8c8ef 60%, #c5d8f8 100%);
     overflow: hidden;
 }
 
-.p-item {
+/* Aurora mesh overlay */
+.parallax-bg::before {
+    content: '';
     position: absolute;
-    width: 90px;
-    opacity: 0.85;
-    animation: float 6s ease-in-out infinite;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 80% 60% at 20% 20%, rgba(168, 148, 240, 0.5) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 10%, rgba(147, 197, 253, 0.45) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 50% at 50% 90%, rgba(221, 182, 247, 0.4) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 90% 70%, rgba(129, 179, 242, 0.35) 0%, transparent 55%);
+    animation: aurora 12s ease-in-out infinite alternate;
 }
 
-.book { top: 15%; left: 8%; }
-.cap1 { top: 10%; right: 12%; }
-.cap2 { top: 55%; left: 6%; }
-.laptop { bottom: 15%; right: 10%; }
-.pen { bottom: 25%; left: 30%; }
-.cup { top: 40%; right: 35%; }
+@keyframes aurora {
+    0%   { opacity: 0.7; transform: scale(1) rotate(0deg); }
+    50%  { opacity: 1;   transform: scale(1.05) rotate(1deg); }
+    100% { opacity: 0.8; transform: scale(0.98) rotate(-1deg); }
+}
 
-@keyframes float {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
-    100% { transform: translateY(0); }
+/* Glowing orbs */
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    animation: orbFloat 10s ease-in-out infinite;
+}
+
+.orb-1 {
+    width: 450px; height: 450px;
+    background: rgba(167, 139, 250, 0.45);
+    top: -100px; left: -80px;
+    animation-duration: 14s;
+}
+.orb-2 {
+    width: 380px; height: 380px;
+    background: rgba(147, 197, 253, 0.4);
+    top: 10%; right: -60px;
+    animation-duration: 11s;
+    animation-delay: -3s;
+}
+.orb-3 {
+    width: 300px; height: 300px;
+    background: rgba(240, 171, 252, 0.35);
+    bottom: 5%; left: 20%;
+    animation-duration: 16s;
+    animation-delay: -6s;
+}
+.orb-4 {
+    width: 250px; height: 250px;
+    background: rgba(99, 179, 237, 0.3);
+    bottom: 20%; right: 25%;
+    animation-duration: 13s;
+    animation-delay: -2s;
+}
+
+@keyframes orbFloat {
+    0%   { transform: translateY(0) scale(1); }
+    33%  { transform: translateY(-30px) scale(1.05); }
+    66%  { transform: translateY(15px) scale(0.97); }
+    100% { transform: translateY(0) scale(1); }
+}
+
+/* Grid overlay */
+.grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(139, 116, 220, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139, 116, 220, 0.08) 1px, transparent 1px);
+    background-size: 60px 60px;
+}
+
+/* Floating icons */
+.p-item {
+    position: absolute;
+    width: 72px;
+    opacity: 0;
+    animation: itemReveal 0.8s forwards, floatIcon 7s ease-in-out infinite;
+    filter: drop-shadow(0 4px 16px rgba(109, 86, 200, 0.3));
+}
+
+.book   { top: 15%; left: 7%;    animation-delay: 0.2s, 0.2s; }
+.cap1   { top: 8%;  right: 10%;  animation-delay: 0.4s, 0.4s; }
+.target { bottom: 18%; right: 8%; animation-delay: 0.6s, 0.6s; }
+.pen    { bottom: 28%; left: 28%; animation-delay: 0.8s, 0.8s; }
+.cup    { top: 42%; right: 33%;  animation-delay: 1.0s, 1.0s; }
+
+@keyframes itemReveal {
+    from { opacity: 0; transform: translateY(20px) scale(0.8); }
+    to   { opacity: 0.75; transform: translateY(0) scale(1); }
+}
+
+@keyframes floatIcon {
+    0%   { transform: translateY(0) rotate(0deg); }
+    50%  { transform: translateY(-14px) rotate(3deg); }
+    100% { transform: translateY(0) rotate(0deg); }
 }
 
 /* ================= INTRO ================= */
 .intro-box {
-    background: #FFF; /* VÀNG */
+    background: #FFF;
     padding: 40px;
     border-radius: 16px;
     border: 3px solid #000;
@@ -54,7 +136,7 @@
 }
 
 .intro-box p {
-    color: #222; /* chữ đen dễ đọc */
+    color: #222;
 }
 
 /* ================= ABOUT HERO ================= */
@@ -112,7 +194,7 @@ document.addEventListener("mousemove", (e) => {
 
     document.querySelectorAll(".p-item").forEach((item, i) => {
         const speed = (i + 1) * 8;
-        item.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+        item.style.transform = `translate(${x * speed}px, ${y * speed + (Math.sin(Date.now()/1000 + i) * 14)}px) rotate(${x * 5}deg)`;
     });
 });
 </script>
@@ -153,7 +235,6 @@ document.addEventListener("mousemove", (e) => {
             border: 3px solid #000;
             box-shadow: 8px 8px 0 #000;
         ">
-            <!-- ẢNH BÊN TRÁI (BẠN TỰ CHỌN) -->
             <img src="https://ptehelper.com.au/wp-content/uploads/2022/12/dai-hoc-fpt-diem-chuan-676x380.webp"
                  style="
                     width: 100%;
@@ -161,10 +242,8 @@ document.addEventListener("mousemove", (e) => {
                     object-fit: cover;
                     filter: brightness(55%);
                  ">
- <!-- TEXT OVER IMAGE -->
-
-
         </div>
+
         <!-- ===== RIGHT: IMAGE CŨ (GIỮ NGUYÊN) ===== -->
         <div style="
             flex: 1;
@@ -190,7 +269,6 @@ document.addEventListener("mousemove", (e) => {
     <div class="team-header text-center">
         <h2 class="team-text">Meet Our Team</h2>
     </div>
-
 
     <div class="row g-4 justify-content-center">
         {% for m in members %}
