@@ -18,7 +18,28 @@
             background-color: #f8f9fa;
         }
 
-        /* ===== NAVBAR ===== */    
+        /* ===== NAVBAR BASE ===== */
+        .navbar {
+            transition: background 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        /* ── Glassmorphism — chỉ dùng khi có class .navbar-glass ── */
+        .navbar-glass {
+            background: transparent !important;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            border-bottom: none;
+            box-shadow: none;
+        }
+        /* Khi scroll xuống — tăng độ mờ lên chút */
+        .navbar-glass.scrolled {
+            background: rgba(255, 255, 255, 0.25) !important;
+            backdrop-filter: blur(20px) saturate(160%);
+            -webkit-backdrop-filter: blur(20px) saturate(160%);
+            box-shadow: 0 4px 32px rgba(130, 110, 200, 0.15);
+        }
+
+        /* ===== NAVBAR BRAND ===== */
         .navbar-brand {
             display: flex;
             align-items: center;
@@ -75,12 +96,22 @@
             letter-spacing: 1px;
         }
 
+        /* ===== NAV HIGHLIGHT PILL ===== */
         .nav-highlight {
             display: flex;
             gap: 16px;
             padding: 8px 16px;
             background: linear-gradient(135deg, #6f42c1, #4b2aad);
             border-radius: 30px;
+            transition: background 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        /* Glass pill khi navbar là glass */
+        .navbar-glass .nav-highlight {
+            background: rgba(111, 66, 193, 0.75);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 16px rgba(111, 66, 193, 0.25);
+            border: 1px solid rgba(180, 160, 255, 0.3);
         }
 
         .nav-item-custom {
@@ -93,7 +124,7 @@
         }
 
         .nav-item-custom:hover {
-            background-color: #ffc107;
+            background-color: rgba(255, 193, 7, 0.9);
             color: #000 !important;
         }
 
@@ -156,17 +187,8 @@
         .team-header::before {
             content: '';
             position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, 
-                #ffc107, 
-                #ff8c00, 
-                #6f42c1, 
-                #845ef7, 
-                #ffc107
-            );
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, #ffc107, #ff8c00, #6f42c1, #845ef7, #ffc107);
             background-size: 300% 300%;
             border-radius: 14px;
             z-index: -1;
@@ -176,28 +198,18 @@
         }
 
         @keyframes gradient-rotate {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .team-header:hover::before {
-            opacity: 1;
-        }
+        .team-header:hover::before { opacity: 1; }
 
         .team-header::after {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             transform: translate(-50%, -50%);
@@ -205,14 +217,12 @@
         }
 
         .team-header:hover::after {
-            width: 500px;
-            height: 500px;
+            width: 500px; height: 500px;
         }
 
         .team-header:hover {
             transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(111, 66, 193, 0.4),
-                        0 8px 20px rgba(255, 193, 7, 0.2);
+            box-shadow: 0 15px 40px rgba(111, 66, 193, 0.4), 0 8px 20px rgba(255, 193, 7, 0.2);
         }
 
         .team-text {
@@ -221,20 +231,17 @@
             position: relative;
             z-index: 1;
             transition: all 0.3s ease;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
         .team-header:hover .team-text {
             transform: scale(1.05);
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
-                         2px 2px 8px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 0 20px rgba(255,255,255,0.5), 2px 2px 8px rgba(0,0,0,0.3);
         }
 
-        /* Sparkle effect */
         .team-header .sparkle {
             position: absolute;
-            width: 4px;
-            height: 4px;
+            width: 4px; height: 4px;
             background: white;
             border-radius: 50%;
             opacity: 0;
@@ -246,41 +253,15 @@
         }
 
         @keyframes sparkle {
-            0%, 100% {
-                opacity: 0;
-                transform: scale(0);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1);
-            }
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50%       { opacity: 1; transform: scale(1); }
         }
 
-        .team-header .sparkle:nth-child(1) {
-            top: 20%;
-            left: 20%;
-            animation-delay: 0s;
-        }
+        .team-header .sparkle:nth-child(1) { top: 20%; left: 20%; animation-delay: 0s; }
+        .team-header .sparkle:nth-child(2) { top: 80%; left: 30%; animation-delay: 0.3s; }
+        .team-header .sparkle:nth-child(3) { top: 40%; left: 80%; animation-delay: 0.6s; }
+        .team-header .sparkle:nth-child(4) { top: 70%; left: 70%; animation-delay: 0.9s; }
 
-        .team-header .sparkle:nth-child(2) {
-            top: 80%;
-            left: 30%;
-            animation-delay: 0.3s;
-        }
-
-        .team-header .sparkle:nth-child(3) {
-            top: 40%;
-            left: 80%;
-            animation-delay: 0.6s;
-        }
-
-        .team-header .sparkle:nth-child(4) {
-            top: 70%;
-            left: 70%;
-            animation-delay: 0.9s;
-        }
-
-        /* Demo instruction box */
         .demo-info {
             background: linear-gradient(135deg, #4CAF50, #45a049);
             color: white;
@@ -307,24 +288,24 @@
 <body>
 
 <!-- ===== NAVBAR ===== -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="Main navigation">
+<nav class="navbar navbar-expand-lg navbar-light bg-light {% block navbar_class %}{% endblock %}" 
+     id="mainNavbar"
+     aria-label="Main navigation">
     <div class="container d-flex align-items-center justify-content-between">
         <a class="navbar-brand fw-bold" href="{% url 'home' %}">
             <img src="https://cdn.haitrieu.com/wp-content/uploads/2021/10/Logo-Dai-hoc-FPT.png" alt="FPT Logo">
             <span>FPT Guide</span>
         </a>
 
-        <!-- Mobile Toggle Button -->
-        <button class="navbar-toggler" type="button" 
-                data-bs-toggle="collapse" 
-                data-bs-target="#navbarNav" 
-                aria-controls="navbarNav" 
-                aria-expanded="false" 
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Navigation Menu -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <div class="nav-highlight ms-auto">
                 <a class="nav-item-custom" href="{% url 'home' %}">Home</a>
@@ -346,86 +327,82 @@
 <canvas id="sparkCanvas"></canvas>
 
 <style>
-#sparkCanvas{
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 9999;
+#sparkCanvas {
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
 }
 </style>
 
 <script>
 const sparkConfig = {
-  color: "#F4A261",   // cam giống ảnh
-  size: 15,
-  radius: 35,
-  count: 9,
-  duration: 400,
-  scale: 1
+    color: "#F4A261",
+    size: 15,
+    radius: 35,
+    count: 9,
+    duration: 400,
+    scale: 1
 };
 
 const canvas = document.getElementById("sparkCanvas");
 const ctx = canvas.getContext("2d");
 
-function resize(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 }
 resize();
 window.addEventListener("resize", resize);
 
 let sparks = [];
 
-document.addEventListener("click", function(e){
-  const now = performance.now();
-
-  for(let i=0;i<sparkConfig.count;i++){
-    sparks.push({
-      x: e.clientX,
-      y: e.clientY,
-      angle: (Math.PI*2*i)/sparkConfig.count,
-      start: now
-    });
-  }
+document.addEventListener("click", function(e) {
+    const now = performance.now();
+    for (let i = 0; i < sparkConfig.count; i++) {
+        sparks.push({
+            x: e.clientX, y: e.clientY,
+            angle: (Math.PI * 2 * i) / sparkConfig.count,
+            start: now
+        });
+    }
 });
 
-function animate(time){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  sparks = sparks.filter(s=>{
-    const elapsed = time - s.start;
-    if(elapsed > sparkConfig.duration) return false;
-
-    const progress = elapsed / sparkConfig.duration;
-    const dist = progress * sparkConfig.radius * sparkConfig.scale;
-
-    const x = s.x + Math.cos(s.angle)*dist;
-    const y = s.y + Math.sin(s.angle)*dist;
-
-    ctx.strokeStyle = sparkConfig.color;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(x,y);
-    ctx.lineTo(
-      x + Math.cos(s.angle)*sparkConfig.size*(1-progress),
-      y + Math.sin(s.angle)*sparkConfig.size*(1-progress)
-    );
-    ctx.stroke();
-
-    return true;
-  });
-
-  requestAnimationFrame(animate);
+function animate(time) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    sparks = sparks.filter(s => {
+        const elapsed = time - s.start;
+        if (elapsed > sparkConfig.duration) return false;
+        const progress = elapsed / sparkConfig.duration;
+        const dist = progress * sparkConfig.radius * sparkConfig.scale;
+        const x = s.x + Math.cos(s.angle) * dist;
+        const y = s.y + Math.sin(s.angle) * dist;
+        ctx.strokeStyle = sparkConfig.color;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(
+            x + Math.cos(s.angle) * sparkConfig.size * (1 - progress),
+            y + Math.sin(s.angle) * sparkConfig.size * (1 - progress)
+        );
+        ctx.stroke();
+        return true;
+    });
+    requestAnimationFrame(animate);
 }
-
 requestAnimationFrame(animate);
+
+/* ── Scroll listener: thêm class .scrolled cho glass navbar ── */
+window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('mainNavbar');
+    if (navbar.classList.contains('navbar-glass')) {
+        navbar.classList.toggle('scrolled', window.scrollY > 20);
+    }
+});
 </script>
 
 <!-- ===== CHATBOT ===== -->
-<div class="chatbot-toggle" id="chatbotToggle" title="Chat với FPT Guide">
-    💬
-</div>
+<div class="chatbot-toggle" id="chatbotToggle" title="Chat với FPT Guide">💬</div>
 
 <div class="chatbot-window" id="chatbotWindow">
     <div class="chatbot-header">
@@ -438,11 +415,7 @@ requestAnimationFrame(animate);
         </div>
         <button class="chatbot-close" id="chatbotClose">✕</button>
     </div>
-    
-    <div class="chatbot-messages" id="chatbotMessages">
-        <!-- Messages will appear here -->
-    </div>
-    
+    <div class="chatbot-messages" id="chatbotMessages"></div>
     <div class="chatbot-input-area">
         <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Nhập tin nhắn..." autocomplete="off">
         <button class="chatbot-send-btn" id="chatbotSend">➤</button>
@@ -450,7 +423,6 @@ requestAnimationFrame(animate);
 </div>
 
 <script>
-// ===== CHATBOT FUNCTIONALITY =====
 (function() {
     const chatbotToggle = document.getElementById('chatbotToggle');
     const chatbotWindow = document.getElementById('chatbotWindow');
@@ -458,10 +430,8 @@ requestAnimationFrame(animate);
     const chatbotMessages = document.getElementById('chatbotMessages');
     const chatbotInput = document.getElementById('chatbotInput');
     const chatbotSend = document.getElementById('chatbotSend');
-    
     let isChatOpen = false;
-    
-    // URL mappings for sections
+
     const sectionUrls = {
         curriculum: '{% url "curriculum" %}',
         lecturer: '{% url "rate_lecture" %}',
@@ -472,250 +442,131 @@ requestAnimationFrame(animate);
         afford_job: '{% url "Afford_job" %}',
         afford: '{% url "afford" %}'
     };
-    
-    // Keyword mappings for smart recommendations
+
     const keywordMappings = [
-        {
-            keywords: ['major', 'ngành', 'chuyên ngành', 'subject', 'môn học', 'kiến thức', 'credit', 'tín chỉ', 'học gì', 'chương trình học', 'ngành học', 'đăng ký môn'],
-            section: 'curriculum',
-            title: 'Curriculum',
-            emoji: '📚',
-            response: 'Bạn có thể tìm thấy thông tin về ngành học, chương trình học và tín chỉ trong phần <strong>Curriculum</strong> của trang Explore.'
-        },
-        {
-            keywords: ['teacher', 'giáo viên', 'giảng viên', 'lecturer', 'đánh giá thầy cô', 'thầy cô', 'review thầy', 'rate', 'đánh giá giảng viên', 'thầy', 'cô'],
-            section: 'lecturer',
-            title: 'Rate My Lecturer',
-            emoji: '⭐',
-            response: 'Bạn có thể xem đánh giá các thầy cô giảng viên trong phần <strong>Rate My Lecturer</strong> của trang Explore.'
-        },
-        {
-            keywords: ['student life', 'đời sống sinh viên', 'hoạt động', 'extracurricular', 'sinh viên', 'cuộc sống'],
-            section: 'student_life',
-            title: 'Student Life',
-            emoji: '🎉',
-            response: 'Khám phá đời sống sinh viên FPT trong phần <strong>Student Life</strong> của trang Explore.'
-        },
-        {
-            keywords: ['club', 'câu lạc bộ', 'CLB', 'tham gia', 'join', 'hoạt động câu lạc bộ', 'clb'],
-            section: 'families',
-            title: 'Families',
-            emoji: '👥',
-            response: 'Bạn có thể khám phá các câu lạc bộ tại trang <strong>Families</strong> của chúng tôi!'
-        },
-        {
-            keywords: ['food', 'ăn', 'ăn uống', 'căng tin', 'quán ăn', 'chợ', 'bữa ăn', 'café', 'cafe', 'coffee'],
-            section: 'afford_food',
-            title: 'Afford - Food',
-            emoji: '🍽️',
-            response: 'Thông tin về chi phí ăn uống có tại trang <strong>Afford - Food</strong>.'
-        },
-        {
-            keywords: ['living', 'nhà ở', 'phòng trọ', 'KTX', 'ký túc xá', 'nơi ở', 'thuê phòng', 'phòng'],
-            section: 'afford_living',
-            title: 'Afford - Living',
-            emoji: '🏠',
-            response: 'Thông tin về chỗ ở (KTX, phòng trọ) có tại trang <strong>Afford - Living</strong>.'
-        },
-        {
-            keywords: ['job', 'việc làm', 'partime', 'freelance', 'làm thêm', 'tìm việc', 'part-time', 'tiền', 'kiếm tiền'],
-            section: 'afford_job',
-            title: 'Afford - Job',
-            emoji: '💼',
-            response: 'Cơ hội việc làm part-time và freelance cho sinh viên có tại trang <strong>Afford - Job</strong>.'
-        },
-        {
-            keywords: ['chi phí', 'tiền', 'spending', 'expense', 'sinh hoạt', 'giá', 'bao nhiêu'],
-            section: 'afford',
-            title: 'Afford',
-            emoji: '💰',
-            response: 'Thông tin về chi phí sinh hoạt (ăn uống, nhà ở, việc làm) có tại trang <strong>Afford</strong>.'
-        }
+        { keywords: ['major','ngành','chuyên ngành','subject','môn học','kiến thức','credit','tín chỉ','học gì','chương trình học','ngành học','đăng ký môn'], section: 'curriculum', title: 'Curriculum', emoji: '📚', response: 'Bạn có thể tìm thấy thông tin về ngành học, chương trình học và tín chỉ trong phần <strong>Curriculum</strong> của trang Explore.' },
+        { keywords: ['teacher','giáo viên','giảng viên','lecturer','đánh giá thầy cô','thầy cô','review thầy','rate','đánh giá giảng viên','thầy','cô'], section: 'lecturer', title: 'Rate My Lecturer', emoji: '⭐', response: 'Bạn có thể xem đánh giá các thầy cô giảng viên trong phần <strong>Rate My Lecturer</strong> của trang Explore.' },
+        { keywords: ['student life','đời sống sinh viên','hoạt động','extracurricular','sinh viên','cuộc sống'], section: 'student_life', title: 'Student Life', emoji: '🎉', response: 'Khám phá đời sống sinh viên FPT trong phần <strong>Student Life</strong> của trang Explore.' },
+        { keywords: ['club','câu lạc bộ','CLB','tham gia','join','hoạt động câu lạc bộ','clb'], section: 'families', title: 'Families', emoji: '👥', response: 'Bạn có thể khám phá các câu lạc bộ tại trang <strong>Families</strong> của chúng tôi!' },
+        { keywords: ['food','ăn','ăn uống','căng tin','quán ăn','chợ','bữa ăn','café','cafe','coffee'], section: 'afford_food', title: 'Afford - Food', emoji: '🍽️', response: 'Thông tin về chi phí ăn uống có tại trang <strong>Afford - Food</strong>.' },
+        { keywords: ['living','nhà ở','phòng trọ','KTX','ký túc xá','nơi ở','thuê phòng','phòng'], section: 'afford_living', title: 'Afford - Living', emoji: '🏠', response: 'Thông tin về chỗ ở (KTX, phòng trọ) có tại trang <strong>Afford - Living</strong>.' },
+        { keywords: ['job','việc làm','partime','freelance','làm thêm','tìm việc','part-time','tiền','kiếm tiền'], section: 'afford_job', title: 'Afford - Job', emoji: '💼', response: 'Cơ hội việc làm part-time và freelance cho sinh viên có tại trang <strong>Afford - Job</strong>.' },
+        { keywords: ['chi phí','tiền','spending','expense','sinh hoạt','giá','bao nhiêu'], section: 'afford', title: 'Afford', emoji: '💰', response: 'Thông tin về chi phí sinh hoạt (ăn uống, nhà ở, việc làm) có tại trang <strong>Afford</strong>.' }
     ];
-    
-    // Quick reply buttons
+
     const quickReplies = [
-        { text: 'Ngành học FPT', keywords: ['ngành học', 'major'] },
-        { text: 'Câu lạc bộ', keywords: ['câu lạc bộ', 'club', 'clb'] },
-        { text: 'Chi phí sinh hoạt', keywords: ['chi phí', 'sinh hoạt'] },
-        { text: 'Đánh giá giảng viên', keywords: ['giảng viên', 'thầy cô', 'đánh giá'] }
+        { text: 'Ngành học FPT', keywords: ['ngành học','major'] },
+        { text: 'Câu lạc bộ', keywords: ['câu lạc bộ','club','clb'] },
+        { text: 'Chi phí sinh hoạt', keywords: ['chi phí','sinh hoạt'] },
+        { text: 'Đánh giá giảng viên', keywords: ['giảng viên','thầy cô','đánh giá'] }
     ];
-    
-    // Toggle chat window
+
     function toggleChat() {
         isChatOpen = !isChatOpen;
         chatbotWindow.classList.toggle('show', isChatOpen);
         chatbotToggle.classList.toggle('active', isChatOpen);
-        
         if (isChatOpen && chatbotMessages.children.length === 0) {
-            // Show welcome message and quick replies on first open
             addBotMessage('Xin chào! 👋\nTôi là FPT Guide Assistant, có thể giúp gì cho bạn hôm nay?');
             showQuickReplies();
         }
     }
-    
-    // Show quick reply buttons
+
     function showQuickReplies() {
-        const quickRepliesDiv = document.createElement('div');
-        quickRepliesDiv.className = 'chatbot-quick-replies';
-        
+        const div = document.createElement('div');
+        div.className = 'chatbot-quick-replies';
         quickReplies.forEach(reply => {
             const btn = document.createElement('button');
             btn.className = 'chatbot-quick-btn';
             btn.textContent = reply.text;
-            btn.onclick = () => {
-                chatbotInput.value = reply.text;
-                sendMessage();
-            };
-            quickRepliesDiv.appendChild(btn);
+            btn.onclick = () => { chatbotInput.value = reply.text; sendMessage(); };
+            div.appendChild(btn);
         });
-        
-        chatbotMessages.appendChild(quickRepliesDiv);
+        chatbotMessages.appendChild(div);
         scrollToBottom();
     }
-    
-    // Add user message
+
     function addUserMessage(text) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'chatbot-message user';
-        messageDiv.innerHTML = `
-            <div class="chatbot-message-icon">👤</div>
-            <div class="chatbot-message-content">${escapeHtml(text)}</div>
-        `;
-        chatbotMessages.appendChild(messageDiv);
+        const div = document.createElement('div');
+        div.className = 'chatbot-message user';
+        div.innerHTML = `<div class="chatbot-message-icon">👤</div><div class="chatbot-message-content">${escapeHtml(text)}</div>`;
+        chatbotMessages.appendChild(div);
         scrollToBottom();
     }
-    
-    // Add bot message
+
     function addBotMessage(text, link = null) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'chatbot-message bot';
-        
-        let content = `<div class="chatbot-message-icon">🤖</div>
-                       <div class="chatbot-message-content">${text.replace(/\n/g, '<br>')}`;
-        
-        if (link) {
-            content += `<br><br><a href="${link.url}" target="_blank">👉 ${link.text}</a>`;
-        }
-        
+        const div = document.createElement('div');
+        div.className = 'chatbot-message bot';
+        let content = `<div class="chatbot-message-icon">🤖</div><div class="chatbot-message-content">${text.replace(/\n/g,'<br>')}`;
+        if (link) content += `<br><br><a href="${link.url}" target="_blank">👉 ${link.text}</a>`;
         content += '</div>';
-        messageDiv.innerHTML = content;
-        chatbotMessages.appendChild(messageDiv);
+        div.innerHTML = content;
+        chatbotMessages.appendChild(div);
         scrollToBottom();
     }
-    
-    // Show typing indicator
+
     function showTyping() {
-        const typingDiv = document.createElement('div');
-        typingDiv.className = 'chatbot-message bot';
-        typingDiv.id = 'typingIndicator';
-        typingDiv.innerHTML = `
-            <div class="chatbot-message-icon">🤖</div>
-            <div class="chatbot-typing">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        `;
-        chatbotMessages.appendChild(typingDiv);
+        const div = document.createElement('div');
+        div.className = 'chatbot-message bot';
+        div.id = 'typingIndicator';
+        div.innerHTML = `<div class="chatbot-message-icon">🤖</div><div class="chatbot-typing"><span></span><span></span><span></span></div>`;
+        chatbotMessages.appendChild(div);
         scrollToBottom();
     }
-    
-    // Remove typing indicator
+
     function removeTyping() {
-        const typing = document.getElementById('typingIndicator');
-        if (typing) typing.remove();
+        const t = document.getElementById('typingIndicator');
+        if (t) t.remove();
     }
-    
-    // Scroll to bottom
-    function scrollToBottom() {
-        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-    }
-    
-    // Escape HTML to prevent XSS
+
+    function scrollToBottom() { chatbotMessages.scrollTop = chatbotMessages.scrollHeight; }
+
     function escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
-    
-    // Find matching section based on keywords
-    function findMatchingSection(userInput) {
-        const input = userInput.toLowerCase();
-        
-        for (const mapping of keywordMappings) {
-            for (const keyword of mapping.keywords) {
-                if (input.includes(keyword.toLowerCase())) {
-                    return mapping;
-                }
-            }
-        }
-        
+
+    function findMatchingSection(input) {
+        input = input.toLowerCase();
+        for (const m of keywordMappings)
+            for (const kw of m.keywords)
+                if (input.includes(kw.toLowerCase())) return m;
         return null;
     }
-    
-    // Process user message
+
     function processMessage(userInput) {
         const match = findMatchingSection(userInput);
-        
         if (match) {
-            const url = sectionUrls[match.section] || '#';
-            addBotMessage(match.response, { url: url, text: `Xem ${match.title}` });
+            addBotMessage(match.response, { url: sectionUrls[match.section] || '#', text: `Xem ${match.title}` });
         } else {
-            // No match - show fallback
-            addBotMessage('Tôi không tìm thấy thông tin bạn cần. Để giải đáp thắc mắc, hiện tại bạn có thể tham gia cộng đồng của chúng tôi để hỏi các anh chị khóa trước hoặc các bạn khác.');
+            addBotMessage('Tôi không tìm thấy thông tin bạn cần. Bạn có thể tham gia cộng đồng của chúng tôi để hỏi các anh chị khóa trước hoặc các bạn khác.');
         }
     }
-    
-    // Send message
+
     function sendMessage() {
         const message = chatbotInput.value.trim();
         if (!message) return;
-        
-        // Disable input while processing
         chatbotInput.disabled = true;
         chatbotSend.disabled = true;
-        
-        // Add user message
         addUserMessage(message);
         chatbotInput.value = '';
-        
-        // Show typing indicator
         showTyping();
-        
-        // Simulate processing delay
         setTimeout(() => {
             removeTyping();
             processMessage(message);
-            
-            // Re-enable input
             chatbotInput.disabled = false;
             chatbotSend.disabled = false;
             chatbotInput.focus();
         }, 1000 + Math.random() * 500);
     }
-    
-    // Event listeners
+
     chatbotToggle.addEventListener('click', toggleChat);
     chatbotClose.addEventListener('click', toggleChat);
     chatbotSend.addEventListener('click', sendMessage);
-    
-    chatbotInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
-    });
-    
-    // Close on escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && isChatOpen) {
-            toggleChat();
-        }
-    });
-    
+    chatbotInput.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && isChatOpen) toggleChat(); });
 })();
 </script>
-
 
 </body>
 </html>
