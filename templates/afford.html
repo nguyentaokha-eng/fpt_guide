@@ -5,125 +5,240 @@
 {% block content %}
 
 <style>
-    /* ===== AFFORD SECTION ===== */
+    /* ===== AFFORD PAGE - MODERN REDESIGN ===== */
     .afford-section {
         min-height: 100vh;
-        padding: 30px 0 60px;
+        background: linear-gradient(135deg, #f8f9ff 0%, #e8f4f8 100%);
+        padding: 0;
     }
 
-    /* ===== TITLE BOX ===== */
-    .afford-header-box {
-        display: inline-block;
-        padding: 25px 50px;
-        background: #ffffff;
-        border: 3px solid #000;
-        border-radius: 16px;
-        box-shadow: 6px 6px 0 #000;
-        text-align: center;
-        margin: 0 auto 30px;
+    /* ===== HERO SECTION ===== */
+    .afford-hero {
+        background: linear-gradient(135deg, #0061f2 0%, #00c6f7 100%);
+        padding: 80px 20px 100px;
+        position: relative;
+        overflow: hidden;
     }
 
-    .afford-header-wrapper {
-        text-align: center;
+    .afford-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        opacity: 0.5;
     }
 
-    .afford-main-title {
-        font-family: 'Courier New', monospace;
+    .afford-hero .container {
+        position: relative;
+        z-index: 1;
+    }
+
+    .afford-hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 16px;
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+    }
+    
+    .afford-hero-title .afford-hero-icon {
         font-size: 3rem;
-        font-weight: 900;
-        letter-spacing: 4px;
-        color: #1200be;
-        text-transform: uppercase;
-        margin-bottom: 10px;
     }
 
-    .afford-subtitle-1 {
-        color: #6f42c1;
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin-bottom: 0;
+    .afford-hero-subtitle {
+        font-size: 1.25rem;
+        color: rgba(255, 255, 255, 0.9);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
     }
 
-    /* ===== CARD GRID (EXPLORE STYLE) ===== */
+    /* ===== CARDS CONTAINER ===== */
+    .afford-cards-section {
+        padding: 60px 0 80px;
+        margin-top: -40px;
+    }
+
     .afford-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 30px;
-        margin-top: 30px;
         max-width: 1200px;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 0 auto;
         padding: 0 20px;
     }
 
+    /* ===== MODERN CARD DESIGN ===== */
     .afford-card {
         background: #fff;
-        padding: 24px;
-        border: 3px solid #000;
-        box-shadow: 6px 6px 0 #000;
-        border-radius: 12px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        min-height: 280px;
+        border-radius: 20px;
+        padding: 32px 28px;
         text-decoration: none;
         color: inherit;
-        transition: all 0.2s;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+        border: none;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        display: flex;
+        flex-direction: column;
+        min-height: 380px;
+    }
+
+    .afford-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(135deg, var(--card-color-start), var(--card-color-end));
+        transform: scaleX(0);
+        transition: transform 0.4s ease;
     }
 
     .afford-card:hover {
-        transform: translate(-4px, -4px);
-        box-shadow: 12px 12px 0 #000;
+        transform: translateY(-12px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .afford-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    /* Card specific colors */
+    .afford-card.food-card {
+        --card-color-start: #10b981;
+        --card-color-end: #34d399;
+    }
+
+    .afford-card.living-card {
+        --card-color-start: #3b82f6;
+        --card-color-end: #60a5fa;
+    }
+
+    .afford-card.job-card {
+        --card-color-start: #8b5cf6;
+        --card-color-end: #a78bfa;
+    }
+
+    .afford-card-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin-bottom: 20px;
+        transition: transform 0.4s ease;
+    }
+
+    .afford-card:hover .afford-card-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .food-card .afford-card-icon {
+        background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    }
+
+    .living-card .afford-card-icon {
+        background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    }
+
+    .job-card .afford-card-icon {
+        background: linear-gradient(135deg, #ede9fe, #ddd6fe);
     }
 
     .afford-card h3 {
-        font-family: "Press Start 2P", monospace;
-        font-size: 18px;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: #1f2937;
+    }
+
+    .afford-card-price {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 30px;
+        font-size: 0.95rem;
+        font-weight: 600;
         margin-bottom: 16px;
-        color: #1200be;
+    }
+
+    .food-card .afford-card-price {
+        background: #d1fae5;
+        color: #065f46;
+    }
+
+    .living-card .afford-card-price {
+        background: #dbeafe;
+        color: #1e40af;
+    }
+
+    .job-card .afford-card-price {
+        background: #ede9fe;
+        color: #5b21b6;
     }
 
     .afford-card p {
-        color: #333;
+        color: #6b7280;
         line-height: 1.7;
+        margin-bottom: 20px;
+        font-size: 0.95rem;
+    }
+
+    .afford-card-note {
+        font-size: 0.875rem;
+        color: #9ca3af;
         margin-bottom: 24px;
+        padding-top: 16px;
+        border-top: 1px dashed #e5e7eb;
+        flex-grow: 1;
     }
 
-    .afford-card .card-note {
-        font-size: 14px;
-        color: #555;
-    }
-
-    .afford-card .card-price {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: #6f42c1;
-        margin-bottom: 15px;
-    }
-
-    /* ===== BUTTONS ===== */
     .afford-btn {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
         padding: 14px 28px;
-        border: 3px solid #000;
-        font-family: "Press Start 2P", monospace;
-        font-size: 14px;
-        color: #000;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.95rem;
         text-decoration: none;
-        box-shadow: 4px 4px 0 #000;
-        transition: all 0.2s;
+        transition: all 0.3s ease;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .food-card .afford-btn {
+        background: linear-gradient(135deg, #10b981, #34d399);
+        color: #fff;
+    }
+
+    .living-card .afford-btn {
+        background: linear-gradient(135deg, #3b82f6, #60a5fa);
+        color: #fff;
+    }
+
+    .job-card .afford-btn {
+        background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+        color: #fff;
     }
 
     .afford-btn:hover {
-        transform: translate(2px, 2px);
-        box-shadow: 2px 2px 0 #000;
+        transform: translateX(4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
-
-    /* Button colors */
-    .btn-green { background: #a8e6cf; }
-    .btn-yellow { background: #ffd93d; }
-    .btn-peach { background: #ff8b94; }
-    .btn-blue { background: #a2d2ff; }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1200px) {
@@ -139,103 +254,129 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 30px;
         }
+
+        .afford-hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .afford-hero-title .afford-hero-icon {
+            font-size: 2.2rem;
+        }
     }
 
     @media (max-width: 576px) {
         .afford-section {
-            padding: 20px 0 40px;
+            padding: 0;
         }
 
-        .afford-header-box {
-            padding: 20px 25px;
-            width: 90%;
-            margin-bottom: 25px;
-            border-radius: 12px;
-            box-shadow: 4px 4px 0 #000;
+        .afford-hero {
+            padding: 50px 20px 70px;
         }
 
-        .afford-main-title {
+        .afford-hero-title {
             font-size: 2rem;
-            letter-spacing: 2px;
+        }
+        
+        .afford-hero-title .afford-hero-icon {
+            font-size: 1.8rem;
         }
 
-        .afford-subtitle-1 {
-            font-size: 0.95rem;
+        .afford-hero-subtitle {
+            font-size: 1rem;
+        }
+
+        .afford-cards-section {
+            padding: 40px 0 60px;
+            margin-top: -30px;
         }
 
         .afford-grid {
             grid-template-columns: 1fr;
-            gap: 25px;
+            gap: 20px;
             padding: 0 15px;
-            margin-top: 25px;
         }
 
         .afford-card {
-            min-height: auto;
-            padding: 20px;
-            box-shadow: 4px 4px 0 #000;
+            padding: 24px 20px;
         }
 
-        .afford-card:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0 #000;
+        .afford-card-icon {
+            width: 56px;
+            height: 56px;
+            font-size: 1.5rem;
         }
 
         .afford-card h3 {
-            font-size: 14px;
+            font-size: 1.25rem;
+        }
+
+        .afford-features {
+            padding: 30px 15px 40px;
         }
     }
 </style>
 
 <section class="afford-section">
-    <div class="container">
-
-        <!-- TITLE BOX -->
-        <div class="afford-header-wrapper">
-            <div class="afford-header-box">
-                <h1 class="afford-main-title">Afford</h1>
-                <p class="afford-subtitle-1">Hướng dẫn chi phí sinh hoạt cho tân sinh viên FPT</p>
-            </div>
+    <!-- Hero Section -->
+    <div class="afford-hero">
+        <div class="container text-center">
+            <h1 class="afford-hero-title"><span class="afford-hero-icon">💵</span> Afford</h1>
+            <p class="afford-hero-subtitle">
+                Hướng dẫn chi phí sinh hoạt cho tân sinh viên FPT<br>
+                Tìm hiểu chi phí ăn uống, chỗ ở và cơ hội việc làm phù hợp với ngân sách của bạn
+            </p>
         </div>
+    </div>
 
-        <!-- CARDS GRID -->
+    <!-- Cards Section -->
+    <div class="afford-cards-section">
         <div class="afford-grid">
 
-            <!-- CARD 1: ĂN UỐNG -->
-            <a href="{% url 'Afford_food' %}" class="afford-card">
-                <div>
-                    <h3>ĂN UỐNG</h3>
-                    <p class="card-price">25k – 50k / bữa</p>
-                    <p>Căng tin FPT, quán ăn rẻ – ngon – no, mẹo tiết kiệm mỗi ngày.</p>
-                    <p class="card-note">Tìm kiếm địa điểm ăn uống ngon và rẻ quanh khu vực FPT.</p>
-                </div>
-                <span class="afford-btn btn-green">XEM CHI TIẾT</span>
+            <!-- Card 1: Food -->
+            <a href="{% url 'Afford_food' %}" class="afford-card food-card">
+                <div class="afford-card-icon">🍽️</div>
+                <h3>Ăn Uống</h3>
+                <span class="afford-card-price">
+                    <span>💵</span> 25k – 50k / bữa
+                </span>
+                <p>Căng tin FPT, quán ăn rẻ – ngon – no quanh khu vực campus. Mẹo tiết kiệm chi phí ăn uống mỗi ngày cho sinh viên.</p>
+                <p class="afford-card-note">Tìm kiếm địa điểm ăn uống ngon và rẻ gần FPT</p>
+                <span class="afford-btn">
+                    Xem chi tiết <span>→</span>
+                </span>
             </a>
 
-            <!-- CARD 2: NƠI Ở -->
-            <a href="{% url 'Afford_living' %}" class="afford-card">
-                <div>
-                    <h3>NƠI Ở</h3>
-                    <p class="card-price">800k – 2tr / tháng</p>
-                    <p>Ký túc xá, nhà trọ gần campus, kinh nghiệm tránh lừa đảo.</p>
-                    <p class="card-note">Hướng dẫn tìm phòng trọ và ký túc xá FPT.</p>
-                </div>
-                <span class="afford-btn btn-yellow">TÌM PHÒNG</span>
+            <!-- Card 2: Living -->
+            <a href="{% url 'Afford_living' %}" class="afford-card living-card">
+                <div class="afford-card-icon">🏠</div>
+                <h3>Nơi Ở</h3>
+                <span class="afford-card-price">
+                    <span>🏢</span> 800k – 2tr / tháng
+                </span>
+                <p>Ký túc xá FPT, nhà trọ gần campus, kinh nghiệm tìm phòng và tránh các chiêu lừa đảo thuê nhà.</p>
+                <p class="afford-card-note">Hướng dẫn tìm phòng trọ và KTX FPT Đà Nẵng</p>
+                <span class="afford-btn">
+                    Tìm phòng ngay <span>→</span>
+                </span>
             </a>
 
-            <!-- CARD 3: VIỆC LÀM -->
-            <a href="{% url 'Afford_job' %}" class="afford-card">
-                <div>
-                    <h3>VIỆC LÀM</h3>
-                    <p class="card-price">Part-time & Freelance</p>
-                    <p>Việc làm thêm linh hoạt, không ảnh hưởng việc học.</p>
-                    <p class="card-note">Cơ hội việc làm cho sinh viên FPT.</p>
-                </div>
-                <span class="afford-btn btn-peach">XEM VIỆC</span>
+            <!-- Card 3: Job -->
+            <a href="{% url 'Afford_job' %}" class="afford-card job-card">
+                <div class="afford-card-icon">💼</div>
+                <h3>Việc Làm</h3>
+                <span class="afford-card-price">
+                    <span>⚡</span> Part-time & Freelance
+                </span>
+                <p>Việc làm thêm linh hoạt, phù hợp với lịch học. Cơ hội việc làm dành riêng cho sinh viên FPT.</p>
+                <p class="afford-card-note">Khám phá cơ hội việc làm cho sinh viên</p>
+                <span class="afford-btn">
+                    Xem việc làm <span>→</span>
+                </span>
             </a>
 
         </div>
     </div>
+
 </section>
 
 {% endblock %}
