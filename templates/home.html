@@ -3,140 +3,190 @@
 
 {% block content %}
 
-<!-- ================= PARALLAX BACKGROUND (HOME ONLY) ================= -->
-<div class="parallax-bg">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-    <div class="orb orb-4"></div>
-    <div class="grid-overlay"></div>
-    <img src="https://png.pngtree.com/png-clipart/20250102/original/pngtree-book-icon-png-image_4358423.png" class="p-item book">
-    <img src="https://lswhs.lsr7.org/wp-content/uploads/2020/05/1-11492_white-graduation-cap-png-graduation-cap-icon-png.png" class="p-item cap1">
-    <img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" class="p-item target">
-    <img src="https://cdn1.iconfinder.com/data/icons/art-design-and-development-vol-1/64/059-1024.png" class="p-item pen">
-    <img src="https://cdn-icons-png.flaticon.com/512/2583/2583344.png" class="p-item cup">
+<!-- ================= PREMIUM BACKGROUND ================= -->
+<div class="premium-bg">
+    <div class="mesh-layer"></div>
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+    <div class="vignette"></div>
 </div>
 
-<!-- ================= HOME STYLE (ONLY HOME) ================= -->
 <style>
-/* ===== PARALLAX BACKGROUND ===== */
-.parallax-bg {
+/* ============================================================
+   PREMIUM UNIVERSITY BACKGROUND
+   Tone: tím-xanh pastel | Vibe: sang trọng học thuật
+   ============================================================ */
+
+.premium-bg {
     position: fixed;
     inset: 0;
     z-index: -1;
-    background: linear-gradient(135deg, #c8d6f5 0%, #ddd0f7 35%, #e8c8ef 60%, #c5d8f8 100%);
     overflow: hidden;
+    background: linear-gradient(135deg,
+        #dde8ff 0%,
+        #e8deff 30%,
+        #f0e6ff 55%,
+        #daeaf8 80%,
+        #e4dcf8 100%
+    );
 }
 
-/* Aurora mesh overlay */
-.parallax-bg::before {
+/* ── Animated mesh overlay ── */
+.mesh-layer {
+    position: absolute;
+    inset: -40%;
+    width: 180%;
+    height: 180%;
+    background:
+        radial-gradient(ellipse 55% 45% at 20% 25%, rgba(180, 155, 255, 0.38) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 55% at 80% 15%, rgba(140, 195, 255, 0.32) 0%, transparent 60%),
+        radial-gradient(ellipse 45% 50% at 60% 80%, rgba(210, 170, 255, 0.28) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 10% 75%, rgba(160, 200, 245, 0.25) 0%, transparent 55%),
+        radial-gradient(ellipse 35% 45% at 90% 60%, rgba(190, 160, 250, 0.22) 0%, transparent 55%);
+    animation: meshDrift 22s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+@keyframes meshDrift {
+    0%   { transform: translate(0%, 0%)   rotate(0deg)   scale(1);    }
+    33%  { transform: translate(2%, -2%)  rotate(0.8deg) scale(1.02); }
+    66%  { transform: translate(-1.5%, 1.5%) rotate(-0.5deg) scale(0.99); }
+    100% { transform: translate(1%, -1%) rotate(0.3deg)  scale(1.01); }
+}
+
+/* ── Floating shapes ── */
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    will-change: transform;
+}
+
+.shape-1 {
+    width: 560px; height: 560px;
+    background: radial-gradient(circle at 40% 40%,
+        rgba(167, 139, 250, 0.32) 0%,
+        rgba(196, 181, 253, 0.14) 50%,
+        transparent 70%);
+    top: -150px; left: -90px;
+    animation: floatA 20s ease-in-out infinite;
+}
+
+.shape-2 {
+    width: 440px; height: 440px;
+    background: radial-gradient(circle at 60% 40%,
+        rgba(125, 185, 255, 0.28) 0%,
+        rgba(165, 210, 255, 0.11) 50%,
+        transparent 70%);
+    top: -70px; right: -110px;
+    animation: floatB 24s ease-in-out infinite;
+    animation-delay: -8s;
+}
+
+.shape-3 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle at 50% 50%,
+        rgba(220, 180, 255, 0.24) 0%,
+        rgba(200, 160, 250, 0.09) 50%,
+        transparent 70%);
+    bottom: -90px; left: 12%;
+    animation: floatC 28s ease-in-out infinite;
+    animation-delay: -14s;
+}
+
+.shape-4 {
+    width: 320px; height: 320px;
+    background: radial-gradient(circle at 50% 50%,
+        rgba(150, 200, 250, 0.22) 0%,
+        transparent 65%);
+    bottom: 8%; right: 6%;
+    animation: floatA 22s ease-in-out infinite;
+    animation-delay: -6s;
+}
+
+@keyframes floatA {
+    0%   { transform: translate(0px,   0px)  scale(1);    }
+    25%  { transform: translate(18px, -22px) scale(1.04); }
+    50%  { transform: translate(-10px,-35px) scale(0.97); }
+    75%  { transform: translate(-20px,-12px) scale(1.02); }
+    100% { transform: translate(0px,   0px)  scale(1);    }
+}
+
+@keyframes floatB {
+    0%   { transform: translate(0px,   0px)  scale(1);    }
+    30%  { transform: translate(-22px, 15px) scale(1.03); }
+    60%  { transform: translate(12px,  28px) scale(0.98); }
+    100% { transform: translate(0px,   0px)  scale(1);    }
+}
+
+@keyframes floatC {
+    0%   { transform: translate(0px,   0px)  scale(1);    }
+    40%  { transform: translate(25px, -18px) scale(1.05); }
+    70%  { transform: translate(-8px, -28px) scale(0.96); }
+    100% { transform: translate(0px,   0px)  scale(1);    }
+}
+
+/* ── Vignette edges ── */
+.vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 85% 85% at 50% 50%,
+        transparent 55%,
+        rgba(170, 150, 225, 0.1) 80%,
+        rgba(155, 130, 210, 0.18) 100%);
+    pointer-events: none;
+}
+
+/* ── Grain texture ── */
+.premium-bg::after {
     content: '';
     position: absolute;
     inset: 0;
-    background:
-        radial-gradient(ellipse 80% 60% at 20% 20%, rgba(168, 148, 240, 0.5) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 80% at 80% 10%, rgba(147, 197, 253, 0.45) 0%, transparent 55%),
-        radial-gradient(ellipse 70% 50% at 50% 90%, rgba(221, 182, 247, 0.4) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 60% at 90% 70%, rgba(129, 179, 242, 0.35) 0%, transparent 55%);
-    animation: aurora 12s ease-in-out infinite alternate;
+    opacity: 0.028;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
 }
 
-@keyframes aurora {
-    0%   { opacity: 0.7; transform: scale(1) rotate(0deg); }
-    50%  { opacity: 1;   transform: scale(1.05) rotate(1deg); }
-    100% { opacity: 0.8; transform: scale(0.98) rotate(-1deg); }
-}
-
-/* Glowing orbs */
-.orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(70px);
-    animation: orbFloat 10s ease-in-out infinite;
-}
-
-.orb-1 {
-    width: 450px; height: 450px;
-    background: rgba(167, 139, 250, 0.45);
-    top: -100px; left: -80px;
-    animation-duration: 14s;
-}
-.orb-2 {
-    width: 380px; height: 380px;
-    background: rgba(147, 197, 253, 0.4);
-    top: 10%; right: -60px;
-    animation-duration: 11s;
-    animation-delay: -3s;
-}
-.orb-3 {
-    width: 300px; height: 300px;
-    background: rgba(240, 171, 252, 0.35);
-    bottom: 5%; left: 20%;
-    animation-duration: 16s;
-    animation-delay: -6s;
-}
-.orb-4 {
-    width: 250px; height: 250px;
-    background: rgba(99, 179, 237, 0.3);
-    bottom: 20%; right: 25%;
-    animation-duration: 13s;
-    animation-delay: -2s;
-}
-
-@keyframes orbFloat {
-    0%   { transform: translateY(0) scale(1); }
-    33%  { transform: translateY(-30px) scale(1.05); }
-    66%  { transform: translateY(15px) scale(0.97); }
-    100% { transform: translateY(0) scale(1); }
-}
-
-/* Grid overlay */
-.grid-overlay {
-    position: absolute;
-    inset: 0;
-    background-image:
-        linear-gradient(rgba(139, 116, 220, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(139, 116, 220, 0.08) 1px, transparent 1px);
-    background-size: 60px 60px;
-}
-
-/* Floating icons */
-.p-item {
-    position: absolute;
-    width: 72px;
-    opacity: 0;
-    animation: itemReveal 0.8s forwards, floatIcon 7s ease-in-out infinite;
-    filter: drop-shadow(0 4px 16px rgba(109, 86, 200, 0.3));
-}
-
-.book   { top: 15%; left: 7%;    animation-delay: 0.2s, 0.2s; }
-.cap1   { top: 8%;  right: 10%;  animation-delay: 0.4s, 0.4s; }
-.target { bottom: 18%; right: 8%; animation-delay: 0.6s, 0.6s; }
-.pen    { bottom: 28%; left: 28%; animation-delay: 0.8s, 0.8s; }
-.cup    { top: 42%; right: 33%;  animation-delay: 1.0s, 1.0s; }
-
-@keyframes itemReveal {
-    from { opacity: 0; transform: translateY(20px) scale(0.8); }
-    to   { opacity: 0.75; transform: translateY(0) scale(1); }
-}
-
-@keyframes floatIcon {
-    0%   { transform: translateY(0) rotate(0deg); }
-    50%  { transform: translateY(-14px) rotate(3deg); }
-    100% { transform: translateY(0) rotate(0deg); }
-}
-
-/* ================= INTRO ================= */
+/* ============================================================
+   INTRO BOX — glassmorphism
+   ============================================================ */
 .intro-box {
-    background: #FFF;
-    padding: 40px;
-    border-radius: 16px;
-    border: 3px solid #000;
-    box-shadow: 8px 8px 0 #000;
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(24px) saturate(170%);
+    -webkit-backdrop-filter: blur(24px) saturate(170%);
+    padding: 44px 50px;
+    border-radius: 22px;
+    border: 1px solid rgba(200, 185, 255, 0.35);
+    box-shadow:
+        0 2px 4px rgba(130, 110, 200, 0.05),
+        0 10px 40px rgba(130, 110, 200, 0.1),
+        0 40px 80px rgba(120, 100, 190, 0.07),
+        inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+
+.intro-box:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 2px 4px rgba(130, 110, 200, 0.06),
+        0 16px 56px rgba(130, 110, 200, 0.14),
+        0 48px 96px rgba(120, 100, 190, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.intro-box h2 {
+    color: #3a2a72;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    margin-bottom: 18px;
 }
 
 .intro-box p {
-    color: #222;
+    color: #4a4268;
+    line-height: 1.78;
+    font-size: 0.97rem;
 }
 
 /* ================= ABOUT HERO ================= */
@@ -146,11 +196,9 @@
     height: 420px;
     border-radius: 18px;
     overflow: hidden;
-
     background-image: url("https://rmep.vn/wp-content/uploads/2024/06/z5503795221847_32de2d1145b3d58dba3c7c10de7885c0.jpg");
     background-size: cover;
     background-position: center;
-
     border: 3px solid #000;
     box-shadow: 8px 8px 0 #000;
 }
@@ -160,16 +208,12 @@
     width: 100%;
     background: rgba(0,0,0,0.55);
     padding: 50px;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.about-overlay h2 {
-    color: #fff;
-}
-
+.about-overlay h2 { color: #fff; }
 .about-overlay p {
     color: #f1f1f1;
     max-width: 650px;
@@ -177,27 +221,11 @@
 }
 
 @media (max-width: 768px) {
-    .about-hero {
-        height: auto;
-    }
-    .about-overlay {
-        padding: 30px;
-    }
+    .about-hero { height: auto; }
+    .about-overlay { padding: 30px; }
+    .intro-box { padding: 28px 24px; }
 }
 </style>
-
-<!-- ================= PARALLAX SCRIPT ================= -->
-<script>
-document.addEventListener("mousemove", (e) => {
-    const x = (e.clientX / window.innerWidth) - 0.5;
-    const y = (e.clientY / window.innerHeight) - 0.5;
-
-    document.querySelectorAll(".p-item").forEach((item, i) => {
-        const speed = (i + 1) * 8;
-        item.style.transform = `translate(${x * speed}px, ${y * speed + (Math.sin(Date.now()/1000 + i) * 14)}px) rotate(${x * 5}deg)`;
-    });
-});
-</script>
 
 <!-- ================= INTRO ================= -->
 <div class="container mt-5">
@@ -207,7 +235,6 @@ document.addEventListener("mousemove", (e) => {
         Trường Đại học FPT – cơ sở Đà Nẵng tọa lạc tại Khu đô thị FPT, phường Ngũ Hành Sơn, TP. Đà Nẵng,
         là nơi khởi đầu hành trình đại học dành cho sinh viên sẵn sàng học tập chủ động, trải nghiệm thực tế và hội nhập toàn cầu.
         Với định hướng công nghệ – khởi nghiệp – toàn cầu, Trường Đại học FPT được xếp Top 01 trong nước, dẫn đầu các trường đại học theo chuẩn chất lượng đào tạo của Bộ Giáo dục và Đào tạo (MOET 2025).
-        Sinh viên không chỉ học trong giảng đường mà còn rèn luyện kỹ năng qua dự án thực tiễn, môi trường học tập hiện đại, đa văn hóa và đời sống sinh viên năng động. 
         Sinh viên không chỉ học trong giảng đường mà còn rèn luyện kỹ năng qua dự án thực tiễn, môi trường học tập hiện đại, đa văn hóa và đời sống sinh viên năng động.
         </p>
         <p>
@@ -222,11 +249,10 @@ document.addEventListener("mousemove", (e) => {
     </div>
 </div>
 
-<!-- ================= ABOUT FPT UNIVERSITY (LEFT IMAGE + RIGHT IMAGE) ================= -->
+<!-- ================= ABOUT FPT UNIVERSITY ================= -->
 <div class="container" style="margin-top: 90px;">
     <div style="display: flex; gap: 40px; align-items: stretch;">
 
-        <!-- ===== LEFT: IMAGE + TEXT OVERLAY ===== -->
         <div style="
             flex: 1;
             position: relative;
@@ -236,15 +262,9 @@ document.addEventListener("mousemove", (e) => {
             box-shadow: 8px 8px 0 #000;
         ">
             <img src="https://ptehelper.com.au/wp-content/uploads/2022/12/dai-hoc-fpt-diem-chuan-676x380.webp"
-                 style="
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    filter: brightness(55%);
-                 ">
+                 style="width:100%;height:100%;object-fit:cover;filter:brightness(55%);">
         </div>
 
-        <!-- ===== RIGHT: IMAGE CŨ (GIỮ NGUYÊN) ===== -->
         <div style="
             flex: 1;
             border-radius: 18px;
@@ -253,16 +273,11 @@ document.addEventListener("mousemove", (e) => {
             box-shadow: 8px 8px 0 #000;
         ">
             <img src="https://rmep.vn/wp-content/uploads/2024/06/z5503795221847_32de2d1145b3d58dba3c7c10de7885c0.jpg"
-                 style="
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                 ">
+                 style="width:100%;height:100%;object-fit:cover;">
         </div>
 
     </div>
 </div>
-
 
 <!-- ================= TEAM ================= -->
 <div class="container mt-5">
