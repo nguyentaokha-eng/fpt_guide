@@ -1,335 +1,400 @@
 {% extends 'base.html' %}
-
+{% block navbar_class %}navbar-glass{% endblock %}
 {% block content %}
-<div class="container mt-5 text-center">
-    <div class="header-box">
-        <h1 class="main-title">Explore FPT University</h1>
-        <p class="subtitle">Trang này dùng để khám phá ngành học, campus, student life...</p>
-    </div>
+
+<!-- ================= LIGHT PREMIUM BACKGROUND ================= -->
+<div class="explore-bg">
+    <div class="explore-orb orb-1"></div>
+    <div class="explore-orb orb-2"></div>
+    <div class="explore-orb orb-3"></div>
+    <div class="explore-grid-overlay"></div>
 </div>
 
 <style>
-        /* ================= HEADER STYLING ================= */
-        .header-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 60px 40px;
-            border-radius: 20px;
-            border: 4px solid #000;
-            box-shadow: 12px 12px 0 #000;
-            margin-bottom: 60px;
-            position: relative;
-            overflow: hidden;
-        }
+/* ── Background ── */
+.explore-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    background: linear-gradient(145deg, #f5f7ff 0%, #ede8ff 35%, #f8f0ff 65%, #e8f4ff 100%);
+}
 
-        .header-box::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(255, 255, 255, 0.05) 10px,
-                rgba(255, 255, 255, 0.05) 20px
-            );
-            animation: move-bg 20s linear infinite;
-        }
+.explore-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+}
 
-        @keyframes move-bg {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
+.orb-1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(167,139,250,0.22) 0%, transparent 70%);
+    top: -120px; left: -80px;
+    animation: orbDrift 18s ease-in-out infinite;
+}
+.orb-2 {
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, rgba(147,197,253,0.2) 0%, transparent 70%);
+    bottom: -80px; right: -60px;
+    animation: orbDrift 22s ease-in-out infinite reverse;
+}
+.orb-3 {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(240,171,252,0.18) 0%, transparent 70%);
+    top: 40%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: orbDrift 26s ease-in-out infinite;
+    animation-delay: -8s;
+}
 
-        .main-title {
-            font-family: "Press Start 2P", monospace;
-            font-size: 42px;
-            color: #fff;
-            text-shadow: 
-                4px 4px 0 #000,
-                6px 6px 0 rgba(0, 0, 0, 0.3);
-            letter-spacing: 3px;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-            animation: float 3s ease-in-out infinite;
-        }
+@keyframes orbDrift {
+    0%   { transform: translate(0,0) scale(1); }
+    33%  { transform: translate(20px,-25px) scale(1.04); }
+    66%  { transform: translate(-15px,15px) scale(0.97); }
+    100% { transform: translate(0,0) scale(1); }
+}
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
+.explore-grid-overlay {
+    position: absolute; inset: 0;
+    background-image:
+        linear-gradient(rgba(139,116,220,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139,116,220,0.055) 1px, transparent 1px);
+    background-size: 52px 52px;
+}
 
-        .subtitle {
-            font-size: 20px;
-            color: #fff;
-            font-weight: 500;
-            position: relative;
-            z-index: 1;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            max-width: 800px;
-            margin: 0 auto;
-        }
+/* ── Page wrap ── */
+.explore-page-wrap { position: relative; z-index: 1; }
 
-        /* ================= EXPLORE GRID ================= */
-        .explore-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-            margin-top: 40px;
-        }
 
-        .explore-card {
-            background: #fff;
-            padding: 40px;
-            border: 4px solid #000;
-            box-shadow: 8px 8px 0 #000;
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: stretch;
-            min-height: 320px;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-        }
+/* ================= HEADER BOX ================= */
+.header-box {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 60px 40px;
+    border-radius: 20px;
+    border: 4px solid #000;
+    box-shadow: 12px 12px 0 #000;
+    margin-bottom: 60px;
+    position: relative;
+    overflow: hidden;
+}
 
-        .explore-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: left 0.5s;
-        }
+/* Animated diagonal stripes — giữ lại feel cũ */
+.header-box::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 14px,
+        rgba(111,66,193,0.035) 14px,
+        rgba(111,66,193,0.035) 28px
+    );
+    animation: stripeDrift 24s linear infinite;
+}
 
-        .explore-card:hover::before {
-            left: 100%;
-        }
+@keyframes stripeDrift {
+    0%   { transform: translate(0,0); }
+    100% { transform: translate(56px,56px); }
+}
 
-        .explore-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 16px 16px 0 #000;
-        }
+/* Top shimmer */
+.header-box::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(167,139,250,0.6), transparent);
+}
 
-        .explore-card h3 {
-            font-family: "Press Start 2P", monospace;
-            font-size: 28px;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-        }
+.main-title {
+    font-family: "Press Start 2P", monospace;
+    font-size: 36px;
+    color: #fff;
+    text-shadow: 4px 4px 0 #000, 6px 6px 0 rgba(0,0,0,0.3);
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+    animation: floatTitle 3.5s ease-in-out infinite;
+}
 
-        .explore-card p {
-            color: #333;
-            line-height: 1.7;
-            margin-bottom: 28px;
-            font-size: 17px;
-            position: relative;
-            z-index: 1;
-        }
+@keyframes floatTitle {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
+}
 
-        /* ================= BUTTON HOVER EFFECTS ================= */
-        .explore-btn {
-            display: inline-block;
-            padding: 18px 36px;
-            border: 4px solid #000;
-            font-family: "Press Start 2P", monospace;
-            font-size: 16px;
-            color: #000;
-            text-decoration: none;
-            box-shadow: 6px 6px 0 #000;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            z-index: 1;
-        }
+.subtitle {
+    font-size: 18px;
+    color: rgba(255,255,255,0.88);
+    font-weight: 400;
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.65;
+}
 
-        .explore-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.1);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
+/* ================= EXPLORE GRID ================= */
+.explore-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    margin-top: 40px;
+}
 
-        .explore-btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
+.explore-card {
+    background: rgba(255,255,255,0.72);
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    padding: 38px 36px 32px;
+    border: 2px solid rgba(200,185,255,0.3);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    min-height: 310px;
+    position: relative;
+    overflow: hidden;
+    transition:
+        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.4s ease,
+        border-color 0.3s ease,
+        background 0.3s ease;
+    box-shadow:
+        0 2px 4px rgba(130,110,200,0.05),
+        0 8px 24px rgba(130,110,200,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.95);
+}
 
-        .explore-btn:hover {
-            transform: translate(4px, 4px);
-            box-shadow: 2px 2px 0 #000;
-        }
+/* Shimmer sweep */
+.explore-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 55%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+    transition: left 0.6s ease;
+    pointer-events: none;
+    z-index: 0;
+}
 
-        .explore-btn:active {
-            transform: translate(6px, 6px);
-            box-shadow: 0px 0px 0 #000;
-        }
+.explore-card:hover::before { left: 150%; }
 
-        /* ================= BUTTON COLORS ================= */
-        .btn-yellow { 
-            background: linear-gradient(135deg, #f5f27a 0%, #ffd700 100%);
-        }
-        
-        .btn-peach { 
-            background: linear-gradient(135deg, #ffe0c2 0%, #ffb88c 100%);
-        }
-        
-        .btn-blue { 
-            background: linear-gradient(135deg, #cdd5f4 0%, #a8b8ff 100%);
-        }
-        
-        .btn-purple { 
-            background: linear-gradient(135deg, #c9c3ff 0%, #a89fff 100%);
-        }
+/* Top glow line */
+.explore-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 20%; right: 20%;
+    height: 2px;
+    border-radius: 0 0 4px 4px;
+    opacity: 0;
+    transition: opacity 0.35s ease, left 0.35s ease, right 0.35s ease;
+}
 
-        /* ================= CARD SPECIFIC COLORS ================= */
-        .rate-card:nth-child(1) h3 {
-            color: #f5c542;
-        }
+.explore-card:nth-child(1)::after { background: linear-gradient(90deg, transparent, #f5c542, transparent); }
+.explore-card:nth-child(2)::after { background: linear-gradient(90deg, transparent, #ffb88c, transparent); }
+.explore-card:nth-child(3)::after { background: linear-gradient(90deg, transparent, #a8b8ff, transparent); }
+.explore-card:nth-child(4)::after { background: linear-gradient(90deg, transparent, #c9c3ff, transparent); }
 
-        .rate-card:nth-child(2) h3 {
-            color: #ff9966;
-        }
+.explore-card:hover::after { opacity: 1; left: 5%; right: 5%; }
 
-        .rate-card:nth-child(3) h3 {
-            color: #6b8cff;
-        }
+.explore-card:hover {
+    transform: translateY(-10px) scale(1.015);
+    background: rgba(255,255,255,0.88);
+    border-color: rgba(167,139,250,0.45);
+    box-shadow:
+        0 0 0 1px rgba(167,139,250,0.15),
+        0 20px 56px rgba(130,110,200,0.14),
+        0 8px 24px rgba(130,110,200,0.1),
+        inset 0 1px 0 rgba(255,255,255,1);
+}
 
-        .rate-card:nth-child(4) h3 {
-            color: #9b7bff;
-        }
+/* Corner triangle accent */
+.corner-accent {
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 0 0 40px 40px;
+    border-color: transparent transparent rgba(111,66,193,0) transparent;
+    transition: border-color 0.35s ease;
+    z-index: 1;
+}
 
-        /* ================= RATE LECTURE STYLE ================= */
-        .rate-card {
-            position: relative;
-        }
+.explore-card:hover .corner-accent {
+    border-color: transparent transparent rgba(111,66,193,0.18) transparent;
+}
 
-        .rate-title {
-            font-family: "Press Start 2P", monospace;
-            text-align: center;
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            margin-bottom: 18px;
-        }
+/* ── Titles ── */
+.rate-title {
+    font-family: "Press Start 2P", monospace;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin-bottom: 18px;
+    line-height: 1.45;
+    position: relative;
+    z-index: 1;
+    transition: letter-spacing 0.3s ease;
+    text-align: center;
+}
 
-        .rate-note {
-            font-size: 17px;
-            line-height: 1.6;
-            color: #222;
-            margin: 2px 0 !important;
-        }
+.explore-card:hover .rate-title { letter-spacing: 2px; }
 
-        /* ================= MOBILE RESPONSIVE ================= */
-        @media (max-width: 768px) {
-            .explore-grid {
-                grid-template-columns: 1fr;
-            }
+.explore-card:nth-child(1) .rate-title { color: #c9950a; }
+.explore-card:nth-child(2) .rate-title { color: #d4711a; }
+.explore-card:nth-child(3) .rate-title { color: #4a6adb; }
+.explore-card:nth-child(4) .rate-title { color: #7c5fc9; }
 
-            .main-title {
-                font-size: 24px;
-            }
+/* Border màu đúng với button của từng card */
+.explore-card:nth-child(1) { border-color: rgba(245,194,66,0.5); box-shadow: 0 2px 4px rgba(245,194,66,0.08), 0 8px 24px rgba(245,194,66,0.1), inset 0 1px 0 rgba(255,255,255,0.95); }
+.explore-card:nth-child(2) { border-color: rgba(255,184,140,0.5); box-shadow: 0 2px 4px rgba(255,140,66,0.08), 0 8px 24px rgba(255,140,66,0.1), inset 0 1px 0 rgba(255,255,255,0.95); }
+.explore-card:nth-child(3) { border-color: rgba(168,184,255,0.5); box-shadow: 0 2px 4px rgba(100,130,255,0.08), 0 8px 24px rgba(100,130,255,0.1), inset 0 1px 0 rgba(255,255,255,0.95); }
+.explore-card:nth-child(4) { border-color: rgba(201,195,255,0.5); box-shadow: 0 2px 4px rgba(160,130,255,0.08), 0 8px 24px rgba(160,130,255,0.1), inset 0 1px 0 rgba(255,255,255,0.95); }
 
-            .subtitle {
-                font-size: 16px;
-            }
+/* Hover border đậm lên đúng màu */
+.explore-card:nth-child(1):hover { border-color: #f5c542; box-shadow: 0 0 0 1px rgba(245,194,66,0.3), 0 20px 56px rgba(245,194,66,0.2), 0 8px 24px rgba(245,194,66,0.15); }
+.explore-card:nth-child(2):hover { border-color: #ffb88c; box-shadow: 0 0 0 1px rgba(255,184,140,0.3), 0 20px 56px rgba(255,140,66,0.2), 0 8px 24px rgba(255,140,66,0.15); }
+.explore-card:nth-child(3):hover { border-color: #a8b8ff; box-shadow: 0 0 0 1px rgba(168,184,255,0.3), 0 20px 56px rgba(100,130,255,0.2), 0 8px 24px rgba(100,130,255,0.15); }
+.explore-card:nth-child(4):hover { border-color: #c9c3ff; box-shadow: 0 0 0 1px rgba(201,195,255,0.3), 0 20px 56px rgba(160,130,255,0.2), 0 8px 24px rgba(160,130,255,0.15); }
 
-            .header-box {
-                padding: 40px 20px;
-            }
+.rate-note {
+    font-size: 16px;
+    line-height: 1.75;
+    color: #444;
+    margin-bottom: 28px !important;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
 
-            .explore-card {
-                padding: 30px;
-            }
+/* ================= BUTTONS ================= */
+.explore-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 17px 28px;
+    border: 3px solid #000;
+    border-radius: 10px;
+    font-family: "Press Start 2P", monospace;
+    font-size: 13px;
+    color: #000;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+    box-shadow: 5px 5px 0 #000;
+    transition:
+        transform 0.2s cubic-bezier(0.22,1,0.36,1),
+        box-shadow 0.2s ease;
+    z-index: 1;
+}
 
-            .rate-title {
-                font-size: 20px;
-            }
-        }
+/* Ripple fill on hover */
+.explore-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.08);
+    transform: translate(-50%,-50%);
+    transition: width 0.55s ease, height 0.55s ease;
+    z-index: -1;
+}
 
-        /* ================= EXTRA ANIMATIONS ================= */
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
+.explore-btn:hover::before { width: 350px; height: 350px; }
 
-        .explore-btn:hover {
-            animation: pulse 1.5s infinite;
-        }
+.explore-btn:hover {
+    transform: translate(3px, 3px);
+    box-shadow: 2px 2px 0 #000;
+    color: #000;
+}
 
-        /* Fix: chặn flex stretch làm button bị tách đôi */
-        .explore-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            box-sizing: border-box;
-            text-align: center;
-            line-height: normal;
-            align-self: flex-end;
-        }
+.explore-btn:active {
+    transform: translate(5px, 5px);
+    box-shadow: 0 0 0 #000;
+}
+
+/* Màu buttons giữ nguyên như cũ */
+.btn-yellow { background: linear-gradient(135deg, #f5f27a 0%, #ffd700 100%); }
+.btn-peach  { background: linear-gradient(135deg, #ffe0c2 0%, #ffb88c 100%); }
+.btn-blue   { background: linear-gradient(135deg, #cdd5f4 0%, #a8b8ff 100%); }
+.btn-purple { background: linear-gradient(135deg, #c9c3ff 0%, #a89fff 100%); }
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .explore-grid  { grid-template-columns: 1fr; }
+    .main-title    { font-size: 22px; }
+    .subtitle      { font-size: 15px; }
+    .header-box    { padding: 36px 20px; }
+    .explore-card  { padding: 28px 24px; }
+    .rate-title    { font-size: 16px; }
+}
 </style>
 
-<!-- ================= EXPLORE ================= -->
-<div class="container">
-    <div class="explore-grid">
-
-        <!-- CARD 1 -->
-        <div class="explore-card rate-card">
-            <h3 class="rate-title">RATE MY LECTURER</h3>
-            <p class="rate-note">
-                Nền tảng chia sẻ trải nghiệm học tập, giúp sinh viên FPT
-                tham khảo giảng viên phù hợp nhất:
-                Xem review thật từ sinh viên FPT trước khi đăng ký môn học.
-            </p>
-            <div><a href="{% url 'rate_lecture' %}" class="explore-btn btn-yellow">SEE RATINGS</a></div>
+<div class="explore-page-wrap">
+    <div class="container mt-5 text-center">
+        <div class="header-box">
+            <h1 class="main-title">Explore FPT University</h1>
+            <p class="subtitle">Trang này dùng để khám phá ngành học, campus, student life...</p>
         </div>
-
-        <!-- CARD 2 -->
-        <div class="explore-card rate-card">
-            <h3 class="rate-title">STUDENT LIFE</h3>
-            <p class="rate-note">
-                Trải nghiệm học tập tại FPT(The FPT Campus Experience):
-                Cơ sở vật chất hiện đại. Hơn 50+ CLB. Hoạt động diễn ra mỗi tuần.
-            </p>
-            <div><a href="{% url 'student_life' %}" class="explore-btn btn-peach">LIFE AT FPT</a></div>
-        </div>
-
-        <!-- CARD 3 -->
-        <div class="explore-card rate-card">
-            <h3 class="rate-title">CURRICULUM</h3>
-            <p class="rate-note">
-                Thông tin ngành học rõ ràng, dễ hiểu:
-                Xem mã ngành, tổng tín chỉ và chuẩn đầu ra trước khi đăng ký.
-            </p>
-            <div><a href="{% url 'curriculum' %}" class="explore-btn btn-blue">VIEW DETAILS</a></div>
-        </div>
-
-        <!-- CARD 4 -->
-        <div class="explore-card rate-card">
-            <h3 class="rate-title">COMMUNITY</h3>
-            <p class="rate-note">
-                Đến với cộng đồng của chúng tôi, nơi sinh viên tự tin hỏi đáp, chia sẻ tài liệu và kinh nghiệm thật.
-                Hãy tương tác cùng chúng tôi nhé >.<
-            </p>
-            <div><a href="https://www.facebook.com/groups/1216577847270995" target="_blank" class="explore-btn btn-purple">GET CONNECTED</a></div>
-        </div>
-
     </div>
+
+    <div class="container">
+        <div class="explore-grid">
+
+            <div class="explore-card">
+                <div class="corner-accent"></div>
+                <h3 class="rate-title">RATE MY LECTURER</h3>
+                <p class="rate-note">
+                    Nền tảng chia sẻ trải nghiệm học tập, giúp sinh viên FPT
+                    tham khảo giảng viên phù hợp nhất:
+                    Xem review thật từ sinh viên FPT trước khi đăng ký môn học.
+                </p>
+                <div><a href="{% url 'rate_lecture' %}" class="explore-btn btn-yellow">SEE RATINGS</a></div>
+            </div>
+
+            <div class="explore-card">
+                <div class="corner-accent"></div>
+                <h3 class="rate-title">STUDENT LIFE</h3>
+                <p class="rate-note">
+                    Trải nghiệm học tập tại FPT (The FPT Campus Experience):
+                    Cơ sở vật chất hiện đại. Hơn 50+ CLB. Hoạt động diễn ra mỗi tuần.
+                </p>
+                <div><a href="{% url 'student_life' %}" class="explore-btn btn-peach">LIFE AT FPT</a></div>
+            </div>
+
+            <div class="explore-card">
+                <div class="corner-accent"></div>
+                <h3 class="rate-title">CURRICULUM</h3>
+                <p class="rate-note">
+                    Thông tin ngành học rõ ràng, dễ hiểu:
+                    Xem mã ngành, tổng tín chỉ và chuẩn đầu ra trước khi đăng ký.
+                </p>
+                <div><a href="{% url 'curriculum' %}" class="explore-btn btn-blue">VIEW DETAILS</a></div>
+            </div>
+
+            <div class="explore-card">
+                <div class="corner-accent"></div>
+                <h3 class="rate-title">COMMUNITY</h3>
+                <p class="rate-note">
+                    Đến với cộng đồng của chúng tôi, nơi sinh viên tự tin hỏi đáp,
+                    chia sẻ tài liệu và kinh nghiệm thật. Hãy tương tác cùng chúng tôi nhé &gt;.&lt;
+                </p>
+                <div><a href="https://www.facebook.com/groups/1216577847270995" target="_blank" class="explore-btn btn-purple">GET CONNECTED</a></div>
+            </div>
+
+        </div>
+    </div>
+    <div style="height: 60px;"></div>
 </div>
 
 {% endblock %}
