@@ -18,7 +18,6 @@
         padding: 40px 20px;
     }
 
-    /* ============ SECTION TITLES ============ */
     .section-title {
         font-family: 'Montserrat', sans-serif;
         font-size: 2.5rem;
@@ -50,7 +49,6 @@
         vertical-align: middle;
     }
 
-    /* ============ BENTO GRID ============ */
     .facilities-section { margin-bottom: 80px; }
 
     .bento-grid {
@@ -60,15 +58,14 @@
         gap: 14px;
     }
 
-    /* Layout mới — asymmetric, editorial */
-    .bento-card:nth-child(1) { grid-column: 1 / 6;  grid-row: 1 / 2; } /* wide */
+    .bento-card:nth-child(1) { grid-column: 1 / 6;  grid-row: 1 / 2; }
     .bento-card:nth-child(2) { grid-column: 6 / 9;  grid-row: 1 / 2; }
-    .bento-card:nth-child(3) { grid-column: 9 / 13; grid-row: 1 / 3; } /* tall */
+    .bento-card:nth-child(3) { grid-column: 9 / 13; grid-row: 1 / 3; }
     .bento-card:nth-child(4) { grid-column: 1 / 4;  grid-row: 2 / 3; }
-    .bento-card:nth-child(5) { grid-column: 4 / 9;  grid-row: 2 / 3; } /* wide */
+    .bento-card:nth-child(5) { grid-column: 4 / 9;  grid-row: 2 / 3; }
     .bento-card:nth-child(6) { grid-column: 1 / 4;  grid-row: 3 / 4; }
     .bento-card:nth-child(7) { grid-column: 4 / 7;  grid-row: 3 / 4; }
-    .bento-card:nth-child(8) { grid-column: 7 / 13; grid-row: 3 / 4; } /* wide */
+    .bento-card:nth-child(8) { grid-column: 7 / 13; grid-row: 3 / 4; }
 
     .bento-card {
         position: relative;
@@ -76,8 +73,6 @@
         overflow: hidden;
         cursor: pointer;
         background: #1a1a2e;
-
-        /* Entry state */
         opacity: 0;
         transform: translateY(28px) scale(0.97);
         transition:
@@ -91,7 +86,6 @@
         transform: translateY(0) scale(1);
     }
 
-    /* ── Hover lift + glow ── */
     .bento-card:hover {
         transform: translateY(-6px) scale(1.02);
         box-shadow:
@@ -101,7 +95,6 @@
         z-index: 2;
     }
 
-    /* ── Background image ── */
     .bento-bg-image {
         position: absolute;
         inset: 0;
@@ -116,29 +109,17 @@
         filter: brightness(0.6) saturate(1.25);
     }
 
-    /* ── Gradient overlay ── */
     .bento-overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(
-            160deg,
-            transparent 30%,
-            rgba(0,0,0,0.1) 55%,
-            rgba(0,0,0,0.72) 100%
-        );
+        background: linear-gradient(160deg, transparent 30%, rgba(0,0,0,0.1) 55%, rgba(0,0,0,0.72) 100%);
         transition: opacity 0.4s ease;
     }
 
     .bento-card:hover .bento-overlay {
-        background: linear-gradient(
-            160deg,
-            rgba(255,107,53,0.04) 0%,
-            rgba(0,0,0,0.15) 40%,
-            rgba(0,0,0,0.82) 100%
-        );
+        background: linear-gradient(160deg, rgba(255,107,53,0.04) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.82) 100%);
     }
 
-    /* ── Category badge ── */
     .bento-category {
         position: absolute;
         top: 16px; left: 16px;
@@ -154,8 +135,6 @@
         padding: 4px 12px;
         border-radius: 20px;
         z-index: 3;
-
-        /* Animate in on hover */
         transform: translateY(0);
         transition: transform 0.3s ease, background 0.3s ease;
     }
@@ -165,20 +144,16 @@
         transform: translateY(-2px);
     }
 
-    /* ── Info block ── */
     .bento-info {
         position: absolute;
         bottom: 0; left: 0; right: 0;
         padding: 20px 22px 22px;
         z-index: 3;
-
         transform: translateY(6px);
         transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .bento-card:hover .bento-info {
-        transform: translateY(0);
-    }
+    .bento-card:hover .bento-info { transform: translateY(0); }
 
     .bento-name {
         font-family: 'Montserrat', sans-serif;
@@ -195,40 +170,26 @@
         color: rgba(255,255,255,0.65);
         margin-top: 3px;
         font-weight: 400;
-
-        /* Hidden by default, slide up on hover */
         opacity: 0;
         transform: translateY(6px);
         transition: opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s;
     }
 
-    .bento-card:hover .bento-sub {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    .bento-card:hover .bento-sub { opacity: 1; transform: translateY(0); }
 
-    /* ── Shimmer line on hover ── */
     .bento-card::before {
         content: '';
         position: absolute;
         top: 0; left: -100%;
         width: 60%; height: 100%;
-        background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,0.06),
-            transparent
-        );
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
         transition: left 0.6s ease;
         z-index: 4;
         pointer-events: none;
     }
 
-    .bento-card:hover::before {
-        left: 150%;
-    }
+    .bento-card:hover::before { left: 150%; }
 
-    /* ── Corner accent ── */
     .bento-card::after {
         content: '';
         position: absolute;
@@ -241,11 +202,8 @@
         z-index: 5;
     }
 
-    .bento-card:hover::after {
-        border-color: transparent transparent rgba(255,107,53,0.6) transparent;
-    }
+    .bento-card:hover::after { border-color: transparent transparent rgba(255,107,53,0.6) transparent; }
 
-    /* ── Icon watermark ── */
     .bento-icon {
         position: absolute;
         top: 50%; left: 50%;
@@ -262,16 +220,11 @@
         transform: translate(-50%, -55%) scale(1.2) rotate(5deg);
     }
 
-    /* no-image fallback */
-    .bento-card.no-image {
-        background: linear-gradient(135deg, #1a1a2e, #2a2a4e);
-    }
-
+    .bento-card.no-image { background: linear-gradient(135deg, #1a1a2e, #2a2a4e); }
     .bento-card.no-image .bento-name  { color: #fff; }
     .bento-card.no-image .bento-sub   { color: rgba(255,255,255,0.5); }
     .bento-card.no-image .bento-icon  { opacity: 0.25; }
 
-    /* ── LUK card ── */
     .luk-card-wrap { margin-top: 14px; }
 
     .luk-card-wrap .bento-card {
@@ -282,10 +235,7 @@
         transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.4s ease;
     }
 
-    .luk-card-wrap .bento-card.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    .luk-card-wrap .bento-card.visible { opacity: 1; transform: translateY(0); }
 
     /* ============ MODAL ============ */
     .modal {
@@ -561,7 +511,8 @@
                 </div>
             </div>
 
-            <div class="bento-card" onclick="openModal(4, 'main')">
+            <!-- ✅ Card Không gian xanh — mở gallery xanh riêng -->
+            <div class="bento-card" onclick="openModal(0, 'xanh')">
                 <img src="{% static 'image/facilities/khong-gian-xanh.jpg' %}" alt="Không gian xanh" class="bento-bg-image" onerror="this.style.display='none';this.parentElement.classList.add('no-image')">
                 <div class="bento-overlay"></div>
                 <span class="bento-icon">🌳</span>
@@ -691,6 +642,8 @@
 </div>
 
 <!-- ============ MODALS ============ -->
+
+<!-- Modal chính -->
 <div class="modal" id="mainModal">
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('main')">×</button>
@@ -701,6 +654,7 @@
     </div>
 </div>
 
+<!-- Modal LUK -->
 <div class="modal" id="lukModal">
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('luk')">×</button>
@@ -708,6 +662,17 @@
         <img src="" alt="" class="modal-image" id="lukModalImage">
         <button class="modal-nav next" onclick="navigateModal(1,'luk')">›</button>
         <div class="modal-caption" id="lukModalCaption"></div>
+    </div>
+</div>
+
+<!-- ✅ Modal Không gian xanh (MỚI) -->
+<div class="modal" id="xanhModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('xanh')">×</button>
+        <button class="modal-nav prev" onclick="navigateModal(-1,'xanh')">‹</button>
+        <img src="" alt="" class="modal-image" id="xanhModalImage">
+        <button class="modal-nav next" onclick="navigateModal(1,'xanh')">›</button>
+        <div class="modal-caption" id="xanhModalCaption"></div>
     </div>
 </div>
 
@@ -730,37 +695,66 @@ const lukFacilities = [
     { name: 'LUK Space',    image: '{% static "image/luk/luk.ipg.jpg" %}' }
 ];
 
-let currentModalIndex = 0;
+// ✅ Gallery riêng cho Không gian xanh (4 ảnh)
+const xanhFacilities = [
+    { name: 'Không gian xanh 1', image: '{% static "image/facilities/khong-gian-xanh.jpg" %}' },
+    { name: 'Không gian xanh 2', image: '{% static "image/facilities/khong-gian-xanh1.jpg" %}' },
+    { name: 'Không gian xanh 3', image: '{% static "image/facilities/khong-gian-xanh2.jpg" %}' },
+    { name: 'Không gian xanh 4', image: '{% static "image/facilities/khong-gian-xanh3.jpg" %}' },
+];
 
+let currentModalIndex = 0;
+let currentModalType = 'main';
+
+// ✅ Hàm helper lấy config theo type
+function getModalEls(type) {
+    return {
+        main: { data: facilities,     id: 'mainModal', img: 'mainModalImage', cap: 'mainModalCaption' },
+        luk:  { data: lukFacilities,  id: 'lukModal',  img: 'lukModalImage',  cap: 'lukModalCaption'  },
+        xanh: { data: xanhFacilities, id: 'xanhModal', img: 'xanhModalImage', cap: 'xanhModalCaption' },
+    }[type];
+}
+
+// ✅ Mở modal
 function openModal(index, type) {
     currentModalIndex = index;
-    const data = type === 'main' ? facilities : lukFacilities;
-    const modal = document.getElementById(type === 'main' ? 'mainModal' : 'lukModal');
-    document.getElementById(type === 'main' ? 'mainModalImage' : 'lukModalImage').src = data[index].image;
-    document.getElementById(type === 'main' ? 'mainModalCaption' : 'lukModalCaption').textContent = data[index].name;
-    modal.classList.add('active');
+    currentModalType = type;
+    const m = getModalEls(type);
+    document.getElementById(m.img).src = m.data[index].image;
+    document.getElementById(m.cap).textContent = m.data[index].name;
+    document.getElementById(m.id).classList.add('active');
     document.body.style.overflow = 'hidden';
 }
 
 function openLukModal() { openModal(0, 'luk'); }
 
+// ✅ Đóng modal
 function closeModal(type) {
-    document.getElementById(type === 'main' ? 'mainModal' : 'lukModal').classList.remove('active');
+    document.getElementById(getModalEls(type).id).classList.remove('active');
     document.body.style.overflow = 'auto';
 }
 
+// ✅ Điều hướng ảnh
 function navigateModal(dir, type) {
-    const data = type === 'main' ? facilities : lukFacilities;
-    currentModalIndex = (currentModalIndex + dir + data.length) % data.length;
-    document.getElementById(type === 'main' ? 'mainModalImage' : 'lukModalImage').src = data[currentModalIndex].image;
-    document.getElementById(type === 'main' ? 'mainModalCaption' : 'lukModalCaption').textContent = data[currentModalIndex].name;
+    const m = getModalEls(type);
+    currentModalIndex = (currentModalIndex + dir + m.data.length) % m.data.length;
+    document.getElementById(m.img).src = m.data[currentModalIndex].image;
+    document.getElementById(m.cap).textContent = m.data[currentModalIndex].name;
 }
 
+// ✅ Phím ESC đóng tất cả modal
 document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { closeModal('main'); closeModal('luk'); }
+    if (e.key === 'Escape') {
+        closeModal('main');
+        closeModal('luk');
+        closeModal('xanh');
+    }
 });
+
+// ✅ Click ngoài modal để đóng
 document.getElementById('mainModal').addEventListener('click', function(e) { if (e.target === this) closeModal('main'); });
-document.getElementById('lukModal').addEventListener('click', function(e) { if (e.target === this) closeModal('luk'); });
+document.getElementById('lukModal').addEventListener('click',  function(e) { if (e.target === this) closeModal('luk');  });
+document.getElementById('xanhModal').addEventListener('click', function(e) { if (e.target === this) closeModal('xanh'); });
 
 /* ── Scroll-triggered stagger animation ── */
 const observer = new IntersectionObserver((entries) => {
