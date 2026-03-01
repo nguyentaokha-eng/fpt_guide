@@ -511,7 +511,6 @@
                 </div>
             </div>
 
-            <!-- ✅ Card Không gian xanh — mở gallery xanh riêng -->
             <div class="bento-card" onclick="openModal(0, 'xanh')">
                 <img src="{% static 'image/facilities/khong-gian-xanh.jpg' %}" alt="Không gian xanh" class="bento-bg-image" onerror="this.style.display='none';this.parentElement.classList.add('no-image')">
                 <div class="bento-overlay"></div>
@@ -558,16 +557,16 @@
 
         </div>
 
-        <!-- LUK card -->
+        <!-- Dining Area card (formerly LUK) -->
         <div class="luk-card-wrap">
-            <div class="bento-card" id="lukCard" onclick="openLukModal()">
-                <img src="{% static 'image/luk/luk-cafe.jpg' %}" alt="LUK" class="bento-bg-image" onerror="this.style.display='none';this.parentElement.classList.add('no-image')">
+            <div class="bento-card" id="lukCard" onclick="openDiningModal()">
+                <img src="{% static 'image/luk/dining-1.ipg.jpg' %}" alt="Dining Area" class="bento-bg-image" onerror="this.style.display='none';this.parentElement.classList.add('no-image')">
                 <div class="bento-overlay"></div>
-                <span class="bento-icon">☕</span>
-                <span class="bento-category">Tiện ích</span>
+                <span class="bento-icon">🍽️</span>
+                <span class="bento-category">Ẩm thực</span>
                 <div class="bento-info">
-                    <div class="bento-name">LUK Facilities</div>
-                    <div class="bento-sub">Cafe · Solution · Room · Space</div>
+                    <div class="bento-name">Dining Area</div>
+                    <div class="bento-sub">Nhà hàng · Canteen · Café · Food Court</div>
                 </div>
             </div>
         </div>
@@ -654,18 +653,18 @@
     </div>
 </div>
 
-<!-- Modal LUK -->
-<div class="modal" id="lukModal">
+<!-- Modal Dining Area (formerly LUK) -->
+<div class="modal" id="diningModal">
     <div class="modal-content">
-        <button class="modal-close" onclick="closeModal('luk')">×</button>
-        <button class="modal-nav prev" onclick="navigateModal(-1,'luk')">‹</button>
-        <img src="" alt="" class="modal-image" id="lukModalImage">
-        <button class="modal-nav next" onclick="navigateModal(1,'luk')">›</button>
-        <div class="modal-caption" id="lukModalCaption"></div>
+        <button class="modal-close" onclick="closeModal('dining')">×</button>
+        <button class="modal-nav prev" onclick="navigateModal(-1,'dining')">‹</button>
+        <img src="" alt="" class="modal-image" id="diningModalImage">
+        <button class="modal-nav next" onclick="navigateModal(1,'dining')">›</button>
+        <div class="modal-caption" id="diningModalCaption"></div>
     </div>
 </div>
 
-<!-- ✅ Modal Không gian xanh (MỚI) -->
+<!-- Modal Không gian xanh -->
 <div class="modal" id="xanhModal">
     <div class="modal-content">
         <button class="modal-close" onclick="closeModal('xanh')">×</button>
@@ -688,14 +687,13 @@ const facilities = [
     { name: 'Studio',          image: '{% static "image/facilities/studio.jpg.jpg" %}' }
 ];
 
-const lukFacilities = [
-    { name: 'LUK Cafe',     image: '{% static "image/luk/luk-cafe.jpg" %}' },
-    { name: 'LUK Solution', image: '{% static "image/luk/luk-sollution.jpg" %}' },
-    { name: 'LUK Room',     image: '{% static "image/luk/luk-room.jpg" %}' },
-    { name: 'LUK Space',    image: '{% static "image/luk/luk.ipg.jpg" %}' }
+const diningFacilities = [
+    { name: 'Dining 1', image: '{% static "image/luk/dining-1.ipg.jpg" %}' },
+    { name: 'Dining 2', image: '{% static "image/luk/dining-2.ipg.jpg" %}' },
+    { name: 'Dining 3', image: '{% static "image/luk/dining-3.ipg.jpg" %}' },
+    { name: 'Dining 4', image: '{% static "image/luk/dining-4.ipg.jpg" %}' }
 ];
 
-// ✅ Gallery riêng cho Không gian xanh (4 ảnh)
 const xanhFacilities = [
     { name: 'Không gian xanh 1', image: '{% static "image/facilities/khong-gian-xanh.jpg" %}' },
     { name: 'Không gian xanh 2', image: '{% static "image/facilities/khong-gian-xanh1.jpg" %}' },
@@ -706,16 +704,14 @@ const xanhFacilities = [
 let currentModalIndex = 0;
 let currentModalType = 'main';
 
-// ✅ Hàm helper lấy config theo type
 function getModalEls(type) {
     return {
-        main: { data: facilities,     id: 'mainModal', img: 'mainModalImage', cap: 'mainModalCaption' },
-        luk:  { data: lukFacilities,  id: 'lukModal',  img: 'lukModalImage',  cap: 'lukModalCaption'  },
-        xanh: { data: xanhFacilities, id: 'xanhModal', img: 'xanhModalImage', cap: 'xanhModalCaption' },
+        main:   { data: facilities,       id: 'mainModal',   img: 'mainModalImage',   cap: 'mainModalCaption'   },
+        dining: { data: diningFacilities, id: 'diningModal', img: 'diningModalImage', cap: 'diningModalCaption' },
+        xanh:   { data: xanhFacilities,   id: 'xanhModal',   img: 'xanhModalImage',   cap: 'xanhModalCaption'   },
     }[type];
 }
 
-// ✅ Mở modal
 function openModal(index, type) {
     currentModalIndex = index;
     currentModalType = type;
@@ -726,15 +722,13 @@ function openModal(index, type) {
     document.body.style.overflow = 'hidden';
 }
 
-function openLukModal() { openModal(0, 'luk'); }
+function openDiningModal() { openModal(0, 'dining'); }
 
-// ✅ Đóng modal
 function closeModal(type) {
     document.getElementById(getModalEls(type).id).classList.remove('active');
     document.body.style.overflow = 'auto';
 }
 
-// ✅ Điều hướng ảnh
 function navigateModal(dir, type) {
     const m = getModalEls(type);
     currentModalIndex = (currentModalIndex + dir + m.data.length) % m.data.length;
@@ -742,21 +736,19 @@ function navigateModal(dir, type) {
     document.getElementById(m.cap).textContent = m.data[currentModalIndex].name;
 }
 
-// ✅ Phím ESC đóng tất cả modal
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
         closeModal('main');
-        closeModal('luk');
+        closeModal('dining');
         closeModal('xanh');
     }
 });
 
-// ✅ Click ngoài modal để đóng
-document.getElementById('mainModal').addEventListener('click', function(e) { if (e.target === this) closeModal('main'); });
-document.getElementById('lukModal').addEventListener('click',  function(e) { if (e.target === this) closeModal('luk');  });
-document.getElementById('xanhModal').addEventListener('click', function(e) { if (e.target === this) closeModal('xanh'); });
+document.getElementById('mainModal').addEventListener('click',   function(e) { if (e.target === this) closeModal('main');   });
+document.getElementById('diningModal').addEventListener('click', function(e) { if (e.target === this) closeModal('dining'); });
+document.getElementById('xanhModal').addEventListener('click',   function(e) { if (e.target === this) closeModal('xanh');   });
 
-/* ── Scroll-triggered stagger animation ── */
+/* Scroll-triggered stagger animation */
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -771,7 +763,6 @@ const observer = new IntersectionObserver((entries) => {
 
 observer.observe(document.getElementById('bentoGrid'));
 
-/* LUK card separate observer */
 const lukObs = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
