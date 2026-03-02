@@ -253,31 +253,38 @@ def recalculate_place_ratings(place):
     comments = place.comments.all()
     total = comments.count()
     
+    # Get or create the linked Restaurant
+    restaurant = place.restaurant
+    if not restaurant:
+        restaurant = Restaurant.objects.create(name=place.name)
+        place.restaurant = restaurant
+        place.save()
+    
     if total == 0:
-        place.price_avg = 0
-        place.quality_avg = 0
-        place.service_avg = 0
-        place.space_avg = 0
-        place.overall_score = 0
-        place.total_reviews = 0
+        restaurant.price_avg = 0
+        restaurant.quality_avg = 0
+        restaurant.service_avg = 0
+        restaurant.space_avg = 0
+        restaurant.overall_score = 0
+        restaurant.total_reviews = 0
     else:
         price_sum = sum(c.price for c in comments)
         quality_sum = sum(c.quality for c in comments)
         service_sum = sum(c.service for c in comments)
         space_sum = sum(c.space for c in comments)
         
-        place.price_avg = round(price_sum / total, 1)
-        place.quality_avg = round(quality_sum / total, 1)
-        place.service_avg = round(service_sum / total, 1)
-        place.space_avg = round(space_sum / total, 1)
-        place.total_reviews = total
+        restaurant.price_avg = round(price_sum / total, 1)
+        restaurant.quality_avg = round(quality_sum / total, 1)
+        restaurant.service_avg = round(service_sum / total, 1)
+        restaurant.space_avg = round(space_sum / total, 1)
+        restaurant.total_reviews = total
         
         # Overall score is average of the 4 category averages
-        place.overall_score = round(
-            (place.price_avg + place.quality_avg + place.service_avg + place.space_avg) / 4, 1
+        restaurant.overall_score = round(
+            (restaurant.price_avg + restaurant.quality_avg + restaurant.service_avg + restaurant.space_avg) / 4, 1
         )
     
-    place.save()
+    restaurant.save()
 
 
 def post_comment(request, place_id):
@@ -404,15 +411,32 @@ def get_places(request):
     
     data = []
     for p in places:
+        # Get ratings from Restaurant if linked, otherwise 0
+        restaurant = p.restaurant
+        if restaurant:
+            price_avg = restaurant.price_avg
+            quality_avg = restaurant.quality_avg
+            service_avg = restaurant.service_avg
+            space_avg = restaurant.space_avg
+            overall_score = restaurant.overall_score
+            total_reviews = restaurant.total_reviews
+        else:
+            price_avg = 0
+            quality_avg = 0
+            service_avg = 0
+            space_avg = 0
+            overall_score = 0
+            total_reviews = 0
+            
         data.append({
             "id": p.id,
             "name": p.name,
-            "price_avg": p.price_avg,
-            "quality_avg": p.quality_avg,
-            "service_avg": p.service_avg,
-            "space_avg": p.space_avg,
-            "overall_score": p.overall_score,
-            "total_reviews": p.total_reviews,
+            "price_avg": price_avg,
+            "quality_avg": quality_avg,
+            "service_avg": service_avg,
+            "space_avg": space_avg,
+            "overall_score": overall_score,
+            "total_reviews": total_reviews,
             "comments_count": p.comments.count(),
             "restaurant_id": p.restaurant_id if p.restaurant else None,
         })

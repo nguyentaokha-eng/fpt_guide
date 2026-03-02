@@ -1,9 +1,44 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+
+<!-- ================= PREMIUM BACKGROUND ================= -->
+<div class="premium-bg">
+    <div class="mesh-layer"></div>
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+    <div class="vignette"></div>
+</div>
+
 <style>
+/* ============================================================
+   PREMIUM UNIVERSITY BACKGROUND
+   ============================================================ */
+.premium-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    background: linear-gradient(135deg, #dde8ff 0%, #e8deff 30%, #f0e6ff 55%, #daeaf8 80%, #e4dcf8 100%);
+}
+.mesh-layer {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+}
+.shape { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.4; }
+.shape-1 { width: 400px; height: 400px; background: #b4a5ff; top: -100px; left: -100px; animation: float 20s ease-in-out infinite; }
+.shape-2 { width: 300px; height: 300px; background: #7db8ff; bottom: -50px; right: -50px; animation: float 25s ease-in-out infinite reverse; }
+.shape-3 { width: 200px; height: 200px; background: #d4b8ff; top: 50%; right: 20%; animation: float 18s ease-in-out infinite; }
+.shape-4 { width: 150px; height: 150px; background: #a8d4ff; bottom: 20%; left: 10%; animation: float 22s ease-in-out infinite reverse; }
+.vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.05) 100%); }
+@keyframes float { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(10px, 10px); } 50% { transform: translate(0, 20px); } 75% { transform: translate(-10px, 10px); } }
+
     /* ===== BASE STYLES ===== */
-    body { background: #f9fafb; color: #1f2937; }
+    body { background: transparent; color: #1f2937; }
     .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
     
     /* ===== PIXEL TITLE ===== */
@@ -869,6 +904,77 @@
 </div>
 
 <script>
+// Static URL for images
+const STATIC_URL = "{% static '' %}";
+
+// Store for backend data
+let backendLivingPlaces = [];
+
+// Load living places from backend API
+async function loadLivingPlacesFromAPI() {
+    try {
+        const response = await fetch('/api/living-places/');
+        if (response.ok) {
+            const data = await response.json();
+            if (data.length > 0) {
+                backendLivingPlaces = data;
+                return true;
+            }
+        }
+    } catch (e) {
+        console.log('Using static data (API not available)');
+    }
+    return false;
+}
+
+// Convert backend place data to display format
+function convertLivingPlaceData(place) {
+    // Use place ID for image number (e.g., id 1 = living/1.jpg, id 10 = living/10.jpg)
+    const imgNum = place.id || 1;
+    return {
+        id: place.id,
+        name: place.name,
+        address: place.address || '',
+        distance: place.distance || '',
+        type: place.type || "phongtro",
+        price: place.price || "0",
+        areaValue: place.area || "0",
+        capacity: place.capacity || "1-2 nguoi",
+        keywords: place.keywords || [place.name.toLowerCase()],
+        tags: place.tags || ["Phong tro"],
+        amenities: place.amenities || [],
+        photos: {
+            place: [STATIC_URL + "image/living/" + imgNum + ".jpg"]
+        },
+        description: place.description || place.name,
+        ratings: [],
+        reviews: []
+    };
+}
+
+// Calculate average ratings from comments
+function calculateLivingRatingsFromComments(comments) {
+    if (!comments || comments.length === 0) {
+        return { price: 0, location: 0, amenity: 0, security: 0 };
+    }
+    
+    let price = 0, location = 0, amenity = 0, security = 0;
+    comments.forEach(c => {
+        price += c.ratings ? c.ratings.price || 0 : 0;
+        location += c.ratings ? c.ratings.location || 0 : 0;
+        amenity += c.ratings ? c.ratings.amenity || 0 : 0;
+        security += c.ratings ? c.ratings.security || 0 : 0;
+    });
+    
+    const len = comments.length;
+    return {
+        price: Math.round(price / len * 10) / 10,
+        location: Math.round(location / len * 10) / 10,
+        amenity: Math.round(amenity / len * 10) / 10,
+        security: Math.round(security / len * 10) / 10
+    };
+}
+
 // Place data with ratings starting at 0
 const DATA = [
     {
@@ -1090,22 +1196,38 @@ function render() {
     
     container.innerHTML = "";
     
-    let filtered = DATA.filter(p => {
-        if (activeFilter !== 'all') {
-            if (activeFilter === 'KTX' && p.type !== 'KTX') return false;
-            if (activeFilter === 'phongtro' && p.type !== 'phongtro') return false;
-            if (activeFilter === 'nha nguyen can' && p.type !== 'nha nguyen can') return false;
-            if (['quantrum', 'nguhanhson', 'hoakhue'].includes(activeFilter)) {
-                if (!p.address.toLowerCase().includes(activeFilter === 'quantrum' ? 'thanh' : activeFilter === 'nguhanhson' ? 'ngũ' : 'hòa')) return false;
+    let filtered = [];
+    
+    // Only search static DATA
+    filtered = DATA
+        .map(p => {
+            let score = 0;
+            if (p.name.toLowerCase().includes(q)) score += 10;
+            if (p.address.toLowerCase().includes(q)) score += 8;
+            // Get individual words from query for partial matching
+            const queryWords = q.toLowerCase().split(/\s+/).filter(w => w.length > 1);
+            p.tags.forEach(t => { 
+                const tagLower = t.toLowerCase();
+                if(q.includes(tagLower) || tagLower.includes(q) || queryWords.some(w => tagLower.includes(w))) score += 3; 
+            });
+            p.keywords.forEach(k => { 
+                const kwLower = k.toLowerCase();
+                if(q.includes(kwLower) || kwLower.includes(q) || queryWords.some(w => kwLower.includes(w))) score += 5; 
+            });
+            return { ...p, score };
+        })
+        .filter(p => {
+            if (activeFilter !== 'all') {
+                if (activeFilter === 'KTX' && p.type !== 'KTX') return false;
+                if (activeFilter === 'phongtro' && p.type !== 'phongtro') return false;
+                if (activeFilter === 'nha nguyen can' && p.type !== 'nha nguyen can') return false;
+                if (['quantrum', 'nguhanhson', 'hoakhue'].includes(activeFilter)) {
+                    if (!p.address.toLowerCase().includes(activeFilter === 'quantrum' ? 'thanh' : activeFilter === 'nguhanhson' ? 'ngũ' : 'hòa')) return false;
+                }
             }
-        }
-        
-        if (!q) return true;
-        return p.name.toLowerCase().includes(q) ||
-               p.address.toLowerCase().includes(q) ||
-               p.tags.some(t => q.includes(t.toLowerCase())) ||
-               p.keywords.some(k => q.includes(k));
-    });
+            return p.score > 0;
+        })
+        .sort((a, b) => b.score - a.score);
     
     console.log('Filtered count:', filtered.length);
     
@@ -1123,9 +1245,28 @@ function render() {
     }
     
     filtered.forEach(p => {
-        const a = avg(p);
-        const overall = ((a.price + a.location + a.amenity + a.security) / 4).toFixed(1);
-        const reviewCount = p.reviews.length;
+        let a = avg(p);
+        let overall = "0.0";
+        let reviewCount = 0;
+        
+        // Use backend data ratings if available
+        if (backendLivingPlaces.length > 0) {
+            const backendPlace = backendLivingPlaces.find(bp => bp.id === p.id);
+            if (backendPlace) {
+                overall = (backendPlace.overall_score || 0).toFixed(1);
+                reviewCount = backendPlace.total_reviews || 0;
+                a = {
+                    price: backendPlace.price_avg || 0,
+                    location: backendPlace.location_avg || 0,
+                    amenity: backendPlace.amenity_avg || 0,
+                    security: backendPlace.security_avg || 0
+                };
+            }
+        } else if (p.reviews && p.reviews.length > 0) {
+            overall = ((a.price + a.location + a.amenity + a.security) / 4).toFixed(1);
+            reviewCount = p.reviews.length;
+        }
+        
         const imgSrc = p.photos.place[0] || '';
         
         container.innerHTML += `
@@ -1248,6 +1389,8 @@ function updateSlider(type) {
 }
 
 function zoomImage(src) {
+    // Replace 'living' folder with 'overliving' for overlay images
+    src = src.replace('/living/', '/overliving/');
     document.getElementById('zoomImg').src = src;
     document.getElementById('zoomOverlay').classList.add('active');
 }
@@ -1290,6 +1433,7 @@ function submitReview() {
             document.getElementById("cText").value = "";
             document.getElementById("cImages").value = "";
             loadReviews(currentId);
+            render(); // Refresh the main grid to show updated ratings
             toggleReviewForm();
         } else {
             alert("Lỗi: " + (d.error || ""));
@@ -1344,6 +1488,21 @@ function loadReviews(id) {
             p.reviews = data;
             p.ratings = data.map(c => c.ratings);
         }
+        
+        // Update backend data with new ratings
+        if (backendLivingPlaces.length > 0) {
+            const backendPlace = backendLivingPlaces.find(bp => bp.id === id);
+            if (backendPlace) {
+                const ratings = calculateLivingRatingsFromComments(data);
+                backendPlace.total_reviews = data.length;
+                backendPlace.price_avg = ratings.price;
+                backendPlace.location_avg = ratings.location;
+                backendPlace.amenity_avg = ratings.amenity;
+                backendPlace.security_avg = ratings.security;
+                backendPlace.overall_score = (ratings.price + ratings.location + ratings.amenity + ratings.security) / 4;
+            }
+        }
+        
         renderReviews(data);
         document.getElementById('reviewCount').innerText = data.length;
         // Refresh the main page to show updated ratings
@@ -1393,8 +1552,12 @@ document.getElementById('costModal').onclick = function(e) {
 // Search listener
 document.getElementById('search').oninput = render;
 
-// Initial render
-render();
+// Initial render - load from API first
+async function init() {
+    await loadLivingPlacesFromAPI();
+    render();
+}
+init();
 console.log('Page loaded successfully');
 </script>
 

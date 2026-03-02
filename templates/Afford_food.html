@@ -1,9 +1,44 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+
+<!-- ================= PREMIUM BACKGROUND ================= -->
+<div class="premium-bg">
+    <div class="mesh-layer"></div>
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+    <div class="vignette"></div>
+</div>
+
 <style>
+/* ============================================================
+   PREMIUM UNIVERSITY BACKGROUND
+   ============================================================ */
+.premium-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    background: linear-gradient(135deg, #dde8ff 0%, #e8deff 30%, #f0e6ff 55%, #daeaf8 80%, #e4dcf8 100%);
+}
+.mesh-layer {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+}
+.shape { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.4; }
+.shape-1 { width: 400px; height: 400px; background: #b4a5ff; top: -100px; left: -100px; animation: float 20s ease-in-out infinite; }
+.shape-2 { width: 300px; height: 300px; background: #7db8ff; bottom: -50px; right: -50px; animation: float 25s ease-in-out infinite reverse; }
+.shape-3 { width: 200px; height: 200px; background: #d4b8ff; top: 50%; right: 20%; animation: float 18s ease-in-out infinite; }
+.shape-4 { width: 150px; height: 150px; background: #a8d4ff; bottom: 20%; left: 10%; animation: float 22s ease-in-out infinite reverse; }
+.vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.05) 100%); }
+@keyframes float { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(10px, 10px); } 50% { transform: translate(0, 20px); } 75% { transform: translate(-10px, 10px); } }
+
     /* ===== BASE STYLES ===== */
-    body { background: #f9fafb; color: #1f2937; }
+    body { background: transparent; color: #1f2937; }
     .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
     
     /* ===== PIXEL TITLE ===== */
@@ -575,9 +610,9 @@ const SAMPLE_DATA = [
     {
         id: 1,
         name: "Quán cơm cô Đẹp",
-        map: "https://maps.google.com/?q=Ngã tư Nam Kỳ Khởi Nghĩa",
+        map: "https://maps.app.goo.gl/vkajrqDqAZG8D9t8A",
         tags: ["Cơm", "Rẻ", "No"],
-        keywords: ["cơm gà xé", "cơm gà chiên", "cơm sườn", "cơm trưa rẻ"],
+        keywords: ["cơm gà", "cơm sườn", "cơm trưa", "rẻ"],
         photos: {
             place: ["{% static 'image/food/1.jpg' %}"]
         },
@@ -587,11 +622,11 @@ const SAMPLE_DATA = [
     {
         id: 2,
         name: "Poonbo",
-        map: "https://maps.google.com/?q=247 Trần Đại Nghĩa",
+        map: "https://maps.app.goo.gl/7mbjpoYcb62ZKBpK8",
         tags: ["Ăn vặt", "Mỳ cay", "Đồ nướng"],
         keywords: ["mỳ cay trứng ốp la", "cá viên", "bún đậu", "đồ chiên", "gỏi"],
         photos: {
-            place: ["{% static 'image/food/4.jpg' %}"]
+            place: ["{% static 'image/food/2.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -599,11 +634,11 @@ const SAMPLE_DATA = [
     {
         id: 3,
         name: "Túc Tắc (Trần Nhân Tông)",
-        map: "https://maps.google.com/?q=224 Trần Nhân Tông",
+        map: "https://maps.app.goo.gl/8qdJfo1xhrmJb4Wd9",
         tags: ["Trà sữa", "Nước uống", "Chill"],
         keywords: ["trà sữa", "trà trái cây", "trà đào"],
         photos: {
-            place: ["{% static 'image/food/5.jpg' %}"]
+            place: ["{% static 'image/food/3.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -611,11 +646,11 @@ const SAMPLE_DATA = [
     {
         id: 4,
         name: "Cơm tấm Family",
-        map: "https://maps.google.com/?q=Bên hông trường Cao Đẳng Du lịch",
+        map: "https://maps.app.goo.gl/cf3XyoMXgs6zLDzN6",
         tags: ["Cơm tấm", "Cơm sườn", "No"],
         keywords: ["cơm tấm sườn", "cơm món", "cơm bình dân"],
         photos: {
-            place: ["{% static 'image/food/6.jpg' %}"]
+            place: ["{% static 'image/food/4.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -623,11 +658,11 @@ const SAMPLE_DATA = [
     {
         id: 5,
         name: "Bún đậu Ông Chú",
-        map: "https://maps.google.com/?q=70 Lê Thiện Trị",
+        map: "https://maps.app.goo.gl/qfn8GU8MWZhTJPj86",
         tags: ["Bún đậu", "Món Việt", "Nhóm"],
         keywords: ["bún đậu mắm tôm", "ram cuốn cải", "bún mắm", "bánh tráng thịt heo"],
         photos: {
-            place: ["{% static 'image/food/7.jpg' %}"]
+            place: ["{% static 'image/food/5.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -635,11 +670,11 @@ const SAMPLE_DATA = [
     {
         id: 6,
         name: "Gà rán Hàn Quốc Heemang",
-        map: "https://maps.google.com/?q=358A Trần Đại Nghĩa",
+        map: "https://maps.app.goo.gl/9qxtnLwvBJDMrFri8",
         tags: ["Gà rán", "Đồ Hàn", "Mỳ cay"],
         keywords: ["gà sốt Hàn", "set gà S 75k", "mì tương đen 59k", "tokbokki"],
         photos: {
-            place: ["{% static 'image/food/8.jpg' %}"]
+            place: ["{% static 'image/food/6.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -647,11 +682,11 @@ const SAMPLE_DATA = [
     {
         id: 7,
         name: "Mỳ Quảng 37",
-        map: "https://maps.google.com/?q=364 Trần Đại Nghĩa",
+        map: "https://maps.app.goo.gl/XLsV6nKPiT868xws9",
         tags: ["Mỳ quảng", "Miền Trung", "Sáng"],
         keywords: ["mỳ quảng gà", "mỳ quảng tôm thịt"],
         photos: {
-            place: ["{% static 'image/food/9.jpg' %}"]
+            place: ["{% static 'image/food/7.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -659,11 +694,11 @@ const SAMPLE_DATA = [
     {
         id: 8,
         name: "Tiệm ăn Hàn Quốc Mishin",
-        map: "https://maps.google.com/?q=356B Trần Đại Nghĩa",
+        map: "https://maps.app.goo.gl/JmL5g3WyKqAbh9MC7",
         tags: ["Đồ Hàn", "Mỳ cay", "Cơm trộn"],
         keywords: ["mì tương đen", "tokbokki", "mandu", "gà rán"],
         photos: {
-            place: ["{% static 'image/food/10.jpg' %}"]
+            place: ["{% static 'image/food/8.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -671,11 +706,11 @@ const SAMPLE_DATA = [
     {
         id: 9,
         name: "Tiệm của Chuột",
-        map: "https://maps.google.com/?q=374 Trần Đại Nghĩa",
+        map: "https://maps.app.goo.gl/eb1mEkfAQADqkJpy7",
         tags: ["Ăn vặt", "Bún đậu", "Mỳ cay"],
         keywords: ["gỏi cuốn", "ram cuốn cải", "bánh tráng trộn"],
         photos: {
-            place: ["{% static 'image/food/1.jpg' %}"]
+            place: ["{% static 'image/food/9.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -683,93 +718,9 @@ const SAMPLE_DATA = [
     {
         id: 10,
         name: "Bông Food & Drink",
-        map: "https://maps.google.com/?q=306 Trần Đại Nghĩa",
+        map: "https://maps.app.goo.gl/bUz3dupoDtT7grnd9",
         tags: ["Trà sữa", "Ăn vặt", "Nước uống"],
         keywords: ["trà sữa", "trà", "đồ ăn vặt"],
-        photos: {
-            place: ["{% static 'image/food/2.jpg' %}"]
-        },
-        ratings: [],
-        comments: []
-    },
-    {
-        id: 11,
-        name: "Chicken Plus",
-        map: "https://maps.google.com/?q=291 Trần Đại Nghĩa",
-        tags: ["Gà rán", "Đồ chiên", "Nhóm"],
-        keywords: ["đùi gà truyền thống 65k/2 cái", "mì ý", "cơm gà sốt"],
-        photos: {
-            place: ["{% static 'image/food/4.jpg' %}"]
-        },
-        ratings: [],
-        comments: []
-    },
-    {
-        id: 12,
-        name: "Bánh canh cá lóc Huế - Hà Huế",
-        map: "https://maps.google.com/?q=148 Trần Đại Nghĩa",
-        tags: ["Bánh canh", "Huế", "Sáng"],
-        keywords: ["bánh canh cá lóc", "bánh canh chả cua", "bánh canh xương"],
-        photos: {
-            place: ["{% static 'image/food/5.jpg' %}"]
-        },
-        ratings: [],
-        comments: []
-    },
-    {
-        id: 13,
-        name: "Bún đậu 1996 (CS1)",
-        map: "https://maps.google.com/?q=358 Trần Đại Nghĩa",
-        tags: ["Bún đậu", "Ăn vặt", "Mỳ cay"],
-        keywords: ["chân gà sốt Thái", "trà sữa", "đồ chiên"],
-        photos: {
-            place: ["{% static 'image/food/6.jpg' %}"]
-        },
-        ratings: [],
-        comments: []
-    },
-    {
-        id: 14,
-        name: "Bún đậu 1996 (CS2)",
-        map: "https://maps.google.com/?q=283 Trần Đại Nghĩa",
-        tags: ["Bún đậu", "No"],
-        keywords: ["bún đậu 1 người 35k", "mì cay 25k"],
-        photos: {
-            place: ["{% static 'image/food/7.jpg' %}"]
-        },
-        ratings: [],
-        comments: []
-    },
-    {
-        id: 15,
-        name: "Nẫu Cuốn - Bánh cuốn Tây Sơn",
-        map: "https://maps.google.com/?q=01 Huỳnh Lắm",
-        tags: ["Món cuốn", "Nhẹ", "Việt"],
-        keywords: ["gỏi cuốn thịt", "bánh hỏi nem chả", "thịt nướng"],
-        photos: {
-            place: ["{% static 'image/food/8.jpg' %}"]
-        },
-        ratings: [],
-        comments: []
-    },
-    {
-        id: 16,
-        name: "Gà ủ muối Đũm Rôpe",
-        map: "https://maps.google.com/?q=Đường Lê Đỉnh",
-        tags: ["Gà ủ muối", "Nhóm", "Đặc sản"],
-        keywords: ["chân gà trứng non", "cháo nghêu", "cháo ếch Singapore"],
-        photos: {
-            place: ["{% static 'image/food/9.jpg' %}"]
-        },
-        ratings: [],
-        comments: []
-    },
-    {
-        id: 17,
-        name: "Bếp nhà Hạ Ny",
-        map: "https://maps.google.com/?q=287 Trần Đại Nghĩa",
-        tags: ["Ăn vặt", "Gà rán", "Hàn"],
-        keywords: ["kimbap", "mandu", "nem chua rán", "gà viên"],
         photos: {
             place: ["{% static 'image/food/10.jpg' %}"]
         },
@@ -777,13 +728,97 @@ const SAMPLE_DATA = [
         comments: []
     },
     {
+        id: 11,
+        name: "Chicken Plus",
+        map: "https://maps.app.goo.gl/3LhLu69ZMcmCXKK9A",
+        tags: ["Gà rán", "Đồ chiên", "Nhóm"],
+        keywords: ["đùi gà truyền thống 65k/2 cái", "mì ý", "cơm gà sốt"],
+        photos: {
+            place: ["{% static 'image/food/11.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 12,
+        name: "Bánh canh cá lóc Huế - Hà Huế",
+        map: "https://maps.app.goo.gl/AkAzcUuT7HksUy6G7",
+        tags: ["Bánh canh", "Huế", "Sáng"],
+        keywords: ["bánh canh cá lóc", "bánh canh chả cua", "bánh canh xương"],
+        photos: {
+            place: ["{% static 'image/food/12.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 13,
+        name: "Bún đậu 1996 (CS1)",
+        map: "https://maps.app.goo.gl/2ZBz5q7KnXr51jSf6",
+        tags: ["Bún đậu", "Ăn vặt", "Mỳ cay"],
+        keywords: ["chân gà sốt Thái", "trà sữa", "đồ chiên"],
+        photos: {
+            place: ["{% static 'image/food/13.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 14,
+        name: "Bún đậu 1996 (CS2)",
+        map: "https://maps.app.goo.gl/KtamaHa7tpa8mvq39",
+        tags: ["Bún đậu", "No"],
+        keywords: ["bún đậu 1 người 35k", "mì cay 25k"],
+        photos: {
+            place: ["{% static 'image/food/14.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 15,
+        name: "Nẫu Cuốn - Bánh cuốn Tây Sơn",
+        map: "https://maps.app.goo.gl/9GzSEFNRwKst5GaW9",
+        tags: ["Món cuốn", "Nhẹ", "Việt"],
+        keywords: ["gỏi cuốn thịt", "bánh hỏi nem chả", "thịt nướng"],
+        photos: {
+            place: ["{% static 'image/food/15.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 16,
+        name: "Gà ủ muối Đũm Rôpe",
+        map: "https://shopeefood.vn/quang-nam/tiem-an-vat-ga-u-muoi-nem-chua-ran-dum-rope",
+        tags: ["Gà ủ muối", "Nhóm", "Đặc sản"],
+        keywords: ["chân gà trứng non", "cháo nghêu", "cháo ếch Singapore"],
+        photos: {
+            place: ["{% static 'image/food/16.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
+        id: 17,
+        name: "Bếp nhà Hạ Ny",
+        map: "https://maps.app.goo.gl/8fcuZZgkjjgaNryu5",
+        tags: ["Ăn vặt", "Gà rán", "Hàn"],
+        keywords: ["kimbap", "mandu", "nem chua rán", "gà viên"],
+        photos: {
+            place: ["{% static 'image/food/17.jpg' %}"]
+        },
+        ratings: [],
+        comments: []
+    },
+    {
         id: 18,
         name: "Gà rán Hàn Quốc Gamori",
-        map: "https://maps.google.com/?q=469 Mai Đăng Chơn",
+        map: "https://maps.app.goo.gl/tMLaSMqBFNy68UwF9",
         tags: ["Gà rán", "Hàn", "Sinh viên"],
         keywords: ["gà lắc sốt", "tokbokki", "cơm gà sốt"],
         photos: {
-            place: ["{% static 'image/food/1.jpg' %}"]
+            place: ["{% static 'image/food/18.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -791,11 +826,11 @@ const SAMPLE_DATA = [
     {
         id: 19,
         name: "Ăn vặt Vi Khương",
-        map: "https://maps.google.com/?q=450 Trần Đại Nghĩa",
+        map: "https://maps.app.goo.gl/KVAriWhNVbH6oDRc8",
         tags: ["Ăn vặt", "Nhóm"],
         keywords: ["đồ ăn vặt các loại"],
         photos: {
-            place: ["{% static 'image/food/2.jpg' %}"]
+            place: ["{% static 'image/food/19.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -803,11 +838,11 @@ const SAMPLE_DATA = [
     {
         id: 20,
         name: "Cơm gà mắm tỏi 33",
-        map: "https://maps.google.com/?q=478 Trần Đại Nghĩa",
+        map: "https://shopeefood.vn/da-nang/com-ga-mam-toi-33-478-tran-dai-nghia",
         tags: ["Cơm gà", "Cơm món", "No"],
         keywords: ["cơm gà xối mỡ", "cơm gà mắm tỏi", "tôm rim", "bò lá lốt"],
         photos: {
-            place: ["{% static 'image/food/4.jpg' %}"]
+            place: ["{% static 'image/food/20.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -815,11 +850,11 @@ const SAMPLE_DATA = [
     {
         id: 21,
         name: "Bún đậu Đòn Đẻn",
-        map: "https://maps.google.com/?q=448 Trần Đại Nghĩa",
+        map: "https://maps.app.goo.gl/NLD3Mi7AJ1VpP5Gv9",
         tags: ["Bún đậu", "No"],
         keywords: ["bún đậu 35k", "mì cay 25k"],
         photos: {
-            place: ["{% static 'image/food/5.jpg' %}"]
+            place: ["{% static 'image/food/21.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -827,11 +862,11 @@ const SAMPLE_DATA = [
     {
         id: 22,
         name: "Trà sữa Chu Cha",
-        map: "https://maps.google.com/?q=500 Trần Hưng Đạo",
+        map: "https://maps.app.goo.gl/iuytszRFobg4oztn6",
         tags: ["Trà sữa", "Nước uống"],
         keywords: ["trà sữa 25-37k"],
         photos: {
-            place: ["{% static 'image/food/6.jpg' %}"]
+            place: ["{% static 'image/food/22.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -839,11 +874,11 @@ const SAMPLE_DATA = [
     {
         id: 23,
         name: "Vita Cafe & Juice",
-        map: "https://maps.google.com/?q=371 Trần Hưng Đạo",
+        map: "https://maps.app.goo.gl/QynQHjjMfzdAS3aL7",
         tags: ["Cafe", "Trà sữa", "Nước ép"],
         keywords: ["cà phê", "trà sữa 18-35k"],
         photos: {
-            place: ["{% static 'image/food/7.jpg' %}"]
+            place: ["{% static 'image/food/23.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -851,11 +886,11 @@ const SAMPLE_DATA = [
     {
         id: 24,
         name: "Mixue",
-        map: "https://maps.google.com/?q=67 Lê Thiện Trị",
+        map: "https://maps.app.goo.gl/dKisxKtfx6cgeuhc8",
         tags: ["Trà sữa", "Kem", "Rẻ"],
         keywords: ["kem 10k", "trà sữa 10-30k"],
         photos: {
-            place: ["{% static 'image/food/8.jpg' %}"]
+            place: ["{% static 'image/food/24.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -863,11 +898,11 @@ const SAMPLE_DATA = [
     {
         id: 25,
         name: "Túc Tắc Tea (Huỳnh Văn Nghệ)",
-        map: "https://maps.google.com/?q=76 Huỳnh Văn Nghệ",
+        map: "https://maps.app.goo.gl/X8CR3BGR9ZK3RTXh9",
         tags: ["Trà sữa", "Trà trái cây"],
         keywords: ["trà sữa 24k+", "nước uống sinh viên"],
         photos: {
-            place: ["{% static 'image/food/9.jpg' %}"]
+            place: ["{% static 'image/food/25.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -896,14 +931,19 @@ async function loadPlacesFromAPI() {
 
 // Convert backend place data to display format
 function convertPlaceData(place) {
+    // Use place ID for image number (e.g., id 1 = food/1.jpg, id 25 = food/25.jpg)
+    const imgNum = place.id || 1;
+    // Try to get map from backend, otherwise fall back to SAMPLE_DATA
+    const samplePlace = SAMPLE_DATA.find(s => s.id === place.id);
+    const mapUrl = place.map || (samplePlace ? samplePlace.map : "https://maps.google.com");
     return {
         id: place.id,
         name: place.name,
-        map: "https://maps.google.com",
-        tags: ["Ăn uống", "FPT"],
-        keywords: ["food", place.name.toLowerCase()],
+        map: mapUrl,
+        tags: place.tags || ["Ăn uống", "FPT"],
+        keywords: place.keywords || ["food", place.name.toLowerCase()],
         photos: {
-            place: ["{% static 'image/food/1.jpg' %}"]
+            place: [STATIC_URL + "image/food/" + imgNum + ".jpg"]
         },
         ratings: [],
         comments: []
@@ -951,21 +991,25 @@ function render() {
     
     let placesToRender = [];
     
-    if (backendPlaces.length > 0) {
-        placesToRender = backendPlaces
-            .filter(p => {
-                if (!q) return true;
-                return p.name.toLowerCase().includes(q);
-            })
-            .map(convertPlaceData);
-    } else {
-        placesToRender = SAMPLE_DATA.filter(p => {
-            if (!q) return true;
-            return p.name.toLowerCase().includes(q) ||
-                   p.tags.some(t => q.includes(t.toLowerCase())) ||
-                   p.keywords.some(k => q.includes(k));
-        });
-    }
+    // Only search SAMPLE_DATA (static data)
+    placesToRender = SAMPLE_DATA
+        .map(p => {
+            let score = 0;
+            if (p.name.toLowerCase().includes(q)) score += 10;
+            // Get individual words from query for partial matching
+            const queryWords = q.toLowerCase().split(/\s+/).filter(w => w.length > 1);
+            p.tags.forEach(t => { 
+                const tagLower = t.toLowerCase();
+                if(q.includes(tagLower) || tagLower.includes(q) || queryWords.some(w => tagLower.includes(w))) score += 3; 
+            });
+            p.keywords.forEach(k => { 
+                const kwLower = k.toLowerCase();
+                if(q.includes(kwLower) || kwLower.includes(q) || queryWords.some(w => kwLower.includes(w))) score += 5; 
+            });
+            return { ...p, score };
+        })
+        .filter(p => p.score > 0)
+        .sort((a, b) => b.score - a.score);
     
     placesToRender.forEach(p => {
         let a = {price: 0, quality: 0, service: 0, space: 0};
@@ -1052,7 +1096,7 @@ async function openDetail(id) {
     }
     
     document.getElementById('dName').innerText = p.name;
-    document.getElementById('dMap').href = p.map;
+    document.getElementById('dMap').href = p.map || "https://maps.google.com";
     document.getElementById('dOverall').innerText = overall + "/10";
     document.getElementById('sPrice').innerText = a.price.toFixed(1);
     document.getElementById('sQuality').innerText = a.quality.toFixed(1);
@@ -1124,6 +1168,8 @@ function updateSlider(type) {
 }
 
 function zoomImage(src) {
+    // Replace 'food' folder with 'overfood' for overlay images
+    src = src.replace('/food/', '/overfood/');
     document.getElementById('zoomImg').src = src;
     document.getElementById('zoomOverlay').classList.add('active');
 }
@@ -1166,6 +1212,7 @@ function submitComment() {
             document.getElementById("cText").value = "";
             document.getElementById("cImages").value = "";
             loadComments(currentPlaceId);
+            render(); // Refresh the main grid to show updated ratings
             toggleReviewForm();
         } else {
             alert("Lỗi: " + (d.error || ""));
