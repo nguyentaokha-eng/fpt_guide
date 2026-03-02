@@ -13,6 +13,13 @@
 </div>
 
 <style>
+    body {
+        background: linear-gradient(145deg, #f5f7ff 0%, #ede8ff 35%, #f8f0ff 65%, #e8f4ff 100%) !important;
+    }
+    .navbar {
+    background: transparent !important;
+}
+    
 /* ============================================================
    PREMIUM UNIVERSITY BACKGROUND
    ============================================================ */
@@ -21,7 +28,7 @@
     inset: 0;
     z-index: -1;
     overflow: hidden;
-    background: linear-gradient(135deg, #dde8ff 0%, #e8deff 30%, #f0e6ff 55%, #daeaf8 80%, #e4dcf8 100%);
+    background: linear-gradient(145deg, #f5f7ff 0%, #ede8ff 35%, #f8f0ff 65%, #e8f4ff 100%);
 }
 .mesh-layer {
     position: absolute;
@@ -614,7 +621,8 @@ const SAMPLE_DATA = [
         tags: ["Cơm", "Rẻ", "No"],
         keywords: ["cơm gà", "cơm sườn", "cơm trưa", "rẻ"],
         photos: {
-            place: ["{% static 'image/food/1.jpg' %}"]
+            place: ["{% static 'image/food/1.jpg' %}"],
+            menu: ["{% static 'image/overfood/1.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -626,7 +634,8 @@ const SAMPLE_DATA = [
         tags: ["Ăn vặt", "Mỳ cay", "Đồ nướng"],
         keywords: ["mỳ cay trứng ốp la", "cá viên", "bún đậu", "đồ chiên", "gỏi"],
         photos: {
-            place: ["{% static 'image/food/2.jpg' %}"]
+            place: ["{% static 'image/food/2.jpg' %}"],
+            menu: ["{% static 'image/overfood/2.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -638,7 +647,8 @@ const SAMPLE_DATA = [
         tags: ["Trà sữa", "Nước uống", "Chill"],
         keywords: ["trà sữa", "trà trái cây", "trà đào"],
         photos: {
-            place: ["{% static 'image/food/3.jpg' %}"]
+            place: ["{% static 'image/food/3.jpg' %}"],
+            menu: ["{% static 'image/overfood/3.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -650,7 +660,8 @@ const SAMPLE_DATA = [
         tags: ["Cơm tấm", "Cơm sườn", "No"],
         keywords: ["cơm tấm sườn", "cơm món", "cơm bình dân"],
         photos: {
-            place: ["{% static 'image/food/4.jpg' %}"]
+            place: ["{% static 'image/food/4.jpg' %}"],
+            menu: ["{% static 'image/overfood/4.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -662,7 +673,8 @@ const SAMPLE_DATA = [
         tags: ["Bún đậu", "Món Việt", "Nhóm"],
         keywords: ["bún đậu mắm tôm", "ram cuốn cải", "bún mắm", "bánh tráng thịt heo"],
         photos: {
-            place: ["{% static 'image/food/5.jpg' %}"]
+            place: ["{% static 'image/food/5.jpg' %}"],
+            menu: ["{% static 'image/overfood/5.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -674,7 +686,8 @@ const SAMPLE_DATA = [
         tags: ["Gà rán", "Đồ Hàn", "Mỳ cay"],
         keywords: ["gà sốt Hàn", "set gà S 75k", "mì tương đen 59k", "tokbokki"],
         photos: {
-            place: ["{% static 'image/food/6.jpg' %}"]
+            place: ["{% static 'image/food/6.jpg' %}"],
+            menu: ["{% static 'image/overfood/6.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -686,7 +699,8 @@ const SAMPLE_DATA = [
         tags: ["Mỳ quảng", "Miền Trung", "Sáng"],
         keywords: ["mỳ quảng gà", "mỳ quảng tôm thịt"],
         photos: {
-            place: ["{% static 'image/food/7.jpg' %}"]
+            place: ["{% static 'image/food/7.jpg' %}"],
+            menu: ["{% static 'image/overfood/7.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -698,7 +712,8 @@ const SAMPLE_DATA = [
         tags: ["Đồ Hàn", "Mỳ cay", "Cơm trộn"],
         keywords: ["mì tương đen", "tokbokki", "mandu", "gà rán"],
         photos: {
-            place: ["{% static 'image/food/8.jpg' %}"]
+            place: ["{% static 'image/food/8.jpg' %}"],
+            menu: ["{% static 'image/overfood/8.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -710,7 +725,8 @@ const SAMPLE_DATA = [
         tags: ["Ăn vặt", "Bún đậu", "Mỳ cay"],
         keywords: ["gỏi cuốn", "ram cuốn cải", "bánh tráng trộn"],
         photos: {
-            place: ["{% static 'image/food/9.jpg' %}"]
+            place: ["{% static 'image/food/9.jpg' %}"],
+            menu: ["{% static 'image/overfood/9.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -722,7 +738,8 @@ const SAMPLE_DATA = [
         tags: ["Trà sữa", "Ăn vặt", "Nước uống"],
         keywords: ["trà sữa", "trà", "đồ ăn vặt"],
         photos: {
-            place: ["{% static 'image/food/10.jpg' %}"]
+            place: ["{% static 'image/food/10.jpg' %}"],
+            menu: ["{% static 'image/overfood/10.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -734,7 +751,8 @@ const SAMPLE_DATA = [
         tags: ["Gà rán", "Đồ chiên", "Nhóm"],
         keywords: ["đùi gà truyền thống 65k/2 cái", "mì ý", "cơm gà sốt"],
         photos: {
-            place: ["{% static 'image/food/11.jpg' %}"]
+            place: ["{% static 'image/food/11.jpg' %}"],
+            menu: ["{% static 'image/overfood/11_1.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -746,7 +764,8 @@ const SAMPLE_DATA = [
         tags: ["Bánh canh", "Huế", "Sáng"],
         keywords: ["bánh canh cá lóc", "bánh canh chả cua", "bánh canh xương"],
         photos: {
-            place: ["{% static 'image/food/12.jpg' %}"]
+            place: ["{% static 'image/food/12.jpg' %}"],
+            menu: ["{% static 'image/overfood/12.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -758,7 +777,8 @@ const SAMPLE_DATA = [
         tags: ["Bún đậu", "Ăn vặt", "Mỳ cay"],
         keywords: ["chân gà sốt Thái", "trà sữa", "đồ chiên"],
         photos: {
-            place: ["{% static 'image/food/13.jpg' %}"]
+            place: ["{% static 'image/food/13.jpg' %}"],
+            menu: ["{% static 'image/overfood/13.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -770,7 +790,8 @@ const SAMPLE_DATA = [
         tags: ["Bún đậu", "No"],
         keywords: ["bún đậu 1 người 35k", "mì cay 25k"],
         photos: {
-            place: ["{% static 'image/food/14.jpg' %}"]
+            place: ["{% static 'image/food/14.jpg' %}"],
+            menu: ["{% static 'image/overfood/14.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -782,7 +803,8 @@ const SAMPLE_DATA = [
         tags: ["Món cuốn", "Nhẹ", "Việt"],
         keywords: ["gỏi cuốn thịt", "bánh hỏi nem chả", "thịt nướng"],
         photos: {
-            place: ["{% static 'image/food/15.jpg' %}"]
+            place: ["{% static 'image/food/15.jpg' %}"],
+            menu: ["{% static 'image/overfood/15.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -794,7 +816,8 @@ const SAMPLE_DATA = [
         tags: ["Gà ủ muối", "Nhóm", "Đặc sản"],
         keywords: ["chân gà trứng non", "cháo nghêu", "cháo ếch Singapore"],
         photos: {
-            place: ["{% static 'image/food/16.jpg' %}"]
+            place: ["{% static 'image/food/16.jpg' %}"],
+            menu: ["{% static 'image/overfood/16.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -806,7 +829,8 @@ const SAMPLE_DATA = [
         tags: ["Ăn vặt", "Gà rán", "Hàn"],
         keywords: ["kimbap", "mandu", "nem chua rán", "gà viên"],
         photos: {
-            place: ["{% static 'image/food/17.jpg' %}"]
+            place: ["{% static 'image/food/17.jpg' %}"],
+            menu: ["{% static 'image/overfood/17.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -818,7 +842,8 @@ const SAMPLE_DATA = [
         tags: ["Gà rán", "Hàn", "Sinh viên"],
         keywords: ["gà lắc sốt", "tokbokki", "cơm gà sốt"],
         photos: {
-            place: ["{% static 'image/food/18.jpg' %}"]
+            place: ["{% static 'image/food/18.jpg' %}"],
+            menu: ["{% static 'image/overfood/18.jpg' %}"]
         },
         ratings: [],
         comments: []
@@ -830,83 +855,13 @@ const SAMPLE_DATA = [
         tags: ["Ăn vặt", "Nhóm"],
         keywords: ["đồ ăn vặt các loại"],
         photos: {
-            place: ["{% static 'image/food/19.jpg' %}"]
+            place: ["{% static 'image/food/19.jpg' %}"],
+            menu: ["{% static 'image/overfood/19.jpg' %}"]
         },
         ratings: [],
         comments: []
     },
-    {
-        id: 20,
-        name: "Cơm gà mắm tỏi 33",
-        map: "https://shopeefood.vn/da-nang/com-ga-mam-toi-33-478-tran-dai-nghia",
-        tags: ["Cơm gà", "Cơm món", "No"],
-        keywords: ["cơm gà xối mỡ", "cơm gà mắm tỏi", "tôm rim", "bò lá lốt"],
-        photos: {
-            place: ["{% static 'image/food/20.jpg' %}"]
-        },
-        ratings: [],
-        comments: []
-    },
-    {
-        id: 21,
-        name: "Bún đậu Đòn Đẻn",
-        map: "https://maps.app.goo.gl/NLD3Mi7AJ1VpP5Gv9",
-        tags: ["Bún đậu", "No"],
-        keywords: ["bún đậu 35k", "mì cay 25k"],
-        photos: {
-            place: ["{% static 'image/food/21.jpg' %}"]
-        },
-        ratings: [],
-        comments: []
-    },
-    {
-        id: 22,
-        name: "Trà sữa Chu Cha",
-        map: "https://maps.app.goo.gl/iuytszRFobg4oztn6",
-        tags: ["Trà sữa", "Nước uống"],
-        keywords: ["trà sữa 25-37k"],
-        photos: {
-            place: ["{% static 'image/food/22.jpg' %}"]
-        },
-        ratings: [],
-        comments: []
-    },
-    {
-        id: 23,
-        name: "Vita Cafe & Juice",
-        map: "https://maps.app.goo.gl/QynQHjjMfzdAS3aL7",
-        tags: ["Cafe", "Trà sữa", "Nước ép"],
-        keywords: ["cà phê", "trà sữa 18-35k"],
-        photos: {
-            place: ["{% static 'image/food/23.jpg' %}"]
-        },
-        ratings: [],
-        comments: []
-    },
-    {
-        id: 24,
-        name: "Mixue",
-        map: "https://maps.app.goo.gl/dKisxKtfx6cgeuhc8",
-        tags: ["Trà sữa", "Kem", "Rẻ"],
-        keywords: ["kem 10k", "trà sữa 10-30k"],
-        photos: {
-            place: ["{% static 'image/food/24.jpg' %}"]
-        },
-        ratings: [],
-        comments: []
-    },
-    {
-        id: 25,
-        name: "Túc Tắc Tea (Huỳnh Văn Nghệ)",
-        map: "https://maps.app.goo.gl/X8CR3BGR9ZK3RTXh9",
-        tags: ["Trà sữa", "Trà trái cây"],
-        keywords: ["trà sữa 24k+", "nước uống sinh viên"],
-        photos: {
-            place: ["{% static 'image/food/25.jpg' %}"]
-        },
-        ratings: [],
-        comments: []
-    }
+ 
 ];
 
 const STATIC_URL = "{% static '' %}";
@@ -1103,11 +1058,13 @@ async function openDetail(id) {
     document.getElementById('sService').innerText = a.service.toFixed(1);
     document.getElementById('sSpace').innerText = a.space.toFixed(1);
     
-    document.getElementById('dMain').src = p.photos.place[0];
+    document.getElementById('dMain').src = p.photos.menu ? p.photos.menu[0] : p.photos.place[0];
     const gallery = document.getElementById('dGallery');
     gallery.innerHTML = "";
-    p.photos.place.forEach((img, idx) => {
-        gallery.innerHTML += `<img src="${img}" onclick="zoomImage('${img}')" ${idx === 0 ? 'style="border-color:#6f42c1"' : ''}>`;
+    // Show menu images in gallery (these can be clicked to zoom)
+    const menuImages = p.photos.menu || p.photos.place;
+    menuImages.forEach((img, idx) => {
+        gallery.innerHTML += `<img src="${img}" onclick="zoomImage('${img}', '')" ${idx === 0 ? 'style="border-color:#6f42c1"' : ''}>`;
     });
     
     document.getElementById('commentCount').innerText = p.comments.length;
@@ -1167,10 +1124,11 @@ function updateSlider(type) {
     document.getElementById('slider' + type).innerText = val;
 }
 
-function zoomImage(src) {
-    // Replace 'food' folder with 'overfood' for overlay images
-    src = src.replace('/food/', '/overfood/');
-    document.getElementById('zoomImg').src = src;
+function zoomImage(img, menuImg) {
+    // Use menu image if available, otherwise use the clicked image
+    // If menuImg is not provided, just use the clicked image (for comment images)
+    const overlaySrc = menuImg && menuImg.trim() ? menuImg : img;
+    document.getElementById('zoomImg').src = overlaySrc + '?v=' + Date.now();
     document.getElementById('zoomOverlay').classList.add('active');
 }
 

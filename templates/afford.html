@@ -3,141 +3,96 @@
 {% block title %}Afford | FPT Guide{% endblock %}
 
 {% block content %}
-
 <style>
-    /* ===== AFFORD PAGE - MODERN REDESIGN ===== */
+    body {
+        background: linear-gradient(145deg, #f5f7ff 0%, #ede8ff 35%, #f8f0ff 65%, #e8f4ff 100%) !important;
+        min-height: 100vh;
+    }
+    .navbar {
+        background: transparent !important;
+    }
+
+    /* ===== AFFORD PAGE ===== */
     .afford-section {
         min-height: 100vh;
-        background: linear-gradient(135deg, #f8f9ff 0%, #e8f4f8 100%);
         padding: 0;
-    }
-
-    /* ===== HERO SECTION ===== */
-    .afford-hero {
-        background: linear-gradient(135deg, #0061f2 0%, #00c6f7 100%);
-        padding: 80px 20px 100px;
         position: relative;
-        overflow: hidden;
-    }
-
-    .afford-hero::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        opacity: 0.5;
-    }
-
-    .afford-hero .container {
-        position: relative;
-        z-index: 1;
-    }
-
-    .afford-hero-title {
-        font-size: 3.5rem;
-        font-weight: 800;
-        color: #fff;
-        margin-bottom: 16px;
-        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 16px;
-    }
-    
-    .afford-hero-title .afford-hero-icon {
-        font-size: 3rem;
-    }
-
-    .afford-hero-subtitle {
-        font-size: 1.25rem;
-        color: rgba(255, 255, 255, 0.9);
-        max-width: 600px;
-        margin: 0 auto;
-        line-height: 1.6;
     }
 
     /* ===== CARDS CONTAINER ===== */
     .afford-cards-section {
-        padding: 60px 0 80px;
-        margin-top: -40px;
+        padding: 40px 0 80px;
     }
 
     .afford-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 30px;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px;
+        margin-top: 0;
     }
 
-    /* ===== MODERN CARD DESIGN ===== */
+    /* ===== CARD DESIGN (matching explore.html) ===== */
     .afford-card {
-        background: #fff;
+        background: rgba(255,255,255,0.72);
+        backdrop-filter: blur(16px) saturate(150%);
+        -webkit-backdrop-filter: blur(16px) saturate(150%);
+        padding: 38px 36px 32px;
+        border: 2px solid rgba(200,185,255,0.3);
         border-radius: 20px;
-        padding: 32px 28px;
-        text-decoration: none;
-        color: inherit;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        position: relative;
-        overflow: hidden;
-        border: none;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         display: flex;
         flex-direction: column;
-        min-height: 380px;
-    }
-
-    .afford-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 5px;
-        background: linear-gradient(135deg, var(--card-color-start), var(--card-color-end));
-        transform: scaleX(0);
-        transition: transform 0.4s ease;
+        justify-content: space-between;
+        align-items: stretch;
+        min-height: 310px;
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+        transition:
+            transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+            box-shadow 0.4s ease,
+            border-color 0.3s ease,
+            background 0.3s ease;
+        box-shadow:
+            0 2px 4px rgba(130,110,200,0.05),
+            0 8px 24px rgba(130,110,200,0.08),
+            inset 0 1px 0 rgba(255,255,255,0.95);
     }
 
     .afford-card:hover {
-        transform: translateY(-12px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    }
-
-    .afford-card:hover::before {
-        transform: scaleX(1);
+        transform: translateY(-10px) scale(1.015);
     }
 
     /* Card specific colors */
     .afford-card.food-card {
-        --card-color-start: #10b981;
-        --card-color-end: #34d399;
+        border-color: rgba(16,185,129,0.3);
+        box-shadow: 0 2px 4px rgba(16,185,129,0.08), 0 8px 24px rgba(16,185,129,0.1), inset 0 1px 0 rgba(255,255,255,0.95);
+    }
+
+    .afford-card.food-card:hover {
+        border-color: #10b981;
+        box-shadow: 0 0 0 1px rgba(16,185,129,0.3), 0 20px 56px rgba(16,185,129,0.2), 0 8px 24px rgba(16,185,129,0.15);
     }
 
     .afford-card.living-card {
-        --card-color-start: #3b82f6;
-        --card-color-end: #60a5fa;
+        border-color: rgba(59,130,246,0.3);
+        box-shadow: 0 2px 4px rgba(59,130,246,0.08), 0 8px 24px rgba(59,130,246,0.1), inset 0 1px 0 rgba(255,255,255,0.95);
     }
 
-    .afford-card.job-card {
-        --card-color-start: #8b5cf6;
-        --card-color-end: #a78bfa;
+    .afford-card.living-card:hover {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 1px rgba(59,130,246,0.3), 0 20px 56px rgba(59,130,246,0.2), 0 8px 24px rgba(59,130,246,0.15);
     }
 
     .afford-card-icon {
-        width: 70px;
-        height: 70px;
-        border-radius: 18px;
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 2rem;
-        margin-bottom: 20px;
+        font-size: 1.6rem;
+        margin-bottom: 10px;
         transition: transform 0.4s ease;
     }
 
@@ -153,26 +108,22 @@
         background: linear-gradient(135deg, #dbeafe, #bfdbfe);
     }
 
-    .job-card .afford-card-icon {
-        background: linear-gradient(135deg, #ede9fe, #ddd6fe);
-    }
-
     .afford-card h3 {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         font-weight: 700;
-        margin-bottom: 12px;
+        margin-bottom: 6px;
         color: #1f2937;
     }
 
     .afford-card-price {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 8px 16px;
+        gap: 6px;
+        padding: 5px 12px;
         border-radius: 30px;
-        font-size: 0.95rem;
+        font-size: 0.88rem;
         font-weight: 600;
-        margin-bottom: 16px;
+        margin-bottom: 8px;
     }
 
     .food-card .afford-card-price {
@@ -185,23 +136,18 @@
         color: #1e40af;
     }
 
-    .job-card .afford-card-price {
-        background: #ede9fe;
-        color: #5b21b6;
-    }
-
     .afford-card p {
         color: #6b7280;
-        line-height: 1.7;
-        margin-bottom: 20px;
-        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
     }
 
     .afford-card-note {
-        font-size: 0.875rem;
+        font-size: 0.82rem;
         color: #9ca3af;
-        margin-bottom: 24px;
-        padding-top: 16px;
+        margin-bottom: 12px;
+        padding-top: 8px;
         border-top: 1px dashed #e5e7eb;
         flex-grow: 1;
     }
@@ -230,107 +176,122 @@
         color: #fff;
     }
 
-    .job-card .afford-btn {
-        background: linear-gradient(135deg, #8b5cf6, #a78bfa);
-        color: #fff;
-    }
-
     .afford-btn:hover {
         transform: translateX(4px);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
 
+    /* ================= HEADER BOX (like explore.html) ================= */
+    .header-box {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 60px 40px;
+        border-radius: 20px;
+        border: 4px solid #000;
+        box-shadow: 12px 12px 0 #000;
+        margin-bottom: 60px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Animated diagonal stripes */
+    .header-box::before {
+        content: '';
+        position: absolute;
+        top: -50%; left: -50%;
+        width: 200%; height: 200%;
+        background: repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 14px,
+            rgba(111,66,193,0.035) 14px,
+            rgba(111,66,193,0.035) 28px
+        );
+        animation: stripeDrift 24s linear infinite;
+    }
+
+    @keyframes stripeDrift {
+        0%   { transform: translate(0,0); }
+        100% { transform: translate(56px,56px); }
+    }
+
+    /* Top shimmer */
+    .header-box::after {
+        content: '';
+        position: absolute;
+        top: 0; left: 10%; right: 10%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(167,139,250,0.6), transparent);
+    }
+
+    .main-title {
+        font-family: "Press Start 2P", monospace;
+        font-size: 36px;
+        color: #fff;
+        text-shadow: 4px 4px 0 #000, 6px 6px 0 rgba(0,0,0,0.3);
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .subtitle {
+        font-size: 18px;
+        color: rgba(255,255,255,0.95);
+        line-height: 1.6;
+        position: relative;
+        z-index: 1;
+    }
+
     /* ===== RESPONSIVE ===== */
-    @media (max-width: 1200px) {
-        .afford-grid {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-            padding: 0 30px;
+    @media (max-width: 768px) {
+        .header-box {
+            padding: 36px 20px;
+            margin-bottom: 40px;
         }
-    }
-
-    @media (max-width: 992px) {
-        .afford-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
+        .main-title {
+            font-size: 24px;
         }
-
-        .afford-hero-title {
-            font-size: 2.5rem;
+        .subtitle {
+            font-size: 15px;
         }
-        
-        .afford-hero-title .afford-hero-icon {
-            font-size: 2.2rem;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .afford-section {
-            padding: 0;
-        }
-
-        .afford-hero {
-            padding: 50px 20px 70px;
-        }
-
-        .afford-hero-title {
-            font-size: 2rem;
-        }
-        
-        .afford-hero-title .afford-hero-icon {
-            font-size: 1.8rem;
-        }
-
-        .afford-hero-subtitle {
-            font-size: 1rem;
-        }
-
         .afford-cards-section {
-            padding: 40px 0 60px;
-            margin-top: -30px;
+            padding: 20px 0 60px;
         }
-
         .afford-grid {
             grid-template-columns: 1fr;
             gap: 20px;
             padding: 0 15px;
         }
-
         .afford-card {
-            padding: 24px 20px;
+            padding: 28px 24px;
         }
-
         .afford-card-icon {
             width: 56px;
             height: 56px;
             font-size: 1.5rem;
         }
-
         .afford-card h3 {
             font-size: 1.25rem;
-        }
-
-        .afford-features {
-            padding: 30px 15px 40px;
         }
     }
 </style>
 
 <section class="afford-section">
-    <!-- Hero Section -->
-    <div class="afford-hero">
-        <div class="container text-center">
-            <h1 class="afford-hero-title"><span class="afford-hero-icon">💵</span> Afford</h1>
-            <p class="afford-hero-subtitle">
+    <!-- Header Box like explore.html -->
+    <div class="container mt-5 text-center">
+        <div class="header-box">
+            <h1 class="main-title">💵 Afford</h1>
+            <p class="subtitle">
                 Hướng dẫn chi phí sinh hoạt cho tân sinh viên FPT<br>
-                Tìm hiểu chi phí ăn uống, chỗ ở và cơ hội việc làm phù hợp với ngân sách của bạn
+                Tìm hiểu chi phí ăn uống, chỗ ở phù hợp với ngân sách của bạn
             </p>
         </div>
     </div>
 
     <!-- Cards Section -->
     <div class="afford-cards-section">
-        <div class="afford-grid">
+        <div class="container">
+            <div class="afford-grid">
 
             <!-- Card 1: Food -->
             <a href="{% url 'Afford_food' %}" class="afford-card food-card">
@@ -339,7 +300,7 @@
                 <span class="afford-card-price">
                     <span>💵</span> 25k – 50k / bữa
                 </span>
-                <p>Căng tin FPT, quán ăn rẻ – ngon – no quanh khu vực campus. Mẹo tiết kiệm chi phí ăn uống mỗi ngày cho sinh viên.</p>
+                <p>Căng tin FPT, quán ăn rẻ – ngon – no quanh khu vực campus.</p>
                 <p class="afford-card-note">Tìm kiếm địa điểm ăn uống ngon và rẻ gần FPT</p>
                 <span class="afford-btn">
                     Xem chi tiết <span>→</span>
@@ -353,27 +314,14 @@
                 <span class="afford-card-price">
                     <span>🏢</span> 800k – 2tr / tháng
                 </span>
-                <p>Ký túc xá FPT, nhà trọ gần campus, kinh nghiệm tìm phòng và tránh các chiêu lừa đảo thuê nhà.</p>
-                <p class="afford-card-note">Hướng dẫn tìm phòng trọ và KTX FPT Đà Nẵng</p>
+                <p>Ký túc xá FPT, nhà trọ gần campus.</p>
+                <p class="afford-card-note">Tìm phòng trọ và KTX FPT Đà Nẵng</p>
                 <span class="afford-btn">
                     Tìm phòng ngay <span>→</span>
                 </span>
             </a>
 
-            <!-- Card 3: Job -->
-            <a href="{% url 'Afford_job' %}" class="afford-card job-card">
-                <div class="afford-card-icon">💼</div>
-                <h3>Việc Làm</h3>
-                <span class="afford-card-price">
-                    <span>⚡</span> Part-time & Freelance
-                </span>
-                <p>Việc làm thêm linh hoạt, phù hợp với lịch học. Cơ hội việc làm dành riêng cho sinh viên FPT.</p>
-                <p class="afford-card-note">Khám phá cơ hội việc làm cho sinh viên</p>
-                <span class="afford-btn">
-                    Xem việc làm <span>→</span>
-                </span>
-            </a>
-
+            </div>
         </div>
     </div>
 

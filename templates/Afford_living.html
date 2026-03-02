@@ -13,6 +13,13 @@
 </div>
 
 <style>
+    body {
+        background: linear-gradient(145deg, #f5f7ff 0%, #ede8ff 35%, #f8f0ff 65%, #e8f4ff 100%) !important;
+    }
+    .navbar {
+    background: transparent !important;
+}
+    
 /* ============================================================
    PREMIUM UNIVERSITY BACKGROUND
    ============================================================ */
@@ -21,7 +28,7 @@
     inset: 0;
     z-index: -1;
     overflow: hidden;
-    background: linear-gradient(135deg, #dde8ff 0%, #e8deff 30%, #f0e6ff 55%, #daeaf8 80%, #e4dcf8 100%);
+    background: linear-gradient(145deg, #f5f7ff 0%, #ede8ff 35%, #f8f0ff 65%, #e8f4ff 100%);
 }
 .mesh-layer {
     position: absolute;
@@ -907,6 +914,9 @@
 // Static URL for images
 const STATIC_URL = "{% static '' %}";
 
+// Cache busting version - change this to force reload images
+const IMAGE_VERSION = "v=2";
+
 // Store for backend data
 let backendLivingPlaces = [];
 
@@ -944,7 +954,7 @@ function convertLivingPlaceData(place) {
         tags: place.tags || ["Phong tro"],
         amenities: place.amenities || [],
         photos: {
-            place: [STATIC_URL + "image/living/" + imgNum + ".jpg"]
+            place: [STATIC_URL + "image/living/" + imgNum + ".jpg?" + IMAGE_VERSION]
         },
         description: place.description || place.name,
         ratings: [],
@@ -980,7 +990,7 @@ const DATA = [
     {
         id: 1,
         name: "Bobi House",
-        map: "https://maps.google.com/?q=Bobi+House+FPT",
+        map: "https://maps.app.goo.gl/w1jwLMUBR7M42u157",
         type: "phongtro",
         address: "Ngũ Hành Sơn, Đà Nẵng",
         price: "2.6tr - 3tr",
@@ -991,7 +1001,8 @@ const DATA = [
         tags: ["Phòng trọ", "Ngũ Hành Sơn"],
         amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Máy giặt"],
         photos: {
-            place: ["{% static 'image/living/1.jpg' %}"]
+            place: [STATIC_URL + "image/living/1.jpg?" + IMAGE_VERSION],
+            menu: [STATIC_URL + "image/overliving/1_1.jpg?" + IMAGE_VERSION, STATIC_URL + "image/overliving/1_2.jpg?" + IMAGE_VERSION]
         },
         description: "Bobi House - Phòng trọ gần FPT, di chuyển thuận tiện. Giá phòng hợp lý, chủ nhà thân thiện.",
         ratings: [],
@@ -1008,7 +1019,7 @@ const DATA = [
     {
         id: 2,
         name: "Căn hộ Đình Vũ",
-        map: "https://maps.google.com/?q=Dinh+Vu+Apartment+FPT",
+        map: "https://maps.app.goo.gl/dcScK5iiV33tap1h7",
         type: "canho",
         address: "Ngũ Hành Sơn, Đà Nẵng",
         price: "3.5tr",
@@ -1019,7 +1030,8 @@ const DATA = [
         tags: ["Căn hộ", "Ngũ Hành Sơn"],
         amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Máy giặt", "Ban công"],
         photos: {
-            place: ["{% static 'image/living/2.jpg' %}"]
+            place: [STATIC_URL + "image/living/2.jpg?" + IMAGE_VERSION],
+            menu: [STATIC_URL + "image/overliving/2_1.jpg?" + IMAGE_VERSION, STATIC_URL + "image/overliving/2_2.jpg?" + IMAGE_VERSION, STATIC_URL + "image/overliving/2_3.jpg?" + IMAGE_VERSION]
         },
         description: "Căn hộ Đình Vũ - Rộng rãi, thoáng mát, gần khu vực FPT. Phù hợp cho 2 người ở.",
         ratings: [],
@@ -1047,7 +1059,8 @@ const DATA = [
         tags: ["Căn hộ", "Ngũ Hành Sơn"],
         amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Máy giặt", "Bếp"],
         photos: {
-            place: ["{% static 'image/living/3.jpg' %}"]
+            place: [STATIC_URL + "image/living/3.jpg?" + IMAGE_VERSION],
+            menu: [STATIC_URL + "image/overliving/3_1.jpg?" + IMAGE_VERSION, STATIC_URL + "image/overliving/3_2.jpg?" + IMAGE_VERSION]
         },
         description: "Tèo FPT Apartment - Căn hộ rộng cho nhóm sinh viên. Gần FPT, tiện nghi đầy đủ.",
         ratings: [],
@@ -1064,7 +1077,7 @@ const DATA = [
     {
         id: 4,
         name: "Café An An",
-        map: "https://maps.google.com/?q=Cafe+An+An+FPT",
+        map: "https://maps.app.goo.gl/adAKRjyhXDMtaGc26",
         type: "phongtro",
         address: "Ngũ Hành Sơn, Đà Nẵng",
         price: "3tr - 4.5tr",
@@ -1075,7 +1088,8 @@ const DATA = [
         tags: ["Phòng trọ", "Ngũ Hành Sơn"],
         amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Máy giặt"],
         photos: {
-            place: ["{% static 'image/living/4.jpg' %}"]
+            place: [STATIC_URL + "image/living/4.jpg?" + IMAGE_VERSION],
+            menu: [STATIC_URL + "image/overliving/4.jpg?" + IMAGE_VERSION]
         },
         description: "Café An An - Phòng trọ có quán cafe bên dưới. Không gian xanh mát, yên tĩnh.",
         ratings: [],
@@ -1092,7 +1106,7 @@ const DATA = [
     {
         id: 5,
         name: "DTT Apartment",
-        map: "https://maps.google.com/?q=DTT+Apartment+FPT",
+        map: "https://maps.app.goo.gl/PKH6Ron3DmhwoHNV8",
         type: "canho",
         address: "Ngũ Hành Sơn, Đà Nẵng",
         price: "4.5tr",
@@ -1103,7 +1117,8 @@ const DATA = [
         tags: ["Căn hộ", "Ngũ Hành Sơn"],
         amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Máy giặt", "Ban công", "Bếp"],
         photos: {
-            place: ["{% static 'image/living/5.jpg' %}"]
+            place: [STATIC_URL + "image/living/5.jpg?" + IMAGE_VERSION],
+            menu: [STATIC_URL + "image/overliving/5.jpg?" + IMAGE_VERSION]
         },
         description: "DTT Apartment - Căn hộ cao cấp gần FPT. Đầy đủ tiện nghi, view đẹp.",
         ratings: [],
@@ -1119,36 +1134,37 @@ const DATA = [
     },
     {
         id: 6,
-        name: "Trọ A Phúc",
-        map: "https://maps.google.com/?q=Tro+A+Phuc+FPT",
+        name: "Minh Trí - Minh Ý (Trần Hoàng cũ)",
+        map: "https://maps.app.goo.gl/t1VTGfD7pXPE6WgL8",
         type: "phongtro",
-        address: "Thanh Khê, Đà Nẵng",
-        price: "1.9tr",
+        address: "Ngũ Hành Sơn, Đà Nẵng",
+        price: "3tr5tr",
         areaValue: "18-25m²",
-        distance: "2.5km",
-        capacity: "1 người",
-        keywords: ["a phúc", "phúc", "thanh khê", "trọ"],
-        tags: ["Phòng trọ", "Thanh Khê"],
+        distance: "~100m",
+        capacity: "1-2 người",
+        keywords: ["Minh Trí", "Minh Ý", "Ngũ Hành Sơn", "trọ"],
+        tags: ["Phòng trọ", "Ngũ Hành Sơn"],
         amenities: ["Wifi", "Điều hòa", "Nóng lạnh"],
         photos: {
-            place: ["{% static 'image/living/6.jpg' %}"]
+            place: [STATIC_URL + "image/living/6.jpg?" + IMAGE_VERSION],
+            menu: [STATIC_URL + "image/living/6.jpg?" + IMAGE_VERSION]
         },
-        description: "Trọ A Phúc - Phòng trọ giá rẻ, phù hợp cho sinh viên. Đi xe máy 15 phút tới FPT.",
+        description: "Trọ Minh Trí Minh Ý - Phòng trọ giá rẻ, phù hợp cho sinh viên. Đi bộ 100m tới FPT.",
         ratings: [],
         reviews: [],
         cost: {
-            room: "1.9tr/người",
+            room: "3tr5/2 người",
             water: "50k/người",
             electric: "3.5k/chữ",
             wifi: "Miễn phí",
             other: "0đ",
-            total: "~2tr - 2.2tr/người"
+            total: "~2tr/người"
         }
     },
     {
         id: 7,
         name: "Bảo Home 2",
-        map: "https://maps.google.com/?q=Bao+Home+2+FPT",
+        map: "https://maps.app.goo.gl/Fny99hSZcW9WanHu8",
         type: "canho",
         address: "Ngũ Hành Sơn, Đà Nẵng",
         price: "3.2tr",
@@ -1159,7 +1175,8 @@ const DATA = [
         tags: ["Căn hộ", "Ngũ Hành Sơn"],
         amenities: ["Wifi", "Điều hòa", "Nóng lạnh", "Tủ lạnh", "Máy giặt", "Bếp"],
         photos: {
-            place: ["{% static 'image/living/7.jpg' %}"]
+            place: [STATIC_URL + "image/living/7.jpg?" + IMAGE_VERSION],
+            menu: [STATIC_URL + "image/overliving/7_1.jpg?" + IMAGE_VERSION, STATIC_URL + "image/overliving/7_2.jpg?" + IMAGE_VERSION]
         },
         description: "Bảo Home 2 - Căn hộ mới, sạch sẽ, gần FPT. Chủ nhà thân thiện, hỗ trợ sinh viên.",
         ratings: [],
@@ -1317,9 +1334,10 @@ function openDetail(id) {
     
     document.getElementById('dAmenities').innerHTML = p.amenities.map(a => `<span class="amenity">${a}</span>`).join('');
     
-    const imgSrc = p.photos.place[0] || '';
-    if (imgSrc) {
-        document.getElementById('dMain').src = imgSrc;
+    // Use menu image for main display if available
+    const mainImgSrc = p.photos.menu ? p.photos.menu[0] : (p.photos.place[0] || '');
+    if (mainImgSrc) {
+        document.getElementById('dMain').src = mainImgSrc;
         document.getElementById('dMain').style.display = 'block';
     } else {
         document.getElementById('dMain').style.display = 'none';
@@ -1327,12 +1345,14 @@ function openDetail(id) {
     
     const gallery = document.getElementById('dGallery');
     gallery.innerHTML = "";
-    p.photos.place.forEach((img, idx) => {
-        gallery.innerHTML += `<img src="${img}" onclick="zoomImage('${img}')" ${idx === 0 ? 'style="border-color:#10b981"' : ''}>`;
+    // Show menu images in gallery (these can be clicked to zoom)
+    const menuImages = p.photos.menu || p.photos.place;
+    menuImages.forEach((img, idx) => {
+        gallery.innerHTML += `<img src="${img}" onclick="zoomImage('${img}', '')" ${idx === 0 ? 'style="border-color:#10b981"' : ''}>`;
     });
     
-    document.getElementById('reviewCount').innerText = p.reviews.length;
-    renderReviews(p.reviews);
+    // Load reviews from backend (including images)
+    loadReviews(id);
     
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -1388,15 +1408,22 @@ function updateSlider(type) {
     document.getElementById('slider' + type).innerText = val;
 }
 
-function zoomImage(src) {
-    // Replace 'living' folder with 'overliving' for overlay images
-    src = src.replace('/living/', '/overliving/');
-    document.getElementById('zoomImg').src = src;
-    document.getElementById('zoomOverlay').classList.add('active');
+function zoomImage(img, menuImg) {
+    try {
+        // Use menu image if available, otherwise use the clicked image
+        // If menuImg is not provided, just use the clicked image (for review images)
+        const overlaySrc = (menuImg && menuImg.trim()) ? menuImg : img;
+        document.getElementById('zoomImg').src = overlaySrc;
+        document.getElementById('zoomOverlay').classList.add('active');
+    } catch (e) {
+        console.error('Error opening zoom:', e);
+        alert('Không thể mở hình ảnh');
+    }
 }
 
 function closeZoom() {
     document.getElementById('zoomOverlay').classList.remove('active');
+    document.getElementById('zoomImg').src = '';
 }
 
 function getCsrfToken() {

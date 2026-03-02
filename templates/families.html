@@ -2,6 +2,44 @@
 {% load static %}
 {% block content %}
 
+    
+<!-- ================= PREMIUM BACKGROUND ================= -->
+<div class="premium-bg">
+    <div class="mesh-layer"></div>
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+    <div class="vignette"></div>
+</div>
+
+<style>
+.navbar {
+    background: transparent !important;
+}
+    
+    .premium-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    background: #0b1220;
+}
+.mesh-layer {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+}
+.shape { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.4; }
+.shape-1 { width: 400px; height: 400px; background: #000000bb; top: -100px; left: -100px; animation: float 20s ease-in-out infinite; }
+.shape-2 { width: 300px; height: 300px; background: #7db8ff; bottom: -50px; right: -50px; animation: float 25s ease-in-out infinite reverse; }
+.shape-3 { width: 200px; height: 200px; background: #d4b8ff; top: 50%; right: 20%; animation: float 18s ease-in-out infinite; }
+.shape-4 { width: 150px; height: 150px; background: #a8d4ff; bottom: 20%; left: 10%; animation: float 22s ease-in-out infinite reverse; }
+.vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.05) 100%); }
+@keyframes float { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(10px, 10px); } 50% { transform: translate(0, 20px); } 75% { transform: translate(-10px, 10px); } }
+</style>
+
 <style>
     /* ===== GIAO DIỆN CHUNG ===== */
     .filter-section { background: #0b1220; padding: 40px 20px 20px; text-align: center; }
