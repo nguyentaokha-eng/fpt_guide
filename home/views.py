@@ -147,14 +147,12 @@ def lecturer_detail(request, lecturer_id):
             tags = request.POST.getlist('outstanding_traits')[:3]
             comment = (request.POST.get('comment') or '').strip()
 
-            # ── LỌC TỪ KHIẾM NHÃ ──────────────────────────────
             ip = get_client_ip(request)
             if comment:
                 filter_result = check_and_filter_text(comment, ip, page='review')
                 comment = filter_result['filtered_text']
                 if filter_result['auto_blocked']:
                     return redirect('lecturer_detail', lecturer_id=lecturer_id)
-            # ───────────────────────────────────────────────────
 
             is_anonymous = request.POST.get('is_anonymous') == '1'
             reviewer_name = (request.POST.get('reviewer_name') or '').strip() if not is_anonymous else ''
@@ -236,7 +234,6 @@ def recalculate_place_ratings(place):
     comments = place.comments.all()
     total = comments.count()
 
-    # Lấy hoặc tạo Restaurant liên kết
     restaurant = place.restaurant
     if not restaurant:
         restaurant = Restaurant.objects.create(name=place.name)
@@ -288,7 +285,6 @@ def post_comment(request, place_id):
     display_name = request.POST.get("display_name", "").strip() or "Ẩn danh"
     is_anonymous = request.POST.get("is_anonymous") == "true"
 
-    # ── LỌC TỪ KHIẾM NHÃ ──────────────────────────────────────
     if content:
         filter_result = check_and_filter_text(content, ip, page='food_comment')
         content = filter_result['filtered_text']
@@ -297,7 +293,6 @@ def post_comment(request, place_id):
                 "error": "Bình luận chứa ngôn từ không phù hợp. Bạn đã bị tạm khóa.",
                 "blocked": True
             }, status=403)
-    # ───────────────────────────────────────────────────────────
 
     place, _ = Place.objects.get_or_create(id=place_id, defaults={'name': f'Place {place_id}'})
     user = request.user if request.user.is_authenticated else None
@@ -444,7 +439,6 @@ def post_living_comment(request, living_place_id):
     display_name = request.POST.get("display_name", "").strip() or "Ẩn danh"
     is_anonymous = request.POST.get("is_anonymous") == "true"
 
-    # ── LỌC TỪ KHIẾM NHÃ ──────────────────────────────────────
     if content:
         filter_result = check_and_filter_text(content, ip, page='living_comment')
         content = filter_result['filtered_text']
@@ -453,7 +447,6 @@ def post_living_comment(request, living_place_id):
                 "error": "Bình luận chứa ngôn từ không phù hợp. Bạn đã bị tạm khóa.",
                 "blocked": True
             }, status=403)
-    # ───────────────────────────────────────────────────────────
 
     living_place, _ = LivingPlace.objects.get_or_create(
         id=living_place_id, defaults={'name': f'Living Place {living_place_id}'}
@@ -558,6 +551,31 @@ def admin_ip_manager(request):
     blocked_ips = BlockedIP.objects.all().order_by('-created_at')
     violation_logs = IPViolationLog.objects.all().order_by('-created_at')[:100]
 
+    # ── TẤT CẢ IP COMMENT ──────────────────────────────────────
+    blocked_ip_set = set(BlockedIP.objects.values_list('ip_address', flat=True))
+    all_comments = []
+
+    for r in Review.objects.exclude(ip_address=None).order_by('-created_at')[:200]:
+        all_comments.append({
+            'ip': r.ip_address, 'type': 'review',
+            'content': r.comment, 'user': r.reviewer_name or 'Ẩn danh',
+            'created_at': r.created_at, 'is_blocked': r.ip_address in blocked_ip_set,
+        })
+    for c in Comment.objects.exclude(ip_address=None).order_by('-created_at')[:200]:
+        all_comments.append({
+            'ip': c.ip_address, 'type': 'food',
+            'content': c.content, 'user': c.display_name,
+            'created_at': c.created_at, 'is_blocked': c.ip_address in blocked_ip_set,
+        })
+    for c in LivingComment.objects.exclude(ip_address=None).order_by('-created_at')[:200]:
+        all_comments.append({
+            'ip': c.ip_address, 'type': 'living',
+            'content': c.content, 'user': c.display_name,
+            'created_at': c.created_at, 'is_blocked': c.ip_address in blocked_ip_set,
+        })
+    all_comments.sort(key=lambda x: x['created_at'], reverse=True)
+    # ────────────────────────────────────────────────────────────
+
     import datetime
     stats = {
         'total_blocked': blocked_ips.count(),
@@ -572,6 +590,7 @@ def admin_ip_manager(request):
     return render(request, 'admin_ip_manager.html', {
         'blocked_ips': blocked_ips,
         'violation_logs': violation_logs,
+        'all_comments': all_comments,
         'stats': stats,
         'message': message,
     })
