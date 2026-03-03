@@ -194,3 +194,67 @@ class LivingComment(models.Model):
 class LivingCommentImage(models.Model):
     comment = models.ForeignKey(LivingComment, on_delete=models.CASCADE, related_name="images")
     image = models.ImageField(upload_to="living_comment_images/")
+# ============================================================
+# THÊM VÀO CUỐI FILE models.py HIỆN TẠI CỦA BẠN
+# ============================================================
+
+# ===== DANH SÁCH TỪ KHIẾM NHÃ MẶC ĐỊNH =====
+BAD_WORDS = [
+    # Tiếng Việt
+    'đm', 'đcm', 'vcl', 'vkl', 'cl', 'đéo', 'địt', 'cặc', 'lồn', 'buồi',
+    'đụ', 'cứt', 'óc chó', 'súc vật', 'mẹ mày', 'con chó', 'thằng chó',
+    'ngu vl', 'ngu vcl', 'đần', 'khốn nạn', 'đồ chó', 'đồ ngu',
+    'vô học', 'mất dạy', 'thằng điên', 'con điên', 'thần kinh',
+    'cút', 'cút đi', 'chết đi', 'biến đi',
+    # Tiếng Anh
+    'fuck', 'shit', 'bitch', 'asshole', 'bastard', 'idiot', 'stupid',
+    'dumbass', 'moron', 'retard', 'crap', 'damn', 'hell',
+]
+
+
+# ===== MODEL BLOCKED IP =====
+class BlockedIP(models.Model):
+    """Lưu danh sách IP bị block."""
+    ip_address = models.GenericIPAddressField(unique=True)
+    reason = models.CharField(max_length=500, blank=True, default='')
+    blocked_by = models.CharField(max_length=50, default='admin')  # 'admin' hoặc 'auto'
+    violation_count = models.IntegerField(default=1)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"Blocked: {self.ip_address} ({self.reason})"
+
+
+# ===== MODEL IP LOG (nhật ký vi phạm) =====
+class IPViolationLog(models.Model):
+    """Ghi lại mỗi lần có ngôn từ vi phạm."""
+    ip_address = models.GenericIPAddressField()
+    page = models.CharField(max_length=100)          # 'review', 'food', 'living'
+    original_text = models.TextField()               # nội dung gốc
+    filtered_text = models.TextField()               # nội dung sau lọc
+    bad_words_found = models.JSONField(default=list) # danh sách từ tìm thấy
+    auto_blocked = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"Violation from {self.ip_address} on {self.page}"
+
+
+# ===== CẬP NHẬT CÁC MODEL CŨ: THÊM TRƯỜNG ip_address =====
+# Bạn cần thêm trường ip_address vào Review, Comment, LivingComment:
+#
+# Trong class Review, thêm:
+#   ip_address = models.GenericIPAddressField(null=True, blank=True)
+#
+# Trong class Comment, thêm:
+#   ip_address = models.GenericIPAddressField(null=True, blank=True)
+#
+# Trong class LivingComment, thêm:
+#   ip_address = models.GenericIPAddressField(null=True, blank=True)

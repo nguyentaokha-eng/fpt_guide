@@ -1,0 +1,482 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<style>
+  :root {
+    --bg: #0d0f14;
+    --card: #161a23;
+    --card2: #1e2433;
+    --border: #2a3145;
+    --accent: #4f8ef7;
+    --danger: #f75c5c;
+    --success: #4fcf8e;
+    --warn: #f7b84f;
+    --purple: #a855f7;
+    --text: #e8eaf0;
+    --text2: #8892a4;
+    --text3: #4a5568;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .ip-admin-wrap {
+    font-family: 'Courier New', monospace;
+    background: var(--bg);
+    min-height: 100vh;
+    padding: 32px 20px 80px;
+    color: var(--text);
+  }
+
+  /* ── HEADER ── */
+  .admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .admin-title {
+    font-size: 22px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #f75c5c, #f7b84f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .admin-subtitle { font-size: 12px; color: var(--text3); margin-top: 4px; }
+
+  .logout-btn {
+    padding: 8px 16px;
+    background: rgba(247,92,92,0.1);
+    border: 1px solid rgba(247,92,92,0.3);
+    color: var(--danger);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+    transition: all 0.2s;
+  }
+  .logout-btn:hover { background: rgba(247,92,92,0.2); }
+
+  /* ── TABS ── */
+  .tab-bar {
+    display: flex;
+    gap: 4px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 4px;
+    width: fit-content;
+    margin-bottom: 24px;
+  }
+  .tab-btn {
+    padding: 8px 18px;
+    border-radius: 7px;
+    border: none;
+    background: transparent;
+    color: var(--text2);
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn.active { background: var(--accent); color: #fff; }
+
+  /* ── STATS ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .stat-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-lbl { font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* ── CARD ── */
+  .section-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text);
+  }
+
+  /* ── BLOCK FORM ── */
+  .block-form-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .input-field {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .input-field:focus { border-color: var(--accent); }
+  .input-ip { width: 200px; }
+  .input-reason { flex: 1; min-width: 200px; }
+
+  .btn {
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+  .btn-block { background: var(--danger); color: #fff; }
+  .btn-unblock { background: var(--success); color: #000; }
+  .btn-primary { background: var(--accent); color: #fff; }
+
+  /* ── TOAST ── */
+  .toast-msg {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    margin-bottom: 14px;
+    background: rgba(79,207,142,0.15);
+    border: 1px solid rgba(79,207,142,0.3);
+    color: var(--success);
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn { from { opacity:0; transform: translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ── IP LIST ── */
+  .ip-list { display: flex; flex-direction: column; gap: 8px; }
+  .ip-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    flex-wrap: wrap;
+  }
+  .ip-row.auto-block { border-color: rgba(247,184,79,0.35); }
+  .ip-row.manual-block { border-color: rgba(247,92,92,0.35); }
+
+  .ip-addr {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--danger);
+    min-width: 140px;
+    font-family: 'Courier New', monospace;
+  }
+  .ip-meta { flex: 1; }
+  .ip-reason { font-size: 12px; color: var(--text2); margin-bottom: 2px; }
+  .ip-date { font-size: 11px; color: var(--text3); }
+  .badge {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-weight: 700;
+  }
+  .badge-auto { background: rgba(247,184,79,0.15); color: var(--warn); border: 1px solid rgba(247,184,79,0.3); }
+  .badge-admin { background: rgba(247,92,92,0.15); color: var(--danger); border: 1px solid rgba(247,92,92,0.3); }
+  .badge-count { background: rgba(79,142,247,0.15); color: var(--accent); border: 1px solid rgba(79,142,247,0.3); }
+  .unblock-btn {
+    padding: 5px 12px;
+    background: rgba(79,207,142,0.12);
+    border: 1px solid rgba(79,207,142,0.3);
+    color: var(--success);
+    border-radius: 7px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .unblock-btn:hover { background: rgba(79,207,142,0.22); }
+
+  /* ── LOG LIST ── */
+  .log-list { display: flex; flex-direction: column; gap: 6px; max-height: 400px; overflow-y: auto; }
+  .log-list::-webkit-scrollbar { width: 4px; }
+  .log-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  .log-item {
+    background: var(--card2);
+    border-radius: 8px;
+    padding: 10px 14px;
+    border-left: 3px solid var(--warn);
+    font-size: 12px;
+  }
+  .log-item.auto-blocked-log { border-color: var(--danger); }
+  .log-top {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+  .log-ip-tag { color: var(--accent); font-weight: 700; }
+  .log-page { color: var(--text3); }
+  .log-time { color: var(--text3); margin-left: auto; }
+  .log-words {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .word-tag {
+    background: rgba(247,92,92,0.12);
+    border: 1px solid rgba(247,92,92,0.25);
+    color: var(--danger);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 11px;
+  }
+  .log-original {
+    color: var(--text2);
+    font-style: italic;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 600px;
+  }
+
+  /* ── TABS PANEL ── */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .empty-hint { text-align: center; color: var(--text3); padding: 28px; font-size: 13px; }
+</style>
+
+<div class="ip-admin-wrap">
+  <div style="max-width: 1000px; margin: 0 auto;">
+
+    <!-- HEADER -->
+    <div class="admin-header">
+      <div>
+        <div class="admin-title">🛡️ IP Manager — FPT Guide</div>
+        <div class="admin-subtitle">Quản lý IP · Lọc ngôn từ · Nhật ký vi phạm</div>
+      </div>
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="logout">
+        <button type="submit" class="logout-btn">🚪 Đăng xuất</button>
+      </form>
+    </div>
+
+    <!-- MESSAGE -->
+    {% if message %}
+    <div class="toast-msg">{{ message }}</div>
+    {% endif %}
+
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num" style="color:var(--danger)">{{ stats.total_blocked }}</div>
+        <div class="stat-lbl">IP bị block</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" style="color:var(--warn)">{{ stats.auto_blocked }}</div>
+        <div class="stat-lbl">Auto-block</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" style="color:var(--accent)">{{ stats.manual_blocked }}</div>
+        <div class="stat-lbl">Admin block</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" style="color:var(--purple)">{{ stats.total_violations }}</div>
+        <div class="stat-lbl">Tổng vi phạm</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" style="color:var(--success)">{{ stats.violations_today }}</div>
+        <div class="stat-lbl">Vi phạm hôm nay</div>
+      </div>
+    </div>
+
+    <!-- TAB BAR -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('blocked')">🚫 IP bị block</button>
+      <button class="tab-btn" onclick="switchTab('logs')">📋 Nhật ký vi phạm</button>
+      <button class="tab-btn" onclick="switchTab('manual')">➕ Block thủ công</button>
+    </div>
+
+    <!-- TAB: BLOCKED IPs -->
+    <div class="tab-panel active" id="tab-blocked">
+      <div class="section-card">
+        <div class="section-title">🚫 Danh sách IP bị block ({{ blocked_ips|length }})</div>
+
+        {% if blocked_ips %}
+        <div class="ip-list">
+          {% for item in blocked_ips %}
+          <div class="ip-row {% if item.blocked_by == 'auto' %}auto-block{% else %}manual-block{% endif %}">
+            <div class="ip-addr">{{ item.ip_address }}</div>
+            <div class="ip-meta">
+              <div class="ip-reason">{{ item.reason|default:"Không có lý do" }}</div>
+              <div class="ip-date">{{ item.created_at|date:"d/m/Y H:i" }}</div>
+            </div>
+            <span class="badge {% if item.blocked_by == 'auto' %}badge-auto{% else %}badge-admin{% endif %}">
+              {{ item.blocked_by }}
+            </span>
+            <span class="badge badge-count">{{ item.violation_count }} vi phạm</span>
+            <button class="unblock-btn" onclick="unblockIP('{{ item.ip_address }}', this)">
+              ✓ Bỏ block
+            </button>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-hint">✨ Chưa có IP nào bị block</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- TAB: VIOLATION LOGS -->
+    <div class="tab-panel" id="tab-logs">
+      <div class="section-card">
+        <div class="section-title">📋 Nhật ký vi phạm gần đây (100 mục mới nhất)</div>
+
+        {% if violation_logs %}
+        <div class="log-list">
+          {% for log in violation_logs %}
+          <div class="log-item {% if log.auto_blocked %}auto-blocked-log{% endif %}">
+            <div class="log-top">
+              <span class="log-ip-tag">{{ log.ip_address }}</span>
+              <span class="log-page">{{ log.page }}</span>
+              {% if log.auto_blocked %}
+              <span class="badge badge-auto">Auto-blocked</span>
+              {% endif %}
+              <span class="log-time">{{ log.created_at|date:"d/m H:i" }}</span>
+            </div>
+            <div class="log-words">
+              {% for word in log.bad_words_found %}
+              <span class="word-tag">{{ word }}</span>
+              {% endfor %}
+            </div>
+            <div class="log-original" title="{{ log.original_text }}">
+              "{{ log.original_text|truncatechars:120 }}"
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-hint">✨ Chưa có vi phạm nào được ghi lại</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- TAB: MANUAL BLOCK -->
+    <div class="tab-panel" id="tab-manual">
+      <div class="section-card">
+        <div class="section-title">➕ Block IP thủ công</div>
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="block">
+          <div class="block-form-row">
+            <input type="text" name="ip_address" class="input-field input-ip"
+                   placeholder="192.168.1.1" required pattern="\d{1,3}(\.\d{1,3}){3}|[0-9a-fA-F:]+">
+            <input type="text" name="reason" class="input-field input-reason"
+                   placeholder="Lý do block (VD: spam, ngôn từ xúc phạm...)">
+            <button type="submit" class="btn btn-block">🚫 Block IP</button>
+          </div>
+          <div style="font-size:11px; color:var(--text3);">
+            Nhập IPv4 (VD: 123.45.67.89) hoặc IPv6
+          </div>
+        </form>
+      </div>
+
+      <div class="section-card">
+        <div class="section-title">🔓 Bỏ block IP</div>
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="unblock">
+          <div class="block-form-row">
+            <input type="text" name="ip_address" class="input-field input-ip"
+                   placeholder="192.168.1.1" required>
+            <button type="submit" class="btn btn-unblock">✓ Bỏ block</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    const tabs = ['blocked', 'logs', 'manual'];
+    b.classList.toggle('active', tabs[i] === name);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+function unblockIP(ip, btn) {
+  if (!confirm(`Bỏ block IP: ${ip}?`)) return;
+
+  fetch('/admin/api/block-ip/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': getCsrf() },
+    body: JSON.stringify({ action: 'unblock', ip_address: ip })
+  })
+  .then(r => r.json())
+  .then(d => {
+    if (d.success) {
+      // Xóa row khỏi DOM
+      btn.closest('.ip-row').style.opacity = '0';
+      btn.closest('.ip-row').style.transition = 'opacity 0.3s';
+      setTimeout(() => btn.closest('.ip-row').remove(), 300);
+      showToast(`✅ Đã bỏ block ${ip}`);
+    } else {
+      showToast(`❌ ${d.message}`, 'error');
+    }
+  })
+  .catch(() => showToast('❌ Lỗi kết nối', 'error'));
+}
+
+function getCsrf() {
+  return document.cookie.split('; ').find(r => r.startsWith('csrftoken='))?.split('=')[1] || '';
+}
+
+function showToast(msg, type = 'success') {
+  const t = document.createElement('div');
+  t.className = 'toast-msg';
+  if (type === 'error') {
+    t.style.background = 'rgba(247,92,92,0.15)';
+    t.style.borderColor = 'rgba(247,92,92,0.3)';
+    t.style.color = 'var(--danger)';
+  }
+  t.textContent = msg;
+  document.querySelector('.ip-admin-wrap > div').insertBefore(
+    t, document.querySelector('.stats-row')
+  );
+  setTimeout(() => t.remove(), 3000);
+}
+</script>
+
+{% endblock %}
