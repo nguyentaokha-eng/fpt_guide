@@ -30,6 +30,6 @@ urlpatterns = [
     path('living-comment/list/<int:living_place_id>/', views.get_living_comments, name='get_living_comments'),
 
     # Admin IP Manager
-    path('admin/ip-manager/', views.admin_ip_manager, name='admin_ip_manager'),
-    path('admin/api/block-ip/', views.api_block_ip, name='api_block_ip'),
+    path('ip-admin/', views.admin_ip_manager, name='admin_ip_manager'),
+    path('ip-admin/api/block-ip/', views.api_block_ip, name='api_block_ip'),
 ]
