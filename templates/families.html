@@ -41,6 +41,58 @@
 </style>
 
 <style>
+    /* ===== CSS HELPERS: NEON GLOW FOR CLUB CARDS ===== */
+    /* New modern glow system using CSS variables - see .card-front styles below */
+    
+    /* Legacy classes kept for compatibility */
+    .neon-purple { --club-color: #6f42c1; }
+    .neon-blue { --club-color: #4ea3ff; }
+    
+    /* ===== GLOW EFFECTS ===== */
+    
+    /* TEXT GLOW - Now handled dynamically via inline styles with hex colors */
+    /* See card generation JavaScript for text-shadow values */
+    
+    /* IMAGE GLOW ON HOVER - Now uses CSS filters */
+    /* See .img-container img:hover above */
+    
+    /* BUTTON GLOW EFFECTS - Now uses CSS variables */
+    /* See .btn-visit above */
+    
+    /* ENHANCED FILTER BUTTON GLOW */
+    .filter-btn:hover {
+        box-shadow: 0 0 15px rgba(111, 66, 193, 0.5), 0 0 30px rgba(111, 66, 193, 0.3);
+        border-color: #6f42c1;
+    }
+    
+    /* SEARCH INPUT GLOW */
+    .smart-search-input:focus {
+        border-color: #6f42c1;
+        box-shadow: 0 0 15px rgba(111, 66, 193, 0.4), 0 0 30px rgba(111, 66, 193, 0.2), inset 0 0 10px rgba(111, 66, 193, 0.1);
+    }
+    
+    /* CARD FLIP GLOW ANIMATION */
+    .club-card:hover .card-front {
+        box-shadow: 0 0 25px rgba(111, 66, 193, 0.5), 0 15px 35px rgba(0,0,0,0.5);
+    }
+    
+    .club-card:hover .card-back {
+        box-shadow: 0 0 30px rgba(111, 66, 193, 0.7), 0 15px 40px rgba(0,0,0,0.5);
+    }
+    
+    /* VISIT BUTTON GLOW */
+    .btn-visit {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    .btn-visit:hover {
+        background: #0b1220;
+        color: #fff;
+        box-shadow: 0 0 15px rgba(111, 66, 193, 0.6), 0 0 30px rgba(111, 66, 193, 0.4), 0 0 45px rgba(111, 66, 193, 0.2);
+        transform: translateY(-2px);
+    }
+    
     /* ===== GIAO DIỆN CHUNG ===== */
     .filter-section { background: #0b1220; padding: 40px 20px 20px; text-align: center; }
     .filter-title { 
@@ -76,7 +128,7 @@
     .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
     .club-card:hover .card-inner { transform: rotateY(180deg); }
     .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
-    .card-front { background: #fff ; border: 1px solid #2d3748; display: flex; flex-direction: column; }
+    .card-front { background: #fff; border: 1px solid #2d3748; display: flex; flex-direction: column; }
     .img-container { width: 100%; height: 70%; overflow: hidden; }
     .img-container img { width: 100%; height: 100%; object-fit: cover; }
     .info-front { padding: 20px; text-align: center; }
@@ -96,13 +148,13 @@
     </div>
 
     <div class="filter-container">
-        <button class="filter-btn active" data-filter="all">Tất cả</button>
-        <button class="filter-btn" data-filter="Kỹ năng mềm">Kỹ năng mềm</button>
-        <button class="filter-btn" data-filter="Sáng tạo">Sáng tạo</button>
-        <button class="filter-btn" data-filter="Việc làm">Việc làm</button>
-        <button class="filter-btn" data-filter="Học thuật">Học thuật</button>
-        <button class="filter-btn" data-filter="Thể lực">Thể lực</button>
-        <button class="filter-btn" data-filter="Nghệ thuật">Nghệ thuật</button>
+        <button class="filter-btn btn-glow active" data-filter="all">Tất cả</button>
+        <button class="filter-btn btn-glow" data-filter="Kỹ năng mềm">Kỹ năng mềm</button>
+        <button class="filter-btn btn-glow" data-filter="Sáng tạo">Sáng tạo</button>
+        <button class="filter-btn btn-glow" data-filter="Việc làm">Việc làm</button>
+        <button class="filter-btn btn-glow" data-filter="Học thuật">Học thuật</button>
+        <button class="filter-btn btn-glow" data-filter="Thể lực">Thể lực</button>
+        <button class="filter-btn btn-glow" data-filter="Nghệ thuật">Nghệ thuật</button>
     </div>
 </div>
 
@@ -118,7 +170,7 @@ const clubData = [
     name: "FUDA Japanese Club",
     short: "Mirai JC",
     tags: ["Học thuật", "Giao lưu", "Nghệ thuật"],
-    keywords: ["nhật", "anime", "manga", "văn hóa", "tiếng nhật", "cosplay", "wibu", "japan"],
+    keywords: ["nhật","anime","manga","cosplay","wibu","văn hóa nhật","tiếng nhật","japan","đất nước nhật bản","otaku","light novel","truyện tranh nhật","giao lưu","nghệ thuật","học thuật","câu lạc bộ nhật bản","văn hóa anime"],
     img: STATIC_URL + "image/clubs/3.jpg",
     link: "https://www.facebook.com/MiraiJClub"
   },
@@ -126,7 +178,7 @@ const clubData = [
     name: "FPTU Developer Club",
     short: "DEVER",
     tags: ["Học thuật", "Việc làm", "Kỹ năng mềm"],
-    keywords: ["code", "lập trình", "it", "web", "phần mềm", "app", "thuật toán", "developer"],
+    keywords: ["code","lập trình","developer","it","web","app","software","thuật toán","coding","technology","công nghệ","lập trình viên","phát triển phần mềm","kỹ sư phần mềm","backend","frontend","fullstack","việc làm","ngành công nghệ"],
     img: STATIC_URL + "image/clubs/13.jpg",
     link: "https://www.facebook.com/FPTUDever/"
   },
@@ -134,7 +186,7 @@ const clubData = [
     name: "Security Research Club",
     short: "SRC",
     tags: ["Học thuật", "Việc làm"],
-    keywords: ["security", "hack", "an ninh mạng", "bảo mật", "linux", "hacker"],
+    keywords: ["security","hack","an ninh mạng","bảo mật","linux","hacker","cybersecurity","pentest","penetration testing","kiểm thử xâm nhập","ethical hacking","bảo mật hệ thống","hệ điều hành linux","học thuật","việc làm"],
     img: STATIC_URL + "image/clubs/20.jpg",
     link: "https://www.facebook.com/SybP3n0r"
   },
@@ -142,7 +194,7 @@ const clubData = [
     name: "Hospitality & Tourism Skills",
     short: "HTS",
     tags: ["Kỹ năng mềm", "Giao lưu", "Việc làm"],
-    keywords: ["du lịch", "dịch vụ", "khách sạn", "pha chế", "hospitality"],
+    keywords: ["du lịch","dịch vụ","khách sạn","hospitality","ngành khách sạn","pha chế","barista","bartender","tourism","ngành du lịch","service","dịch vụ khách hàng","kỹ năng mềm","giao lưu","việc làm"],
     img: STATIC_URL + "image/clubs/6.jpg",
     link: "https://www.facebook.com/profile.php?id=100077055935304"
   },
@@ -150,7 +202,7 @@ const clubData = [
     name: "Kinh doanh & Marketing",
     short: "RES-UP",
     tags: ["Sáng tạo", "Việc làm", "Kỹ năng mềm"],
-    keywords: ["marketing", "kinh doanh", "startup", "content", "quảng cáo"],
+    keywords: ["marketing","kinh doanh","startup","khởi nghiệp","content","nội dung","quảng cáo","business","doanh nghiệp","creative","sáng tạo","branding","xây dựng thương hiệu","digital marketing","kỹ năng mềm","việc làm"],
     img: STATIC_URL + "image/clubs/18.jpg",
     link: "https://www.facebook.com/resup.fudn"
   },
@@ -158,7 +210,7 @@ const clubData = [
     name: "Financial Investing Club",
     short: "FIC",
     tags: ["Học thuật", "Việc làm"],
-    keywords: ["đầu tư", "chứng khoán", "tài chính", "coin", "forex"],
+    keywords: ["đầu tư","chứng khoán","tài chính","coin","crypto","tiền điện tử","forex","ngoại hối","stock","cổ phiếu","finance","tài chính doanh nghiệp","trading","giao dịch","học thuật","việc làm"],
     img: STATIC_URL + "image/clubs/12.jpg",
     link: "https://www.facebook.com/FIC.fuda"
   },
@@ -166,7 +218,7 @@ const clubData = [
     name: "FPTU Football Club",
     short: "FUFC",
     tags: ["Thể lực", "Hướng ngoại", "Giao lưu"],
-    keywords: ["bóng đá", "đá banh", "sport", "football"],
+    keywords: ["bóng đá","football","sport","thể thao","đá banh","đội bóng","football club","thi đấu","giải đấu","giao lưu","thể lực","hướng ngoại"],
     img: STATIC_URL + "image/clubs/15.jpg",
     link: "https://www.facebook.com/fptuniversityfootballclub"
   },
@@ -174,7 +226,7 @@ const clubData = [
     name: "FUDN Vovinam Club",
     short: "FVC",
     tags: ["Thể lực", "Kỹ năng mềm"],
-    keywords: ["võ", "vovinam", "tự vệ"],
+    keywords: ["võ","vovinam","tự vệ","võ thuật","martial art","võ việt nam","võ tự vệ","tập luyện","thể lực","kỹ năng mềm"],
     img: STATIC_URL + "image/clubs/8.jpg",
     link: "https://www.facebook.com/fvcdn"
   },
@@ -182,7 +234,7 @@ const clubData = [
     name: "FPTU Badminton Club",
     short: "FUB",
     tags: ["Thể lực", "Giao lưu"],
-    keywords: ["cầu lông", "badminton"],
+    keywords: ["cầu lông","badminton","thể thao","sport","đánh cầu","thi đấu","giao lưu","thể lực"],
     img: STATIC_URL + "image/clubs/19.jpg",
     link: "https://www.facebook.com/FUBadmintonClubDN"
   },
@@ -190,7 +242,7 @@ const clubData = [
     name: "FPT University Volleyball",
     short: "FUV",
     tags: ["Thể lực", "Giao lưu"],
-    keywords: ["bóng chuyền", "volleyball"],
+    keywords: ["bóng chuyền","volleyball","thể thao","sport","thi đấu","đội bóng chuyền","giao lưu","thể lực"],
     img: STATIC_URL + "image/clubs/9.jpg",
     link: "https://www.facebook.com/clbbongchuyenfptdn"
   },
@@ -198,7 +250,7 @@ const clubData = [
     name: "FUDA Hoops Gene",
     short: "FHG",
     tags: ["Thể lực", "Hướng ngoại"],
-    keywords: ["bóng rổ", "basketball"],
+    keywords: ["bóng rổ","basketball","sport","thể thao","đội bóng rổ","thi đấu","giải đấu","hướng ngoại","thể lực"],
     img: STATIC_URL + "image/clubs/11.jpg",
     link: "https://www.facebook.com/fudnbasketball"
   },
@@ -206,7 +258,7 @@ const clubData = [
     name: "Nhị khúc côn",
     short: "FDN Nunchaku",
     tags: ["Thể lực", "Nghệ thuật"],
-    keywords: ["nhị khúc", "võ thuật", "biểu diễn"],
+    keywords: ["nhị khúc","nunchaku","võ thuật","martial art","biểu diễn","performance","kỹ thuật nhị khúc","tập luyện","thể lực","nghệ thuật"],
     img: STATIC_URL + "image/clubs/17.jpg",
     link: "https://www.facebook.com/profile.php?id=100063567160734"
   },
@@ -214,7 +266,7 @@ const clubData = [
     name: "CLB Võ cổ truyền",
     short: "FPTU VCT",
     tags: ["Thể lực", "Kỹ năng mềm"],
-    keywords: ["võ", "cổ truyền"],
+    keywords: ["võ","võ cổ truyền","martial art","võ thuật","võ việt nam","truyền thống","tập luyện","thể lực","kỹ năng mềm"],
     img: STATIC_URL + "image/clubs/10.jpg",
     link: "https://www.facebook.com/profile.php?id=100092324607122"
   },
@@ -222,7 +274,7 @@ const clubData = [
     name: "FUDA Event Club",
     short: "EVO",
     tags: ["Sáng tạo", "Hướng ngoại", "Kỹ năng mềm"],
-    keywords: ["event", "sự kiện", "tổ chức"],
+    keywords: ["event","sự kiện","tổ chức sự kiện","event planning","lên kế hoạch sự kiện","teamwork","làm việc nhóm","sáng tạo","creative","hướng ngoại","kỹ năng mềm"],
     img: STATIC_URL + "image/clubs/21.jpg",
     link: "https://www.facebook.com/EVOEventClub"
   },
@@ -230,7 +282,7 @@ const clubData = [
     name: "FPTU Media",
     short: "FUM",
     tags: ["Sáng tạo", "Việc làm", "Nghệ thuật"],
-    keywords: ["media", "chụp ảnh", "quay phim", "edit"],
+    keywords: ["media","truyền thông","chụp ảnh","quay phim","edit","chỉnh sửa video","video","photo","nhiếp ảnh","content media","sáng tạo","nghệ thuật","việc làm"],
     img: STATIC_URL + "image/clubs/14.jpg",
     link: "https://www.facebook.com/FUMedia"
   },
@@ -238,7 +290,7 @@ const clubData = [
     name: "Dance For Passion Club",
     short: "DFP",
     tags: ["Nghệ thuật", "Hướng ngoại", "Thể lực"],
-    keywords: ["dance", "nhảy", "hiphop"],
+    keywords: ["dance","nhảy","hiphop","nhảy hiphop","choreography","biên đạo","dancer","vũ công","nghệ thuật","thể lực","hướng ngoại"],
     img: STATIC_URL + "image/clubs/16.jpg",
     link: "https://www.facebook.com/fudadancingclub"
   },
@@ -246,7 +298,7 @@ const clubData = [
     name: "Traditional Instrument",
     short: "TIA",
     tags: ["Nghệ thuật", "Học thuật", "Giao lưu"],
-    keywords: ["nhạc cụ", "truyền thống"],
+    keywords: ["nhạc cụ","instrument","âm nhạc","music","truyền thống","nhạc cụ dân tộc","biểu diễn","giao lưu","nghệ thuật","học thuật"],
     img: STATIC_URL + "image/clubs/2.jpg",
     link: "https://www.facebook.com/tiaclubnhaccudantoc"
   },
@@ -254,7 +306,7 @@ const clubData = [
     name: "FUDA MC Club",
     short: "MIC",
     tags: ["Kỹ năng mềm", "Nghệ thuật", "Hướng ngoại"],
-    keywords: ["mc", "dẫn chương trình", "nói trước đám đông"],
+    keywords: ["mc","dẫn chương trình","host","người dẫn chương trình","public speaking","nói trước đám đông","presentation","thuyết trình","kỹ năng mềm","hướng ngoại","nghệ thuật"],
     img: STATIC_URL + "image/clubs/4.jpg",
     link: "https://www.facebook.com/michome.vn"
   },
@@ -262,7 +314,7 @@ const clubData = [
     name: "FUDA Graphic Design",
     short: "FGD",
     tags: ["Sáng tạo", "Việc làm", "Học thuật"],
-    keywords: ["design", "đồ họa", "photoshop", "illustrator"],
+    keywords: ["design","đồ họa","photoshop","illustrator","graphic design","thiết kế đồ họa","creative","sáng tạo","visual design","thiết kế hình ảnh","việc làm","học thuật"],
     img: STATIC_URL + "image/clubs/22.jpg",
     link: "https://www.facebook.com/FudaGraphicDesign.FGD"
   },
@@ -270,7 +322,7 @@ const clubData = [
     name: "Xưởng làm nhạc",
     short: "RHYTHM",
     tags: ["Sáng tạo", "Nghệ thuật", "Giao lưu"],
-    keywords: ["nhạc", "studio", "sáng tác"],
+    keywords: ["nhạc","music","studio","phòng thu","sáng tác","songwriting","music production","sản xuất âm nhạc","beat","làm beat","giao lưu","sáng tạo","nghệ thuật"],
     img: STATIC_URL + "image/clubs/5.jpg",
     link: "https://www.facebook.com/xuonglamnhac.fptdn"
   },
@@ -278,7 +330,7 @@ const clubData = [
     name: "Fuda's Creative Space",
     short: "FCS",
     tags: ["Giao lưu", "Sáng tạo", "Kỹ năng mềm"],
-    keywords: ["sáng tạo", "workshop", "ý tưởng"],
+    keywords: ["sáng tạo","creative","workshop","hội thảo thực hành","ý tưởng","idea","community","cộng đồng","giao lưu","kỹ năng mềm"],
     img: STATIC_URL + "image/clubs/7.jpg",
     link: "https://www.facebook.com/fudacreativespace"
   },
@@ -286,7 +338,7 @@ const clubData = [
     name: "FPT's Kindness Krew",
     short: "F2K",
     tags: ["Giao lưu", "Kỹ năng mềm", "Hướng ngoại"],
-    keywords: ["tình nguyện", "cộng đồng"],
+    keywords: ["tình nguyện","volunteer","charity","từ thiện","community service","phục vụ cộng đồng","cộng đồng","hoạt động xã hội","giao lưu","kỹ năng mềm","hướng ngoại"],
     img: STATIC_URL + "image/clubs/1.jpg",
     link: "https://www.facebook.com/FPT.KINDNESS.KREW"
   }
@@ -328,7 +380,66 @@ function render() {
     }
 
     // TẠO NỘI DUNG CARD
-    const cardHtml = filtered.map(club => `
+    // Helper to convert hex to RGB
+    function hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? 
+            `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : 
+            '111, 66, 193'; // default purple
+    }
+    
+    const cardHtml = filtered.map((club, index) => {
+        // Card color schemes with exact colors from user
+        const cardSchemes = [
+            // Card 0: FUDA Japanese Club - Mirai JC
+            { border: '#e4572e', title: '#c73e1d', tags: '#e4572e', bg: '#0f0f1a' },
+            // Card 1: FPTU Developer Club - DEVER
+            { border: '#4ea3ff', title: '#2d7dd2', tags: '#4ea3ff', bg: '#0f0f1a' },
+            // Card 2: Security Research Club - SRC
+            { border: '#6fffe9', title: '#6fffe9', tags: '#6fffe9', bg: '#0f0f1a' },
+            // Card 3: Hospitality & Tourism - HTS
+            { border: '#ffd166', title: '#ffd166', tags: '#ffd166', bg: '#0f0f1a' },
+            // Card 4: RES-UP Marketing
+            { border: '#ff3c38', title: '#ff3c38', tags: '#ff3c38', bg: '#0f0f1a' },
+            // Card 5: Financial Investing - FIC
+            { border: '#2cff88', title: '#2cff88', tags: '#2cff88', bg: '#0f0f1a' },
+            // Card 6: FPTU Football - FUFC
+            { border: '#ff7a2f', title: '#ff7a2f', tags: '#ff7a2f', bg: '#0f0f1a' },
+            // Card 7: FUDN Vovinam - FVC
+            { border: '#3db2ff', title: '#2b7bbf', tags: '#3db2ff', bg: '#0f0f1a' },
+            // Card 8: FPTU Badminton - FUB
+            { border: '#ff8c32', title: '#ff8c32', tags: '#ff8c32', bg: '#0f0f1a' },
+            // Card 9: FPT Volleyball - FUV
+            { border: '#6ed4c7', title: '#4ecdc4', tags: '#6ed4c7', bg: '#0f0f1a' },
+            // Card 10: FUDA Hoops - FHG
+            { border: '#ff9f1c', title: '#ff9f1c', tags: '#ff9f1c', bg: '#0f0f1a' },
+            // Card 11: Nhị khúc côn - FDN
+            { border: '#ff2f5d', title: '#ff2f5d', tags: '#ff2f5d', bg: '#0f0f1a' },
+            // Card 12: CLB Võ cổ truyền - VCT
+            { border: '#3a66ff', title: '#3a66ff', tags: '#3a66ff', bg: '#0f0f1a' },
+            // Card 13: FUDA Event Club - EVO
+            { border: '#ffd84a', title: '#ffd84a', tags: '#ffd84a', bg: '#0f0f1a' },
+            // Card 14: FPTU Media - FUM
+            { border: '#ff4040', title: '#ff4040', tags: '#ff4040', bg: '#0f0f1a' },
+            // Card 15: Dance For Passion - DFP
+            { border: '#ff3b3b', title: '#ff3b3b', tags: '#ff3b3b', bg: '#0f0f1a' },
+            // Card 16: Traditional Instrument - TIA
+            { border: '#e6c68a', title: '#e6c68a', tags: '#e6c68a', bg: '#0f0f1a' },
+            // Card 17: FUDA MC Club - MIC
+            { border: '#f5c542', title: '#f5c542', tags: '#f5c542', bg: '#0f0f1a' },
+            // Card 18: FUDA Graphic Design - FGD
+            { border: '#d52bff', title: '#d52bff', tags: '#d52bff', bg: '#0f0f1a' },
+            // Card 19: Xưởng làm nhạc - RHYTHM
+            { border: '#ff7a18', title: '#ff7a18', tags: '#ff7a18', bg: '#0f0f1a' },
+            // Card 20: Fuda's Creative Space - FCS
+            { border: '#ffe066', title: '#ffe066', tags: '#ffe066', bg: '#0f0f1a' },
+            // Card 21: FPT's Kindness Krew - F2K
+            { border: '#4cd964', title: '#2bb84f', tags: '#4cd964', bg: '#0f0f1a' }
+        ];
+        
+        const scheme = cardSchemes[index % cardSchemes.length];
+        
+        return `
         <div class="club-card">
             <div class="card-inner">
                 <div class="card-front">
@@ -345,7 +456,7 @@ function render() {
                 </div>
             </div>
         </div>
-    `).join('');
+    `}).join('');
 
     // NHÂN BẢN 3 LẦN ĐỂ TẠO HIỆU ỨNG VÒNG LẶP VÔ TẬN
     track.innerHTML = cardHtml + cardHtml + cardHtml;
