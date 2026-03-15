@@ -20,10 +20,12 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     'fpt-guide-campus-dn.up.railway.app',
+    '.onrender.com',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://fpt-guide-campus-dn.up.railway.app",
+    "https://*.onrender.com",
 ]
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
