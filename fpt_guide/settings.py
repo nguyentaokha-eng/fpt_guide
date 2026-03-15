@@ -19,7 +19,7 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'fpt-guide-campus-dn.up.railway.app',
+    'fpt-guide.onrender.com/',
     '.onrender.com',
 ]
 
