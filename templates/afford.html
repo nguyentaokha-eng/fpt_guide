@@ -144,15 +144,13 @@
 
     /* Icon backgrounds - light theme */
     .food-card .afford-card-icon {
-        background: linear-gradient(135deg, rgba(25,227,178,0.15), rgba(25,227,178,0.05));
-        border: 1px solid rgba(25,227,178,0.3);
-        color: #19E3B2;
+        background: rgba(25, 227, 178, 0.15);
+        color: #14b8a6;
     }
 
     .living-card .afford-card-icon {
-        background: linear-gradient(135deg, rgba(46,163,255,0.15), rgba(46,163,255,0.05));
-        border: 1px solid rgba(46,163,255,0.3);
-        color: #2EA3FF;
+        background: rgba(59, 130, 246, 0.15);
+        color: #3b82f6;
     }
 
     .afford-card h3 {
@@ -434,7 +432,7 @@
 
             <!-- Card 1: Food -->
             <a href="{% url 'Afford_food' %}" class="afford-card food-card">
-                <div class="afford-card-icon">🍽️</div>
+                <div class="afford-card-icon"><i class="bi bi-cup-hot-fill"></i></div>
                 <h3>Ăn Uống</h3>
                 <span class="afford-card-price">
                     <span>💵</span> 25k – 50k / bữa
@@ -448,7 +446,7 @@
 
             <!-- Card 2: Living -->
             <a href="{% url 'Afford_living' %}" class="afford-card living-card">
-                <div class="afford-card-icon">🏠</div>
+                <div class="afford-card-icon"><i class="bi bi-house-heart-fill"></i></div>
                 <h3>Nơi Ở</h3>
                 <span class="afford-card-price">
                     <span>🏢</span> 800k – 2tr / tháng
