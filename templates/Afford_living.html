@@ -995,7 +995,7 @@ const DATA = [
         address: "Ngũ Hành Sơn, Đà Nẵng",
         price: "2.6tr - 3tr",
         areaValue: "20-30m²",
-        distance: "800m",
+        distance: "850m",
         capacity: "1-2 người",
         keywords: ["bobi", "house", "ngũ hành sơn"],
         tags: ["Phòng trọ", "Ngũ Hành Sơn"],
@@ -1024,7 +1024,7 @@ const DATA = [
         address: "Ngũ Hành Sơn, Đà Nẵng",
         price: "3.5tr",
         areaValue: "35-45m²",
-        distance: "1km",
+        distance: "400m",
         capacity: "2 người",
         keywords: ["đình vũ", "căn hộ", "ngũ hành sơn"],
         tags: ["Căn hộ", "Ngũ Hành Sơn"],
@@ -1053,7 +1053,7 @@ const DATA = [
         address: "Ngũ Hành Sơn, Đà Nẵng",
         price: "3.5tr",
         areaValue: "40-50m²",
-        distance: "1.2km",
+        distance: "350m",
         capacity: "3 người",
         keywords: ["tèo", "fpt", "apartment", "ngũ hành sơn"],
         tags: ["Căn hộ", "Ngũ Hành Sơn"],
@@ -1082,7 +1082,7 @@ const DATA = [
         address: "Ngũ Hành Sơn, Đà Nẵng",
         price: "3tr - 4.5tr",
         areaValue: "25-35m²",
-        distance: "700m",
+        distance: "100m",
         capacity: "1-2 người",
         keywords: ["an an", "cafe", "phòng trọ", "ngũ hành sơn"],
         tags: ["Phòng trọ", "Ngũ Hành Sơn"],
@@ -1111,7 +1111,7 @@ const DATA = [
         address: "Ngũ Hành Sơn, Đà Nẵng",
         price: "4.5tr",
         areaValue: "45-55m²",
-        distance: "1km",
+        distance: "600m",
         capacity: "2 người",
         keywords: ["dtt", "apartment", "ngũ hành sơn"],
         tags: ["Căn hộ", "Ngũ Hành Sơn"],
@@ -1140,7 +1140,7 @@ const DATA = [
         address: "Ngũ Hành Sơn, Đà Nẵng",
         price: "3tr5tr",
         areaValue: "18-25m²",
-        distance: "~100m",
+        distance: "100m",
         capacity: "1-2 người",
         keywords: ["Minh Trí", "Minh Ý", "Ngũ Hành Sơn", "trọ"],
         tags: ["Phòng trọ", "Ngũ Hành Sơn"],
@@ -1169,7 +1169,7 @@ const DATA = [
         address: "Ngũ Hành Sơn, Đà Nẵng",
         price: "3.2tr",
         areaValue: "35-45m²",
-        distance: "900m",
+        distance: "1,4km",
         capacity: "2 người",
         keywords: ["bảo home", "home 2", "ngũ hành sơn"],
         tags: ["Căn hộ", "Ngũ Hành Sơn"],
@@ -1287,22 +1287,23 @@ function render() {
         const imgSrc = p.photos.place[0] || '';
         
         container.innerHTML += `
-            <div class="accommodation-card" onclick="openDetail(${p.id})" style="min-height: 320px;">
-                <div class="card-image-placeholder" style="width: 100%; height: 180px; background: #e5e7eb; display: flex; align-items: center; justify-content: center; font-size: 48px;">
-                    ${imgSrc ? `<img src="${imgSrc}" alt="${p.name}" style="width: 100%; height: 100%; object-fit: cover;">` : '🏠'}
-                </div>
-                <div class="accommodation-info">
-                    <div class="accommodation-name">${p.name}</div>
-                    <div class="accommodation-tags">
-                        ${p.tags.slice(0, 3).map(t => `<span class="tag-badge ${t === 'KTX' ? 'green' : t === 'Phòng trọ' ? 'blue' : 'orange'}">${t}</span>`).join('')}
-                    </div>
-                    <div class="accommodation-rating">
-                        <span class="rating-stars">⭐ ${overall}</span>
-                        <span>${reviewCount} đánh giá</span>
-                    </div>
-                </div>
+    <div class="accommodation-card" onclick="openDetail(${p.id})" style="min-height: 320px;">
+        <div class="card-image-placeholder" style="width: 100%; height: 180px; background: #e5e7eb; display: flex; align-items: center; justify-content: center; font-size: 48px;">
+            ${imgSrc ? `<img src="${imgSrc}" alt="${p.name}" style="width: 100%; height: 100%; object-fit: cover;">` : '🏠'}
+        </div>
+        <div class="accommodation-info">
+            <div class="accommodation-name">${p.name}</div>
+            <div class="accommodation-tags">
+                ${p.tags.slice(0, 3).map(t => `<span class="tag-badge ${t === 'KTX' ? 'green' : t === 'Phòng trọ' ? 'blue' : 'orange'}">${t}</span>`).join('')}
             </div>
-        `;
+            <div style="font-size: 13px; color: #6b7280; margin-bottom: 8px;">📍 ${p.address} &nbsp;·&nbsp; 🚗 ${p.distance}</div>
+            <div class="accommodation-rating">
+                <span class="rating-stars">⭐ ${overall}</span>
+                <span>${reviewCount} đánh giá</span>
+            </div>
+        </div>
+    </div>
+`;
     });
     
     console.log('Cards rendered successfully');

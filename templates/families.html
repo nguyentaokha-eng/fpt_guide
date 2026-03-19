@@ -23,7 +23,7 @@
     background: transparent !important;
 }
     
-    .premium-bg {
+.premium-bg {
     position: fixed;
     inset: 0;
     z-index: -1;
@@ -45,7 +45,6 @@
 }
 .vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.05) 100%); }
 
-/* Stars */
 .star-dot {
     position: absolute;
     width: 3px;
@@ -72,46 +71,27 @@
 </style>
 
 <style>
-    /* ===== CSS HELPERS: NEON GLOW FOR CLUB CARDS ===== */
-    /* New modern glow system using CSS variables - see .card-front styles below */
-    
-    /* Legacy classes kept for compatibility */
     .neon-purple { --club-color: #6f42c1; }
     .neon-blue { --club-color: #4ea3ff; }
-    
-    /* ===== GLOW EFFECTS ===== */
-    
-    /* TEXT GLOW - Now handled dynamically via inline styles with hex colors */
-    /* See card generation JavaScript for text-shadow values */
-    
-    /* IMAGE GLOW ON HOVER - Now uses CSS filters */
-    /* See .img-container img:hover above */
-    
-    /* BUTTON GLOW EFFECTS - Now uses CSS variables */
-    /* See .btn-visit above */
-    
-    /* ENHANCED FILTER BUTTON GLOW */
+
     .filter-btn:hover {
         box-shadow: 0 0 15px rgba(111, 66, 193, 0.5), 0 0 30px rgba(111, 66, 193, 0.3);
         border-color: #6f42c1;
     }
-    
-    /* SEARCH INPUT GLOW */
+
     .smart-search-input:focus {
         border-color: #6f42c1;
         box-shadow: 0 0 15px rgba(111, 66, 193, 0.4), 0 0 30px rgba(111, 66, 193, 0.2), inset 0 0 10px rgba(111, 66, 193, 0.1);
     }
-    
-    /* CARD FLIP GLOW ANIMATION */
+
     .club-card:hover .card-front {
         box-shadow: 0 0 25px rgba(111, 66, 193, 0.5), 0 15px 35px rgba(0,0,0,0.5);
     }
-    
+
     .club-card:hover .card-back {
         box-shadow: 0 0 30px rgba(111, 66, 193, 0.7), 0 15px 40px rgba(0,0,0,0.5);
     }
-    
-    /* VISIT BUTTON GLOW */
+
     .btn-visit {
         position: relative;
         overflow: hidden;
@@ -123,15 +103,13 @@
         box-shadow: 0 0 15px rgba(111, 66, 193, 0.6), 0 0 30px rgba(111, 66, 193, 0.4), 0 0 45px rgba(111, 66, 193, 0.2);
         transform: translateY(-2px);
     }
-    
-    /* ===== GIAO DIỆN CHUNG ===== */
+
     .filter-section { background: transparent; padding: 40px 20px 20px; text-align: center; }
-    .filter-title { 
-        color: #6f42c1; margin-bottom: 20px; font-size: 1.2rem; 
+    .filter-title {
+        color: #6f42c1; margin-bottom: 20px; font-size: 1.2rem;
         text-transform: uppercase; letter-spacing: 2px; font-weight: bold;
     }
-    
-    /* SMART SEARCH BAR */
+
     .search-container { max-width: 600px; margin: 0 auto 30px; position: relative; }
     .smart-search-input {
         width: 100%; padding: 15px 25px; border-radius: 30px; border: 2px solid #cbd5e1;
@@ -147,7 +125,6 @@
     }
     .filter-btn.active { background: #6f42c1; color: #fff; border-color: #6f42c1; box-shadow: 0 4px 15px rgba(111, 66, 193, 0.4); }
 
-    /* ===== SLIDER & CARDS ===== */
     .club-slider {
         position: relative; overflow: hidden; width: 100%; padding: 80px 0;
         background: transparent;
@@ -166,14 +143,94 @@
     .card-back { background: #6f42c1; color: white; transform: rotateY(180deg); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 25px; text-align: center; }
     .btn-visit { margin-top: 20px; padding: 10px 25px; background: #fff; color: #6f42c1; text-decoration: none; border-radius: 8px; font-weight: bold; transition: 0.3s;}
     .btn-visit:hover { background: #0b1220; color: #fff; }
+
+    /* ===== DOUBT UI — Neo-brutalism ===== */
+    #doubt-ui {
+        display: none;
+        max-width: 700px;
+        margin: 0 auto 30px;
+        padding: 24px 28px;
+        background: #fff;
+        border: 3px solid #0b1220;
+        border-radius: 12px;
+        box-shadow: 6px 6px 0px #0b1220;
+    }
+    #doubt-ui .doubt-question {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #0b1220;
+        margin-bottom: 16px;
+        text-align: center;
+        letter-spacing: 0.5px;
+    }
+    #doubt-ui .doubt-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+    }
+    .doubt-btn {
+        padding: 10px 20px;
+        background: #fff;
+        color: #0b1220;
+        border: 2.5px solid #0b1220;
+        border-radius: 8px;
+        box-shadow: 4px 4px 0px #0b1220;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .doubt-btn:hover {
+        background: #0b1220;
+        color: #fff;
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0px #0b1220;
+    }
+    .doubt-btn .match-count {
+        background: #6f42c1;
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: 800;
+        padding: 2px 8px;
+        border-radius: 99px;
+        border: 2px solid #0b1220;
+    }
+    .doubt-btn:hover .match-count {
+        background: #fff;
+        color: #6f42c1;
+    }
+    .doubt-none-btn {
+        padding: 8px 20px;
+        background: transparent;
+        color: #64748b;
+        border: 2px solid #cbd5e1;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.15s ease;
+    }
+    .doubt-none-btn:hover {
+        background: #f1f5f9;
+        color: #0b1220;
+        border-color: #94a3b8;
+    }
 </style>
 
 <div class="filter-section">
     <div class="filter-title">Khám phá cộng đồng của bạn</div>
-    
+
     <div class="search-container">
         <input type="text" id="smartSearch" class="smart-search-input" placeholder="Mô tả bản thân... (VD: mình hướng ngoại, thích đá banh và học code)">
         <span id="searchFeedback">Nhập sở thích để nhận gợi ý CLB phù hợp ✨</span>
+    </div>
+
+    <div id="doubt-ui">
+        <div class="doubt-question">Không tìm thấy kết quả chính xác. Bạn có muốn tìm...?</div>
+        <div class="doubt-buttons" id="doubt-buttons"></div>
     </div>
 
     <div class="filter-container">
@@ -343,7 +400,7 @@ const clubData = [
     name: "FUDA Graphic Design",
     short: "FGD",
     tags: ["Sáng tạo", "Việc làm", "Học thuật"],
-    keywords: ["design","đồ họa","photoshop","illustrator","graphic design","thiết kế đồ họa","creative","sáng tạo","visual design","thiết kế hình ảnh","việc làm","học thuật"],
+    keywords: ["vẽ","design","đồ họa","photoshop","illustrator","graphic design","thiết kế đồ họa","creative","sáng tạo","visual design","thiết kế hình ảnh","việc làm","học thuật"],
     img: STATIC_URL + "image/clubs/22.jpg",
     link: "https://www.facebook.com/FudaGraphicDesign.FGD"
   },
@@ -374,100 +431,209 @@ const clubData = [
 ];
 
 
-const track = document.getElementById('club-track');
-const slider = document.getElementById('club-slider');
-const searchInput = document.getElementById('smartSearch');
+// ============================================================
+//  SEARCH ENGINE
+// ============================================================
+
+function norm(str) {
+    return str
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+        .toLowerCase().trim();
+}
+
+const preparedClubs = clubData.map(club => ({
+    ...club,
+    _nName:        norm(club.name),
+    _nShort:       norm(club.short),
+    _nTags:        club.tags.map(norm),
+    _nKeywords:    club.keywords.map(norm),
+    _origKeywords: club.keywords,
+    _origTags:     club.tags,
+}));
+
+function tokenize(rawQuery) {
+    let q = norm(rawQuery);
+    q = q.replace(/\bcau lac bo\b/g, ' ');
+    q = q.replace(/\bclb\b/g, ' ');
+    q = q.replace(/\bnhom\b/g, ' ');
+    q = q.replace(/\bteam\b/g, ' ');
+    return q.split(/\s+/).filter(t => t.length >= 1);
+}
+
+function getNgrams(tokens, n) {
+    const ngrams = [];
+    for (let i = 0; i <= tokens.length - n; i++) {
+        ngrams.push(tokens.slice(i, i + n).join(' '));
+    }
+    return ngrams;
+}
+
+function scoreClub(club, phrase) {
+    if (club._nName === phrase)                  return 40;
+    if (club._nShort === phrase)                 return 30;
+    if (club._nTags.some(t => t === phrase))     return 20;
+    if (club._nKeywords.some(k => k === phrase)) return 10;
+    return 0;
+}
+
+function candidateSearch(rawQuery, pool) {
+    const tokens = tokenize(rawQuery);
+    if (tokens.length === 0) return [];
+
+    const searchSyllables = new Set(tokens);
+    const candidateMap = {};
+
+    pool.forEach(club => {
+        club._nKeywords.forEach((nk, i) => {
+            const kwSyllables = nk.split(/\s+/);
+            const matched = kwSyllables.some(ks => searchSyllables.has(ks));
+            if (matched) {
+                if (!candidateMap[nk]) {
+                    candidateMap[nk] = {
+                        candidateToken: club._origKeywords[i],
+                        candidateNorm:  nk,
+                        clubs: new Set(),
+                    };
+                }
+                candidateMap[nk].clubs.add(club.short);
+            }
+        });
+
+        club._nTags.forEach((nt, i) => {
+            const tagSyllables = nt.split(/\s+/);
+            const matched = tagSyllables.some(ts => searchSyllables.has(ts));
+            if (matched) {
+                if (!candidateMap[nt]) {
+                    candidateMap[nt] = {
+                        candidateToken: club._origTags[i],
+                        candidateNorm:  nt,
+                        clubs: new Set(),
+                    };
+                }
+                candidateMap[nt].clubs.add(club.short);
+            }
+        });
+    });
+
+    return Object.values(candidateMap)
+        .map(c => ({ ...c, matchCount: c.clubs.size, clubs: [...c.clubs] }))
+        .sort((a, b) => b.matchCount - a.matchCount);
+}
+
+function ngramSearch(rawQuery, pool) {
+    const tokens = tokenize(rawQuery);
+    if (tokens.length === 0) return null;
+
+    const maxN = Math.min(tokens.length, 5);
+
+    for (let n = maxN; n >= 1; n--) {
+        const phrases = getNgrams(tokens, n);
+        const matched = [];
+
+        pool.forEach(club => {
+            let total = 0;
+            phrases.forEach(phrase => { total += scoreClub(club, phrase); });
+            if (total > 0) matched.push({ ...club, score: total });
+        });
+
+        if (matched.length > 0) {
+            return { type: 'results', data: matched.sort((a, b) => b.score - a.score) };
+        }
+    }
+
+    const candidates = candidateSearch(rawQuery, pool);
+    if (candidates.length > 0) {
+        return { type: 'candidates', data: candidates };
+    }
+
+    return { type: 'empty' };
+}
+
+
+// ============================================================
+//  SLIDER STATE
+// ============================================================
+
+const track          = document.getElementById('club-track');
+const slider         = document.getElementById('club-slider');
+const searchInput    = document.getElementById('smartSearch');
 const searchFeedback = document.getElementById('searchFeedback');
+const doubtUI        = document.getElementById('doubt-ui');
+const doubtButtons   = document.getElementById('doubt-buttons');
 
 let x = 0, speed = 0.8, isPaused = false, isDown = false, startX, singleSetWidth = 0, activeFilters = ['all'];
 
-function render() {
-    track.innerHTML = '';
-    const query = searchInput.value.toLowerCase().trim();
-    let filtered;
+function hideDoubt() {
+    doubtUI.style.display = 'none';
+    doubtButtons.innerHTML = '';
+}
 
-    if (query === "") {
-        filtered = activeFilters.includes('all') 
-            ? clubData 
-            : clubData.filter(c => activeFilters.every(f => c.tags.includes(f)));
-        searchFeedback.innerText = "Nhập sở thích để nhận gợi ý phù hợp ✨";
-    } else {
-        filtered = clubData.map(club => {
-            let score = 0;
-            club.keywords.forEach(k => { if(query.includes(k)) score += 5; });
-            club.tags.forEach(t => { if(query.includes(t.toLowerCase())) score += 3; });
-            if(club.name.toLowerCase().includes(query) || club.short.toLowerCase().includes(query)) score += 10;
-            return { ...club, score };
-        }).filter(c => c.score > 0).sort((a, b) => b.score - a.score);
-        
-        searchFeedback.innerText = filtered.length > 0 ? `Tìm thấy ${filtered.length} CLB khớp với bạn!` : "Không tìm thấy kết quả, hãy thử mô tả khác nhé!";
-    }
+function handleNoneMatch() {
+    hideDoubt();
+    searchInput.value = '';
+    track.innerHTML = '<h3 style="color:#1A1A1A; width:100vw; text-align:center; padding:50px;">Hiện không có Clubs phù hợp với bạn, hãy thử lại với mô tả khác 🙏</h3>';
+    searchFeedback.innerText = 'Hãy thử mô tả theo cách khác nhé!';
+}
 
-    if(filtered.length === 0) {
+function showDoubt(candidates) {
+    doubtButtons.innerHTML = '';
+
+    candidates.forEach(c => {
+        const btn = document.createElement('button');
+        btn.className = 'doubt-btn';
+        btn.innerHTML = `${c.candidateToken} <span class="match-count">${c.matchCount} CLB</span>`;
+        btn.onclick = () => {
+            searchInput.value = c.candidateToken;
+            hideDoubt();
+            render();
+        };
+        doubtButtons.appendChild(btn);
+    });
+
+    const noneWrapper = document.createElement('div');
+    noneWrapper.style.cssText = 'margin-top: 16px; text-align: center; width: 100%;';
+    noneWrapper.innerHTML = `<button class="doubt-none-btn" onclick="handleNoneMatch()">Không phải</button>`;
+    doubtButtons.appendChild(noneWrapper);
+
+    doubtUI.style.display = 'block';
+}
+
+function renderCards(filtered) {
+    if (filtered.length === 0) {
         track.innerHTML = '<h3 style="color:#fff; width:100vw; text-align:center; padding:50px;">Dữ liệu đang được cập nhật...</h3>';
         return;
     }
 
-    // TẠO NỘI DUNG CARD
-    // Helper to convert hex to RGB
-    function hexToRgb(hex) {
-        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        return result ? 
-            `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : 
-            '111, 66, 193'; // default purple
-    }
-    
-    const cardHtml = filtered.map((club, index) => {
-        // Card color schemes with exact colors from user
-        const cardSchemes = [
-            // Card 0: FUDA Japanese Club - Mirai JC
-            { border: '#e4572e', title: '#c73e1d', tags: '#e4572e', bg: '#0f0f1a' },
-            // Card 1: FPTU Developer Club - DEVER
-            { border: '#4ea3ff', title: '#2d7dd2', tags: '#4ea3ff', bg: '#0f0f1a' },
-            // Card 2: Security Research Club - SRC
-            { border: '#6fffe9', title: '#6fffe9', tags: '#6fffe9', bg: '#0f0f1a' },
-            // Card 3: Hospitality & Tourism - HTS
-            { border: '#ffd166', title: '#ffd166', tags: '#ffd166', bg: '#0f0f1a' },
-            // Card 4: RES-UP Marketing
-            { border: '#ff3c38', title: '#ff3c38', tags: '#ff3c38', bg: '#0f0f1a' },
-            // Card 5: Financial Investing - FIC
-            { border: '#2cff88', title: '#2cff88', tags: '#2cff88', bg: '#0f0f1a' },
-            // Card 6: FPTU Football - FUFC
-            { border: '#ff7a2f', title: '#ff7a2f', tags: '#ff7a2f', bg: '#0f0f1a' },
-            // Card 7: FUDN Vovinam - FVC
-            { border: '#3db2ff', title: '#2b7bbf', tags: '#3db2ff', bg: '#0f0f1a' },
-            // Card 8: FPTU Badminton - FUB
-            { border: '#ff8c32', title: '#ff8c32', tags: '#ff8c32', bg: '#0f0f1a' },
-            // Card 9: FPT Volleyball - FUV
-            { border: '#6ed4c7', title: '#4ecdc4', tags: '#6ed4c7', bg: '#0f0f1a' },
-            // Card 10: FUDA Hoops - FHG
-            { border: '#ff9f1c', title: '#ff9f1c', tags: '#ff9f1c', bg: '#0f0f1a' },
-            // Card 11: Nhị khúc côn - FDN
-            { border: '#ff2f5d', title: '#ff2f5d', tags: '#ff2f5d', bg: '#0f0f1a' },
-            // Card 12: CLB Võ cổ truyền - VCT
-            { border: '#3a66ff', title: '#3a66ff', tags: '#3a66ff', bg: '#0f0f1a' },
-            // Card 13: FUDA Event Club - EVO
-            { border: '#ffd84a', title: '#ffd84a', tags: '#ffd84a', bg: '#0f0f1a' },
-            // Card 14: FPTU Media - FUM
-            { border: '#ff4040', title: '#ff4040', tags: '#ff4040', bg: '#0f0f1a' },
-            // Card 15: Dance For Passion - DFP
-            { border: '#ff3b3b', title: '#ff3b3b', tags: '#ff3b3b', bg: '#0f0f1a' },
-            // Card 16: Traditional Instrument - TIA
-            { border: '#e6c68a', title: '#e6c68a', tags: '#e6c68a', bg: '#0f0f1a' },
-            // Card 17: FUDA MC Club - MIC
-            { border: '#f5c542', title: '#f5c542', tags: '#f5c542', bg: '#0f0f1a' },
-            // Card 18: FUDA Graphic Design - FGD
-            { border: '#d52bff', title: '#d52bff', tags: '#d52bff', bg: '#0f0f1a' },
-            // Card 19: Xưởng làm nhạc - RHYTHM
-            { border: '#ff7a18', title: '#ff7a18', tags: '#ff7a18', bg: '#0f0f1a' },
-            // Card 20: Fuda's Creative Space - FCS
-            { border: '#ffe066', title: '#ffe066', tags: '#ffe066', bg: '#0f0f1a' },
-            // Card 21: FPT's Kindness Krew - F2K
-            { border: '#4cd964', title: '#2bb84f', tags: '#4cd964', bg: '#0f0f1a' }
-        ];
-        
-        const scheme = cardSchemes[index % cardSchemes.length];
-        
+    const cardSchemes = [
+        { border: '#e4572e', title: '#c73e1d', tags: '#e4572e', bg: '#0f0f1a' },
+        { border: '#4ea3ff', title: '#2d7dd2', tags: '#4ea3ff', bg: '#0f0f1a' },
+        { border: '#6fffe9', title: '#6fffe9', tags: '#6fffe9', bg: '#0f0f1a' },
+        { border: '#ffd166', title: '#ffd166', tags: '#ffd166', bg: '#0f0f1a' },
+        { border: '#ff3c38', title: '#ff3c38', tags: '#ff3c38', bg: '#0f0f1a' },
+        { border: '#2cff88', title: '#2cff88', tags: '#2cff88', bg: '#0f0f1a' },
+        { border: '#ff7a2f', title: '#ff7a2f', tags: '#ff7a2f', bg: '#0f0f1a' },
+        { border: '#3db2ff', title: '#2b7bbf', tags: '#3db2ff', bg: '#0f0f1a' },
+        { border: '#ff8c32', title: '#ff8c32', tags: '#ff8c32', bg: '#0f0f1a' },
+        { border: '#6ed4c7', title: '#4ecdc4', tags: '#6ed4c7', bg: '#0f0f1a' },
+        { border: '#ff9f1c', title: '#ff9f1c', tags: '#ff9f1c', bg: '#0f0f1a' },
+        { border: '#ff2f5d', title: '#ff2f5d', tags: '#ff2f5d', bg: '#0f0f1a' },
+        { border: '#3a66ff', title: '#3a66ff', tags: '#3a66ff', bg: '#0f0f1a' },
+        { border: '#ffd84a', title: '#ffd84a', tags: '#ffd84a', bg: '#0f0f1a' },
+        { border: '#ff4040', title: '#ff4040', tags: '#ff4040', bg: '#0f0f1a' },
+        { border: '#ff3b3b', title: '#ff3b3b', tags: '#ff3b3b', bg: '#0f0f1a' },
+        { border: '#e6c68a', title: '#e6c68a', tags: '#e6c68a', bg: '#0f0f1a' },
+        { border: '#f5c542', title: '#f5c542', tags: '#f5c542', bg: '#0f0f1a' },
+        { border: '#d52bff', title: '#d52bff', tags: '#d52bff', bg: '#0f0f1a' },
+        { border: '#ff7a18', title: '#ff7a18', tags: '#ff7a18', bg: '#0f0f1a' },
+        { border: '#ffe066', title: '#ffe066', tags: '#ffe066', bg: '#0f0f1a' },
+        { border: '#4cd964', title: '#2bb84f', tags: '#4cd964', bg: '#0f0f1a' }
+    ];
+
+    const cardHtml = filtered.map((club) => {
+        const originalIndex = clubData.findIndex(c => c.short === club.short);
+        const scheme = cardSchemes[originalIndex % cardSchemes.length];
         return `
         <div class="club-card">
             <div class="card-inner">
@@ -484,28 +650,69 @@ function render() {
                     <a href="${club.link}" target="_blank" class="btn-visit">Khám phá ngay</a>
                 </div>
             </div>
-        </div>
-    `}).join('');
+        </div>`;
+    }).join('');
 
-    // NHÂN BẢN 3 LẦN ĐỂ TẠO HIỆU ỨNG VÒNG LẶP VÔ TẬN
     track.innerHTML = cardHtml + cardHtml + cardHtml;
 
-    // Tính toán chiều rộng của một bộ card duy nhất
-    setTimeout(() => {
-        const cards = track.querySelectorAll('.club-card');
-        if(cards.length > 0) {
-            const cardWidth = cards[0].offsetWidth;
-            const gap = 40; 
-            singleSetWidth = (cardWidth + gap) * filtered.length;
-        }
-    }, 100);
-    
-    x = 0; // Reset vị trí về đầu mỗi khi filter/search
+    x = 0;
+    track.style.transform = 'translateX(0px)';
+
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            const cards = track.querySelectorAll('.club-card');
+            if (cards.length > 0) {
+                singleSetWidth = (cards[0].offsetWidth + 40) * filtered.length;
+            }
+        });
+    });
+}
+
+function render() {
+    track.innerHTML = '';
+    hideDoubt();
+
+    const rawQuery = searchInput.value.trim();
+
+    const pool = activeFilters.includes('all')
+        ? preparedClubs
+        : preparedClubs.filter(c => activeFilters.every(f => c.tags.includes(f)));
+
+    if (rawQuery === '') {
+        searchFeedback.innerText = 'Nhập sở thích để nhận gợi ý phù hợp ✨';
+        renderCards(pool);
+        return;
+    }
+
+    const result = ngramSearch(rawQuery, pool);
+
+    if (result === null) {
+        searchFeedback.innerText = 'Nhập sở thích để nhận gợi ý phù hợp ✨';
+        renderCards(pool);
+        return;
+    }
+
+    if (result.type === 'results') {
+        searchFeedback.innerText = `Tìm thấy ${result.data.length} CLB khớp với bạn!`;
+        renderCards(result.data);
+        return;
+    }
+
+    if (result.type === 'candidates') {
+        searchFeedback.innerText = 'Không tìm thấy kết quả chính xác...';
+        showDoubt(result.data);
+        track.innerHTML = '';
+        return;
+    }
+
+    // type === 'empty'
+    searchFeedback.innerText = 'Không tìm thấy kết quả, hãy thử mô tả khác nhé!';
+    track.innerHTML = '<h3 style="color:#fff; width:100vw; text-align:center; padding:50px;">Dữ liệu đang được cập nhật...</h3>';
 }
 
 // SỰ KIỆN TÌM KIẾM
 searchInput.addEventListener('input', () => {
-    if(searchInput.value !== "") {
+    if (searchInput.value !== '') {
         activeFilters = ['all'];
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         document.querySelector('[data-filter="all"]').classList.add('active');
@@ -516,7 +723,7 @@ searchInput.addEventListener('input', () => {
 // SỰ KIỆN FILTER BUTTONS
 document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.onclick = function() {
-        searchInput.value = "";
+        searchInput.value = '';
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
         activeFilters = [this.dataset.filter];
@@ -526,10 +733,9 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 
 // LOGIC TỰ ĐỘNG CHẠY (INFINITE LOOP)
 function step() {
-    if(!isDown && !isPaused && singleSetWidth > 0) {
+    if (!isDown && !isPaused && singleSetWidth > 0) {
         x -= speed;
-        // Khi chạy hết một bộ card, nhảy về 0 ngay lập tức (không nhận ra)
-        if(Math.abs(x) >= singleSetWidth) {
+        if (Math.abs(x) >= singleSetWidth) {
             x = 0;
         }
         track.style.transform = `translateX(${x}px)`;
@@ -538,40 +744,35 @@ function step() {
 }
 
 // SỰ KIỆN KÉO CHUỘT / VUỐT TAY
-const start = (e) => { 
-    isDown = true; 
-    isPaused = true; 
-    startX = (e.pageX || e.touches[0].pageX) - x; 
+const start = (e) => {
+    isDown = true;
+    isPaused = true;
+    startX = (e.pageX || e.touches[0].pageX) - x;
     track.style.cursor = 'grabbing';
 };
 
 const move = (e) => {
-    if(!isDown) return;
+    if (!isDown) return;
     const currentX = (e.pageX || e.touches[0].pageX);
     x = currentX - startX;
-    
-    // Logic vòng lặp khi kéo
-    if(x > 0) x = -singleSetWidth;
-    if(Math.abs(x) >= singleSetWidth) x = 0;
-    
+    if (x > 0) x = -singleSetWidth;
+    if (Math.abs(x) >= singleSetWidth) x = 0;
     track.style.transform = `translateX(${x}px)`;
 };
 
-const end = () => { 
-    isDown = false; 
-    isPaused = false; 
+const end = () => {
+    isDown = false;
+    isPaused = false;
     track.style.cursor = 'grab';
 };
 
-// Đăng ký sự kiện
 slider.addEventListener('mousedown', start);
 window.addEventListener('mousemove', move);
 window.addEventListener('mouseup', end);
 slider.addEventListener('touchstart', start, {passive: true});
-window.addEventListener('touchmove', (e) => { if(isDown) move(e); }, {passive: true});
+window.addEventListener('touchmove', (e) => { if (isDown) move(e); }, {passive: true});
 window.addEventListener('touchend', end);
 
-// Khởi tạo lần đầu
 render();
 step();
 </script>
