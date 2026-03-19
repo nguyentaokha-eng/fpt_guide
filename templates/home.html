@@ -17,7 +17,6 @@
 <style>
 /* ============================================================
    PREMIUM UNIVERSITY BACKGROUND
-   Tone: tím-xanh pastel | Vibe: sang trọng học thuật
    ============================================================ */
 
 .premium-bg {
@@ -34,7 +33,6 @@
     );
 }
 
-/* ── Animated mesh overlay ── */
 .mesh-layer {
     position: absolute;
     inset: -40%;
@@ -57,7 +55,6 @@
     100% { transform: translate(1%, -1%) rotate(0.3deg)  scale(1.01); }
 }
 
-/* ── Floating shapes ── */
 .shape {
     position: absolute;
     border-radius: 50%;
@@ -129,7 +126,6 @@
     100% { transform: translate(0px,   0px)  scale(1);    }
 }
 
-/* ── Vignette edges ── */
 .vignette {
     position: absolute;
     inset: 0;
@@ -140,7 +136,6 @@
     pointer-events: none;
 }
 
-/* ── Grain texture ── */
 .premium-bg::after {
     content: '';
     position: absolute;
@@ -151,7 +146,7 @@
 }
 
 /* ============================================================
-   INTRO BOX — glassmorphism
+   INTRO BOX
    ============================================================ */
 .intro-box {
     background: rgba(255, 255, 255, 0.65);
@@ -190,41 +185,140 @@
     font-size: 0.97rem;
 }
 
-/* ================= ABOUT HERO ================= */
-.about-hero {
-    max-width: 1100px;
-    margin: 90px auto;
-    height: 420px;
-    border-radius: 18px;
-    overflow: hidden;
-    background-image: url("https://rmep.vn/wp-content/uploads/2024/06/z5503795221847_32de2d1145b3d58dba3c7c10de7885c0.jpg");
-    background-size: cover;
-    background-position: center;
-    border: 3px solid #000;
-    box-shadow: 8px 8px 0 #000;
+/* ============================================================
+   TEAM SECTION
+   ============================================================ */
+
+/* Tiêu đề — giữ nền tím, ĐỔI CHỮ sang đen */
+.team-header {
+    margin-bottom: 44px;
 }
 
-.about-overlay {
-    height: 100%;
-    width: 100%;
-    background: rgba(0,0,0,0.55);
-    padding: 50px;
+.team-text {
+    color: #0d0d0d !important;  /* ĐEN thay vì xanh */
+    font-weight: 800;
+    font-size: 2rem;
+    letter-spacing: -0.3px;
+}
+
+/* Card nâng cấp — trắng glassmorphism + accent tím */
+.team-card {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border: 1.5px solid rgba(180, 160, 255, 0.3);
+    border-radius: 20px;
+    box-shadow:
+        0 4px 16px rgba(120, 90, 200, 0.08),
+        0 16px 48px rgba(100, 70, 180, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    padding: 36px 24px 28px;
+    text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    height: 100%;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.about-overlay h2 { color: #fff; }
-.about-overlay p {
-    color: #f1f1f1;
-    max-width: 650px;
-    line-height: 1.6;
+/* Accent bar tím ở trên cùng card */
+.team-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #7c5cfc, #a78bfa, #60a5fa);
+    border-radius: 20px 20px 0 0;
+}
+
+.team-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(160, 130, 255, 0.5);
+    box-shadow:
+        0 8px 24px rgba(120, 90, 200, 0.14),
+        0 28px 64px rgba(100, 70, 180, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+/* Avatar tròn với gradient tím */
+.team-card-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c5cfc 0%, #a78bfa 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(124, 92, 252, 0.35);
+}
+
+.team-card h5 {
+    color: #1e1340;
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+    letter-spacing: -0.2px;
+}
+
+/* Badge major */
+.team-card .major-badge {
+    display: inline-block;
+    background: rgba(124, 92, 252, 0.1);
+    color: #6b46c1;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-bottom: 22px;
+    letter-spacing: 0.3px;
+}
+
+/* Ghi đè tag <p> bên trong card thành badge */
+.team-card > p {
+    display: inline-block;
+    background: rgba(124, 92, 252, 0.1);
+    color: #6b46c1;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 3px 14px;
+    border-radius: 20px;
+    margin-bottom: 22px;
+    letter-spacing: 0.3px;
+}
+
+.experience-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #7c5cfc 0%, #9b7ffe 100%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.4px;
+    padding: 9px 26px;
+    border-radius: 10px;
+    border: none;
+    text-decoration: none;
+    text-transform: uppercase;
+    box-shadow: 0 4px 14px rgba(124, 92, 252, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.experience-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(124, 92, 252, 0.45);
+    color: #fff;
+    opacity: 0.92;
 }
 
 @media (max-width: 768px) {
-    .about-hero { height: auto; }
     .about-overlay { padding: 30px; }
     .intro-box { padding: 28px 24px; }
+    .team-text { font-size: 1.5rem; }
 }
 </style>
 
@@ -281,7 +375,7 @@
 </div>
 
 <!-- ================= TEAM ================= -->
-<div class="container mt-5">
+<div class="container mt-5" style="padding-bottom: 80px;">
     <div class="team-header text-center">
         <a href="https://www.facebook.com/groups/1216577847270995" target="_blank" style="text-decoration: none;">
             <h2 class="team-text">Meet Our Team</h2>
@@ -292,6 +386,9 @@
         {% for m in members %}
         <div class="col-md-4 col-sm-6">
             <div class="team-card">
+                <div class="team-card-avatar">
+                    {{ m.name|first|upper }}
+                </div>
                 <h5>{{ m.name }}</h5>
                 <p>{{ m.major }}</p>
                 <a href="{% url 'experience' m.slug %}" class="experience-btn">

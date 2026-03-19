@@ -11,11 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --purple-primary: #6b5bb5;
@@ -47,11 +43,9 @@
         body::before {
             content: '';
             position: fixed;
-            width: 600px;
-            height: 600px;
-            top: -200px;
-            right: -200px;
-            background: radial-gradient(circle, rgba(139, 124, 200, 0.15) 0%, transparent 70%);
+            width: 600px; height: 600px;
+            top: -200px; right: -200px;
+            background: radial-gradient(circle, rgba(139,124,200,0.15) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
         }
@@ -59,23 +53,16 @@
         body::after {
             content: '';
             position: fixed;
-            width: 500px;
-            height: 500px;
-            bottom: -150px;
-            left: -150px;
-            background: radial-gradient(circle, rgba(249, 115, 22, 0.08) 0%, transparent 70%);
+            width: 500px; height: 500px;
+            bottom: -150px; left: -150px;
+            background: radial-gradient(circle, rgba(249,115,22,0.08) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
+        .container { max-width: 1400px; margin: 0 auto; position: relative; z-index: 1; }
 
-        /* ===== HERO ===== */
+        /* HERO */
         .hero-frame {
             background: var(--bg-card);
             border-radius: 24px;
@@ -106,7 +93,7 @@
         .hero-badge {
             display: inline-block;
             padding: 8px 22px;
-            background: rgba(107, 91, 181, 0.1);
+            background: rgba(107,91,181,0.1);
             color: var(--purple-primary);
             border-radius: 50px;
             font-size: 0.85rem;
@@ -114,7 +101,7 @@
             letter-spacing: 1.5px;
             text-transform: uppercase;
             margin-bottom: 20px;
-            border: 1px solid rgba(107, 91, 181, 0.2);
+            border: 1px solid rgba(107,91,181,0.2);
         }
 
         .hero-title {
@@ -132,13 +119,9 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .hero-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-body);
-            font-weight: 400;
-        }
+        .hero-subtitle { font-size: 1.1rem; color: var(--text-body); font-weight: 400; }
 
-        /* ===== GRID ===== */
+        /* GRID */
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
@@ -168,14 +151,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .category-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-hover);
-        }
+        .category-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); }
 
         .category-header {
             padding: 24px 28px;
-            background: linear-gradient(135deg, rgba(107, 91, 181, 0.07) 0%, rgba(107, 91, 181, 0.03) 100%);
+            background: linear-gradient(135deg, rgba(107,91,181,0.07) 0%, rgba(107,91,181,0.03) 100%);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
@@ -185,7 +165,7 @@
         }
 
         .category-card.active .category-header {
-            background: linear-gradient(135deg, rgba(107, 91, 181, 0.12) 0%, rgba(107, 91, 181, 0.05) 100%);
+            background: linear-gradient(135deg, rgba(107,91,181,0.12) 0%, rgba(107,91,181,0.05) 100%);
             border-color: var(--border-soft);
         }
 
@@ -198,48 +178,30 @@
             gap: 12px;
         }
 
-        .category-icon {
-            font-size: 1.8rem;
-            transition: transform 0.4s ease;
-        }
-
-        .category-card:hover .category-icon {
-            transform: scale(1.15);
-        }
+        .category-icon { font-size: 1.8rem; transition: transform 0.4s ease; }
+        .category-card:hover .category-icon { transform: scale(1.15); }
 
         .toggle-icon {
-            width: 32px;
-            height: 32px;
+            width: 32px; height: 32px;
             border-radius: 50%;
-            background: rgba(107, 91, 181, 0.1);
+            background: rgba(107,91,181,0.1);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1rem;
             color: var(--purple-primary);
-            transition: all 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: all 0.35s cubic-bezier(0.68,-0.55,0.265,1.55);
             flex-shrink: 0;
         }
 
-        .category-card.active .toggle-icon {
-            transform: rotate(180deg);
-            background: var(--purple-primary);
-            color: white;
-        }
+        .category-card.active .toggle-icon { transform: rotate(180deg); background: var(--purple-primary); color: white; }
 
-        .courses-list {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .category-card.active .courses-list {
-            max-height: 3000px;
-        }
+        .courses-list { max-height: 0; overflow: hidden; transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1); }
+        .category-card.active .courses-list { max-height: 3000px; }
 
         .course-item {
             padding: 14px 28px;
-            border-bottom: 1px solid rgba(107, 91, 181, 0.07);
+            border-bottom: 1px solid rgba(107,91,181,0.07);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -248,54 +210,33 @@
             transition: background 0.2s ease, padding-left 0.25s ease;
         }
 
-        .course-item:last-child {
-            border-bottom: none;
-        }
+        .course-item:last-child { border-bottom: none; }
 
         .course-item::before {
             content: '';
             position: absolute;
             left: 0; top: 0;
-            width: 3px;
-            height: 0;
+            width: 3px; height: 0;
             background: linear-gradient(180deg, var(--purple-primary), var(--orange-accent));
             transition: height 0.3s ease;
             border-radius: 0 2px 2px 0;
         }
 
-        .course-item:hover::before {
-            height: 100%;
-        }
-
-        .course-item:hover {
-            background: rgba(107, 91, 181, 0.05);
-            padding-left: 36px;
-        }
+        .course-item:hover::before { height: 100%; }
+        .course-item:hover { background: rgba(107,91,181,0.05); padding-left: 36px; }
 
         .course-bullet {
-            width: 8px;
-            height: 8px;
+            width: 8px; height: 8px;
             background: var(--purple-light);
             border-radius: 50%;
             flex-shrink: 0;
             transition: all 0.25s ease;
         }
 
-        .course-item:hover .course-bullet {
-            background: var(--orange-accent);
-            transform: scale(1.4);
-        }
+        .course-item:hover .course-bullet { background: var(--orange-accent); transform: scale(1.4); }
 
-        .course-name {
-            font-size: 0.97rem;
-            color: var(--text-body);
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-
-        .course-item:hover .course-name {
-            color: var(--purple-primary);
-        }
+        .course-name { font-size: 0.97rem; color: var(--text-body); font-weight: 500; transition: color 0.2s ease; }
+        .course-item:hover .course-name { color: var(--purple-primary); }
 
         /* ===== MODAL ===== */
         .modal-overlay {
@@ -303,7 +244,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(45, 37, 96, 0.5);
+            background: rgba(45,37,96,0.5);
             backdrop-filter: blur(8px);
             z-index: 9999;
             align-items: center;
@@ -311,20 +252,18 @@
             padding: 20px;
         }
 
-        .modal-overlay.active {
-            display: flex;
-        }
+        .modal-overlay.active { display: flex; }
 
         .modal-content {
             background: var(--bg-card);
             border-radius: 24px;
-            max-width: 760px;
+            max-width: 900px;
             width: 100%;
-            max-height: 90vh;
+            max-height: 92vh;
             overflow-y: auto;
             position: relative;
-            animation: modalSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 40px 80px rgba(45, 37, 96, 0.25);
+            animation: modalSlideIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+            box-shadow: 0 40px 80px rgba(45,37,96,0.25);
             border: 1px solid var(--border-soft);
         }
 
@@ -334,8 +273,8 @@
         }
 
         .modal-header {
-            padding: 36px 32px 24px;
-            background: linear-gradient(135deg, rgba(107, 91, 181, 0.08), rgba(107, 91, 181, 0.03));
+            padding: 36px 40px 28px;
+            background: linear-gradient(135deg, rgba(107,91,181,0.08), rgba(107,91,181,0.03));
             border-bottom: 1px solid var(--border-soft);
             position: relative;
             border-radius: 24px 24px 0 0;
@@ -353,8 +292,8 @@
         .modal-close {
             position: absolute;
             top: 16px; right: 16px;
-            background: rgba(107, 91, 181, 0.1);
-            border: 1px solid rgba(107, 91, 181, 0.2);
+            background: rgba(107,91,181,0.1);
+            border: 1px solid rgba(107,91,181,0.2);
             color: var(--purple-primary);
             font-size: 18px;
             width: 40px; height: 40px;
@@ -368,89 +307,300 @@
             z-index: 10;
         }
 
-        .modal-close:hover {
-            background: var(--purple-primary);
-            color: white;
-            transform: rotate(90deg);
-        }
+        .modal-close:hover { background: var(--purple-primary); color: white; transform: rotate(90deg); }
 
         .modal-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.9rem;
+            font-size: 2rem;
             font-weight: 900;
             color: var(--text-dark);
             line-height: 1.3;
-        }
-
-        .modal-body {
-            padding: 28px 32px;
-        }
-
-        .course-detail-section {
             margin-bottom: 16px;
-            padding: 18px 20px;
+        }
+
+        .modal-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .meta-chip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: white;
+            border-radius: 50px;
+            border: 1px solid var(--border-soft);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-medium);
+        }
+
+        .meta-chip .meta-icon { font-size: 1rem; }
+        .meta-chip .meta-val { color: var(--purple-primary); font-weight: 800; }
+
+        .modal-body { padding: 32px 40px; }
+
+        /* Description */
+        .course-description-block {
+            background: linear-gradient(135deg, rgba(107,91,181,0.05), rgba(249,115,22,0.03));
+            padding: 22px 24px;
+            border-radius: 16px;
+            border: 1px solid rgba(107,91,181,0.12);
+            margin-bottom: 32px;
+            font-size: 0.97rem;
+            line-height: 1.85;
+            color: var(--text-body);
+        }
+
+        /* Section title */
+        .section-heading {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-heading .accent { color: var(--orange-accent); }
+
+        /* Features grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .feature-card {
             background: var(--bg-header);
-            border-radius: 12px;
-            border-left: 3px solid var(--purple-primary);
+            border-radius: 14px;
+            padding: 20px;
+            border: 1px solid var(--border-soft);
             transition: all 0.25s ease;
         }
 
-        .course-detail-section:hover {
-            background: rgba(107, 91, 181, 0.07);
-            border-left-width: 5px;
+        .feature-card:hover {
+            background: white;
+            box-shadow: var(--shadow-card);
+            transform: translateY(-3px);
         }
 
-        .detail-label {
-            font-weight: 700;
-            color: var(--purple-primary);
+        .feature-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
+
+        .feature-title { font-size: 0.9rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
+
+        .feature-desc { font-size: 0.82rem; color: var(--text-body); line-height: 1.6; }
+
+        /* Career section */
+        .career-section {
+            background: linear-gradient(135deg, #2d2560 0%, #4a3f8a 100%);
+            border-radius: 16px;
+            padding: 28px 28px;
+            margin-bottom: 24px;
+        }
+
+        .career-section .section-heading { color: white; }
+        .career-section .section-heading .accent { color: var(--orange-accent); }
+
+        .career-intro {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .career-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+        .career-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.92);
+            line-height: 1.5;
+        }
+
+        .career-list li::before {
+            content: '✦';
+            color: var(--orange-accent);
             font-size: 0.75rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* ===== CURRICULUM PHASES ===== */
+        .curriculum-section {
+            margin-bottom: 32px;
+        }
+
+        .phase-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 0;
+            position: relative;
+        }
+
+        .phase-tab {
+            flex: 1;
+            padding: 12px 10px 14px;
+            cursor: pointer;
+            background: #f0eef8;
+            border: 1px solid rgba(107,91,181,0.15);
+            border-right: none;
+            position: relative;
+            transition: all 0.25s ease;
+            clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%, 14px 50%);
+            margin-right: -8px;
+            z-index: 1;
+        }
+
+        .phase-tab:first-child {
+            clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%);
+            border-radius: 6px 0 0 6px;
+        }
+
+        .phase-tab:last-child {
+            clip-path: polygon(14px 0, 100% 0, 100% 100%, 14px 100%, 0 50%);
+            border-radius: 0 6px 6px 0;
+            margin-right: 0;
+        }
+
+        .phase-tab.active {
+            background: white;
+            border-color: var(--orange-accent);
+            z-index: 3;
+            box-shadow: 0 4px 16px rgba(249,115,22,0.2);
+        }
+
+        .phase-tab-badge {
+            display: inline-block;
+            background: #333;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 4px;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .phase-tab.active .phase-tab-badge {
+            background: var(--orange-accent);
+        }
+
+        .phase-tab-time {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .phase-tab-name {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.3;
+            display: block;
+        }
+
+        .phase-tab.active .phase-tab-name {
+            color: var(--orange-accent);
+        }
+
+        /* Phase content panel */
+        .phase-panels {
+            border: 1px solid rgba(107,91,181,0.15);
+            border-radius: 0 0 14px 14px;
+            background: white;
+            overflow: hidden;
+        }
+
+        .phase-panel {
+            display: none;
+            padding: 24px 28px;
+            animation: fadeInPanel 0.3s ease;
+        }
+
+        .phase-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+
+        @keyframes fadeInPanel {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .panel-col-title {
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 8px;
+            color: var(--text-dark);
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
-        .detail-label::before {
-            content: '◆';
+        .panel-col-title .col-icon {
+            font-size: 1.1rem;
+        }
+
+        .panel-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .panel-list li {
+            font-size: 0.83rem;
+            color: var(--text-body);
+            line-height: 1.6;
+            padding-left: 14px;
+            position: relative;
+        }
+
+        .panel-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
             color: var(--orange-accent);
-            font-size: 0.65rem;
-        }
-
-        .detail-value {
-            color: var(--text-body);
-            font-size: 1rem;
-            line-height: 1.7;
-            font-weight: 500;
-        }
-
-        .detail-value.large {
-            font-size: 2.5rem;
             font-weight: 900;
-            color: var(--purple-primary);
         }
 
-        .course-description {
-            background: linear-gradient(135deg, rgba(107, 91, 181, 0.06), rgba(249, 115, 22, 0.04));
-            padding: 22px;
-            border-radius: 14px;
-            border: 1px solid rgba(107, 91, 181, 0.15);
-            margin-top: 20px;
+        .panel-list li strong {
+            color: var(--text-dark);
+            font-weight: 700;
         }
 
-        .course-description .detail-value {
-            font-size: 0.95rem;
-            line-height: 1.8;
+        .phase-note {
+            margin-top: 14px;
+            padding: 10px 14px;
+            background: rgba(249,115,22,0.07);
+            border-left: 3px solid var(--orange-accent);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.8rem;
             color: var(--text-body);
+            line-height: 1.6;
         }
 
-        /* ===== FAB ===== */
-        .fab-container {
-            position: fixed;
-            bottom: 36px; right: 36px;
-            z-index: 1000;
+        .phase-note strong { color: var(--orange-accent); }
+
+        @media (max-width: 600px) {
+            .phase-panel.active { grid-template-columns: 1fr; gap: 16px; }
+            .phase-tabs { flex-wrap: nowrap; overflow-x: auto; }
+            .phase-tab { min-width: 100px; flex-shrink: 0; }
         }
+
+        /* FAB */
+        .fab-container { position: fixed; bottom: 36px; right: 36px; z-index: 1000; }
 
         .collapse-all-btn {
             background: linear-gradient(135deg, var(--purple-primary), var(--purple-light));
@@ -462,40 +612,31 @@
             font-weight: 700;
             font-size: 0.95rem;
             cursor: pointer;
-            box-shadow: 0 8px 24px rgba(107, 91, 181, 0.4);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 24px rgba(107,91,181,0.4);
+            transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
         }
 
-        .collapse-all-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 36px rgba(107, 91, 181, 0.5);
-        }
+        .collapse-all-btn:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(107,91,181,0.5); }
 
-        .collapse-all-btn:active {
-            transform: translateY(-2px);
-        }
-
-        /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: rgba(107, 91, 181, 0.05); }
-        ::-webkit-scrollbar-thumb { background: rgba(107, 91, 181, 0.3); border-radius: 10px; }
+        ::-webkit-scrollbar-track { background: rgba(107,91,181,0.05); }
+        ::-webkit-scrollbar-thumb { background: rgba(107,91,181,0.3); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--purple-primary); }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 900px) {
             .categories-grid { grid-template-columns: 1fr; }
             .hero-title { font-size: 2.4rem; }
             .hero-frame { padding: 40px 28px; }
+            .modal-body, .modal-header { padding: 22px 24px; }
         }
 
         @media (max-width: 600px) {
             body { padding: 30px 14px 80px; }
             .hero-title { font-size: 1.9rem; }
-            .modal-body, .modal-header { padding: 22px 20px; }
             .modal-title { font-size: 1.5rem; }
-            .detail-value.large { font-size: 2rem; }
             .fab-container { bottom: 20px; right: 20px; }
             .collapse-all-btn { padding: 14px 22px; font-size: 0.88rem; }
+            .features-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -633,113 +774,1264 @@
         <div class="modal-header">
             <button class="modal-close" id="modalClose">&#10005;</button>
             <h2 class="modal-title" id="modalTitle">Tên môn học</h2>
+            <div class="modal-meta">
+                <div class="meta-chip">
+                    <span class="meta-icon">🏷️</span>
+                    <span>Mã ngành:</span>
+                    <span class="meta-val" id="courseCode">7480201</span>
+                </div>
+                <div class="meta-chip">
+                    <span class="meta-icon">📚</span>
+                    <span>Tín chỉ:</span>
+                    <span class="meta-val" id="courseCredits">145</span>
+                </div>
+            </div>
         </div>
         <div class="modal-body">
-            <div class="course-detail-section">
-                <div class="detail-label">Mã ngành</div>
-                <div class="detail-value" id="courseCode">7480201</div>
+            <div class="course-description-block" id="courseDescription"></div>
+
+            <div class="section-heading">
+                <span>⭐</span>
+                <span>Đặc điểm <span class="accent">nổi bật</span> của chương trình</span>
             </div>
-            <div class="course-detail-section">
-                <div class="detail-label">Số tín chỉ</div>
-                <div class="detail-value large" id="courseCredits">145</div>
+            <div class="features-grid" id="featuresGrid"></div>
+
+            <!-- CURRICULUM SECTION -->
+            <div class="curriculum-section">
+                <div class="section-heading">
+                    <span>📋</span>
+                    <span>Tổng quan <span class="accent">Chương trình đào tạo</span></span>
+                </div>
+
+                <div class="phase-tabs" id="phaseTabs">
+                    <div class="phase-tab active" data-phase="0">
+                        <span class="phase-tab-badge">GĐ1</span>
+                        <span class="phase-tab-time">2 tháng - 1 năm</span>
+                        <span class="phase-tab-name">Giai đoạn nền tảng</span>
+                    </div>
+                    <div class="phase-tab" data-phase="1">
+                        <span class="phase-tab-badge">GĐ2</span>
+                        <span class="phase-tab-time">Học kỳ 1 - Học kỳ 5</span>
+                        <span class="phase-tab-name">Giai đoạn cơ bản & cơ sở ngành</span>
+                    </div>
+                    <div class="phase-tab" data-phase="2">
+                        <span class="phase-tab-badge">GĐ3</span>
+                        <span class="phase-tab-time">Học kỳ 6</span>
+                        <span class="phase-tab-name">Giai đoạn đào tạo trong doanh nghiệp (OJT)</span>
+                    </div>
+                    <div class="phase-tab" data-phase="3">
+                        <span class="phase-tab-badge">GĐ4</span>
+                        <span class="phase-tab-time">Học kỳ 7 - Học kỳ 9</span>
+                        <span class="phase-tab-name">Giai đoạn chuyên ngành hẹp & khoá luận tốt nghiệp</span>
+                    </div>
+                </div>
+
+                <div class="phase-panels">
+                    <!-- Phase 1 -->
+                    <div class="phase-panel active" id="phase-panel-0">
+                        <div>
+                            <div class="panel-col-title"><span class="col-icon">📖</span> NỘI DUNG HỌC</div>
+                            <ul class="panel-list" id="phase0-content"></ul>
+                            <div class="phase-note" id="phase0-note" style="display:none"></div>
+                        </div>
+                        <div>
+                            <div class="panel-col-title"><span class="col-icon">✅</span> KẾT QUẢ ĐẠT ĐƯỢC</div>
+                            <ul class="panel-list" id="phase0-result"></ul>
+                        </div>
+                    </div>
+                    <!-- Phase 2 -->
+                    <div class="phase-panel" id="phase-panel-1">
+                        <div>
+                            <div class="panel-col-title"><span class="col-icon">📖</span> NỘI DUNG HỌC</div>
+                            <ul class="panel-list" id="phase1-content"></ul>
+                        </div>
+                        <div>
+                            <div class="panel-col-title"><span class="col-icon">✅</span> KẾT QUẢ ĐẠT ĐƯỢC</div>
+                            <ul class="panel-list" id="phase1-result"></ul>
+                        </div>
+                    </div>
+                    <!-- Phase 3 -->
+                    <div class="phase-panel" id="phase-panel-2">
+                        <div>
+                            <div class="panel-col-title"><span class="col-icon">📖</span> NỘI DUNG HỌC</div>
+                            <ul class="panel-list" id="phase2-content"></ul>
+                        </div>
+                        <div>
+                            <div class="panel-col-title"><span class="col-icon">✅</span> KẾT QUẢ ĐẠT ĐƯỢC</div>
+                            <ul class="panel-list" id="phase2-result"></ul>
+                        </div>
+                    </div>
+                    <!-- Phase 4 -->
+                    <div class="phase-panel" id="phase-panel-3">
+                        <div>
+                            <div class="panel-col-title"><span class="col-icon">📖</span> NỘI DUNG HỌC</div>
+                            <ul class="panel-list" id="phase3-content"></ul>
+                        </div>
+                        <div>
+                            <div class="panel-col-title"><span class="col-icon">✅</span> KẾT QUẢ ĐẠT ĐƯỢC</div>
+                            <ul class="panel-list" id="phase3-result"></ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="course-description">
-                <div class="detail-label">Định hướng đầu ra</div>
-                <div class="detail-value" id="courseDescription">Đào tạo cử nhân Công nghệ thông tin có tư duy công nghệ...</div>
+
+            <div class="career-section">
+                <div class="section-heading">
+                    <span>🚀</span>
+                    <span>Tiềm năng & <span class="accent">Cơ hội nghề nghiệp</span></span>
+                </div>
+                <p class="career-intro" id="careerIntro"></p>
+                <ul class="career-list" id="careerList"></ul>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    const courseData = {
-        'cong-nghe-thong-tin': { title: 'Công nghệ thông tin', code: '7480201', credits: '145', description: 'Đào tạo cử nhân Công nghệ thông tin có tư duy công nghệ, năng lực thiết kế, phát triển, triển khai và vận hành các hệ thống phần mềm, hệ thống thông tin và dịch vụ công nghệ thông tin trong môi trường doanh nghiệp và xã hội hiện đại. Sinh viên tốt nghiệp sẵn sàng làm việc trong môi trường toàn cầu, tham gia phát triển các hệ thống công nghệ phục vụ chuyển đổi số, điện toán đám mây, AI và khoa học dữ liệu ứng dụng, an ninh mạng và các nền tảng số của doanh nghiệp.' },
-        'ky-thuat-phan-mem': { title: 'Kỹ thuật phần mềm', code: '7480201', credits: '145', description: 'Chuyên ngành Kỹ thuật phần mềm tại Trường Đại học FPT đào tạo kỹ sư phần mềm có khả năng phân tích, thiết kế, xây dựng và quản lý hệ thống phần mềm, đáp ứng nhu cầu doanh nghiệp.' },
-        'tri-tue-nhan-tao': { title: 'Trí tuệ nhân tạo', code: '7480201', credits: '145', description: 'Đào tạo cử nhân Trí tuệ nhân tạo có năng lực làm chủ công nghệ, tư duy logic và sáng tạo, sẵn sàng tham gia phát triển các hệ thống thông minh phục vụ chuyển đổi số và kinh tế tri thức toàn cầu.' },
-        'khoa-hoc-dl': { title: 'Khoa học dữ liệu ứng dụng', code: '7480201', credits: '145', description: 'Đào tạo cử nhân Khoa học dữ liệu ứng dụng có năng lực thu thập, xử lý, phân tích và khai phá dữ liệu lớn; có tư duy logic, sáng tạo, kỹ năng lập trình và thống kê; sẵn sàng phát triển các giải pháp dữ liệu - AI - Machine Learning để hỗ trợ doanh nghiệp, tổ chức trong quyết định, quản lý, đổi mới số và phát triển kinh tế tri thức.' },
-        'an-toan-thong-tin': { title: 'An toàn thông tin', code: '7480201', credits: '145', description: 'Đào tạo kỹ sư An toàn thông tin có năng lực phân tích, thiết kế, vận hành và bảo vệ hệ thống số theo tiêu chuẩn quốc tế; ứng dụng trí tuệ nhân tạo và công nghệ mới trong giám sát, phát hiện và phản ứng sự cố an ninh mạng.' },
-        'vi-mach-ban-dan': { title: 'Vi mạch bán dẫn', code: '7480201', credits: '145', description: 'Đào tạo kỹ sư Vi mạch bán dẫn có năng lực thiết kế – mô phỏng – kiểm thử – tối ưu hóa các vi mạch số, tương tự và hỗn hợp theo chuẩn quốc tế.' },
-        'cong-nghe-o-to-so': { title: 'Công nghệ ô tô số', code: '7480201', credits: '145', description: 'Đào tạo kỹ sư phần mềm ô tô có năng lực thiết kế, lập trình và kiểm thử các hệ thống điện – điện tử trên ô tô theo tiêu chuẩn quốc tế.' },
-        'he-thong-thong-tin': { title: 'Hệ thống thông tin', code: '7480201', credits: '145', description: 'Chuyên ngành Hệ thống thông tin đào tạo nguồn nhân lực công nghệ – chiến lược – kinh doanh toàn diện.' },
-        'thiet-ke-do-hoa': { title: 'Thiết kế đồ họa và mỹ thuật số', code: '7480201', credits: '146', description: 'Cử nhân chuyên ngành Thiết kế đồ hoạ và mỹ thuật số có đạo đức nghề nghiệp và năng lực đáp ứng nhu cầu thực tế của xã hội.' },
-        'truyen-thong-da-phuong-tien': { title: 'Truyền thông đa phương tiện', code: '7320106', credits: '139', description: 'Đào tạo người học trở thành chuyên gia trong lĩnh vực truyền thông ở thời đại kỹ thuật số.' },
-        'quan-he-cong-chung': { title: 'Quan hệ công chúng', code: '7320106', credits: '139', description: 'Đào tạo chuyên gia Quan hệ công chúng có năng lực hoạch định, triển khai và quản trị chiến lược truyền thông thương hiệu trong môi trường toàn cầu.' },
-        'truyen-thong-marketing': { title: 'Truyền thông Marketing tích hợp', code: '7320106', credits: '139', description: 'Chương trình đào tạo cử nhân có nền tảng vững chắc về truyền thông và marketing, thành thạo xây dựng chiến lược truyền thông tích hợp.' },
-        'truyen-thong-thuong-hieu': { title: 'Truyền thông thương hiệu', code: '7320106', credits: '139', description: 'Đào tạo cử nhân có kiến thức chuyên môn sâu về truyền thông thương hiệu, thành thạo trong việc xây dựng chiến lược truyền thông tích hợp.' },
-        'ngon-ngu-anh': { title: 'Ngôn ngữ Anh', code: '7220201', credits: '139', description: 'Đào tạo cử nhân Ngôn ngữ Anh có năng lực sử dụng tiếng Anh thành thạo trong giao tiếp, học thuật và môi trường làm việc chuyên nghiệp.' },
-        'tieng-anh-thuong-mai': { title: 'Tiếng Anh thương mại', code: '7220201', credits: '139', description: 'Đào tạo cử nhân có chuyên môn sâu về Tiếng Anh thương mại, có năng lực sử dụng tiếng Anh thành thạo trong môi trường kinh doanh quốc tế.' },
-        'ngon-ngu-han': { title: 'Ngôn ngữ Hàn Quốc', code: '7220210', credits: '139', description: 'Đào tạo cử nhân Ngôn ngữ Hàn Quốc có khả năng sử dụng thành thạo hai ngoại ngữ trong giao tiếp, học thuật và môi trường làm việc chuyên nghiệp.' },
-        'tieng-han-thuong-mai': { title: 'Tiếng Hàn thương mại', code: '7220210', credits: '139', description: 'Đào tạo cử nhân Tiếng Hàn thương mại có khả năng sử dụng thành thạo hai ngoại ngữ gồm tiếng Hàn và tiếng Anh trong môi trường kinh doanh quốc tế.' },
-        'ngon-ngu-trung': { title: 'Ngôn ngữ Trung Quốc', code: '7220204', credits: '139', description: 'Đào tạo cử nhân thành thạo tiếng Trung trong bối cảnh thương mại quốc tế.' },
-        'tieng-trung-thuong-mai': { title: 'Tiếng Trung thương mại', code: '7220204', credits: '139', description: 'Đào tạo cử nhân Tiếng Trung thương mại có khả năng giao tiếp, đàm phán, biên phiên dịch trong môi trường chuyên nghiệp.' },
-        'luat': { title: 'Luật', code: '7380101', credits: '139', description: 'Đào tạo cử nhân Luật có tư duy pháp lý hiện đại, nắm vững nền tảng luật học.' },
-        'luat-kinh-te': { title: 'Luật kinh tế', code: '7380101', credits: '139', description: 'Chuyên ngành Luật Kinh tế tại Trường Đại học FPT đào tạo chuyên gia pháp lý có năng lực pháp luật kinh doanh – đầu tư – thương mại – tài chính.' },
-        'marketing': { title: 'Marketing', code: '7340101', credits: '139', description: 'Đào tạo cử nhân Quản trị kinh doanh có chuyên môn sâu về marketing.' },
-        'kinh-doanh-quoc-te': { title: 'Kinh doanh quốc tế', code: '7340101', credits: '139', description: 'Đào tạo cử nhân quản trị kinh doanh có chuyên môn sâu về kinh doanh quốc tế.' },
-        'thuong-mai-dien-tu': { title: 'Thương mại điện tử', code: '7340101', credits: '139', description: 'Đào tạo cử nhân quản trị kinh doanh có chuyên môn sâu về thương mại điện tử.' },
-        'quan-tri-kinh-doanh': { title: 'Quản trị kinh doanh', code: '7340101', credits: '139', description: 'Chương trình cử nhân Quản trị kinh doanh trang bị cho sinh viên kiến thức nền tảng và chuyên sâu về quản trị, marketing, tài chính và nhân sự.' },
-        'quan-tri-giai-tri': { title: 'Quản trị giải trí và sự kiện', code: '7340101', credits: '139', description: 'Chương trình Cử nhân Quản trị giải trí và sự kiện đào tạo sinh viên trở thành những chuyên gia có khả năng lên kế hoạch, tổ chức và quản lý đa dạng loại hình sự kiện.' },
-        'quan-tri-trai-nghiem': { title: 'Quản trị trải nghiệm khách hàng', code: '7340101', credits: '139', description: 'Đào tạo cử nhân Quản trị trải nghiệm khách hàng có năng lực xây dựng, quản lý và tối ưu hóa hành trình khách hàng.' },
-        'quan-tri-thu-mua': { title: 'Quản trị thu mua', code: '7340101', credits: '139', description: 'Đào tạo cử nhân Quản trị thu mua có năng lực xây dựng, triển khai và quản lý các chiến lược thu mua hiệu quả.' },
-        'quan-tri-khach-san': { title: 'Quản trị khách sạn', code: '7340101', credits: '139', description: 'Chuyên ngành Quản trị khách sạn đào tạo chuyên gia có năng lực quản lý và điều phối các hoạt động khách sạn, resort, nhà hàng.' },
-        'quan-tri-du-lich': { title: 'Quản trị dịch vụ du lịch và lữ hành', code: '7340101', credits: '139', description: 'Đào tạo cử nhân Quản trị dịch vụ du lịch và lữ hành có tư duy quản trị du lịch toàn diện.' },
-        'phan-tich-kinh-doanh': { title: 'Phân tích kinh doanh (Business Analytics)', code: '7340101', credits: '139', description: 'Chương trình cử nhân Quản trị kinh doanh có chuyên môn sâu về Phân tích kinh doanh, đào tạo sinh viên có năng lực phân tích, dự báo và ra quyết định dựa trên dữ liệu.' },
-        'logistics': { title: 'Logistics và Quản lý chuỗi cung ứng toàn cầu', code: '7340101', credits: '139', description: 'Đào tạo cử nhân Quản trị kinh doanh có chuyên môn sâu về Logistics và Quản lý chuỗi cung ứng toàn cầu.' },
-        'cong-nghe-tai-chinh': { title: 'Công nghệ tài chính (Fintech)', code: '7340101', credits: '139', description: 'Đào tạo cử nhân Công nghệ tài chính (Fintech) có năng lực ứng dụng công nghệ hiện đại như trí tuệ nhân tạo, dữ liệu lớn, blockchain trong phân tích, thiết kế và vận hành các giải pháp tài chính số.' },
-        'tai-chinh-doanh-nghiep': { title: 'Tài chính doanh nghiệp', code: '7340101', credits: '139', description: 'Đào tạo cử nhân Tài chính doanh nghiệp có năng lực phân tích, hoạch định và quản trị tài chính toàn diện.' },
-        'tai-chinh-thong-minh': { title: 'Tài chính thông minh', code: '7340101', credits: '142', description: 'Đào tạo chuyên gia tài chính có năng lực phân tích, hoạch định và quản trị danh mục đầu tư theo chuẩn quốc tế.' },
-        'tai-chinh-ngan-hang': { title: 'Tài chính ngân hàng', code: '7340101', credits: '139', description: 'Đào tạo cử nhân quản trị kinh doanh có chuyên môn sâu về tài chính ngân hàng.' },
-        'tri-tue-nhan-tao-khoa': { title: 'Trí tuệ nhân tạo khoa học máy tính', code: '7480101', credits: '139', description: 'Đào tạo chuyên gia AI – DS tài năng có tư duy phân tích, sáng tạo, và khả năng giải quyết vấn đề dựa trên mô hình toán – dữ liệu – thuật toán.' },
-        'an-ninh-mang': { title: 'An ninh mạng và an toàn số', code: '7480101', credits: '139', description: 'Đào tạo chuyên gia công nghệ tài năng có tư duy logic, sáng tạo và năng lực giải quyết vấn đề bằng công nghệ.' }
-    };
-
-    document.querySelectorAll('.category-header').forEach(header => {
-        header.addEventListener('click', function() {
-            this.parentElement.classList.toggle('active');
-        });
-    });
-
-    document.querySelectorAll('.course-item').forEach(item => {
-        item.addEventListener('click', function() {
-            const course = courseData[this.dataset.course];
-            if (course) {
-                document.getElementById('modalTitle').textContent = course.title;
-                document.getElementById('courseCode').textContent = course.code || 'N/A';
-                document.getElementById('courseCredits').textContent = course.credits || 'N/A';
-                document.getElementById('courseDescription').textContent = course.description || 'Thông tin đang được cập nhật';
-                document.getElementById('modalOverlay').classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        });
-    });
-
-    function closeModal() {
-        document.getElementById('modalOverlay').classList.remove('active');
-        document.body.style.overflow = 'auto';
+const courseData = {
+    'cong-nghe-thong-tin': {
+        title: 'Công nghệ thông tin',
+        code: '7480201', credits: '145',
+        description: 'Đào tạo cử nhân Công nghệ thông tin có tư duy công nghệ, năng lực thiết kế, phát triển, triển khai và vận hành các hệ thống phần mềm, hệ thống thông tin và dịch vụ công nghệ thông tin trong môi trường doanh nghiệp và xã hội hiện đại. Sinh viên tốt nghiệp sẵn sàng làm việc trong môi trường toàn cầu, tham gia phát triển các hệ thống công nghệ phục vụ chuyển đổi số.',
+        features: [
+            { icon: '🤖', title: 'Tích hợp trí tuệ nhân tạo (AI)', desc: 'Ứng dụng AI trong các dự án thực tiễn, phát triển hệ thống thông minh phục vụ doanh nghiệp.' },
+            { icon: '🌍', title: 'Cập nhật theo xu hướng toàn cầu', desc: 'Chương trình đào tạo luôn bám sát công nghệ và phương pháp mới nhất trong lĩnh vực CNTT.' },
+            { icon: '🏆', title: 'Tích hợp chứng chỉ quốc tế', desc: 'Sinh viên được tiếp cận với kho học liệu mở, chất lượng cao từ Coursera, Udemy và các nền tảng hàng đầu.' },
+            { icon: '🏢', title: 'Thực chiến doanh nghiệp (OJT)', desc: 'Học kỳ thực tập tại các công ty hàng đầu như FPT Software, VNPT, CMC và các tập đoàn công nghệ lớn.' },
+            { icon: '🔗', title: 'Liên ngành – đa cơ hội', desc: 'Kết nối với các lĩnh vực AI, Kỹ thuật phần mềm, An ninh mạng, mở rộng cơ hội việc làm.' }
+        ],
+        careerIntro: 'Nhu cầu nhân lực CNTT tại Việt Nam tăng mạnh hàng năm với mức lương cạnh tranh. Sinh viên FPTU có thể phát triển sự nghiệp tại các tập đoàn lớn như FPT, Viettel, VNPT, Samsung, hoặc các công ty khởi nghiệp công nghệ.',
+        careers: [
+            'Lập trình viên phần mềm (Software Developer / Engineer)',
+            'Kỹ sư hệ thống và quản trị mạng (System Engineer)',
+            'Chuyên gia phân tích và thiết kế hệ thống (System Analyst)',
+            'Kỹ sư DevOps và điện toán đám mây (Cloud/DevOps Engineer)',
+            'Chuyên gia dữ liệu và trí tuệ nhân tạo (Data Engineer / AI Engineer)',
+            'Quản lý dự án công nghệ (IT Project Manager)'
+        ]
+    },
+    'ky-thuat-phan-mem': {
+        title: 'Kỹ thuật phần mềm',
+        code: '7480201', credits: '145',
+        description: 'Chuyên ngành Kỹ thuật phần mềm tại Trường Đại học FPT đào tạo kỹ sư phần mềm có khả năng phân tích, thiết kế, xây dựng và quản lý hệ thống phần mềm, đáp ứng nhu cầu doanh nghiệp. Sinh viên được trang bị kỹ năng phát triển phần mềm theo tiêu chuẩn quốc tế.',
+        features: [
+            { icon: '⚙️', title: 'Quy trình phát triển Agile/Scrum', desc: 'Học và thực hành các phương pháp phát triển phần mềm hiện đại được doanh nghiệp ưa chuộng nhất.' },
+            { icon: '🧪', title: 'Kiểm thử phần mềm chuyên sâu', desc: 'Đào tạo kỹ năng QA/QC, kiểm thử tự động và đảm bảo chất lượng phần mềm theo chuẩn quốc tế.' },
+            { icon: '☁️', title: 'Công nghệ đám mây & DevOps', desc: 'Ứng dụng AWS, Azure, GCP và các công cụ CI/CD trong phát triển và triển khai phần mềm.' },
+            { icon: '🏢', title: 'Thực tập doanh nghiệp thực chiến', desc: 'Học kỳ OJT tại FPT Software, Axon Active, KMS Technology và các công ty phần mềm hàng đầu.' },
+            { icon: '📜', title: 'Chứng chỉ chuyên nghiệp', desc: 'Hỗ trợ thi chứng chỉ AWS, PMP, ISTQB và các chứng chỉ công nghệ quốc tế uy tín.' }
+        ],
+        careerIntro: 'Kỹ thuật phần mềm là một trong những ngành có nhu cầu tuyển dụng cao nhất và mức lương hấp dẫn. Kỹ sư phần mềm FPTU được các công ty trong và ngoài nước săn đón.',
+        careers: [
+            'Kỹ sư phần mềm (Software Engineer / Full-stack Developer)',
+            'Kỹ sư kiểm thử phần mềm (QA/QC Engineer)',
+            'Kỹ sư DevOps và tích hợp liên tục (DevOps Engineer)',
+            'Kiến trúc sư phần mềm (Software Architect)',
+            'Quản lý dự án phần mềm (IT Project Manager / Scrum Master)',
+            'Chuyên gia tư vấn giải pháp công nghệ (Solution Consultant)'
+        ]
+    },
+    'tri-tue-nhan-tao': {
+        title: 'Trí tuệ nhân tạo',
+        code: '7480201', credits: '145',
+        description: 'Đào tạo cử nhân Trí tuệ nhân tạo có năng lực làm chủ công nghệ, tư duy logic và sáng tạo, sẵn sàng tham gia phát triển các hệ thống thông minh phục vụ chuyển đổi số và kinh tế tri thức toàn cầu. Chương trình kết hợp nền tảng toán học vững chắc với kỹ năng lập trình thực tiễn.',
+        features: [
+            { icon: '🧠', title: 'Machine Learning & Deep Learning', desc: 'Nắm vững các thuật toán học máy, mạng nơ-ron sâu và ứng dụng thực tiễn trong sản xuất.' },
+            { icon: '🗣️', title: 'Xử lý ngôn ngữ tự nhiên (NLP)', desc: 'Phát triển các mô hình xử lý ngôn ngữ, chatbot thông minh và phân tích văn bản tự động.' },
+            { icon: '👁️', title: 'Thị giác máy tính (Computer Vision)', desc: 'Xây dựng hệ thống nhận dạng ảnh, video, phục vụ sản xuất thông minh và y tế.' },
+            { icon: '📊', title: 'Nền tảng toán học & thống kê', desc: 'Được trang bị kiến thức đại số tuyến tính, giải tích, xác suất thống kê chuyên sâu.' },
+            { icon: '🔬', title: 'Nghiên cứu và ứng dụng thực tiễn', desc: 'Tham gia các dự án nghiên cứu AI thực tế tại các lab của FPT và đối tác quốc tế.' }
+        ],
+        careerIntro: 'AI là lĩnh vực tăng trưởng nhanh nhất trong thập kỷ tới. Theo các báo cáo toàn cầu, nhu cầu nhân lực AI tăng trưởng hơn 40%/năm với mức lương trung bình từ 30-80 triệu đồng/tháng.',
+        careers: [
+            'Kỹ sư AI / Machine Learning Engineer',
+            'Chuyên gia Deep Learning & Neural Networks',
+            'Kỹ sư xử lý ngôn ngữ tự nhiên (NLP Engineer)',
+            'Chuyên gia thị giác máy tính (Computer Vision Engineer)',
+            'Nghiên cứu viên AI (AI Researcher)',
+            'Chuyên gia tư vấn giải pháp AI cho doanh nghiệp'
+        ]
+    },
+    'khoa-hoc-dl': {
+        title: 'Khoa học dữ liệu ứng dụng',
+        code: '7480201', credits: '145',
+        description: 'Đào tạo cử nhân Khoa học dữ liệu ứng dụng có năng lực thu thập, xử lý, phân tích và khai phá dữ liệu lớn; có tư duy logic, sáng tạo, kỹ năng lập trình và thống kê; sẵn sàng phát triển các giải pháp dữ liệu - AI - Machine Learning để hỗ trợ doanh nghiệp, tổ chức trong quyết định và quản lý.',
+        features: [
+            { icon: '📊', title: 'Phân tích dữ liệu lớn (Big Data)', desc: 'Nắm vững các công cụ Hadoop, Spark, và các nền tảng xử lý dữ liệu quy mô lớn.' },
+            { icon: '🐍', title: 'Python & R cho Data Science', desc: 'Thành thạo Python, R cùng các thư viện Pandas, NumPy, Scikit-learn, TensorFlow.' },
+            { icon: '📈', title: 'Trực quan hóa dữ liệu', desc: 'Xây dựng dashboard và báo cáo dữ liệu chuyên nghiệp với Tableau, Power BI, Matplotlib.' },
+            { icon: '🗄️', title: 'Cơ sở dữ liệu & SQL nâng cao', desc: 'Thiết kế và tối ưu hóa cơ sở dữ liệu quan hệ và phi quan hệ (NoSQL).' },
+            { icon: '🤝', title: 'Hợp tác doanh nghiệp thực tiễn', desc: 'Làm việc với dữ liệu thực từ các doanh nghiệp đối tác, giải quyết bài toán kinh doanh thực tế.' }
+        ],
+        careerIntro: 'Dữ liệu được coi là "dầu mỏ" của thế kỷ 21. Các chuyên gia Data Science là những nhân sự được săn đón nhất tại Việt Nam và toàn cầu với mức lương rất cạnh tranh.',
+        careers: [
+            'Chuyên gia khoa học dữ liệu (Data Scientist)',
+            'Kỹ sư dữ liệu (Data Engineer)',
+            'Chuyên gia phân tích dữ liệu (Data Analyst)',
+            'Kỹ sư Machine Learning (ML Engineer)',
+            'Chuyên gia BI & Trực quan hóa dữ liệu (BI Developer)',
+            'Giám đốc dữ liệu (Chief Data Officer - CDO)'
+        ]
+    },
+    'an-toan-thong-tin': {
+        title: 'An toàn thông tin',
+        code: '7480201', credits: '145',
+        description: 'Đào tạo kỹ sư An toàn thông tin có năng lực phân tích, thiết kế, vận hành và bảo vệ hệ thống số theo tiêu chuẩn quốc tế; ứng dụng trí tuệ nhân tạo và công nghệ mới trong giám sát, phát hiện và phản ứng sự cố an ninh mạng.',
+        features: [
+            { icon: '🤖', title: 'Tích hợp trí tuệ nhân tạo (AI)', desc: 'Ứng dụng AI trong giám sát, phát hiện và phản ứng sự cố an ninh mạng, giúp sinh viên làm chủ công nghệ bảo mật thông minh và đón đầu xu hướng AI-driven Security.' },
+            { icon: '🌍', title: 'Cập nhật theo xu hướng toàn cầu', desc: 'Chương trình đào tạo luôn bám sát công nghệ và phương pháp mới nhất trong lĩnh vực Cyber Security, giúp sinh viên bắt nhịp với tốc độ phát triển của thế giới số.' },
+            { icon: '🏆', title: 'Tích hợp chứng chỉ quốc tế', desc: 'Tài liệu học tập chính sử dụng toàn bộ các sách giáo trình được nhập khẩu từ nước ngoài kết hợp khai thác các nguồn học liệu uy tín từ Coursera, Udemy.' },
+            { icon: '🏢', title: 'Thực chiến doanh nghiệp (OJT)', desc: 'Học kỳ thực tập tại các công ty hàng đầu như FPT Software, VNPT, NCSC, VSEC,... mang đến trải nghiệm thực tế và cơ hội việc làm sớm.' },
+            { icon: '🔗', title: 'Liên ngành – đa cơ hội', desc: 'Kết nối với các lĩnh vực AI, Kỹ thuật phần mềm, Kinh doanh, mở rộng khả năng ứng dụng bảo mật trong nhiều môi trường công nghệ khác nhau.' }
+        ],
+        careerIntro: 'Theo tổ chức (ISC)², thế giới hiện thiếu hơn 4 triệu chuyên gia an ninh mạng, khiến đây trở thành lĩnh vực có tốc độ tăng trưởng nhân lực nhanh nhất toàn cầu. Với năng lực quốc tế và trải nghiệm thực tế, sinh viên FPTU có thể phát triển sự nghiệp tại các tập đoàn công nghệ lớn.',
+        careers: [
+            'Chuyên viên phân tích và phòng thủ an ninh mạng (Security Analyst, Cyber Defense Engineer)',
+            'Kỹ sư kiểm thử xâm nhập (Penetration Tester)',
+            'Chuyên gia điều tra số (Digital Forensics Specialist)',
+            'Chuyên viên bảo mật đám mây và IoT (Cloud/IoT Security Expert)',
+            'Quản lý rủi ro và tư vấn an ninh mạng (Cyber Risk Manager, Security Consultant)'
+        ]
+    },
+    'vi-mach-ban-dan': {
+        title: 'Vi mạch bán dẫn',
+        code: '7480201', credits: '145',
+        description: 'Đào tạo kỹ sư Vi mạch bán dẫn có năng lực thiết kế – mô phỏng – kiểm thử – tối ưu hóa các vi mạch số, tương tự và hỗn hợp theo chuẩn quốc tế. Chương trình đặc biệt phù hợp với xu hướng phát triển ngành bán dẫn tại Việt Nam.',
+        features: [
+            { icon: '🔬', title: 'Thiết kế VLSI chuyên sâu', desc: 'Học thiết kế vi mạch tích hợp quy mô lớn (VLSI) với phần mềm chuyên nghiệp Cadence, Synopsys.' },
+            { icon: '⚡', title: 'FPGA & Lập trình phần cứng', desc: 'Thực hành thiết kế và lập trình FPGA với ngôn ngữ VHDL và Verilog theo tiêu chuẩn công nghiệp.' },
+            { icon: '🏭', title: 'Kết nối doanh nghiệp bán dẫn', desc: 'Hợp tác với Intel, Samsung, Renesas và các tập đoàn bán dẫn toàn cầu trong đào tạo và tuyển dụng.' },
+            { icon: '🌐', title: 'Xu hướng ngành bán dẫn Việt Nam', desc: 'Việt Nam đang nổi lên là trung tâm bán dẫn của Đông Nam Á với hàng tỷ USD đầu tư mới.' },
+            { icon: '📐', title: 'Phòng lab hiện đại', desc: 'Trang thiết bị thí nghiệm và phần mềm thiết kế vi mạch tiên tiến đạt chuẩn công nghiệp.' }
+        ],
+        careerIntro: 'Ngành bán dẫn đang bùng nổ tại Việt Nam với làn sóng đầu tư từ Intel, Samsung, Amkor... Kỹ sư vi mạch bán dẫn hiện đang khan hiếm và có mức lương từ 50-150 triệu đồng/tháng.',
+        careers: [
+            'Kỹ sư thiết kế vi mạch số / tương tự (IC Design Engineer)',
+            'Kỹ sư kiểm thử và xác minh vi mạch (Verification Engineer)',
+            'Kỹ sư thiết kế FPGA (FPGA Design Engineer)',
+            'Kỹ sư quy trình sản xuất bán dẫn (Process Engineer)',
+            'Kỹ sư kiểm soát chất lượng bán dẫn (Quality Control Engineer)',
+            'Chuyên gia R&D vi điện tử (Electronics R&D Specialist)'
+        ]
+    },
+    'cong-nghe-o-to-so': {
+        title: 'Công nghệ ô tô số',
+        code: '7480201', credits: '145',
+        description: 'Đào tạo kỹ sư phần mềm ô tô có năng lực thiết kế, lập trình và kiểm thử các hệ thống điện – điện tử trên ô tô theo tiêu chuẩn quốc tế. Chương trình kết hợp công nghệ điện tử và phần mềm nhúng trong ngành công nghiệp ô tô hiện đại.',
+        features: [
+            { icon: '🚗', title: 'Phần mềm nhúng ô tô', desc: 'Phát triển phần mềm nhúng cho ECU, BCM và các module điều khiển trên xe theo chuẩn AUTOSAR.' },
+            { icon: '🤖', title: 'Xe tự lái & ADAS', desc: 'Nghiên cứu và phát triển hệ thống hỗ trợ lái xe tiên tiến (ADAS) và công nghệ xe tự hành.' },
+            { icon: '⚡', title: 'Xe điện (EV) & Hybrid', desc: 'Thiết kế và tối ưu hóa hệ thống quản lý pin và động cơ điện cho xe điện thế hệ mới.' },
+            { icon: '🔒', title: 'An ninh mạng ô tô', desc: 'Bảo mật hệ thống kết nối trên xe (V2X) theo tiêu chuẩn ISO/SAE 21434.' },
+            { icon: '🏭', title: 'Đối tác ngành ô tô hàng đầu', desc: 'Hợp tác với Bosch, Toyota, Hyundai và các nhà sản xuất ô tô lớn trong đào tạo thực tiễn.' }
+        ],
+        careerIntro: 'Ngành ô tô đang trải qua cuộc cách mạng số hóa. Nhu cầu kỹ sư phần mềm ô tô tăng mạnh toàn cầu với mức lương rất cạnh tranh, đặc biệt tại các công ty như Bosch, NVIDIA, Tesla, Hyundai.',
+        careers: [
+            'Kỹ sư phần mềm nhúng ô tô (Automotive Embedded Software Engineer)',
+            'Kỹ sư kiểm thử hệ thống ô tô (Automotive Test Engineer)',
+            'Kỹ sư ADAS và xe tự lái (ADAS / Autonomous Driving Engineer)',
+            'Kỹ sư điện – điện tử ô tô (Automotive E/E Engineer)',
+            'Kỹ sư kết nối xe (Connected Vehicle Engineer)',
+            'Chuyên gia hệ thống xe điện (EV Systems Engineer)'
+        ]
+    },
+    'he-thong-thong-tin': {
+        title: 'Hệ thống thông tin',
+        code: '7480201', credits: '145',
+        description: 'Chuyên ngành Hệ thống thông tin đào tạo nguồn nhân lực công nghệ – chiến lược – kinh doanh toàn diện, có khả năng phân tích, thiết kế và quản trị hệ thống thông tin phục vụ chuyển đổi số của tổ chức.',
+        features: [
+            { icon: '🗃️', title: 'Quản trị cơ sở dữ liệu', desc: 'Thiết kế, vận hành và tối ưu hóa hệ thống cơ sở dữ liệu quy mô doanh nghiệp.' },
+            { icon: '📋', title: 'Phân tích yêu cầu & quy trình', desc: 'Nắm vững kỹ năng phân tích nghiệp vụ, mô hình hóa quy trình và thiết kế giải pháp.' },
+            { icon: '🏗️', title: 'Kiến trúc hệ thống doanh nghiệp', desc: 'Thiết kế kiến trúc hệ thống ERP, CRM và các hệ thống thông tin doanh nghiệp tích hợp.' },
+            { icon: '💡', title: 'Chuyển đổi số', desc: 'Tư vấn và triển khai chiến lược chuyển đổi số cho tổ chức và doanh nghiệp.' },
+            { icon: '🤝', title: 'Cầu nối Công nghệ – Kinh doanh', desc: 'Đào tạo nhân sự am hiểu cả công nghệ lẫn kinh doanh, đáp ứng nhu cầu chuyển đổi số toàn diện.' }
+        ],
+        careerIntro: 'Trong thời đại chuyển đổi số, mọi tổ chức đều cần chuyên gia hệ thống thông tin. Đây là ngành có nhu cầu ổn định và tiềm năng phát triển lên các vị trí quản lý cấp cao.',
+        careers: [
+            'Chuyên viên phân tích hệ thống (System Analyst)',
+            'Chuyên gia tư vấn giải pháp doanh nghiệp (ERP Consultant)',
+            'Quản lý dự án CNTT (IT Project Manager)',
+            'Chuyên gia chuyển đổi số (Digital Transformation Consultant)',
+            'Giám đốc thông tin (Chief Information Officer - CIO)',
+            'Chuyên gia quản trị cơ sở dữ liệu (Database Administrator)'
+        ]
+    },
+    'thiet-ke-do-hoa': {
+        title: 'Thiết kế đồ họa và mỹ thuật số',
+        code: '7480201', credits: '146',
+        description: 'Đào tạo cử nhân Thiết kế đồ hoạ và mỹ thuật số có đạo đức nghề nghiệp và năng lực sáng tạo đáp ứng nhu cầu thực tế của xã hội. Sinh viên được học từ cơ bản đến chuyên sâu về thiết kế thị giác, motion graphics và UI/UX.',
+        features: [
+            { icon: '🎨', title: 'Thiết kế thị giác & nhận diện thương hiệu', desc: 'Xây dựng hệ thống nhận diện thương hiệu chuyên nghiệp, thiết kế ấn phẩm truyền thông đa kênh.' },
+            { icon: '🎬', title: 'Motion Graphics & Video', desc: 'Sản xuất nội dung video, animation và motion graphics cho quảng cáo và truyền thông kỹ thuật số.' },
+            { icon: '📱', title: 'UI/UX Design', desc: 'Thiết kế giao diện ứng dụng và trải nghiệm người dùng với Figma, Adobe XD.' },
+            { icon: '🖼️', title: 'Digital Art & Illustration', desc: 'Sáng tạo tác phẩm nghệ thuật số, minh họa cho xuất bản phẩm và nội dung số.' },
+            { icon: '💻', title: 'Công cụ sáng tạo chuyên nghiệp', desc: 'Thành thạo bộ Adobe Creative Suite, Figma, Blender và các phần mềm thiết kế hiện đại.' }
+        ],
+        careerIntro: 'Nhu cầu thiết kế sáng tạo bùng nổ trong thời đại số. Từ startup đến tập đoàn lớn đều cần chuyên gia thiết kế đồ họa và mỹ thuật số để phát triển thương hiệu và nội dung.',
+        careers: [
+            'Nhà thiết kế đồ họa (Graphic Designer)',
+            'Chuyên gia thiết kế UI/UX (UI/UX Designer)',
+            'Nhà sáng tạo nội dung số (Digital Content Creator)',
+            'Chuyên gia Motion Graphics (Motion Designer)',
+            'Nghệ sĩ minh họa kỹ thuật số (Digital Illustrator)',
+            'Giám đốc sáng tạo (Creative Director)'
+        ]
+    },
+    'truyen-thong-da-phuong-tien': {
+        title: 'Truyền thông đa phương tiện',
+        code: '7320106', credits: '139',
+        description: 'Đào tạo người học trở thành chuyên gia trong lĩnh vực truyền thông ở thời đại kỹ thuật số, có khả năng sản xuất nội dung đa nền tảng, quản trị chiến lược truyền thông tích hợp.',
+        features: [
+            { icon: '📸', title: 'Nhiếp ảnh & Quay phim chuyên nghiệp', desc: 'Học sản xuất nội dung hình ảnh và video chất lượng cao cho báo chí và truyền thông số.' },
+            { icon: '📻', title: 'Phát thanh & Truyền hình', desc: 'Kỹ năng dẫn chương trình, sản xuất nội dung phát thanh và các định dạng truyền hình hiện đại.' },
+            { icon: '💻', title: 'Báo điện tử & Mạng xã hội', desc: 'Quản trị nội dung trên các nền tảng số, SEO, phân tích dữ liệu truyền thông.' },
+            { icon: '🎙️', title: 'Podcast & Video Content', desc: 'Sản xuất podcast, YouTube và các dạng nội dung video ngắn đang bùng nổ.' },
+            { icon: '🎯', title: 'Chiến lược nội dung số', desc: 'Xây dựng chiến lược content marketing và phân phối nội dung đa kênh hiệu quả.' }
+        ],
+        careerIntro: 'Ngành truyền thông đa phương tiện đang phát triển mạnh mẽ với sự bùng nổ của nền kinh tế sáng tạo và các nền tảng kỹ thuật số. Nhu cầu nhân lực truyền thông chất lượng cao tăng đều hàng năm.',
+        careers: [
+            'Phóng viên báo điện tử và đa phương tiện',
+            'Chuyên gia sản xuất nội dung số (Content Creator)',
+            'Biên tập viên truyền thông (Media Editor)',
+            'Quản lý nội dung mạng xã hội (Social Media Manager)',
+            'Chuyên gia truyền thông doanh nghiệp (Corporate Communications)',
+            'Nhà sản xuất chương trình phát thanh – truyền hình'
+        ]
+    },
+    'quan-he-cong-chung': {
+        title: 'Quan hệ công chúng',
+        code: '7320106', credits: '139',
+        description: 'Đào tạo chuyên gia Quan hệ công chúng có năng lực hoạch định, triển khai và quản trị chiến lược truyền thông thương hiệu trong môi trường toàn cầu. Chương trình trang bị kỹ năng xây dựng hình ảnh và quản lý khủng hoảng truyền thông.',
+        features: [
+            { icon: '📣', title: 'Truyền thông chiến lược', desc: 'Hoạch định và triển khai chiến dịch PR tổng thể cho tổ chức và thương hiệu.' },
+            { icon: '🆘', title: 'Quản lý khủng hoảng truyền thông', desc: 'Kỹ năng xử lý và phòng ngừa khủng hoảng, bảo vệ uy tín thương hiệu trong tình huống phức tạp.' },
+            { icon: '🤝', title: 'Quan hệ báo chí & truyền thông', desc: 'Xây dựng mạng lưới quan hệ với báo giới, tổ chức họp báo và quản lý thông tin.' },
+            { icon: '🌐', title: 'PR kỹ thuật số', desc: 'Triển khai chiến lược PR trên nền tảng số, quản lý danh tiếng trực tuyến.' },
+            { icon: '🎪', title: 'Tổ chức sự kiện & truyền thông', desc: 'Lên kế hoạch và tổ chức các sự kiện truyền thông, lễ ra mắt sản phẩm chuyên nghiệp.' }
+        ],
+        careerIntro: 'Quan hệ công chúng là nghề nghiệp thiết yếu trong mọi tổ chức hiện đại. Nhu cầu chuyên gia PR tăng mạnh đặc biệt tại các công ty đa quốc gia, tập đoàn lớn và cơ quan chính phủ.',
+        careers: [
+            'Chuyên viên Quan hệ công chúng (PR Executive / Manager)',
+            'Chuyên gia truyền thông doanh nghiệp (Corporate Communication)',
+            'Quản lý danh tiếng thương hiệu (Brand Reputation Manager)',
+            'Chuyên gia tổ chức sự kiện (Event Manager)',
+            'Người phát ngôn / Chuyên viên quan hệ báo chí (Media Relations)',
+            'Giám đốc truyền thông (Communications Director)'
+        ]
+    },
+    'truyen-thong-marketing': {
+        title: 'Truyền thông Marketing tích hợp',
+        code: '7320106', credits: '139',
+        description: 'Chương trình đào tạo cử nhân có nền tảng vững chắc về truyền thông và marketing, thành thạo xây dựng chiến lược truyền thông tích hợp đa kênh, kết hợp sáng tạo nội dung và phân tích dữ liệu.',
+        features: [
+            { icon: '📱', title: 'Digital Marketing toàn diện', desc: 'Nắm vững SEO, SEM, Facebook Ads, Google Ads và các kênh quảng cáo kỹ thuật số hiệu quả.' },
+            { icon: '🎯', title: 'Chiến lược IMC', desc: 'Xây dựng chiến lược truyền thông tích hợp đa kênh (Integrated Marketing Communications) chuyên nghiệp.' },
+            { icon: '📊', title: 'Phân tích & đo lường hiệu quả', desc: 'Sử dụng Google Analytics, Facebook Insights và các công cụ đo lường ROI chiến dịch.' },
+            { icon: '✍️', title: 'Content Marketing & Copywriting', desc: 'Sáng tạo nội dung hấp dẫn, storytelling thương hiệu và copywriting thuyết phục.' },
+            { icon: '🛒', title: 'E-commerce Marketing', desc: 'Chiến lược marketing cho thương mại điện tử, Shopee, Lazada, TikTok Shop.' }
+        ],
+        careerIntro: 'Marketing tích hợp là nhu cầu thiết yếu của mọi doanh nghiệp trong thời đại số. Chuyên gia IMC được săn đón rộng rãi ở cả agency quảng cáo lẫn doanh nghiệp.',
+        careers: [
+            'Chuyên gia Marketing tích hợp (IMC Specialist)',
+            'Quản lý kênh Digital Marketing (Digital Marketing Manager)',
+            'Chuyên gia Content Marketing (Content Strategist)',
+            'Quản lý chiến dịch quảng cáo (Campaign Manager)',
+            'Chuyên gia phân tích marketing (Marketing Analyst)',
+            'Giám đốc Marketing (CMO / Marketing Director)'
+        ]
+    },
+    'truyen-thong-thuong-hieu': {
+        title: 'Truyền thông thương hiệu',
+        code: '7320106', credits: '139',
+        description: 'Đào tạo cử nhân có kiến thức chuyên môn sâu về truyền thông thương hiệu, thành thạo trong việc xây dựng chiến lược truyền thông tích hợp, phát triển và quản lý bản sắc thương hiệu trong môi trường kinh doanh.',
+        features: [
+            { icon: '🏷️', title: 'Xây dựng thương hiệu (Branding)', desc: 'Phát triển chiến lược thương hiệu toàn diện từ định vị, nhận diện đến trải nghiệm thương hiệu.' },
+            { icon: '📖', title: 'Brand Storytelling', desc: 'Kỹ năng kể chuyện thương hiệu truyền cảm hứng, tạo kết nối cảm xúc với khách hàng.' },
+            { icon: '🛡️', title: 'Quản lý và bảo vệ thương hiệu', desc: 'Chiến lược bảo vệ tài sản thương hiệu, xử lý vi phạm nhãn hiệu và quản lý danh tiếng.' },
+            { icon: '🌟', title: 'Influencer & KOL Marketing', desc: 'Triển khai chiến dịch với người ảnh hưởng, xây dựng mạng lưới đại sứ thương hiệu.' },
+            { icon: '📐', title: 'Brand Identity & Design', desc: 'Thiết kế hệ thống nhận diện thương hiệu nhất quán trên mọi điểm tiếp xúc.' }
+        ],
+        careerIntro: 'Thương hiệu mạnh là tài sản vô giá của doanh nghiệp. Chuyên gia truyền thông thương hiệu là những người kiến tạo giá trị lâu dài, được trọng dụng tại các công ty hàng đầu.',
+        careers: [
+            'Chuyên gia xây dựng thương hiệu (Brand Strategist)',
+            'Quản lý thương hiệu (Brand Manager)',
+            'Chuyên gia truyền thông thương hiệu (Brand Communications Specialist)',
+            'Giám đốc thương hiệu (Brand Director)',
+            'Chuyên gia Influencer Marketing',
+            'Tư vấn chiến lược thương hiệu (Brand Consultant)'
+        ]
+    },
+    'ngon-ngu-anh': {
+        title: 'Ngôn ngữ Anh',
+        code: '7220201', credits: '139',
+        description: 'Đào tạo cử nhân Ngôn ngữ Anh có năng lực sử dụng tiếng Anh thành thạo trong giao tiếp, học thuật và môi trường làm việc chuyên nghiệp đa văn hóa. Chương trình kết hợp ngôn ngữ với kiến thức liên ngành.',
+        features: [
+            { icon: '🗣️', title: 'Kỹ năng giao tiếp quốc tế', desc: 'Đào tạo 4 kỹ năng nghe - nói - đọc - viết tiếng Anh đạt chuẩn IELTS 6.5+ / TOEIC 750+.' },
+            { icon: '📝', title: 'Biên phiên dịch chuyên nghiệp', desc: 'Thành thạo kỹ năng biên dịch, phiên dịch tiếng Anh trong các lĩnh vực kinh tế, pháp lý, kỹ thuật.' },
+            { icon: '🌏', title: 'Văn hóa & Ngôn ngữ học', desc: 'Hiểu sâu về văn hóa các nước nói tiếng Anh, ngữ dụng học và giao tiếp liên văn hóa.' },
+            { icon: '💼', title: 'Tiếng Anh chuyên ngành', desc: 'Học tiếng Anh thương mại, pháp lý, y tế, kỹ thuật phục vụ môi trường làm việc chuyên sâu.' },
+            { icon: '🎓', title: 'Chuẩn bị du học & làm việc quốc tế', desc: 'Trang bị đủ năng lực để tiếp tục học tập hoặc làm việc tại các môi trường quốc tế.' }
+        ],
+        careerIntro: 'Tiếng Anh là chìa khóa mở cánh cửa toàn cầu. Cử nhân Ngôn ngữ Anh có thể làm việc trong nhiều lĩnh vực khác nhau với mức thu nhập ổn định và cơ hội thăng tiến rõ ràng.',
+        careers: [
+            'Biên dịch viên / Phiên dịch viên tiếng Anh',
+            'Giáo viên / Giảng viên tiếng Anh',
+            'Chuyên viên đối ngoại và hợp tác quốc tế',
+            'Biên tập viên nội dung tiếng Anh (Content Editor)',
+            'Chuyên viên quan hệ khách hàng quốc tế',
+            'Chuyên gia xuất nhập khẩu và giao thương quốc tế'
+        ]
+    },
+    'tieng-anh-thuong-mai': {
+        title: 'Tiếng Anh thương mại',
+        code: '7220201', credits: '139',
+        description: 'Đào tạo cử nhân có chuyên môn sâu về Tiếng Anh thương mại, có năng lực sử dụng tiếng Anh thành thạo trong môi trường kinh doanh quốc tế, đàm phán, soạn thảo văn bản thương mại và quản lý quan hệ đối tác.',
+        features: [
+            { icon: '💼', title: 'Anh văn thương mại chuyên sâu', desc: 'Thành thạo tiếng Anh trong đàm phán, hội nghị, soạn thảo hợp đồng và thư tín thương mại quốc tế.' },
+            { icon: '🌐', title: 'Kinh doanh quốc tế', desc: 'Kiến thức về thương mại quốc tế, Incoterms, L/C và các quy định thương mại toàn cầu.' },
+            { icon: '📊', title: 'Phân tích thị trường', desc: 'Kỹ năng nghiên cứu và phân tích thị trường quốc tế bằng tiếng Anh cho mục đích kinh doanh.' },
+            { icon: '🤝', title: 'Đàm phán quốc tế', desc: 'Kỹ thuật đàm phán và xây dựng quan hệ đối tác kinh doanh trong môi trường đa văn hóa.' },
+            { icon: '🏆', title: 'Chứng chỉ IELTS/TOEIC', desc: 'Đạt chuẩn IELTS 6.5+ hoặc TOEIC 850+ cùng các chứng chỉ thương mại quốc tế.' }
+        ],
+        careerIntro: 'Trong bối cảnh hội nhập kinh tế quốc tế, nhu cầu nhân lực thành thạo tiếng Anh thương mại tại các doanh nghiệp FDI và xuất nhập khẩu ngày càng cao.',
+        careers: [
+            'Chuyên viên xuất nhập khẩu (Import/Export Specialist)',
+            'Phiên dịch thương mại (Business Interpreter)',
+            'Chuyên viên kinh doanh quốc tế (International Sales Executive)',
+            'Quản lý quan hệ đối tác quốc tế (Partner Relations Manager)',
+            'Chuyên gia logistic và chuỗi cung ứng quốc tế',
+            'Chuyên viên đầu tư nước ngoài (FDI Specialist)'
+        ]
+    },
+    'ngon-ngu-han': {
+        title: 'Ngôn ngữ Hàn Quốc',
+        code: '7220210', credits: '139',
+        description: 'Đào tạo cử nhân Ngôn ngữ Hàn Quốc có khả năng sử dụng thành thạo tiếng Hàn và tiếng Anh trong giao tiếp, học thuật và môi trường làm việc chuyên nghiệp với các doanh nghiệp Hàn Quốc.',
+        features: [
+            { icon: '🇰🇷', title: 'Tiếng Hàn toàn diện TOPIK II', desc: 'Đào tạo đạt chuẩn TOPIK II Level 4-6 (tương đương năng lực sử dụng chuyên nghiệp).' },
+            { icon: '🎎', title: 'Văn hóa & Xã hội Hàn Quốc', desc: 'Hiểu sâu về văn hóa, phong tục, xã hội Hàn Quốc – nền tảng giao tiếp hiệu quả.' },
+            { icon: '🏢', title: 'Môi trường doanh nghiệp Hàn', desc: 'Văn hóa doanh nghiệp Hàn Quốc, cách thức làm việc, giao thức trong môi trường chaebol.' },
+            { icon: '✈️', title: 'Cơ hội trao đổi sinh viên', desc: 'Chương trình trao đổi với các đại học Hàn Quốc, học bổng du học và thực tập tại Hàn.' },
+            { icon: '🎭', title: 'Hallyu & Công nghiệp văn hóa', desc: 'Cơ hội trong ngành công nghiệp văn hóa Hàn Quốc đang bùng nổ toàn cầu (K-pop, K-drama).' }
+        ],
+        careerIntro: 'Việt Nam là điểm đến đầu tư hàng đầu của Hàn Quốc với hàng nghìn doanh nghiệp FDI. Nhân sự thành thạo tiếng Hàn đang rất khan hiếm và có mức đãi ngộ vượt trội.',
+        careers: [
+            'Phiên dịch viên tiếng Hàn (Korean Interpreter/Translator)',
+            'Chuyên viên kinh doanh tại doanh nghiệp FDI Hàn Quốc',
+            'Hướng dẫn viên du lịch tiếng Hàn',
+            'Chuyên viên quan hệ đối ngoại Việt – Hàn',
+            'Giáo viên tiếng Hàn',
+            'Chuyên gia xuất nhập khẩu thị trường Hàn Quốc'
+        ]
+    },
+    'tieng-han-thuong-mai': {
+        title: 'Tiếng Hàn thương mại',
+        code: '7220210', credits: '139',
+        description: 'Đào tạo cử nhân Tiếng Hàn thương mại có khả năng sử dụng thành thạo hai ngoại ngữ gồm tiếng Hàn và tiếng Anh trong môi trường kinh doanh quốc tế, đặc biệt trong quan hệ thương mại Việt – Hàn.',
+        features: [
+            { icon: '💰', title: 'Tiếng Hàn kinh doanh chuyên sâu', desc: 'Thành thạo tiếng Hàn thương mại: đàm phán, hợp đồng, thư tín và văn bản kinh doanh.' },
+            { icon: '📦', title: 'Thương mại Việt – Hàn', desc: 'Kiến thức về FTA Việt Nam – Hàn Quốc, quy trình xuất nhập khẩu và logistics hai chiều.' },
+            { icon: '🏭', title: 'Thực tập doanh nghiệp Hàn Quốc', desc: 'Cơ hội thực tập tại Samsung, LG, Hyundai, LOTTE và các tập đoàn Hàn Quốc tại Việt Nam.' },
+            { icon: '🌐', title: 'Song ngữ Hàn – Anh', desc: 'Phát triển năng lực song ngữ, phục vụ môi trường làm việc đa quốc gia.' },
+            { icon: '📑', title: 'Luật thương mại & hợp đồng quốc tế', desc: 'Hiểu biết pháp lý về hợp đồng kinh doanh quốc tế và tranh chấp thương mại.' }
+        ],
+        careerIntro: 'Với làn sóng đầu tư từ Hàn Quốc ngày càng mạnh, chuyên gia tiếng Hàn thương mại có mức lương khởi điểm cao và cơ hội thăng tiến nhanh tại các tập đoàn Hàn Quốc.',
+        careers: [
+            'Chuyên viên kinh doanh quốc tế (Hàn – Việt)',
+            'Phiên dịch thương mại tiếng Hàn',
+            'Chuyên viên xuất nhập khẩu thị trường Hàn Quốc',
+            'Quản lý dự án FDI Hàn Quốc',
+            'Chuyên viên mua hàng từ Hàn Quốc (Sourcing Specialist)',
+            'Tư vấn đầu tư Hàn Quốc tại Việt Nam'
+        ]
+    },
+    'ngon-ngu-trung': {
+        title: 'Ngôn ngữ Trung Quốc',
+        code: '7220204', credits: '139',
+        description: 'Đào tạo cử nhân thành thạo tiếng Trung trong bối cảnh thương mại quốc tế, có năng lực giao tiếp, biên phiên dịch và làm việc chuyên nghiệp trong môi trường doanh nghiệp Trung Quốc.',
+        features: [
+            { icon: '🇨🇳', title: 'Tiếng Trung chuẩn HSK 5-6', desc: 'Đào tạo đạt chuẩn HSK cấp 5-6 (tương đương bậc đại học tại Trung Quốc).' },
+            { icon: '📚', title: 'Văn hóa & Lịch sử Trung Hoa', desc: 'Hiểu sâu về văn hóa, triết học, lịch sử Trung Quốc – nền tảng giao tiếp và hợp tác hiệu quả.' },
+            { icon: '💻', title: 'Truyền thông & Báo chí tiếng Trung', desc: 'Kỹ năng đọc và viết báo chí, biên tập nội dung tiếng Trung chuyên nghiệp.' },
+            { icon: '🌐', title: 'Nền kinh tế số Trung Quốc', desc: 'Tìm hiểu hệ sinh thái công nghệ Alibaba, Tencent, ByteDance và kinh doanh số tại Trung Quốc.' },
+            { icon: '✈️', title: 'Du học & trao đổi sinh viên', desc: 'Cơ hội học bổng và trao đổi sinh viên với các đại học danh tiếng tại Trung Quốc.' }
+        ],
+        careerIntro: 'Trung Quốc là đối tác thương mại lớn nhất của Việt Nam. Nhân lực thành thạo tiếng Trung đang được các doanh nghiệp FDI và công ty xuất nhập khẩu săn đón mạnh mẽ.',
+        careers: [
+            'Phiên dịch viên tiếng Trung (Chinese Interpreter/Translator)',
+            'Chuyên viên kinh doanh tại doanh nghiệp Trung Quốc',
+            'Hướng dẫn viên du lịch tiếng Trung',
+            'Chuyên gia quan hệ đối ngoại Việt – Trung',
+            'Giáo viên tiếng Trung',
+            'Chuyên viên truyền thông đối ngoại với Trung Quốc'
+        ]
+    },
+    'tieng-trung-thuong-mai': {
+        title: 'Tiếng Trung thương mại',
+        code: '7220204', credits: '139',
+        description: 'Đào tạo cử nhân Tiếng Trung thương mại có khả năng giao tiếp, đàm phán, biên phiên dịch trong môi trường kinh doanh chuyên nghiệp, thành thạo tiếng Trung thương mại và am hiểu thị trường Trung Quốc.',
+        features: [
+            { icon: '💰', title: 'Tiếng Trung thương mại chuyên sâu', desc: 'Thành thạo văn bản hợp đồng, thư tín thương mại, đàm phán và giao dịch kinh doanh bằng tiếng Trung.' },
+            { icon: '📊', title: 'Thị trường Trung Quốc', desc: 'Phân tích và nghiên cứu thị trường Trung Quốc, cơ hội kinh doanh và xu hướng tiêu dùng.' },
+            { icon: '🏭', title: 'Chuỗi cung ứng từ Trung Quốc', desc: 'Quản lý sourcing, nhập khẩu và logistics hàng hóa từ các nhà máy Trung Quốc.' },
+            { icon: '📱', title: 'Thương mại điện tử xuyên biên giới', desc: 'Kinh doanh trên các nền tảng Alibaba, Taobao, WeChat và thương mại điện tử quốc tế.' },
+            { icon: '🤝', title: 'Kỹ năng đàm phán Á Đông', desc: 'Hiểu văn hóa đàm phán Trung Quốc, xây dựng quan hệ (guanxi) trong kinh doanh.' }
+        ],
+        careerIntro: 'Với kim ngạch thương mại Việt – Trung hàng trăm tỷ USD mỗi năm, nhân sự tiếng Trung thương mại là nguồn lực vô cùng quý giá và khan hiếm.',
+        careers: [
+            'Chuyên viên xuất nhập khẩu thị trường Trung Quốc',
+            'Phiên dịch thương mại tiếng Trung',
+            'Chuyên gia mua hàng từ Trung Quốc (Sourcing)',
+            'Quản lý kinh doanh tại doanh nghiệp FDI Trung Quốc',
+            'Chuyên gia thương mại điện tử xuyên biên giới (Cross-border E-commerce)',
+            'Tư vấn đầu tư và thị trường Trung Quốc'
+        ]
+    },
+    'luat': {
+        title: 'Luật',
+        code: '7380101', credits: '139',
+        description: 'Đào tạo cử nhân Luật có tư duy pháp lý hiện đại, nắm vững nền tảng luật học, có khả năng vận dụng pháp luật vào thực tiễn nghề nghiệp đa dạng trong bối cảnh hội nhập pháp lý quốc tế.',
+        features: [
+            { icon: '⚖️', title: 'Nền tảng pháp lý toàn diện', desc: 'Học các lĩnh vực luật dân sự, hình sự, hành chính, hiến pháp và luật quốc tế.' },
+            { icon: '💼', title: 'Thực hành nghề luật', desc: 'Rèn luyện kỹ năng tư vấn pháp lý, soạn thảo hợp đồng và biện hộ tại tòa.' },
+            { icon: '🌐', title: 'Luật quốc tế & So sánh luật', desc: 'Am hiểu luật pháp quốc tế, điều ước và chuẩn mực pháp lý toàn cầu.' },
+            { icon: '💻', title: 'LegalTech & Pháp lý số', desc: 'Ứng dụng công nghệ trong lĩnh vực pháp lý, hợp đồng thông minh và AI trong luật.' },
+            { icon: '🏛️', title: 'Thực tập tại cơ quan pháp lý', desc: 'Thực tập tại tòa án, văn phòng luật sư, công ty và cơ quan nhà nước.' }
+        ],
+        careerIntro: 'Pháp luật là nền tảng của mọi hoạt động xã hội. Nhu cầu về chuyên gia pháp lý ổn định và tăng trưởng đều đặn, đặc biệt trong bối cảnh hội nhập kinh tế quốc tế.',
+        careers: [
+            'Luật sư (Lawyer / Attorney)',
+            'Chuyên viên pháp lý doanh nghiệp (In-house Counsel)',
+            'Thẩm phán / Kiểm sát viên / Chấp hành viên',
+            'Công chứng viên / Thừa phát lại',
+            'Chuyên gia tư vấn luật đầu tư quốc tế',
+            'Chuyên gia pháp lý trong lĩnh vực công nghệ (LegalTech)'
+        ]
+    },
+    'luat-kinh-te': {
+        title: 'Luật kinh tế',
+        code: '7380101', credits: '139',
+        description: 'Chuyên ngành Luật Kinh tế tại Trường Đại học FPT đào tạo chuyên gia pháp lý có năng lực pháp luật kinh doanh – đầu tư – thương mại – tài chính, sẵn sàng làm việc trong môi trường doanh nghiệp và đầu tư quốc tế.',
+        features: [
+            { icon: '🏢', title: 'Pháp luật doanh nghiệp', desc: 'Nắm vững luật doanh nghiệp, M&A, cổ phần hóa và quản trị công ty theo chuẩn quốc tế.' },
+            { icon: '📈', title: 'Pháp luật đầu tư & chứng khoán', desc: 'Am hiểu pháp lý về đầu tư, thị trường chứng khoán, quỹ đầu tư và M&A.' },
+            { icon: '🌏', title: 'Luật thương mại quốc tế', desc: 'Nắm vững WTO, CPTPP, EVFTA và các hiệp định thương mại tự do Việt Nam đã ký kết.' },
+            { icon: '🏦', title: 'Pháp luật tài chính – ngân hàng', desc: 'Quy định pháp lý về ngân hàng, bảo hiểm, fintech và giao dịch tài chính.' },
+            { icon: '🔎', title: 'Giải quyết tranh chấp thương mại', desc: 'Kỹ năng hòa giải, trọng tài và giải quyết tranh chấp kinh doanh trong và ngoài nước.' }
+        ],
+        careerIntro: 'Trong bối cảnh kinh tế hội nhập và thị trường M&A sôi động, chuyên gia Luật kinh tế là nguồn nhân lực thiết yếu tại các tập đoàn, ngân hàng, công ty luật và tổ chức tài chính.',
+        careers: [
+            'Chuyên viên pháp lý doanh nghiệp (Corporate Legal Counsel)',
+            'Luật sư thương mại và M&A (M&A Lawyer)',
+            'Chuyên gia pháp lý đầu tư nước ngoài (FDI Legal Expert)',
+            'Chuyên gia tuân thủ pháp lý (Compliance Officer)',
+            'Trọng tài viên thương mại (Commercial Arbitrator)',
+            'Giám đốc pháp lý (General Counsel / Chief Legal Officer)'
+        ]
+    },
+    'marketing': {
+        title: 'Marketing',
+        code: '7340101', credits: '139',
+        description: 'Đào tạo cử nhân Quản trị kinh doanh có chuyên môn sâu về marketing, trang bị toàn diện từ nghiên cứu thị trường, xây dựng chiến lược đến triển khai các chiến dịch marketing đa kênh hiệu quả.',
+        features: [
+            { icon: '📊', title: 'Nghiên cứu thị trường', desc: 'Nắm vững phương pháp nghiên cứu định tính, định lượng và phân tích hành vi người tiêu dùng.' },
+            { icon: '📱', title: 'Digital Marketing toàn diện', desc: 'SEO, SEM, Social Media Marketing, Email Marketing và các kênh kỹ thuật số.' },
+            { icon: '🎯', title: 'Chiến lược thương hiệu', desc: 'Xây dựng định vị thương hiệu, phát triển brand identity và chiến lược marketing tích hợp.' },
+            { icon: '💡', title: 'Creativity & Innovation', desc: 'Phát triển tư duy sáng tạo trong marketing, ideation và concept development.' },
+            { icon: '📈', title: 'Data-Driven Marketing', desc: 'Phân tích dữ liệu khách hàng, tối ưu chiến dịch và đo lường ROI marketing.' }
+        ],
+        careerIntro: 'Marketing là xương sống của mọi doanh nghiệp. Chuyên gia marketing giỏi luôn được săn đón ở mọi ngành nghề, từ startup đến tập đoàn đa quốc gia.',
+        careers: [
+            'Chuyên viên Marketing (Marketing Executive / Specialist)',
+            'Quản lý thương hiệu (Brand Manager)',
+            'Quản lý Marketing Digital (Digital Marketing Manager)',
+            'Chuyên gia nghiên cứu thị trường (Market Research Analyst)',
+            'Giám đốc Marketing (CMO / Marketing Director)',
+            'Chuyên gia tư vấn Marketing (Marketing Consultant)'
+        ]
+    },
+    'kinh-doanh-quoc-te': {
+        title: 'Kinh doanh quốc tế',
+        code: '7340101', credits: '139',
+        description: 'Đào tạo cử nhân quản trị kinh doanh có chuyên môn sâu về kinh doanh quốc tế, am hiểu môi trường kinh doanh toàn cầu, các hiệp định thương mại và chiến lược mở rộng doanh nghiệp ra thị trường quốc tế.',
+        features: [
+            { icon: '🌍', title: 'Thương mại quốc tế', desc: 'Nắm vững các hiệp định thương mại, quy trình xuất nhập khẩu, Incoterms và thanh toán quốc tế.' },
+            { icon: '📊', title: 'Phân tích thị trường toàn cầu', desc: 'Nghiên cứu và đánh giá cơ hội kinh doanh tại các thị trường quốc tế tiềm năng.' },
+            { icon: '🤝', title: 'Đàm phán kinh doanh quốc tế', desc: 'Kỹ năng đàm phán, ký kết hợp đồng và quản lý quan hệ đối tác quốc tế đa văn hóa.' },
+            { icon: '💱', title: 'Tài chính quốc tế', desc: 'Quản lý rủi ro tỷ giá, thanh toán quốc tế và các công cụ tài chính phái sinh.' },
+            { icon: '🏢', title: 'Chiến lược toàn cầu hóa', desc: 'Xây dựng chiến lược mở rộng doanh nghiệp ra thị trường nước ngoài, FDI.' }
+        ],
+        careerIntro: 'Trong bối cảnh Việt Nam hội nhập sâu rộng, chuyên gia kinh doanh quốc tế là nhân lực then chốt tại các công ty FDI, tập đoàn xuất nhập khẩu và tổ chức quốc tế.',
+        careers: [
+            'Chuyên viên kinh doanh quốc tế (International Business Executive)',
+            'Chuyên gia xuất nhập khẩu (Import/Export Manager)',
+            'Quản lý phát triển thị trường quốc tế',
+            'Chuyên viên đầu tư nước ngoài (FDI Specialist)',
+            'Quản lý quan hệ đối tác toàn cầu (Global Partnership Manager)',
+            'Giám đốc kinh doanh quốc tế (International Sales Director)'
+        ]
+    },
+    'thuong-mai-dien-tu': {
+        title: 'Thương mại điện tử',
+        code: '7340101', credits: '139',
+        description: 'Đào tạo cử nhân quản trị kinh doanh có chuyên môn sâu về thương mại điện tử, nắm vững công nghệ và chiến lược kinh doanh trực tuyến, vận hành sàn TMĐT và phát triển doanh nghiệp số.',
+        features: [
+            { icon: '🛒', title: 'Vận hành sàn TMĐT', desc: 'Thành thạo kinh doanh trên Shopee, Lazada, Tiki, TikTok Shop và các nền tảng quốc tế.' },
+            { icon: '📦', title: 'Logistics TMĐT', desc: 'Quản lý kho hàng, fulfillment và chuỗi cung ứng cho thương mại điện tử.' },
+            { icon: '📊', title: 'Phân tích dữ liệu bán hàng', desc: 'Sử dụng data analytics để tối ưu danh mục, giá bán và chiến lược marketing trên sàn.' },
+            { icon: '💳', title: 'Thanh toán số & Fintech', desc: 'Am hiểu hệ sinh thái thanh toán số, ví điện tử và các phương thức thanh toán hiện đại.' },
+            { icon: '🌐', title: 'TMĐT xuyên biên giới', desc: 'Kinh doanh quốc tế trên Amazon, Alibaba và các nền tảng TMĐT toàn cầu.' }
+        ],
+        careerIntro: 'Thương mại điện tử Việt Nam tăng trưởng 25-30%/năm, thuộc top tăng trưởng nhanh nhất khu vực. Nhu cầu nhân lực TMĐT bùng nổ ở tất cả các cấp độ.',
+        careers: [
+            'Chuyên viên kinh doanh TMĐT (E-commerce Executive)',
+            'Quản lý gian hàng trực tuyến (Online Store Manager)',
+            'Chuyên gia Digital Marketing cho TMĐT',
+            'Quản lý logistics và chuỗi cung ứng TMĐT',
+            'Chuyên gia phân tích dữ liệu TMĐT (E-commerce Data Analyst)',
+            'Giám đốc TMĐT (E-commerce Director)'
+        ]
+    },
+    'quan-tri-kinh-doanh': {
+        title: 'Quản trị kinh doanh',
+        code: '7340101', credits: '139',
+        description: 'Chương trình cử nhân Quản trị kinh doanh trang bị cho sinh viên kiến thức nền tảng và chuyên sâu về quản trị, marketing, tài chính và nhân sự, chuẩn bị cho các vai trò lãnh đạo trong doanh nghiệp.',
+        features: [
+            { icon: '🎯', title: 'Tư duy chiến lược doanh nghiệp', desc: 'Phát triển năng lực phân tích, lập kế hoạch và ra quyết định chiến lược kinh doanh.' },
+            { icon: '👥', title: 'Quản trị nhân sự & lãnh đạo', desc: 'Kỹ năng lãnh đạo, quản lý nhóm, xây dựng văn hóa tổ chức và phát triển nhân tài.' },
+            { icon: '💰', title: 'Quản trị tài chính cơ bản', desc: 'Lập ngân sách, phân tích báo cáo tài chính và quản lý dòng tiền doanh nghiệp.' },
+            { icon: '🌐', title: 'Quản trị trong thời đại số', desc: 'Ứng dụng công nghệ số, AI và data trong quản trị và vận hành doanh nghiệp hiệu quả.' },
+            { icon: '🚀', title: 'Khởi nghiệp & Đổi mới sáng tạo', desc: 'Phát triển tư duy khởi nghiệp, xây dựng mô hình kinh doanh và tinh thần innovation.' }
+        ],
+        careerIntro: 'Quản trị kinh doanh là nền tảng cho mọi vị trí quản lý. Cử nhân QTKD có thể khởi nghiệp hoặc phát triển sự nghiệp trong bất kỳ ngành nào từ sản xuất, dịch vụ đến công nghệ.',
+        careers: [
+            'Quản lý kinh doanh (Business Manager)',
+            'Chuyên viên phát triển doanh nghiệp (Business Development Executive)',
+            'Giám đốc điều hành (CEO / General Director)',
+            'Chuyên viên tư vấn quản lý (Management Consultant)',
+            'Nhà sáng lập khởi nghiệp (Entrepreneur / Startup Founder)',
+            'Quản lý vận hành (Operations Manager)'
+        ]
+    },
+    'quan-tri-giai-tri': {
+        title: 'Quản trị giải trí và sự kiện',
+        code: '7340101', credits: '139',
+        description: 'Chương trình Cử nhân Quản trị giải trí và sự kiện đào tạo sinh viên trở thành những chuyên gia có khả năng lên kế hoạch, tổ chức và quản lý đa dạng loại hình sự kiện trong ngành công nghiệp giải trí.',
+        features: [
+            { icon: '🎪', title: 'Tổ chức sự kiện chuyên nghiệp', desc: 'Lên kế hoạch, phối hợp và quản lý toàn bộ quy trình tổ chức sự kiện từ A-Z.' },
+            { icon: '🎭', title: 'Quản lý biểu diễn & giải trí', desc: 'Nắm vững nghiệp vụ quản lý chương trình biểu diễn, concert, lễ hội và sản xuất giải trí.' },
+            { icon: '🎬', title: 'Sản xuất nội dung sáng tạo', desc: 'Kỹ năng sản xuất nội dung cho sự kiện, livestream và các định dạng giải trí hiện đại.' },
+            { icon: '💡', title: 'Sáng tạo concept & kịch bản', desc: 'Phát triển concept sự kiện độc đáo, kịch bản và trải nghiệm thương hiệu ấn tượng.' },
+            { icon: '🤝', title: 'Quan hệ nhà tài trợ & đối tác', desc: 'Kỹ năng tìm kiếm, đàm phán và quản lý quan hệ với nhà tài trợ và đối tác sự kiện.' }
+        ],
+        careerIntro: 'Ngành công nghiệp sự kiện và giải trí đang phục hồi và tăng trưởng mạnh mẽ. Việt Nam là thị trường sôi động với hàng nghìn sự kiện lớn nhỏ diễn ra mỗi năm.',
+        careers: [
+            'Quản lý sự kiện (Event Manager / Event Planner)',
+            'Giám đốc sáng tạo sự kiện (Creative Director)',
+            'Chuyên gia tổ chức hội nghị – hội thảo (MICE Specialist)',
+            'Quản lý chương trình giải trí (Entertainment Program Manager)',
+            'Chuyên viên truyền thông sự kiện (Event Communication Specialist)',
+            'Nhà sản xuất chương trình (Show Producer)'
+        ]
+    },
+    'quan-tri-trai-nghiem': {
+        title: 'Quản trị trải nghiệm khách hàng',
+        code: '7340101', credits: '139',
+        description: 'Đào tạo cử nhân Quản trị trải nghiệm khách hàng có năng lực xây dựng, quản lý và tối ưu hóa hành trình khách hàng, tạo ra trải nghiệm xuất sắc tại mọi điểm tiếp xúc.',
+        features: [
+            { icon: '🗺️', title: 'Customer Journey Mapping', desc: 'Phân tích và thiết kế toàn bộ hành trình khách hàng từ nhận biết đến trung thành.' },
+            { icon: '📊', title: 'Voice of Customer (VoC)', desc: 'Thu thập, phân tích và hành động dựa trên phản hồi khách hàng theo thời gian thực.' },
+            { icon: '🤖', title: 'CX Technology & AI', desc: 'Ứng dụng CRM, chatbot AI và các công nghệ tự động hóa trải nghiệm khách hàng.' },
+            { icon: '💎', title: 'Quản lý loyalty & retention', desc: 'Xây dựng chương trình khách hàng thân thiết và chiến lược giữ chân khách hàng hiệu quả.' },
+            { icon: '📈', title: 'Đo lường NPS & CX Metrics', desc: 'Thiết lập hệ thống đo lường và cải thiện liên tục các chỉ số trải nghiệm khách hàng.' }
+        ],
+        careerIntro: 'Trải nghiệm khách hàng trở thành vũ khí cạnh tranh hàng đầu của doanh nghiệp hiện đại. Chuyên gia CX được săn đón rộng rãi trong các ngành dịch vụ, bán lẻ, ngân hàng và công nghệ.',
+        careers: [
+            'Chuyên gia trải nghiệm khách hàng (CX Specialist)',
+            'Quản lý dịch vụ khách hàng (Customer Service Manager)',
+            'Chuyên gia phân tích hành vi khách hàng (Customer Insights Analyst)',
+            'Quản lý chương trình loyalty (Loyalty Program Manager)',
+            'Giám đốc trải nghiệm khách hàng (Chief Customer Officer)',
+            'Chuyên gia thiết kế dịch vụ (Service Design Specialist)'
+        ]
+    },
+    'quan-tri-thu-mua': {
+        title: 'Quản trị thu mua',
+        code: '7340101', credits: '139',
+        description: 'Đào tạo cử nhân Quản trị thu mua có năng lực xây dựng, triển khai và quản lý các chiến lược thu mua hiệu quả, tối ưu chi phí và xây dựng quan hệ nhà cung cấp bền vững.',
+        features: [
+            { icon: '🏭', title: 'Quản lý nhà cung cấp', desc: 'Đánh giá, lựa chọn và phát triển quan hệ đối tác chiến lược với nhà cung cấp.' },
+            { icon: '📋', title: 'Đàm phán và ký kết hợp đồng', desc: 'Kỹ năng đàm phán giá, điều khoản hợp đồng và quản lý rủi ro trong thu mua.' },
+            { icon: '📊', title: 'Phân tích chi phí thu mua', desc: 'Tối ưu chi phí mua hàng, phân tích tổng chi phí sở hữu (TCO) và spend analysis.' },
+            { icon: '🌐', title: 'Sourcing toàn cầu', desc: 'Tìm kiếm và đánh giá nhà cung cấp quốc tế, quản lý rủi ro thu mua xuyên biên giới.' },
+            { icon: '💻', title: 'Công nghệ trong thu mua', desc: 'Sử dụng ERP, hệ thống e-procurement và tự động hóa quy trình mua hàng.' }
+        ],
+        careerIntro: 'Quản trị thu mua hiệu quả có thể tiết kiệm hàng chục tỷ đồng cho doanh nghiệp. Chuyên gia thu mua được trọng dụng tại các tập đoàn sản xuất, bán lẻ và các công ty đa quốc gia.',
+        careers: [
+            'Chuyên viên thu mua (Procurement Specialist / Buyer)',
+            'Quản lý nhà cung cấp (Supplier Relationship Manager)',
+            'Chuyên gia sourcing toàn cầu (Global Sourcing Specialist)',
+            'Giám đốc thu mua (Procurement Director / CPO)',
+            'Chuyên gia tối ưu chi phí (Cost Optimization Specialist)',
+            'Quản lý hợp đồng (Contract Manager)'
+        ]
+    },
+    'quan-tri-khach-san': {
+        title: 'Quản trị khách sạn',
+        code: '7340101', credits: '139',
+        description: 'Chuyên ngành Quản trị khách sạn đào tạo chuyên gia có năng lực quản lý và điều phối các hoạt động khách sạn, resort, nhà hàng theo tiêu chuẩn quốc tế.',
+        features: [
+            { icon: '🏨', title: 'Vận hành khách sạn quốc tế', desc: 'Nắm vững nghiệp vụ buồng phòng, ẩm thực, lễ tân và dịch vụ khách hàng theo chuẩn 5 sao.' },
+            { icon: '💼', title: 'Revenue Management', desc: 'Quản lý doanh thu, pricing strategy và tối ưu hóa công suất phòng và F&B.' },
+            { icon: '🌟', title: 'Quản lý trải nghiệm khách', desc: 'Xây dựng và duy trì chất lượng dịch vụ xuất sắc, xử lý phàn nàn và tăng loyalty.' },
+            { icon: '💻', title: 'Technology trong hospitality', desc: 'Sử dụng PMS, CRM, channel manager và các công nghệ hospitality hiện đại.' },
+            { icon: '🌍', title: 'Thực tập khách sạn quốc tế', desc: 'Cơ hội thực tập tại các chuỗi khách sạn quốc tế Marriott, Hilton, InterContinental.' }
+        ],
+        careerIntro: 'Du lịch Việt Nam đang phục hồi mạnh mẽ. Nhu cầu nhân lực quản lý khách sạn chất lượng cao đang rất lớn, đặc biệt tại các điểm đến như Đà Nẵng, Nha Trang, Phú Quốc.',
+        careers: [
+            'Quản lý khách sạn (Hotel Manager)',
+            'Trưởng bộ phận Buồng phòng / F&B / Lễ tân',
+            'Chuyên gia Revenue Management (Revenue Manager)',
+            'Quản lý resort và khu nghỉ dưỡng (Resort Manager)',
+            'Giám đốc kinh doanh khách sạn (Director of Sales)',
+            'Tổng Giám đốc khách sạn (General Manager)'
+        ]
+    },
+    'quan-tri-du-lich': {
+        title: 'Quản trị dịch vụ du lịch và lữ hành',
+        code: '7340101', credits: '139',
+        description: 'Đào tạo cử nhân Quản trị dịch vụ du lịch và lữ hành có tư duy quản trị du lịch toàn diện, kỹ năng thiết kế tour, quản lý điểm đến và phát triển sản phẩm du lịch sáng tạo.',
+        features: [
+            { icon: '🗺️', title: 'Thiết kế sản phẩm du lịch', desc: 'Xây dựng tour, package du lịch độc đáo phù hợp với từng phân khúc khách hàng.' },
+            { icon: '🌏', title: 'Du lịch quốc tế & Inbound', desc: 'Quản lý tour cho khách nước ngoài, khai thác thị trường du lịch quốc tế.' },
+            { icon: '💻', title: 'Digital Tourism', desc: 'Ứng dụng công nghệ số, OTA (Booking, Expedia) và quản lý phân phối du lịch online.' },
+            { icon: '🌿', title: 'Du lịch bền vững', desc: 'Phát triển mô hình du lịch eco-tourism, community-based tourism và du lịch có trách nhiệm.' },
+            { icon: '🎓', title: 'Chứng chỉ nghiệp vụ du lịch', desc: 'Chuẩn bị cho các chứng chỉ hướng dẫn viên quốc tế và quản lý du lịch chuyên nghiệp.' }
+        ],
+        careerIntro: 'Du lịch là một trong những ngành kinh tế mũi nhọn của Việt Nam. Đà Nẵng, Hội An, Phú Quốc đang thu hút hàng triệu du khách mỗi năm, tạo ra nhu cầu lớn về nhân lực du lịch chuyên nghiệp.',
+        careers: [
+            'Hướng dẫn viên du lịch quốc tế (Tour Guide)',
+            'Quản lý tour và lữ hành (Tour Manager)',
+            'Chuyên gia thiết kế sản phẩm du lịch (Tour Designer)',
+            'Quản lý điểm đến (Destination Manager)',
+            'Chuyên gia marketing du lịch (Tourism Marketing Specialist)',
+            'Giám đốc công ty lữ hành (Travel Agency Director)'
+        ]
+    },
+    'phan-tich-kinh-doanh': {
+        title: 'Phân tích kinh doanh (Business Analytics)',
+        code: '7340101', credits: '139',
+        description: 'Chương trình cử nhân Quản trị kinh doanh có chuyên môn sâu về Phân tích kinh doanh, đào tạo sinh viên có năng lực phân tích, dự báo và ra quyết định dựa trên dữ liệu để tối ưu hoạt động kinh doanh.',
+        features: [
+            { icon: '📊', title: 'Data Analytics & Visualization', desc: 'Thành thạo Excel nâng cao, Power BI, Tableau và các công cụ phân tích dữ liệu kinh doanh.' },
+            { icon: '🐍', title: 'Python & SQL cho Business', desc: 'Lập trình Python, SQL để truy xuất, xử lý và phân tích dữ liệu kinh doanh quy mô lớn.' },
+            { icon: '🤖', title: 'Machine Learning cho kinh doanh', desc: 'Ứng dụng ML trong dự báo bán hàng, phân tích rủi ro và tối ưu chiến lược kinh doanh.' },
+            { icon: '💡', title: 'Business Intelligence (BI)', desc: 'Xây dựng hệ thống BI, dashboard và báo cáo quản trị phục vụ ra quyết định.' },
+            { icon: '🔮', title: 'Dự báo và mô hình hóa', desc: 'Xây dựng mô hình dự báo thị trường, xu hướng và kịch bản kinh doanh.' }
+        ],
+        careerIntro: 'Business Analytics là nghề của tương lai khi mọi doanh nghiệp đều cần ra quyết định dựa trên dữ liệu. Nhu cầu nhân lực BA tăng mạnh toàn cầu với mức lương rất cạnh tranh.',
+        careers: [
+            'Chuyên gia phân tích kinh doanh (Business Analyst)',
+            'Chuyên viên BI & Data Visualization (BI Analyst)',
+            'Chuyên gia dự báo và lập kế hoạch (Demand Planner)',
+            'Quản lý phân tích dữ liệu (Data Analytics Manager)',
+            'Chuyên gia tối ưu vận hành (Operations Analyst)',
+            'Giám đốc Chiến lược & Phân tích (Chief Strategy & Analytics Officer)'
+        ]
+    },
+    'logistics': {
+        title: 'Logistics và Quản lý chuỗi cung ứng toàn cầu',
+        code: '7340101', credits: '139',
+        description: 'Đào tạo cử nhân Quản trị kinh doanh có chuyên môn sâu về Logistics và Quản lý chuỗi cung ứng toàn cầu, có năng lực thiết kế, vận hành và tối ưu hóa toàn bộ chuỗi cung ứng.',
+        features: [
+            { icon: '🚢', title: 'Vận tải đa phương thức', desc: 'Nắm vững vận tải biển, hàng không, đường bộ, đường sắt và tối ưu phương thức vận chuyển.' },
+            { icon: '🏭', title: 'Quản lý kho và phân phối', desc: 'Thiết kế kho hàng, WMS, tự động hóa kho và tối ưu hóa mạng lưới phân phối.' },
+            { icon: '🌐', title: 'Chuỗi cung ứng toàn cầu', desc: 'Quản lý chuỗi cung ứng quốc tế, Incoterms, hải quan và logistics xuyên biên giới.' },
+            { icon: '💻', title: 'Supply Chain Technology', desc: 'ERP, TMS, WMS và ứng dụng AI, IoT trong tối ưu hóa chuỗi cung ứng.' },
+            { icon: '♻️', title: 'Chuỗi cung ứng xanh & bền vững', desc: 'Giảm carbon footprint, logistics ngược và phát triển chuỗi cung ứng bền vững.' }
+        ],
+        careerIntro: 'Việt Nam là trung tâm sản xuất và logistics quan trọng của Đông Nam Á. Nhu cầu chuyên gia logistics và chuỗi cung ứng đang tăng mạnh với sự phát triển của TMĐT và FDI.',
+        careers: [
+            'Chuyên viên logistics (Logistics Coordinator / Specialist)',
+            'Quản lý kho hàng (Warehouse Manager)',
+            'Chuyên gia chuỗi cung ứng (Supply Chain Manager)',
+            'Chuyên gia giao nhận hàng hóa (Freight Forwarder)',
+            'Giám đốc logistics (Logistics Director)',
+            'Chuyên gia tư vấn chuỗi cung ứng (Supply Chain Consultant)'
+        ]
+    },
+    'cong-nghe-tai-chinh': {
+        title: 'Công nghệ tài chính (Fintech)',
+        code: '7340101', credits: '139',
+        description: 'Đào tạo cử nhân Công nghệ tài chính (Fintech) có năng lực ứng dụng công nghệ hiện đại như trí tuệ nhân tạo, dữ liệu lớn, blockchain trong phân tích, thiết kế và vận hành các giải pháp tài chính số.',
+        features: [
+            { icon: '🔗', title: 'Blockchain & Tiền mã hóa', desc: 'Hiểu sâu về công nghệ blockchain, DeFi, smart contracts và ứng dụng trong tài chính.' },
+            { icon: '🤖', title: 'AI trong tài chính', desc: 'Ứng dụng machine learning trong phân tích rủi ro tín dụng, phát hiện gian lận và trading.' },
+            { icon: '📱', title: 'Mobile Banking & Digital Payment', desc: 'Thiết kế và phát triển ứng dụng ngân hàng số, ví điện tử và hệ thống thanh toán.' },
+            { icon: '📊', title: 'RegTech & Tuân thủ số', desc: 'Công nghệ tuân thủ quy định, KYC/AML tự động hóa và quản lý rủi ro kỹ thuật số.' },
+            { icon: '💡', title: 'Khởi nghiệp Fintech', desc: 'Phát triển tư duy khởi nghiệp trong lĩnh vực tài chính công nghệ, mô hình kinh doanh Fintech.' }
+        ],
+        careerIntro: 'Fintech là một trong những lĩnh vực tăng trưởng nóng nhất toàn cầu, với hàng trăm tỷ USD đầu tư mỗi năm. Việt Nam có hệ sinh thái Fintech phát triển mạnh với nhiều unicorn tiềm năng.',
+        careers: [
+            'Chuyên gia phân tích Fintech (Fintech Analyst)',
+            'Kỹ sư phát triển sản phẩm tài chính số',
+            'Chuyên gia blockchain và smart contract',
+            'Quản lý sản phẩm ngân hàng số (Digital Banking PM)',
+            'Chuyên gia quản lý rủi ro công nghệ tài chính',
+            'Nhà sáng lập startup Fintech (Fintech Entrepreneur)'
+        ]
+    },
+    'tai-chinh-doanh-nghiep': {
+        title: 'Tài chính doanh nghiệp',
+        code: '7340101', credits: '139',
+        description: 'Đào tạo cử nhân Tài chính doanh nghiệp có năng lực phân tích, hoạch định và quản trị tài chính toàn diện, phục vụ sự phát triển bền vững của doanh nghiệp.',
+        features: [
+            { icon: '📊', title: 'Phân tích tài chính chuyên sâu', desc: 'Phân tích báo cáo tài chính, đánh giá hiệu quả kinh doanh và định giá doanh nghiệp.' },
+            { icon: '💰', title: 'Quản lý vốn và dòng tiền', desc: 'Tối ưu cơ cấu vốn, quản lý dòng tiền và chiến lược huy động vốn cho doanh nghiệp.' },
+            { icon: '📈', title: 'Đầu tư & M&A', desc: 'Thẩm định dự án đầu tư, phân tích M&A và quản lý danh mục đầu tư doanh nghiệp.' },
+            { icon: '🛡️', title: 'Quản trị rủi ro tài chính', desc: 'Nhận diện, đo lường và phòng ngừa các rủi ro tài chính bằng công cụ phái sinh.' },
+            { icon: '🏆', title: 'Chứng chỉ CFA/ACCA', desc: 'Hỗ trợ chuẩn bị cho các chứng chỉ tài chính quốc tế uy tín CFA, ACCA, CPA.' }
+        ],
+        careerIntro: 'Tài chính doanh nghiệp là trái tim của mọi tổ chức. Chuyên gia tài chính giỏi luôn được trọng dụng và có lộ trình thăng tiến rõ ràng lên đến CFO.',
+        careers: [
+            'Chuyên viên tài chính doanh nghiệp (Corporate Finance Analyst)',
+            'Chuyên gia thẩm định dự án đầu tư',
+            'Quản lý tài chính (Finance Manager)',
+            'Chuyên gia M&A (M&A Analyst)',
+            'Giám đốc tài chính (CFO)',
+            'Nhà phân tích tài chính (Financial Analyst - CFA)'
+        ]
+    },
+    'tai-chinh-thong-minh': {
+        title: 'Tài chính thông minh',
+        code: '7340101', credits: '142',
+        description: 'Đào tạo chuyên gia tài chính có năng lực phân tích, hoạch định và quản trị danh mục đầu tư theo chuẩn quốc tế, kết hợp công nghệ AI và dữ liệu lớn trong các quyết định tài chính hiện đại.',
+        features: [
+            { icon: '🤖', title: 'AI & Machine Learning trong tài chính', desc: 'Ứng dụng AI trong dự báo giá tài sản, phân tích rủi ro và tự động hóa quyết định tài chính.' },
+            { icon: '📊', title: 'Quản trị danh mục đầu tư', desc: 'Xây dựng và tối ưu hóa danh mục đầu tư theo lý thuyết Markowitz và các mô hình hiện đại.' },
+            { icon: '💻', title: 'Algorithmic Trading', desc: 'Thiết kế và kiểm thử các chiến lược giao dịch tự động trên thị trường tài chính.' },
+            { icon: '📈', title: 'Phân tích kỹ thuật & cơ bản', desc: 'Thành thạo phân tích kỹ thuật, định giá tài sản và phân tích vĩ mô thị trường.' },
+            { icon: '🌐', title: 'Thị trường tài chính quốc tế', desc: 'Am hiểu thị trường chứng khoán, trái phiếu, phái sinh và ngoại hối toàn cầu.' }
+        ],
+        careerIntro: 'Tài chính thông minh kết hợp công nghệ và tài chính đang tạo ra thế hệ chuyên gia mới. Đây là lĩnh vực có mức lương cao nhất trong nhóm tài chính.',
+        careers: [
+            'Nhà phân tích đầu tư (Investment Analyst)',
+            'Chuyên gia quản lý quỹ (Fund Manager)',
+            'Chuyên gia quantitative finance (Quant)',
+            'Chuyên gia giao dịch tự động (Algorithmic Trader)',
+            'Giám đốc đầu tư (Chief Investment Officer - CIO)',
+            'Chuyên gia tư vấn đầu tư tài chính (Financial Advisor)'
+        ]
+    },
+    'tai-chinh-ngan-hang': {
+        title: 'Tài chính ngân hàng',
+        code: '7340101', credits: '139',
+        description: 'Đào tạo cử nhân quản trị kinh doanh có chuyên môn sâu về tài chính ngân hàng, nắm vững nghiệp vụ ngân hàng thương mại, thị trường tiền tệ và các sản phẩm tài chính.',
+        features: [
+            { icon: '🏦', title: 'Nghiệp vụ ngân hàng thương mại', desc: 'Nắm vững tín dụng, huy động vốn, thanh toán và các sản phẩm dịch vụ ngân hàng hiện đại.' },
+            { icon: '💳', title: 'Ngân hàng số & Digital Banking', desc: 'Xu hướng chuyển đổi số ngân hàng, mobile banking, open banking và embedded finance.' },
+            { icon: '📊', title: 'Phân tích tín dụng', desc: 'Thẩm định hồ sơ tín dụng, đánh giá rủi ro và ra quyết định cấp tín dụng.' },
+            { icon: '🌐', title: 'Thị trường tiền tệ & vốn', desc: 'Hiểu biết về thị trường liên ngân hàng, trái phiếu và các công cụ tài chính phái sinh.' },
+            { icon: '🛡️', title: 'Quản trị rủi ro ngân hàng', desc: 'Basel III, IFRS 9 và các chuẩn mực quản lý rủi ro quốc tế trong ngân hàng.' }
+        ],
+        careerIntro: 'Ngân hàng là ngành có hệ thống tuyển dụng lớn nhất Việt Nam với hàng nghìn vị trí mỗi năm. Lộ trình thăng tiến rõ ràng từ chuyên viên đến lãnh đạo cấp cao.',
+        careers: [
+            'Chuyên viên tín dụng ngân hàng (Credit Officer)',
+            'Chuyên viên quan hệ khách hàng doanh nghiệp (Corporate Relationship Manager)',
+            'Chuyên gia phân tích rủi ro (Risk Analyst)',
+            'Quản lý chi nhánh ngân hàng (Branch Manager)',
+            'Chuyên gia tài chính doanh nghiệp (Corporate Banker)',
+            'Giám đốc ngân hàng (Banking Director)'
+        ]
+    },
+    'tri-tue-nhan-tao-khoa': {
+        title: 'Trí tuệ nhân tạo khoa học máy tính',
+        code: '7480101', credits: '139',
+        description: 'Đào tạo chuyên gia AI – DS tài năng có tư duy phân tích, sáng tạo, và khả năng giải quyết vấn đề dựa trên mô hình toán – dữ liệu – thuật toán, đáp ứng nhu cầu nghiên cứu và ứng dụng AI tiên tiến.',
+        features: [
+            { icon: '🧮', title: 'Nền tảng toán học chuyên sâu', desc: 'Đại số tuyến tính, giải tích, xác suất thống kê và tối ưu hóa là cốt lõi của chương trình.' },
+            { icon: '🔬', title: 'Nghiên cứu AI tiên tiến', desc: 'Tiếp cận các nghiên cứu mới nhất về LLM, Generative AI, Reinforcement Learning.' },
+            { icon: '💻', title: 'Lập trình thuật toán nâng cao', desc: 'Python, C++ và các framework AI hiện đại như PyTorch, TensorFlow, JAX.' },
+            { icon: '🏆', title: 'Cạnh tranh quốc tế', desc: 'Tham gia các cuộc thi AI quốc tế như Kaggle, ACM ICPC, OLP và các hackathon toàn cầu.' },
+            { icon: '🎓', title: 'Chương trình tài năng đặc biệt', desc: 'Chương trình học tăng cường, giảng viên đầu ngành và kết nối nghiên cứu quốc tế.' }
+        ],
+        careerIntro: 'Đây là chương trình đào tạo elite, chuẩn bị những nhà khoa học máy tính và chuyên gia AI hàng đầu cho Việt Nam và thế giới. Cơ hội làm việc tại Google, Meta, DeepMind và các tổ chức nghiên cứu hàng đầu.',
+        careers: [
+            'Nhà nghiên cứu AI (AI Researcher)',
+            'Kỹ sư Machine Learning cấp cao (Senior ML Engineer)',
+            'Chuyên gia khoa học dữ liệu (Principal Data Scientist)',
+            'Kỹ sư phát triển mô hình ngôn ngữ lớn (LLM Engineer)',
+            'Giảng viên / Nghiên cứu viên đại học',
+            'CTO / AI Lead tại công ty công nghệ'
+        ]
+    },
+    'an-ninh-mang': {
+        title: 'An ninh mạng và an toàn số',
+        code: '7480101', credits: '139',
+        description: 'Đào tạo chuyên gia công nghệ tài năng có tư duy logic, sáng tạo và năng lực giải quyết vấn đề bằng công nghệ trong lĩnh vực an ninh mạng và bảo vệ hệ thống số.',
+        features: [
+            { icon: '🛡️', title: 'Tấn công & Phòng thủ mạng', desc: 'Nắm vững cả hai mặt Red Team (tấn công) và Blue Team (phòng thủ) trong an ninh mạng.' },
+            { icon: '🔒', title: 'Mật mã học ứng dụng', desc: 'Lý thuyết và thực hành mật mã, bảo vệ dữ liệu và xác thực hệ thống thông tin.' },
+            { icon: '🕵️', title: 'Điều tra số (Digital Forensics)', desc: 'Kỹ thuật thu thập, phân tích bằng chứng số trong điều tra tội phạm mạng.' },
+            { icon: '🤖', title: 'AI-driven Cybersecurity', desc: 'Ứng dụng AI trong phát hiện bất thường, dự báo tấn công và tự động hóa phản ứng.' },
+            { icon: '🏆', title: 'CTF & Hacking competitions', desc: 'Tham gia thi Capture The Flag quốc tế, rèn luyện kỹ năng thực chiến an ninh mạng.' }
+        ],
+        careerIntro: 'An ninh mạng là lĩnh vực thiếu nhân lực trầm trọng nhất thế giới với hàng triệu vị trí tuyển dụng chưa được lấp đầy. Chuyên gia an ninh mạng tài năng có mức lương và đãi ngộ vượt trội.',
+        careers: [
+            'Chuyên gia kiểm thử thâm nhập (Penetration Tester / Ethical Hacker)',
+            'Kỹ sư bảo mật hệ thống (Security Engineer)',
+            'Chuyên gia điều tra tội phạm mạng (Cyber Crime Investigator)',
+            'Nhà phân tích mã độc (Malware Analyst)',
+            'Quản lý trung tâm điều hành bảo mật (SOC Manager)',
+            'Chuyên gia bảo mật đám mây (Cloud Security Architect)'
+        ]
     }
+};
 
-    document.getElementById('modalClose').addEventListener('click', closeModal);
-    document.getElementById('modalOverlay').addEventListener('click', function(e) {
-        if (e.target === this) closeModal();
-    });
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') closeModal();
-    });
+// ===== CURRICULUM DATA (shared across all majors, customized per group) =====
+const curriculumData = {
+    // IT group
+    'it': {
+        phases: [
+            {
+                content: [
+                    'Rèn luyện tác phong học tập, văn hóa đại học và tinh thần tự học.',
+                    'Học tiếng Anh đến trình độ tương đương IELTS 6.0, sẵn sàng học tập bằng tiếng Anh.',
+                    'Tham gia các học phần đặc trưng của FPTU như Nhạc cụ dân tộc, Vovinam và các chương trình định hướng tân sinh viên.',
+                    'Có cơ hội tham gia trao đổi sinh viên quốc tế tại Thái Lan, Malaysia, Philippines.'
+                ],
+                result: [
+                    'Xây dựng nền tảng tiếng Anh vững chắc tương đương Bậc 4/6 trước khi vào chuyên ngành, sẵn sàng học tập bằng tiếng Anh.'
+                ],
+                note: 'Sinh viên có chứng chỉ tiếng Anh tương đương IELTS 6.0 được miễn đào tạo giai đoạn tiếng Anh chuẩn bị.'
+            },
+            {
+                content: [
+                    '<strong>Kiến thức khoa học cơ sở:</strong> Toán rời rạc, Đại số tuyến tính, Giải tích, Xác suất thống kê.',
+                    '<strong>Lập trình nền tảng:</strong> Python, C/C++, Java, cấu trúc dữ liệu và giải thuật.',
+                    '<strong>Kiến thức cơ sở ngành:</strong> Mạng máy tính, Hệ điều hành, Cơ sở dữ liệu, Kỹ thuật phần mềm.',
+                    '<strong>Kỹ năng mềm & ngoại ngữ:</strong> Giao tiếp tiếng Anh chuyên ngành, làm việc nhóm, tư duy phản biện.'
+                ],
+                result: [
+                    'Nắm vững kiến thức Kỹ năng Chung (29 TC) và Kiến thức Cơ sở ngành (61 TC).',
+                    'Có khả năng lập trình thành thạo ít nhất 2 ngôn ngữ lập trình phổ biến.',
+                    'Sẵn sàng tiếp cận các môn chuyên sâu ở giai đoạn tiếp theo.'
+                ]
+            },
+            {
+                content: [
+                    'Trường kết nối và sắp xếp doanh nghiệp thực tập (OJT) đảm bảo sinh viên có cơ hội trải nghiệm tại nhiều doanh nghiệp uy tín như FPT Software, VNPT, Viettel, CMC.',
+                    'Trải nghiệm với môi trường làm việc chuyên nghiệp, rèn luyện kỹ năng giao tiếp liên văn hóa và hợp tác nhóm hiệu quả.',
+                    'Thực hiện báo cáo OJT, được đánh giá chất lượng công việc bởi cả Trường và chuyên gia tại doanh nghiệp.'
+                ],
+                result: [
+                    'Áp dụng kiến thức, kỹ năng được học vào công việc thực tế và các dự án tại doanh nghiệp.',
+                    'Giúp sinh viên có góc nhìn thực tế về định hướng nghề nghiệp trong tương lai.',
+                    'Sinh viên có cơ hội được tuyển dụng hoặc ký hợp đồng ngay sau kỳ OJT.'
+                ]
+            },
+            {
+                content: [
+                    'Sinh viên chọn định hướng chuyên sâu phù hợp với mục tiêu nghề nghiệp cá nhân.',
+                    '<strong>Các môn học tự chọn chuyên ngành:</strong> Phát triển ứng dụng di động, Điện toán đám mây, Machine Learning nâng cao, Bảo mật hệ thống, DevOps.',
+                    'Thực hiện Dự án/Khóa luận Tốt nghiệp (10 TC): áp dụng toàn bộ kiến thức tích lũy vào dự án thực tiễn.',
+                    'Tham gia bảo vệ Dự án/Khóa luận trước hội đồng chuyên môn.'
+                ],
+                result: [
+                    'Hoàn thành Kiến thức Lựa chọn (12 TC), phát triển kỹ năng chuyên môn sâu.',
+                    'Tổng hợp kiến thức, kỹ năng và phát triển năng lực nghiên cứu, tự định hướng để thực hiện Dự án/Khóa luận.',
+                    'Sẵn sàng gia nhập thị trường lao động hoặc tiếp tục học sau đại học.'
+                ]
+            }
+        ]
+    },
+    // Language group
+    'lang': {
+        phases: [
+            {
+                content: [
+                    'Rèn luyện tác phong học tập, văn hóa đại học và tinh thần tự học.',
+                    'Học tiếng Anh đến trình độ tương đương IELTS 6.0, sẵn sàng học tập bằng tiếng Anh.',
+                    'Tham gia các học phần đặc trưng của FPTU như Nhạc cụ dân tộc, Vovinam và các chương trình định hướng tân sinh viên.',
+                    'Có cơ hội tham gia trao đổi sinh viên quốc tế tại Thái Lan, Malaysia, Philippines.'
+                ],
+                result: [
+                    'Xây dựng nền tảng tiếng Anh vững chắc tương đương Bậc 4/6, sẵn sàng học tập bằng tiếng Anh.'
+                ],
+                note: 'Sinh viên có chứng chỉ tiếng Anh tương đương IELTS 6.0 được miễn đào tạo giai đoạn tiếng Anh chuẩn bị.'
+            },
+            {
+                content: [
+                    '<strong>Kiến thức khoa học xã hội & chính trị:</strong> Triết học Mác-Lênin, Tư tưởng Hồ Chí Minh, Đường lối cách mạng Đảng Cộng sản Việt Nam.',
+                    '<strong>Thực hành ngoại ngữ chuyên ngành:</strong> 48 tín chỉ từ sơ cấp đến cao cấp, gồm các kỹ năng nghe, nói, đọc, viết.',
+                    '<strong>Văn hoá doanh nghiệp & Kinh tế:</strong> Các học phần về Văn hoá doanh nghiệp, Địa lý kinh tế, Kinh tế vi mô và vĩ mô.',
+                    '<strong>Kiến thức thương mại:</strong> Tiếng chuyên ngành thương mại, logistics, luật và đạo đức kinh doanh, marketing.'
+                ],
+                result: [
+                    'Cung cấp Kiến thức Kỹ năng Chung (29 TC) và Kiến thức Kỹ năng Cơ sở ngành (61 TC).',
+                    'Xây dựng nền tảng tri thức vững chắc về khoa học xã hội, pháp luật, đạo đức.',
+                    'Nắm vững kỹ năng cốt lõi của ngành ngôn ngữ từ sơ cấp đến cao cấp.',
+                    'Cung cấp kiến thức và kỹ năng làm việc trong các doanh nghiệp Hàn/Trung/Anh.'
+                ]
+            },
+            {
+                content: [
+                    'Trường kết nối doanh nghiệp thực tập (OJT) tại các công ty có yếu tố nước ngoài, cơ quan nhà nước, tổ chức quốc tế.',
+                    'Trải nghiệm môi trường làm việc chuyên nghiệp, rèn luyện kỹ năng giao tiếp liên văn hóa và hợp tác nhóm.',
+                    'Thực hiện báo cáo OJT, được đánh giá bởi cả Trường và chuyên gia tại doanh nghiệp.',
+                    'Đặc biệt phù hợp nếu thực tập ở các công ty nước ngoài để tăng cường năng lực ngôn ngữ thực chiến.'
+                ],
+                result: [
+                    'Áp dụng kiến thức ngôn ngữ vào công việc thực tế trong môi trường chuyên nghiệp.',
+                    'Có góc nhìn thực tế về định hướng nghề nghiệp và cơ hội việc làm trong tương lai.'
+                ]
+            },
+            {
+                content: [
+                    'Sinh viên chọn một trong các định hướng chuyên sâu phù hợp mục tiêu nghề nghiệp.',
+                    '<strong>Định hướng thương mại:</strong> Biên phiên dịch thương mại, bán hàng đa kênh, chiến lược marketing số.',
+                    '<strong>Định hướng logistics:</strong> Xuất nhập khẩu, vận tải hàng hóa đường biển và hàng không, biên phiên dịch logistics.',
+                    'Thực hiện Dự án/Khóa luận Tốt nghiệp (10 TC) dưới sự hướng dẫn của giảng viên.'
+                ],
+                result: [
+                    'Hoàn thành Kiến thức Lựa chọn (12 TC), phát triển kỹ năng chuyên môn sâu.',
+                    'Tổng hợp kiến thức và phát triển năng lực nghiên cứu, tự định hướng nghề nghiệp.',
+                    'Chứng minh khả năng đưa ra kết luận chuyên môn và bảo vệ quan điểm cá nhân.'
+                ]
+            }
+        ]
+    },
+    // Business group
+    'biz': {
+        phases: [
+            {
+                content: [
+                    'Rèn luyện tác phong học tập, văn hóa đại học và tinh thần tự học.',
+                    'Học tiếng Anh đến trình độ tương đương IELTS 6.0, sẵn sàng học tập bằng tiếng Anh.',
+                    'Tham gia các học phần đặc trưng của FPTU: Nhạc cụ dân tộc, Vovinam, định hướng tân sinh viên.',
+                    'Cơ hội trao đổi sinh viên quốc tế tại Thái Lan, Malaysia, Philippines.'
+                ],
+                result: [
+                    'Xây dựng nền tảng tiếng Anh vững chắc tương đương Bậc 4/6, sẵn sàng học tập bằng tiếng Anh.'
+                ],
+                note: 'Sinh viên có chứng chỉ tiếng Anh tương đương IELTS 6.0 được miễn đào tạo giai đoạn tiếng Anh chuẩn bị.'
+            },
+            {
+                content: [
+                    '<strong>Kiến thức khoa học xã hội & chính trị:</strong> Triết học Mác-Lênin, Tư tưởng Hồ Chí Minh, kinh tế chính trị.',
+                    '<strong>Kiến thức kinh tế nền tảng:</strong> Kinh tế vi mô, vĩ mô, Kế toán cơ bản, Thống kê kinh doanh.',
+                    '<strong>Quản trị cơ bản:</strong> Quản trị học, Marketing căn bản, Quản trị nhân sự, Luật kinh doanh.',
+                    '<strong>Kỹ năng kinh doanh số:</strong> Excel nâng cao, phân tích dữ liệu, digital marketing cơ bản.'
+                ],
+                result: [
+                    'Nắm vững Kiến thức Kỹ năng Chung (29 TC) và Kiến thức Cơ sở ngành (61 TC).',
+                    'Có nền tảng vững chắc về quản trị, tài chính và marketing để tiếp cận chuyên ngành sâu.',
+                    'Sẵn sàng tham gia các dự án thực tiễn tại doanh nghiệp.'
+                ]
+            },
+            {
+                content: [
+                    'Trường kết nối doanh nghiệp thực tập (OJT) tại các công ty trong và ngoài nước.',
+                    'Trải nghiệm môi trường kinh doanh thực tế, rèn luyện kỹ năng giao tiếp và làm việc nhóm.',
+                    'Thực hiện báo cáo OJT, được đánh giá bởi cả Trường và mentor tại doanh nghiệp.',
+                    'Cơ hội được tuyển dụng hoặc ký hợp đồng ngay sau kỳ OJT.'
+                ],
+                result: [
+                    'Áp dụng kiến thức quản trị, marketing, tài chính vào công việc thực tế.',
+                    'Có định hướng nghề nghiệp rõ ràng và kết nối với mạng lưới doanh nghiệp.'
+                ]
+            },
+            {
+                content: [
+                    'Sinh viên chọn định hướng chuyên sâu theo mục tiêu nghề nghiệp cá nhân.',
+                    '<strong>Các môn học tự chọn:</strong> Phân tích kinh doanh nâng cao, Quản trị dự án, Thương mại điện tử nâng cao, Tài chính quốc tế.',
+                    'Thực hiện Dự án/Khóa luận Tốt nghiệp (10 TC) giải quyết bài toán kinh doanh thực tế.',
+                    'Tham gia bảo vệ trước hội đồng gồm giảng viên và chuyên gia doanh nghiệp.'
+                ],
+                result: [
+                    'Hoàn thành Kiến thức Lựa chọn (12 TC), cá nhân hóa lộ trình nghề nghiệp.',
+                    'Tổng hợp toàn bộ kiến thức, kỹ năng thực tiễn cho thị trường lao động.',
+                    'Sẵn sàng đảm nhận các vị trí quản lý và chuyên gia trong doanh nghiệp.'
+                ]
+            }
+        ]
+    },
+    // Law group
+    'law': {
+        phases: [
+            {
+                content: [
+                    'Rèn luyện tác phong học tập, văn hóa đại học và tinh thần tự học.',
+                    'Học tiếng Anh đến trình độ tương đương IELTS 6.0, sẵn sàng học tập bằng tiếng Anh.',
+                    'Tham gia các học phần đặc trưng của FPTU: Nhạc cụ dân tộc, Vovinam, định hướng tân sinh viên.'
+                ],
+                result: [
+                    'Xây dựng nền tảng tiếng Anh vững chắc tương đương Bậc 4/6, chuẩn bị cho học tập pháp luật bằng tiếng Anh.'
+                ],
+                note: 'Sinh viên có chứng chỉ tiếng Anh tương đương IELTS 6.0 được miễn đào tạo giai đoạn tiếng Anh chuẩn bị.'
+            },
+            {
+                content: [
+                    '<strong>Nền tảng pháp lý:</strong> Lý luận nhà nước và pháp luật, Luật hiến pháp, Luật hành chính.',
+                    '<strong>Luật tư:</strong> Luật dân sự, Luật thương mại, Luật hôn nhân gia đình, Luật lao động.',
+                    '<strong>Luật hình sự & tố tụng:</strong> Luật hình sự, Luật tố tụng hình sự, Luật tố tụng dân sự.',
+                    '<strong>Pháp luật kinh doanh:</strong> Luật doanh nghiệp, Luật đầu tư, Luật chứng khoán, Luật tài chính.'
+                ],
+                result: [
+                    'Nắm vững hệ thống pháp luật Việt Nam và các quy định quốc tế liên quan.',
+                    'Có khả năng phân tích, áp dụng pháp luật vào các tình huống thực tiễn.',
+                    'Sẵn sàng tiếp cận chuyên ngành pháp lý sâu hơn.'
+                ]
+            },
+            {
+                content: [
+                    'Thực tập tại tòa án, viện kiểm sát, văn phòng luật sư, công ty hoặc cơ quan nhà nước.',
+                    'Tham gia tư vấn pháp lý, soạn thảo hợp đồng, xử lý hồ sơ tố tụng thực tế.',
+                    'Được hướng dẫn bởi luật sư và cán bộ pháp lý có kinh nghiệm.',
+                    'Thực hiện báo cáo OJT, đánh giá năng lực thực hành pháp lý.'
+                ],
+                result: [
+                    'Áp dụng kiến thức pháp lý vào công việc thực tiễn, hiểu quy trình tố tụng thực tế.',
+                    'Xây dựng mạng lưới kết nối trong giới pháp lý và doanh nghiệp.'
+                ]
+            },
+            {
+                content: [
+                    'Chọn định hướng chuyên sâu: Pháp luật kinh doanh – đầu tư, Luật hình sự – tố tụng, Luật quốc tế.',
+                    '<strong>Các môn chuyên sâu:</strong> Pháp luật M&A, Trọng tài thương mại quốc tế, Luật so sánh, LegalTech.',
+                    'Thực hiện Khóa luận Tốt nghiệp nghiên cứu một vấn đề pháp lý chuyên sâu.',
+                    'Bảo vệ khóa luận trước hội đồng gồm giảng viên và chuyên gia pháp lý.'
+                ],
+                result: [
+                    'Hoàn thiện chuyên môn pháp lý trong lĩnh vực đã chọn.',
+                    'Có năng lực nghiên cứu độc lập và đưa ra quan điểm pháp lý vững chắc.',
+                    'Sẵn sàng hành nghề luật hoặc tiếp tục học thạc sĩ, tiến sĩ luật.'
+                ]
+            }
+        ]
+    }
+};
 
-    const collapseBtn = document.getElementById('collapseBtn');
-    let allExpanded = false;
-    collapseBtn.addEventListener('click', function() {
-        const cards = document.querySelectorAll('.category-card');
-        if (allExpanded) {
-            cards.forEach(card => card.classList.remove('active'));
-            this.textContent = 'Mở rộng tất cả ▼';
-            allExpanded = false;
-        } else {
-            cards.forEach(card => card.classList.add('active'));
-            this.textContent = 'Thu gọn tất cả ▲';
-            allExpanded = true;
-        }
+// Map course keys to curriculum groups
+const curriculumGroup = {
+    'cong-nghe-thong-tin': 'it', 'ky-thuat-phan-mem': 'it', 'tri-tue-nhan-tao': 'it',
+    'khoa-hoc-dl': 'it', 'an-toan-thong-tin': 'it', 'vi-mach-ban-dan': 'it',
+    'cong-nghe-o-to-so': 'it', 'he-thong-thong-tin': 'it', 'thiet-ke-do-hoa': 'it',
+    'tri-tue-nhan-tao-khoa': 'it', 'an-ninh-mang': 'it',
+    'truyen-thong-da-phuong-tien': 'biz', 'quan-he-cong-chung': 'biz',
+    'truyen-thong-marketing': 'biz', 'truyen-thong-thuong-hieu': 'biz',
+    'ngon-ngu-anh': 'lang', 'tieng-anh-thuong-mai': 'lang',
+    'ngon-ngu-han': 'lang', 'tieng-han-thuong-mai': 'lang',
+    'ngon-ngu-trung': 'lang', 'tieng-trung-thuong-mai': 'lang',
+    'luat': 'law', 'luat-kinh-te': 'law',
+    'marketing': 'biz', 'kinh-doanh-quoc-te': 'biz', 'thuong-mai-dien-tu': 'biz',
+    'quan-tri-kinh-doanh': 'biz', 'quan-tri-giai-tri': 'biz', 'quan-tri-trai-nghiem': 'biz',
+    'quan-tri-thu-mua': 'biz', 'quan-tri-khach-san': 'biz', 'quan-tri-du-lich': 'biz',
+    'phan-tich-kinh-doanh': 'biz', 'logistics': 'biz', 'cong-nghe-tai-chinh': 'biz',
+    'tai-chinh-doanh-nghiep': 'biz', 'tai-chinh-thong-minh': 'biz', 'tai-chinh-ngan-hang': 'biz'
+};
+
+function renderPhasePanel(phaseIdx, phaseData) {
+    const toList = arr => arr.map(s => `<li>${s}</li>`).join('');
+    document.getElementById(`phase${phaseIdx}-content`).innerHTML = toList(phaseData.content);
+    document.getElementById(`phase${phaseIdx}-result`).innerHTML = toList(phaseData.result);
+    const noteEl = document.getElementById(`phase${phaseIdx}-note`);
+    if (phaseData.note && noteEl) {
+        noteEl.innerHTML = `<strong>⚠ Lưu ý:</strong> ${phaseData.note}`;
+        noteEl.style.display = 'block';
+    } else if (noteEl) {
+        noteEl.style.display = 'none';
+    }
+}
+
+// Phase tab switching
+document.querySelectorAll('.phase-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+        const idx = parseInt(this.dataset.phase);
+        document.querySelectorAll('.phase-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.phase-panel').forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById(`phase-panel-${idx}`).classList.add('active');
     });
+});
+
+// Toggle categories
+document.querySelectorAll('.category-header').forEach(header => {
+    header.addEventListener('click', function() {
+        this.parentElement.classList.toggle('active');
+    });
+});
+
+// Open modal
+document.querySelectorAll('.course-item').forEach(item => {
+    item.addEventListener('click', function() {
+        const course = courseData[this.dataset.course];
+        if (!course) return;
+
+        document.getElementById('modalTitle').textContent = course.title;
+        document.getElementById('courseCode').textContent = course.code || 'N/A';
+        document.getElementById('courseCredits').textContent = course.credits || 'N/A';
+        document.getElementById('courseDescription').textContent = course.description || '';
+
+        // Features
+        const featuresGrid = document.getElementById('featuresGrid');
+        featuresGrid.innerHTML = (course.features || []).map(f => `
+            <div class="feature-card">
+                <span class="feature-icon">${f.icon}</span>
+                <div class="feature-title">${f.title}</div>
+                <div class="feature-desc">${f.desc}</div>
+            </div>
+        `).join('');
+
+        // Curriculum phases
+        const group = curriculumGroup[this.dataset.course] || 'it';
+        const curriculum = curriculumData[group];
+        curriculum.phases.forEach((phase, idx) => renderPhasePanel(idx, phase));
+
+        // Reset to first tab
+        document.querySelectorAll('.phase-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.phase-panel').forEach(p => p.classList.remove('active'));
+        document.querySelector('.phase-tab[data-phase="0"]').classList.add('active');
+        document.getElementById('phase-panel-0').classList.add('active');
+
+        // Career
+        document.getElementById('careerIntro').textContent = course.careerIntro || '';
+        const careerList = document.getElementById('careerList');
+        careerList.innerHTML = (course.careers || []).map(c => `<li>${c}</li>`).join('');
+
+        document.getElementById('modalOverlay').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+});
+
+function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+});
+
+// Expand/Collapse all
+const collapseBtn = document.getElementById('collapseBtn');
+let allExpanded = false;
+collapseBtn.addEventListener('click', function() {
+    const cards = document.querySelectorAll('.category-card');
+    if (allExpanded) {
+        cards.forEach(card => card.classList.remove('active'));
+        this.textContent = 'Mở rộng tất cả ▼';
+        allExpanded = false;
+    } else {
+        cards.forEach(card => card.classList.add('active'));
+        this.textContent = 'Thu gọn tất cả ▲';
+        allExpanded = true;
+    }
+});
 </script>
 
 </body>
