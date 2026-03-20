@@ -527,20 +527,25 @@ function ngramSearch(rawQuery, pool) {
     if (tokens.length === 0) return null;
 
     const maxN = Math.min(tokens.length, 5);
+    const scoreMap = {};
 
+    // Accumulate scores from ALL n-gram sizes, don't stop early
     for (let n = maxN; n >= 1; n--) {
         const phrases = getNgrams(tokens, n);
-        const matched = [];
-
         pool.forEach(club => {
             let total = 0;
             phrases.forEach(phrase => { total += scoreClub(club, phrase); });
-            if (total > 0) matched.push({ ...club, score: total });
+            if (total > 0) {
+                scoreMap[club.short] = (scoreMap[club.short] || { ...club, score: 0 });
+                scoreMap[club.short].score += total;
+            }
         });
+    }
 
-        if (matched.length > 0) {
-            return { type: 'results', data: matched.sort((a, b) => b.score - a.score) };
-        }
+    const matched = Object.values(scoreMap);
+
+    if (matched.length > 0) {
+        return { type: 'results', data: matched.sort((a, b) => b.score - a.score) };
     }
 
     const candidates = candidateSearch(rawQuery, pool);
